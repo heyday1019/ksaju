@@ -1,0 +1,2 @@
+# ksaju
+korean fortune project
