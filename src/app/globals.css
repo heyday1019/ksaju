@@ -52,10 +52,10 @@
 
 /* Tailwind v4 @theme inline 블록에 폰트 패밀리 추가 */
 @theme inline {
-  --font-display: "Geist", system-ui, -apple-system, sans-serif;
-  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-display: var(--font-geist), system-ui, -apple-system, sans-serif;
+  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
   --font-serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
-  --font-hangul: "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+  --font-hangul: "Pretendard Variable", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
   --font-mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, monospace;
   
   --color-brand-navy: var(--color-cosmic-navy);
