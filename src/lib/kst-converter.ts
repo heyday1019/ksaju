@@ -1,16 +1,13 @@
-import { JIZI_HOURS } from "./kst-data";
-import type { JiziHour } from "./kst-types";
+import { fromZonedTime, formatInTimeZone } from "date-fns-tz";
+import { ko, enUS } from "date-fns/locale";
+import { JIZI_HOURS, POPULAR_TIMEZONES } from "./kst-data";
+import type { BirthData, JiziHour, KSTResult } from "./kst-types";
 
 export function getJiziHour(kstHour: number): JiziHour {
   // 자시(子)는 23-01시 wraparound. (hour + 1) mod 24를 2로 나눈 floor가 인덱스.
   const idx = Math.floor(((kstHour + 1) % 24) / 2);
   return JIZI_HOURS[idx];
 }
-
-import { fromZonedTime, formatInTimeZone } from "date-fns-tz";
-import { ko, enUS } from "date-fns/locale";
-import { POPULAR_TIMEZONES } from "./kst-data";
-import type { BirthData, KSTResult } from "./kst-types";
 
 const pad = (n: number) => n.toString().padStart(2, "0");
 
@@ -31,6 +28,42 @@ function getGmtLabel(iana: string, atDate: Date): string {
     timeZoneName: "shortOffset",
   }).formatToParts(atDate);
   return parts.find(p => p.type === "timeZoneName")?.value ?? "GMT?";
+}
+
+function koreaTimeOfDay(hour: number): string {
+  if (hour < 5)  return "새벽 (dawn)";
+  if (hour < 9)  return "아침 (morning)";
+  if (hour < 12) return "오전 (late morning)";
+  if (hour < 14) return "정오 (midday)";
+  if (hour < 18) return "오후 (afternoon)";
+  if (hour < 21) return "저녁 (evening)";
+  return "밤 (night)";
+}
+
+function buildFunFact(
+  input: BirthData,
+  kstY: number, kstM: number, kstD: number, kstH: number | null,
+  sourceCity: string
+): string {
+  // 날짜 차이를 Date.UTC 기반으로 계산 (월/년 경계 안전)
+  const sourceDateUTC = Date.UTC(input.year, input.month - 1, input.day);
+  const kstDateUTC = Date.UTC(kstY, kstM - 1, kstD);
+  const dayDelta = Math.round((kstDateUTC - sourceDateUTC) / (1000 * 60 * 60 * 24));
+
+  if (dayDelta === 1) {
+    const tod = kstH !== null ? koreaTimeOfDay(kstH) : "morning (아침)";
+    return `You were born the next day in Korea — already ${tod} when you arrived.`;
+  }
+  if (dayDelta === -1) {
+    const tod = kstH !== null ? koreaTimeOfDay(kstH) : "evening (저녁)";
+    return `You were born the previous day in Korea — still ${tod} from yesterday.`;
+  }
+
+  // Same day
+  if (kstH !== null) {
+    return `Same day in Korea, around ${koreaTimeOfDay(kstH)}.`;
+  }
+  return `Korea (KST) and ${sourceCity} share the same day for your birth.`;
 }
 
 export function convertToKST(input: BirthData): KSTResult {
@@ -76,6 +109,6 @@ export function convertToKST(input: BirthData): KSTResult {
       weekdayEn,
     },
     jiziHour,
-    funFact: "", // Task 6에서 채움
+    funFact: buildFunFact(input, kstY, kstM, kstD, kstH, sourceTz.city),
   };
 }

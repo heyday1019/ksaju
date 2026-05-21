@@ -97,3 +97,39 @@ describe("convertToKST", () => {
     expect(r.sourceLocal.dateLabel).toBe("March 15, 1999");
   });
 });
+
+describe("buildFunFact (via convertToKST)", () => {
+  it("NY 14:30 EST → Seoul 다음 날 새벽: 'next day in Korea' + '새벽'", () => {
+    const r = convertToKST({
+      year: 1999, month: 3, day: 15, hour: 14, minute: 30,
+      timezone: "America/New_York",
+    });
+    expect(r.funFact).toContain("next day");
+    expect(r.funFact).toContain("새벽");
+  });
+
+  it("Tokyo 14:00 → Seoul 14:00 같은 날 오후: 'Same day'", () => {
+    const r = convertToKST({
+      year: 2000, month: 6, day: 1, hour: 14, minute: 0,
+      timezone: "Asia/Tokyo",
+    });
+    expect(r.funFact).toContain("Same day");
+  });
+
+  it("Sydney 00:30 → Seoul 전날 23:30 (previous day)", () => {
+    const r = convertToKST({
+      year: 2024, month: 6, day: 15, hour: 0, minute: 30,
+      timezone: "Australia/Sydney",
+    });
+    expect(r.kst.day).toBe(14);
+    expect(r.funFact).toContain("previous day");
+  });
+
+  it("time 미입력 + 같은 시간대: 의미 있는 메시지", () => {
+    const r = convertToKST({
+      year: 1990, month: 5, day: 15,
+      timezone: "Asia/Tokyo",
+    });
+    expect(r.funFact.length).toBeGreaterThan(10);
+  });
+});
