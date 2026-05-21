@@ -67,11 +67,14 @@ function buildFunFact(
 }
 
 export function convertToKST(input: BirthData): KSTResult {
-  const hasTime = input.hour !== undefined && input.minute !== undefined;
+  // hour만 주어지고 minute 없으면 0으로 보정 (구 superRefine mutation 자리 — I4)
+  const minute =
+    input.hour !== undefined && input.minute === undefined ? 0 : input.minute;
+  const hasTime = input.hour !== undefined && minute !== undefined;
 
   // 1) Source naive datetime string → UTC Date
   const naiveStr = hasTime
-    ? `${input.year}-${pad(input.month)}-${pad(input.day)}T${pad(input.hour!)}:${pad(input.minute!)}:00`
+    ? `${input.year}-${pad(input.month)}-${pad(input.day)}T${pad(input.hour!)}:${pad(minute!)}:00`
     : `${input.year}-${pad(input.month)}-${pad(input.day)}T12:00:00`;
   const utcDate = fromZonedTime(naiveStr, input.timezone);
 
@@ -98,7 +101,7 @@ export function convertToKST(input: BirthData): KSTResult {
   return {
     sourceLocal: {
       dateLabel: formatSourceDate(input),
-      timeLabel: hasTime ? format12Hour(input.hour!, input.minute!) : null,
+      timeLabel: hasTime ? format12Hour(input.hour!, minute!) : null,
       timezone: sourceTz,
     },
     kst: {

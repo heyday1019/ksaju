@@ -61,8 +61,6 @@ export const birthSchema = z
         message: `${data.year}년 ${data.month}월은 ${maxDay}일까지입니다`,
       });
     }
-    // hour만 있고 minute 없으면 0으로 보정 (mutate)
-    if (data.hour !== undefined && data.minute === undefined) {
-      data.minute = 0;
-    }
+    // hour-without-minute 보정은 convertToKST에서 처리 (superRefine mutation은
+    // Zod v4에서 권장되지 않음 — 코드 리뷰 I4).
   });

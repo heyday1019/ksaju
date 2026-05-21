@@ -2,6 +2,7 @@
 
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import type { Control, FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   Form,
@@ -12,7 +13,6 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import type { Control, FieldValues } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import {
   Select,
@@ -32,7 +32,8 @@ type BirthFormProps = {
   defaultTimezone?: string;
 };
 
-type FormValues = z.infer<typeof birthSchema>;
+// birthSchema는 .superRefine를 거쳐 ZodEffects가 되므로 z.input을 써서 폼 입력 타입과 일치
+type FormValues = z.input<typeof birthSchema>;
 
 export function BirthForm({ onSubmit, defaultTimezone }: BirthFormProps) {
   const form = useForm<FormValues>({
@@ -106,9 +107,16 @@ export function BirthForm({ onSubmit, defaultTimezone }: BirthFormProps) {
           <FormDescription className="text-xs">
             Needed for your full saju (12지지 hour pillar).
           </FormDescription>
+          <FormMessage>
+            {form.formState.errors.hour?.message ||
+              form.formState.errors.minute?.message}
+          </FormMessage>
         </FormItem>
 
         <FormField
+          // shadcn FormField는 ControllerProps의 default(FieldValues) generic을
+          // 그대로 받아서 우리 FormValues로의 추론을 보존하지 않음. 캐스트는
+          // shadcn 디자인의 결과이지 실제 타입 안전성 우회가 아님 (I3 검토 후 유지).
           control={form.control as unknown as Control<FieldValues>}
           name="timezone"
           render={({ field }) => (
