@@ -27,7 +27,7 @@ export default function Home() {
           <h1 className="font-display text-7xl font-bold tracking-tight bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent">
             KSaju
           </h1>
-          <p className="hanja text-2xl tracking-[0.5em]">사 주</p>
+          <p className="hanja text-5xl font-bold tracking-[0.4em]">사 주</p>
           <p className="font-serif italic text-xl text-primary">
             Saju, but make it K.
           </p>
