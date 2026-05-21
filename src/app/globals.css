@@ -83,6 +83,12 @@
   --font-serif:   var(--font-gowun-batang), Georgia, serif;
   --font-calli:   var(--font-yeon-sung), cursive;
   --font-mono:    ui-monospace, "Cascadia Code", "SF Mono", Menlo, monospace;
+
+  /* shadcn 시맨틱 컬러 토큰 — Tailwind v4에서 bg-popover/text-popover-foreground 등이
+     컴파일되도록 등록. 현재는 popover만 등록 (Select dropdown 투명 버그 해결).
+     TODO: 다른 토큰(card/primary/secondary/muted/accent 등)도 등록 필요 — 별도 fix. */
+  --color-popover:            var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
 }
 
 /* === 페이지 배경 유틸리티 — 모드 적응 ===

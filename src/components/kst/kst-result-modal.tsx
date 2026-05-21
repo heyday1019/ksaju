@@ -1,6 +1,11 @@
 "use client";
 
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogTitle,
+  DialogDescription,
+} from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import type { KSTResult } from "@/lib/kst-types";
 
@@ -17,6 +22,13 @@ export function KstResultModal({ open, onClose, onEdit, result }: KstResultModal
   return (
     <Dialog open={open} onOpenChange={(o) => !o && onClose()}>
       <DialogContent className="hanji-paper max-w-md p-0 overflow-hidden max-h-[90vh] overflow-y-auto">
+        {/* a11y: 시각적으로는 숨기되 스크린리더에서 dialog 제목/설명 노출 (Radix 요구사항) */}
+        <DialogTitle className="sr-only">Your KST birth time</DialogTitle>
+        <DialogDescription className="sr-only">
+          Your birth time converted to Korea Standard Time, including the
+          corresponding 12-jizi hour pillar.
+        </DialogDescription>
+
         {/* 상단 창살 */}
         <div
           className="changsal-band absolute top-0 left-0 right-0 h-[14px] z-10"
