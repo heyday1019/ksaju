@@ -97,6 +97,8 @@
 /* === 한지 텍스처 유틸리티 — JK 스윗 스폿 (stripe 0.035, noise 0.07, freq 0.75) === */
 .hanji-paper {
   background-color: var(--color-hanji);
+  /* NOTE: stripe rgba(196,154,63,...) = --color-dancheong (#C49A3F).
+     CSS vars can't expand inside data URLs, so hex is duplicated here. */
   background-image:
     repeating-linear-gradient(45deg,
       transparent 0px, transparent 2px,
@@ -115,7 +117,7 @@
 
 .dark .changsal-band {
   opacity: 0.45;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 40 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpattern id='g' x='0' y='0' width='40' height='30' patternUnits='userSpaceOnUse'%3E%3Cline x1='0' y1='10' x2='40' y2='10' stroke='%23FFF6E5' stroke-width='1'/%3E%3Cline x1='0' y1='20' x2='40' y2='20' stroke='%23FFF6E5' stroke-width='1'/%3E%3Cline x1='13' y1='0' x2='13' y2='30' stroke='%23FFF6E5' stroke-width='1'/%3E%3Cline x1='27' y1='0' x2='27' y2='30' stroke='%23FFF6E5' stroke-width='1'/%3E%3C/pattern%3E%3Crect width='100%25' height='100%25' fill='url(%23g)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 40 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpattern id='gd' x='0' y='0' width='40' height='30' patternUnits='userSpaceOnUse'%3E%3Cline x1='0' y1='10' x2='40' y2='10' stroke='%23FFF6E5' stroke-width='1'/%3E%3Cline x1='0' y1='20' x2='40' y2='20' stroke='%23FFF6E5' stroke-width='1'/%3E%3Cline x1='13' y1='0' x2='13' y2='30' stroke='%23FFF6E5' stroke-width='1'/%3E%3Cline x1='27' y1='0' x2='27' y2='30' stroke='%23FFF6E5' stroke-width='1'/%3E%3C/pattern%3E%3Crect width='100%25' height='100%25' fill='url(%23gd)'/%3E%3C/svg%3E");
 }
 
 /* === 잉크 번짐 효과 (거대 ㅎ에 적용) === */
