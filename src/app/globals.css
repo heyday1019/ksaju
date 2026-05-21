@@ -1,95 +1,143 @@
 /* ============================================
-   COSMIC KOREAN — KSaju Design System v1
+   백의민족 한지 — KSaju Design System v2
+   ============================================
+   Light (기본): 한지 톤
+   Dark (토글): Cosmic Korean
    ============================================ */
 
 @import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css");
 @import "tailwindcss";
 
-/* 다크 우선 — light/dark 동일 값 (사용자 토글 없음, 항상 코스믹) */
-:root,
-.dark {
-  /* === 기본 시맨틱 (shadcn 표준 변수) === */
-  --background: #0F0828;
-  --foreground: #FFF6E5;
-  
-  --card: #1A0B3A;
-  --card-foreground: #FFF6E5;
-  
-  --popover: #1F0F40;
-  --popover-foreground: #FFF6E5;
-  
-  --primary: #FF4D8D;
-  --primary-foreground: #FFF6E5;
-  
-  --secondary: #1F0F40;
-  --secondary-foreground: #FFF6E5;
-  
-  --muted: #2D1454;
-  --muted-foreground: rgba(255, 246, 229, 0.65);
-  
-  --accent: #F4C95D;
-  --accent-foreground: #0F0828;
-  
+/* === LIGHT MODE (DEFAULT) — 백의민족 한지 === */
+:root {
+  /* 브랜드 색 — 한국어 이름 */
+  --color-hanji:     #FBF6E8;  /* 한지 — 배경 */
+  --color-baekja:    #FFFFFF;  /* 백자 — 카드 */
+  --color-muk:       #1A1A2E;  /* 묵 — 본문 텍스트 */
+  --color-jindallae: #C8385A;  /* 진달래 — primary */
+  --color-dancheong: #C49A3F;  /* 단청황 — accent */
+  --color-cheongja:  #88B0BC;  /* 청자 — 예약 (정보/secondary 배지) */
+
+  /* shadcn 시맨틱 매핑 */
+  --background: var(--color-hanji);
+  --foreground: var(--color-muk);
+  --card: var(--color-baekja);
+  --card-foreground: var(--color-muk);
+  --popover: var(--color-baekja);
+  --popover-foreground: var(--color-muk);
+  --primary: var(--color-jindallae);
+  --primary-foreground: var(--color-baekja);
+  --secondary: #F5EFE0;
+  --secondary-foreground: var(--color-muk);
+  --muted: #F5EFE0;
+  --muted-foreground: rgba(26, 26, 46, 0.65);
+  --accent: var(--color-dancheong);
+  --accent-foreground: var(--color-baekja);
   --destructive: #C84B30;
-  --destructive-foreground: #FFF6E5;
-  
+  --destructive-foreground: var(--color-baekja);
+  --border: rgba(26, 26, 46, 0.12);
+  --input: rgba(26, 26, 46, 0.08);
+  --ring: var(--color-jindallae);
+  --radius: 0.75rem;
+
+  /* cosmic-bg 그라데이션 변수 (Light = 한지 톤) */
+  --bg-from: var(--color-hanji);
+  --bg-via:  #F5EFE0;
+  --bg-to:   var(--color-baekja);
+}
+
+/* === DARK MODE — Cosmic Korean === */
+.dark {
+  /* 브랜드 색 — Cosmic Korean (영문 유지) */
+  --color-cosmic-navy:  #0F0828;
+  --color-cosmic-deep:  #1A0B3A;
+  --color-cosmic-mid:   #1F0F40;
+  --color-cosmic-light: #2D1454;
+  --color-saju-pink:    #FF4D8D;
+  --color-korean-gold:  #F4C95D;
+  --color-hanji-cream:  #FFF6E5;
+
+  /* shadcn 시맨틱 매핑 */
+  --background: var(--color-cosmic-navy);
+  --foreground: var(--color-hanji-cream);
+  --card: var(--color-cosmic-deep);
+  --card-foreground: var(--color-hanji-cream);
+  --popover: var(--color-cosmic-mid);
+  --popover-foreground: var(--color-hanji-cream);
+  --primary: var(--color-saju-pink);
+  --primary-foreground: var(--color-hanji-cream);
+  --secondary: var(--color-cosmic-mid);
+  --secondary-foreground: var(--color-hanji-cream);
+  --muted: var(--color-cosmic-light);
+  --muted-foreground: rgba(255, 246, 229, 0.65);
+  --accent: var(--color-korean-gold);
+  --accent-foreground: var(--color-cosmic-navy);
+  --destructive: #C84B30;
+  --destructive-foreground: var(--color-hanji-cream);
   --border: rgba(255, 246, 229, 0.12);
   --input: rgba(255, 246, 229, 0.08);
-  --ring: #FF4D8D;
-  
-  --radius: 0.75rem;
-  
-  /* === 브랜드 전용 토큰 (시맨틱 외부에서 직접 호출용) === */
-  --color-cosmic-navy: #0F0828;
-  --color-saju-pink: #FF4D8D;
-  --color-korean-gold: #F4C95D;
-  --color-hanji-cream: #FFF6E5;
-  
-  --color-cosmic-deep: #1A0B3A;
-  --color-cosmic-mid: #1F0F40;
-  --color-cosmic-light: #2D1454;
+  --ring: var(--color-saju-pink);
+
+  /* cosmic-bg 그라데이션 변수 (Dark = Cosmic) */
+  --bg-from: var(--color-cosmic-navy);
+  --bg-via:  var(--color-cosmic-mid);
+  --bg-to:   var(--color-cosmic-light);
 }
 
-/* Tailwind v4 @theme inline 블록에 폰트 패밀리 추가 */
+/* === Tailwind v4 @theme inline — 폰트 변수 매핑 === */
 @theme inline {
   --font-display: var(--font-geist), system-ui, -apple-system, sans-serif;
-  --font-sans: var(--font-inter), system-ui, -apple-system, sans-serif;
-  --font-serif: Georgia, "Iowan Old Style", "Times New Roman", serif;
-  --font-hangul: "Pretendard Variable", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
-  --font-mono: ui-monospace, "Cascadia Code", "SF Mono", Menlo, monospace;
-  
-  --color-brand-navy: var(--color-cosmic-navy);
-  --color-brand-pink: var(--color-saju-pink);
-  --color-brand-gold: var(--color-korean-gold);
-  --color-brand-cream: var(--color-hanji-cream);
+  --font-sans:    var(--font-inter), system-ui, -apple-system, sans-serif;
+  --font-hangul:  "Pretendard Variable", "Pretendard", "Noto Sans KR", system-ui, sans-serif;
+  --font-serif:   var(--font-gowun-batang), Georgia, serif;
+  --font-calli:   var(--font-yeon-sung), cursive;
+  --font-mono:    ui-monospace, "Cascadia Code", "SF Mono", Menlo, monospace;
 }
 
-/* === 코스믹 배경 그라데이션 유틸리티 === */
-.cosmic-bg {
-  background: linear-gradient(135deg, #0F0828 0%, #1F0F40 55%, #2D1454 100%);
-}
-
-.cosmic-card-bg {
-  background: linear-gradient(165deg, #0F0828 0%, #2D1454 50%, #1A0B3A 100%);
-}
-
-/* === 별 패턴 (선택, 결과 카드용) === */
-.cosmic-stars::before {
-  content: "";
-  position: absolute;
-  inset: 0;
+/* === 한지 텍스처 유틸리티 — JK 스윗 스폿 (stripe 0.035, noise 0.07, freq 0.75) === */
+.hanji-paper {
+  background-color: var(--color-hanji);
   background-image:
-    radial-gradient(1.5px 1.5px at 30px 40px, rgba(255,246,229,0.5), transparent),
-    radial-gradient(1px 1px at 100px 90px, rgba(244,201,93,0.6), transparent),
-    radial-gradient(1.5px 1.5px at 380px 50px, rgba(255,77,141,0.5), transparent);
-  pointer-events: none;
-  z-index: 0;
+    repeating-linear-gradient(45deg,
+      transparent 0px, transparent 2px,
+      rgba(196, 154, 63, 0.035) 2px, rgba(196, 154, 63, 0.035) 4px),
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' /%3E%3CfeColorMatrix values='0 0 0 0 0.77 0 0 0 0 0.6 0 0 0 0 0.25 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* === 우물 정(井) 창살 띠 — 가로 2획 + 세로 2획 === */
+.changsal-band {
+  height: 28px;
+  background-repeat: repeat-x;
+  background-size: 40px 28px;
+  opacity: 0.65;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 40 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpattern id='g' x='0' y='0' width='40' height='30' patternUnits='userSpaceOnUse'%3E%3Cline x1='0' y1='10' x2='40' y2='10' stroke='%23C49A3F' stroke-width='1'/%3E%3Cline x1='0' y1='20' x2='40' y2='20' stroke='%23C49A3F' stroke-width='1'/%3E%3Cline x1='13' y1='0' x2='13' y2='30' stroke='%23C49A3F' stroke-width='1'/%3E%3Cline x1='27' y1='0' x2='27' y2='30' stroke='%23C49A3F' stroke-width='1'/%3E%3C/pattern%3E%3Crect width='100%25' height='100%25' fill='url(%23g)'/%3E%3C/svg%3E");
+}
+
+.dark .changsal-band {
+  opacity: 0.45;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 40 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpattern id='g' x='0' y='0' width='40' height='30' patternUnits='userSpaceOnUse'%3E%3Cline x1='0' y1='10' x2='40' y2='10' stroke='%23FFF6E5' stroke-width='1'/%3E%3Cline x1='0' y1='20' x2='40' y2='20' stroke='%23FFF6E5' stroke-width='1'/%3E%3Cline x1='13' y1='0' x2='13' y2='30' stroke='%23FFF6E5' stroke-width='1'/%3E%3Cline x1='27' y1='0' x2='27' y2='30' stroke='%23FFF6E5' stroke-width='1'/%3E%3C/pattern%3E%3Crect width='100%25' height='100%25' fill='url(%23g)'/%3E%3C/svg%3E");
+}
+
+/* === 잉크 번짐 효과 (거대 ㅎ에 적용) === */
+.ink-bleed {
+  filter: blur(0.6px);
+  text-shadow:
+    0 0 1px rgba(196, 154, 63, 0.4),
+    2px 2px 0 rgba(196, 154, 63, 0.15);
+}
+
+/* === 코스믹 배경 그라데이션 (모드 적응) === */
+.cosmic-bg {
+  background: linear-gradient(135deg,
+    var(--bg-from) 0%,
+    var(--bg-via) 55%,
+    var(--bg-to) 100%);
 }
 
 /* === 한자/한글 텍스트 강조 유틸리티 === */
 .hanja {
   font-family: var(--font-serif);
-  color: var(--color-korean-gold);
+  color: var(--accent);
   letter-spacing: 0.05em;
 }
 
