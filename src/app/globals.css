@@ -17,6 +17,7 @@
   --color-jindallae: #C8385A;  /* 진달래 — primary */
   --color-dancheong: #C49A3F;  /* 단청황 — accent */
   --color-cheongja:  #88B0BC;  /* 청자 — 예약 (정보/secondary 배지) */
+  --color-hanji-warm: #F5EFE0;  /* 따뜻한 한지 — secondary, muted */
 
   /* shadcn 시맨틱 매핑 */
   --background: var(--color-hanji);
@@ -27,9 +28,9 @@
   --popover-foreground: var(--color-muk);
   --primary: var(--color-jindallae);
   --primary-foreground: var(--color-baekja);
-  --secondary: #F5EFE0;
+  --secondary: var(--color-hanji-warm);
   --secondary-foreground: var(--color-muk);
-  --muted: #F5EFE0;
+  --muted: var(--color-hanji-warm);
   --muted-foreground: rgba(26, 26, 46, 0.65);
   --accent: var(--color-dancheong);
   --accent-foreground: var(--color-baekja);
@@ -39,11 +40,6 @@
   --input: rgba(26, 26, 46, 0.08);
   --ring: var(--color-jindallae);
   --radius: 0.75rem;
-
-  /* cosmic-bg 그라데이션 변수 (Light = 한지 톤) */
-  --bg-from: var(--color-hanji);
-  --bg-via:  #F5EFE0;
-  --bg-to:   var(--color-baekja);
 }
 
 /* === DARK MODE — Cosmic Korean === */
@@ -77,11 +73,6 @@
   --border: rgba(255, 246, 229, 0.12);
   --input: rgba(255, 246, 229, 0.08);
   --ring: var(--color-saju-pink);
-
-  /* cosmic-bg 그라데이션 변수 (Dark = Cosmic) */
-  --bg-from: var(--color-cosmic-navy);
-  --bg-via:  var(--color-cosmic-mid);
-  --bg-to:   var(--color-cosmic-light);
 }
 
 /* === Tailwind v4 @theme inline — 폰트 변수 매핑 === */
@@ -94,7 +85,9 @@
   --font-mono:    ui-monospace, "Cascadia Code", "SF Mono", Menlo, monospace;
 }
 
-/* === 한지 텍스처 유틸리티 — JK 스윗 스폿 (stripe 0.035, noise 0.07, freq 0.75) === */
+/* === 페이지 배경 유틸리티 — 모드 적응 ===
+   Light: 한지 베이지 + JK 스윗 스폿 노이즈 (stripe 0.035, noise 0.07, freq 0.75)
+   Dark:  Cosmic Korean 그라데이션 (네이비 → 미드 → 라이트) */
 .hanji-paper {
   background-color: var(--color-hanji);
   /* NOTE: stripe rgba(196,154,63,...) = --color-dancheong (#C49A3F).
@@ -104,6 +97,14 @@
       transparent 0px, transparent 2px,
       rgba(196, 154, 63, 0.035) 2px, rgba(196, 154, 63, 0.035) 4px),
     url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' /%3E%3CfeColorMatrix values='0 0 0 0 0.77 0 0 0 0 0.6 0 0 0 0 0.25 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.dark .hanji-paper {
+  background-color: var(--color-cosmic-navy);
+  background-image: linear-gradient(135deg,
+    var(--color-cosmic-navy) 0%,
+    var(--color-cosmic-mid) 55%,
+    var(--color-cosmic-light) 100%);
 }
 
 /* === 우물 정(井) 창살 띠 — 가로 2획 + 세로 2획 === */
@@ -126,14 +127,6 @@
   text-shadow:
     0 0 1px rgba(196, 154, 63, 0.4),
     2px 2px 0 rgba(196, 154, 63, 0.15);
-}
-
-/* === 코스믹 배경 그라데이션 (모드 적응) === */
-.cosmic-bg {
-  background: linear-gradient(135deg,
-    var(--bg-from) 0%,
-    var(--bg-via) 55%,
-    var(--bg-to) 100%);
 }
 
 /* === 한자/한글 텍스트 강조 유틸리티 === */

@@ -4,7 +4,7 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 export default function Home() {
   return (
-    <main className="hanji-paper cosmic-bg min-h-screen relative overflow-hidden">
+    <main className="hanji-paper min-h-screen relative overflow-hidden">
       {/* 페이지 상단 창살 */}
       <div className="changsal-band absolute top-0 left-0 right-0 z-40" />
 
