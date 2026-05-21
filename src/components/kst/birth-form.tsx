@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
@@ -41,10 +42,12 @@ export function BirthForm({ onSubmit, defaultTimezone }: BirthFormProps) {
     },
   });
 
-  // defaultTimezone이 mount 후 결정되므로 변경 시 폼에 반영
-  if (defaultTimezone && form.getValues("timezone") === "Asia/Seoul" && defaultTimezone !== "Asia/Seoul") {
-    form.setValue("timezone", defaultTimezone);
-  }
+  // defaultTimezone이 mount 후 결정되면 폼에 반영 (parent의 Intl.DateTimeFormat 감지 후 도착)
+  useEffect(() => {
+    if (defaultTimezone && defaultTimezone !== form.getValues("timezone")) {
+      form.setValue("timezone", defaultTimezone);
+    }
+  }, [defaultTimezone, form]);
 
   const handleDateChange = (value: string) => {
     if (!value) {
