@@ -21,16 +21,20 @@ const getTzServerSnapshot = () => undefined;
 export default function Home() {
   const [result, setResult] = useState<KSTResult | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const defaultTz = useSyncExternalStore(subscribeTz, getTzSnapshot, getTzServerSnapshot);
 
   const handleSubmit = (data: BirthData) => {
+    setErrorMessage(null);
     try {
       const r = convertToKST(data);
       setResult(r);
       setModalOpen(true);
     } catch (err) {
       console.error("KST conversion failed:", err);
-      alert("변환 중 오류가 발생했습니다. 다시 시도해주세요.");
+      setErrorMessage(
+        "Couldn't convert this birth time. Please double-check the timezone and try again."
+      );
     }
   };
 
@@ -74,7 +78,15 @@ export default function Home() {
                 Korea uses KST · we&apos;ll convert for you
               </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="space-y-4">
+              {errorMessage && (
+                <div
+                  role="alert"
+                  className="rounded-md border border-destructive bg-destructive/10 px-3 py-2 text-left text-sm text-destructive"
+                >
+                  {errorMessage}
+                </div>
+              )}
               <BirthForm onSubmit={handleSubmit} defaultTimezone={defaultTz} />
             </CardContent>
             <div
