@@ -4,6 +4,154 @@
 
 ---
 
+## 2026-05-22 (금)
+
+### 오늘 한 일 — KST 변환기 마무리 + 코드 리뷰 fix
+
+#### 사이클 3: Task 10-11 + 리뷰 fix + 모바일 폴리시
+
+- **Task 10 — `page.tsx` 통합 완료** (`2d5602f`)
+  - `"use client"` 추가, 기존 hero card 콘텐츠를 BirthForm + KstResultModal로 교체
+  - 브라우저 timezone 감지를 `useState + useEffect`(plan) → **`useSyncExternalStore`**로 변경: React 19의 새 lint `react-hooks/set-state-in-effect`가 plan 패턴 거부. server snapshot=undefined, client snapshot=IANA로 hydration-safe.
+  - 한지/창살/ㅎ/토글 디자인 보존
+
+- **Task 11 — 수동 시각 검증 (사용자 협조)** + 2개 버그 발견 → 즉시 fix (`19ce0b9`)
+  1. **Radix Dialog a11y error**: `KstResultModal`에 `DialogTitle` 누락 → `sr-only` `<DialogTitle>` + `<DialogDescription>` 추가
+  2. **Select dropdown 투명**: 근본 원인은 `globals.css`의 `@theme inline` 블록에 폰트만 매핑, shadcn 시맨틱 컬러 토큰(`--color-popover` 등) 미등록 → `bg-popover` 컴파일 안 됨. 좁게 `popover`만 등록 (잠정).
+  - 부수 발견: MetaMask 확장이 모든 localhost 페이지에 inpage.js 주입 → 시크릿 창에서 검증 회피
+
+- **Final 코드 리뷰 디스패치** (general-purpose subagent, `7fd2060..19ce0b9` 13 commits)
+  - 결과: **"No - with fixes"** — C1 1건, I1-I6 6건, M1-M8 8건
+  - 가장 중요한 발견: **C1** — Tailwind v4 시맨틱 토큰 13개 전체가 미등록 상태였음. `bg-primary`/`bg-card`/`bg-accent`/`from-primary` 등 26개 utility가 무음 실패. 모달의 brand 컬러와 KSaju 헤더 그라데이션이 안 보이고 있었음 (hanji-paper 부모 배경이 비쳐서 우연히 가려져 있었음)
+
+- **리뷰 fix 적용 (6 commit)**
+  - `392854c`: C1(전체 시맨틱 토큰 등록) + I1(time 필드 FormMessage) + I3(캐스트 재검토 후 유지 + 주석) + I4(superRefine mutation 제거 → `convertToKST`로 이동)
+    - 검증: 컴파일 CSS에 `.bg-primary` `.bg-card` `.from-primary` `.to-accent` 등 26개 utility 확인됨
+    - I3은 push back: shadcn FormField의 `ControllerProps default(FieldValues)` generic 설계상 우리 FormValues로의 추론 불가 → 캐스트는 안전성 우회가 아니라 구조적 노이즈로 결론
+  - `e2bbac7`: I2(date/time 입력을 `FormField`로 정식 wrap, name='year'/'hour' 앵커) + I5(`alert()` → in-card destructive error banner) + M1(defaultTimezone이 POPULAR_TIMEZONES에 없을 때 합성 SelectItem `(detected)` 맨 위에 삽입)
+  - `7519da9`: 모바일 ㅎ z-index — 모바일에서 카드가 ㅎ을 가려 디자인 의도 사라짐 → `z-30 sm:z-0`로 mobile만 카드 위로
+
+### 오늘의 commits (5개, 최신순)
+
+| SHA | 메시지 |
+|-----|--------|
+| `7519da9` | fix(landing): lift ㅎ above card on mobile (z-30 sm:z-0) |
+| `e2bbac7` | fix(review): apply deferred review items I2, I5, M1 |
+| `392854c` | fix(review): address code review C1, I1, I3, I4 |
+| `19ce0b9` | fix(kst): resolve Dialog a11y error and Select dropdown transparency |
+| `2d5602f` | feat(landing): integrate KST converter form and result modal |
+
+### 현재 상태 (2026-05-22 작업 종료 시)
+
+- **활성 브랜치:** `dev` (18 commits ahead of local `main`, 18 commits ahead of `origin/dev`)
+- **local main:** 20 commits ahead of `origin/main` (어제 백의민족 피벗, 아직 push 안 함)
+- **dev → origin/main 거리:** 38 commits (백의민족 20 + KST 18)
+- **워킹 트리:** 클린
+- **Dev 서버:** 중지됨
+- **빌드/lint/test:** 모두 통과 (22 vitest tests · build pass · pre-existing form.tsx unused-ref warning 1건 외 lint clean)
+
+### Task 11 시각 검증 — 사용자 보고 결과 (PASS)
+
+| # | 시나리오 | 결과 |
+|---|---------|------|
+| 1 | 폼 초기 상태 (시크릿 창) | ✅ |
+| 2 | 1999-03-15 14:30 NY → 모달 정상 | ✅ (C1 fix 이후 brand 컬러까지 모두 적용됨 재확인) |
+| 3 | Edit → 폼 복귀 | ✅ |
+| 4 | time 미입력 | ✅ |
+| 5 | invalid 날짜 (1899/2051) | ✅ |
+| 6 | Dark 모드 토글 | ✅ |
+| 7 | 모바일 viewport | 처음엔 ㅎ이 카드에 가려져 ⚠️ → `7519da9`로 fix → ✅ |
+
+### KST 변환기 사이클 완료 ✅
+
+Spec → plan → 11 task → 6 fix → final review pass → 모든 검증 통과. 다음 사이클(사주 계산) 진입 준비됨.
+
+---
+
+## 내일 시작 시 첫 액션
+
+### Step 0 — finishing-a-development-branch 결정 (어제로부터 보류)
+
+오늘 finishing 스킬까지 진입했으나 dev/main/origin 정렬 결정을 사용자가 보류했음. 이게 가장 먼저 해야 할 일:
+
+**dev (18 commits) 처리 옵션:**
+1. dev → main local merge 후 한꺼번에 push (단순)
+2. dev → origin/dev push + GitHub PR 생성 (KST + 백의민족 38 commits이 함께 PR에 포함됨 — 두 피벗을 한 PR로 묶거나, main부터 origin/main에 먼저 push해 base 정렬 필요)
+3. dev 유지하고 별도 결정으로 보류
+
+**main (20 commits) 처리 옵션 (어제부터 보류):**
+- (a) dev → main merge 후 main을 origin/main에 push (백의민족 + KST 38 commits 한꺼번에 history에 보존)
+- (b) main reset to origin/main (백의민족 작업은 dev에만 보존 — 중복 정리)
+- (c) main을 그냥 origin/main에 push (origin/main도 따라잡기)
+
+권장: **1(a) — 가장 단순. PR 없이 dev/main 동기화 + origin/main에도 history 보존.** 개인 프로젝트 단계라 PR 분리의 이득 작음.
+
+### Step 1 — 다음 사이클 결정 (사주 v2 또는 다른 방향)
+
+후보 (어제부터 거론):
+
+**A) 사주 실제 계산 (manseryeok 통합)**
+- 현재 KST 변환기는 데이터 수집만 됨, "Discover your saju" CTA는 disabled
+- spec brainstorming → 4기둥(년주/월주/일주/시주) 계산 + 시각화
+- 데이터 소스: KASI manseryeok 또는 무료 npm 라이브러리
+- 의존성: 음력 변환, 천간/지지 60갑자, 절기 boundary
+- 사이즈: 중-대 (1-2주, 도메인 로직 무거움)
+
+**B) 사주 결과 카드 v2 (visualization)**
+- 4기둥을 시각적으로 어떻게 보여줄지 디자인 spec
+- 한지/창살/먹/단청 테마 유지
+- 사이즈: 중 (디자인 1-2일 + 구현 며칠)
+
+**C) 그 외 — 어제·오늘 떠오른 다른 아이디어**
+
+### Step 2 — 일반 점검 (1분)
+
+```bash
+git branch --show-current   # 현재 브랜치 확인 (finishing 결정에 따라 dev or main)
+git log --oneline -5        # 마지막 커밋들
+npm test                    # 22 tests pass 재확인
+```
+
+---
+
+## 미해결 / 결정 보류 항목
+
+### 1. dev/main/origin/main 정렬 (어제 #1, 오늘로 이월)
+
+위 "내일 시작 시 첫 액션 Step 0" 참고.
+
+### 2. 디자인 시스템 후속 정리
+
+오늘 C1 fix로 `@theme inline`에 시맨틱 토큰 13개 등록함 → `bg-card`, `bg-primary` 등이 처음으로 실제 컴파일됨. 부작용 점검 필요:
+- 카드 배경이 이전에는 hanji 비쳐 보였는데 이제 **백자 #FFFFFF로 또렷이 분리**됨 — 디자인 의도와 일치하지만, **어제 백의민족 피벗 spec 작성 당시 의도와 다른 시각**일 수 있음
+- 모달 brand 컬러가 처음으로 실제 적용됨 — 시각 검증 다시 했음
+- 향후 컴포넌트 추가 시 동일 토큰 사용 패턴 따라가면 됨 (별도 작업 필요 없음, 기존 컴포넌트는 변화 흡수됨)
+
+### 3. 사주 결과 카드 v2 / 사주 실제 계산 (어제 #2-3, 오늘로 이월)
+
+위 "Step 1 다음 사이클 결정" 참고.
+
+### 4. 코드 리뷰의 deferred items (오늘 발생)
+
+- **I6** (UI 자동 테스트): spec상 "UI는 시각/수동 검증"으로 결정됨. 추후 결정 — Playwright 도입 시 KstResultModal 스모크 테스트가 다음 회귀 방지에 좋음. 리뷰어가 "C1을 잡았어야 할 테스트"로 명시함.
+- **M2-M8** (소소한 폴리시): defaultTimezone 미커버리지 fallback / `formatSourceDate` locale comment / `koreaTimeOfDay` 단위 테스트 / `buildFunFact` dateline 방어 / 등. 별도 fix 사이클 또는 시간 날 때.
+
+---
+
+## 참고 파일 (오늘 추가·수정된 것)
+
+| 파일 | 내용 |
+|------|------|
+| `src/app/page.tsx` | Task 10 통합 (use client, BirthForm/KstResultModal 사용) + error banner + 모바일 ㅎ z-index |
+| `src/app/globals.css` | **@theme inline에 시맨틱 컬러 토큰 13개 등록 (C1)** — 디자인 시스템의 숨은 결함 해결 |
+| `src/components/kst/birth-form.tsx` | I2(FormField wrap) + M1(synthetic timezone) + I3 주석 + I1 FormMessage |
+| `src/components/kst/kst-result-modal.tsx` | DialogTitle/Description sr-only 추가 (a11y) |
+| `src/lib/kst-types.ts` | superRefine mutation 제거 (I4) |
+| `src/lib/kst-converter.ts` | hour-without-minute defaulting을 진입부로 이동 (I4) |
+| `task-log.md` | 이 항목 추가 |
+
+---
+
 ## 2026-05-21 (목)
 
 ### 오늘 한 일 — 2가지 큰 사이클
