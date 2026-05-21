@@ -13,9 +13,10 @@ export default function Home() {
         <ThemeToggle />
       </div>
 
-      {/* 거대 ㅎ — 우측하단 배경. Dark에서 opacity 낮춰 코스믹 위 잡음 줄임 */}
+      {/* 거대 ㅎ — 우측하단 배경. 모바일은 viewport 안에 작게, 데스크탑은 peek 효과로 크게.
+          Dark에서 opacity 낮춰 코스믹 위 잡음 줄임. */}
       <span
-        className="font-calli ink-bleed absolute -right-[3%] -bottom-[10%] text-[32rem] leading-none text-accent/55 dark:text-accent/35 select-none pointer-events-none z-0"
+        className="font-calli ink-bleed absolute right-[2%] bottom-[2%] sm:-right-[3%] sm:-bottom-[10%] text-[8rem] sm:text-[14rem] md:text-[22rem] lg:text-[28rem] xl:text-[32rem] leading-none text-accent/55 dark:text-accent/35 select-none pointer-events-none z-0"
         aria-hidden="true"
       >
         ㅎ
