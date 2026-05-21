@@ -1,20 +1,50 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+"use client";
+
+import { useState, useSyncExternalStore } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { BirthForm } from "@/components/kst/birth-form";
+import { KstResultModal } from "@/components/kst/kst-result-modal";
+import { convertToKST } from "@/lib/kst-converter";
+import type { BirthData, KSTResult } from "@/lib/kst-types";
+
+const subscribeTz = () => () => {};
+const getTzSnapshot = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
+const getTzServerSnapshot = () => undefined;
 
 export default function Home() {
+  const [result, setResult] = useState<KSTResult | null>(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const defaultTz = useSyncExternalStore(subscribeTz, getTzSnapshot, getTzServerSnapshot);
+
+  const handleSubmit = (data: BirthData) => {
+    try {
+      const r = convertToKST(data);
+      setResult(r);
+      setModalOpen(true);
+    } catch (err) {
+      console.error("KST conversion failed:", err);
+      alert("변환 중 오류가 발생했습니다. 다시 시도해주세요.");
+    }
+  };
+
   return (
     <main className="hanji-paper min-h-screen relative overflow-hidden">
       {/* 페이지 상단 창살 */}
       <div className="changsal-band absolute top-0 left-0 right-0 z-40" />
 
-      {/* 우상단 테마 토글 (상단 창살 아래에 위치) */}
+      {/* 우상단 테마 토글 */}
       <div className="absolute top-12 right-6 z-50">
         <ThemeToggle />
       </div>
 
-      {/* 거대 ㅎ — 우측하단 배경. 모바일은 viewport 안에 작게, 데스크탑은 peek 효과로 크게.
-          Dark에서 opacity 낮춰 코스믹 위 잡음 줄임. */}
+      {/* 거대 ㅎ 배경 */}
       <span
         className="font-calli ink-bleed absolute right-[2%] bottom-[2%] sm:-right-[3%] sm:-bottom-[10%] text-[8rem] sm:text-[14rem] md:text-[22rem] lg:text-[28rem] xl:text-[32rem] leading-none text-accent/55 dark:text-accent/35 select-none pointer-events-none z-0"
         aria-hidden="true"
@@ -34,24 +64,19 @@ export default function Home() {
           </p>
 
           <Card className="relative overflow-hidden border-border mt-8 py-6">
-            {/* 카드 상단 창살 */}
             <div
               className="changsal-band absolute top-0 left-0 right-0 h-[18px] z-10"
               style={{ backgroundSize: "40px 18px" }}
             />
             <CardHeader>
-              <CardTitle className="text-2xl">Your Inyeon Awaits</CardTitle>
+              <CardTitle className="text-2xl">When were you born?</CardTitle>
+              <CardDescription>
+                Korea uses KST · we&apos;ll convert for you
+              </CardDescription>
             </CardHeader>
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">
-                Korean fortune for the K-content generation. Built on KASI manseryeok.
-              </p>
-              <div className="flex gap-4 justify-center pt-4">
-                <Button size="lg">Discover your saju</Button>
-                <Button size="lg" variant="outline">Learn more</Button>
-              </div>
+            <CardContent>
+              <BirthForm onSubmit={handleSubmit} defaultTimezone={defaultTz} />
             </CardContent>
-            {/* 카드 하단 창살 */}
             <div
               className="changsal-band absolute bottom-0 left-0 right-0 h-[18px] z-10"
               style={{ backgroundSize: "40px 18px" }}
@@ -59,6 +84,14 @@ export default function Home() {
           </Card>
         </div>
       </div>
+
+      {/* 결과 모달 */}
+      <KstResultModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        onEdit={() => setModalOpen(false)}
+        result={result}
+      />
 
       {/* 페이지 하단 창살 */}
       <div className="changsal-band absolute bottom-0 left-0 right-0 z-40" />
