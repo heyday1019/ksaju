@@ -39,6 +39,14 @@ yarn-error.log*
 # superpowers brainstorm sessions
 .superpowers/
 
+# Phase 1 (Cosmic Korean) 백업 파일 — 로컬 보존, e1dc2ed 커밋에 git 히스토리 있음
+src/app/globals_org.css
+src/app/layout_org.tsx
+src/app/page_org.tsx
+
+# 디자인 참고 자산 — 로컬 보존, spec에 임베드됨
+팔래트+토큰.jpg
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts
