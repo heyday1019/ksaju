@@ -91,4 +91,57 @@ describe("saju-data — 무결성", () => {
     expect(SOLAR_TERMS_12).toHaveLength(12);
     expect(new Set(SOLAR_TERMS_12).size).toBe(12);
   });
+
+  it("OHO_DUN 값 정확성 (五虎遁): 甲己→丙, 乙庚→戊, 丙辛→庚, 丁壬→壬, 戊癸→甲", () => {
+    expect(OHO_DUN["甲"]).toBe("丙"); expect(OHO_DUN["己"]).toBe("丙");
+    expect(OHO_DUN["乙"]).toBe("戊"); expect(OHO_DUN["庚"]).toBe("戊");
+    expect(OHO_DUN["丙"]).toBe("庚"); expect(OHO_DUN["辛"]).toBe("庚");
+    expect(OHO_DUN["丁"]).toBe("壬"); expect(OHO_DUN["壬"]).toBe("壬");
+    expect(OHO_DUN["戊"]).toBe("甲"); expect(OHO_DUN["癸"]).toBe("甲");
+  });
+
+  it("OSEO_DUN 값 정확성 (五鼠遁): 甲己→甲, 乙庚→丙, 丙辛→戊, 丁壬→庚, 戊癸→壬", () => {
+    expect(OSEO_DUN["甲"]).toBe("甲"); expect(OSEO_DUN["己"]).toBe("甲");
+    expect(OSEO_DUN["乙"]).toBe("丙"); expect(OSEO_DUN["庚"]).toBe("丙");
+    expect(OSEO_DUN["丙"]).toBe("戊"); expect(OSEO_DUN["辛"]).toBe("戊");
+    expect(OSEO_DUN["丁"]).toBe("庚"); expect(OSEO_DUN["壬"]).toBe("庚");
+    expect(OSEO_DUN["戊"]).toBe("壬"); expect(OSEO_DUN["癸"]).toBe("壬");
+  });
+
+  it("WUXING_PRODUCE 정확한 생 cycle: 木→火→土→金→水→木", () => {
+    expect(WUXING_PRODUCE).toEqual({
+      wood: "fire",
+      fire: "earth",
+      earth: "metal",
+      metal: "water",
+      water: "wood",
+    });
+  });
+
+  it("WUXING_CONTROL 정확한 극 cycle: 木→土→水→火→金→木", () => {
+    expect(WUXING_CONTROL).toEqual({
+      wood: "earth",
+      earth: "water",
+      water: "fire",
+      fire: "metal",
+      metal: "wood",
+    });
+  });
+
+  it("EARTHLY_BRANCHES.primaryHiddenStem (지지장간 본기) 값 정확성", () => {
+    // 子=癸, 丑=己, 寅=甲, 卯=乙, 辰=戊, 巳=丙
+    // 午=丁, 未=己, 申=庚, 酉=辛, 戌=戊, 亥=壬
+    expect(EARTHLY_BRANCHES[0].primaryHiddenStem).toBe("癸");  // 子
+    expect(EARTHLY_BRANCHES[1].primaryHiddenStem).toBe("己");  // 丑
+    expect(EARTHLY_BRANCHES[2].primaryHiddenStem).toBe("甲");  // 寅
+    expect(EARTHLY_BRANCHES[3].primaryHiddenStem).toBe("乙");  // 卯
+    expect(EARTHLY_BRANCHES[4].primaryHiddenStem).toBe("戊");  // 辰
+    expect(EARTHLY_BRANCHES[5].primaryHiddenStem).toBe("丙");  // 巳
+    expect(EARTHLY_BRANCHES[6].primaryHiddenStem).toBe("丁");  // 午
+    expect(EARTHLY_BRANCHES[7].primaryHiddenStem).toBe("己");  // 未
+    expect(EARTHLY_BRANCHES[8].primaryHiddenStem).toBe("庚");  // 申
+    expect(EARTHLY_BRANCHES[9].primaryHiddenStem).toBe("辛");  // 酉
+    expect(EARTHLY_BRANCHES[10].primaryHiddenStem).toBe("戊"); // 戌
+    expect(EARTHLY_BRANCHES[11].primaryHiddenStem).toBe("壬"); // 亥
+  });
 });
