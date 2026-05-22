@@ -109,17 +109,18 @@
 }
 
 /* === 페이지 배경 유틸리티 — 모드 적응 ===
-   Light: 한지 베이지 + JK 스윗 스폿 노이즈 (stripe 0.035, noise 0.07, freq 0.75)
+   Light: 실제 한지 사진(/hanji-bg.png 612x428) 타일 + 단청황 45° 미세 스트라이프
    Dark:  Cosmic Korean 그라데이션 (네이비 → 미드 → 라이트) */
 .hanji-paper {
   background-color: var(--color-hanji);
-  /* NOTE: stripe rgba(196,154,63,...) = --color-dancheong (#C49A3F).
-     CSS vars can't expand inside data URLs, so hex is duplicated here. */
   background-image:
     repeating-linear-gradient(45deg,
       transparent 0px, transparent 2px,
       rgba(196, 154, 63, 0.035) 2px, rgba(196, 154, 63, 0.035) 4px),
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='2' /%3E%3CfeColorMatrix values='0 0 0 0 0.77 0 0 0 0 0.6 0 0 0 0 0.25 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)'/%3E%3C/svg%3E");
+    url("/hanji-bg.png");
+  background-repeat: repeat, repeat;
+  background-size: auto, 612px 428px;
+  background-blend-mode: normal, multiply;
 }
 
 .dark .hanji-paper {
@@ -128,6 +129,23 @@
     var(--color-cosmic-navy) 0%,
     var(--color-cosmic-mid) 55%,
     var(--color-cosmic-light) 100%);
+}
+
+/* 다크모드: 같은 한지 사진을 invert + hue-rotate로 네이비/딥퍼플 톤으로 재채색.
+   pseudo-element를 쓰는 이유: filter를 .hanji-paper 자체에 걸면 자식(카드/텍스트)까지 영향. */
+.dark .hanji-paper::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("/hanji-bg.png");
+  background-repeat: repeat;
+  background-size: 612px 428px;
+  /* invert(1): 크림(밝음) → 다크 네이비 톤. hue-rotate로 약간 퍼플 쪽으로. */
+  filter: invert(1) hue-rotate(215deg) saturate(0.5) brightness(0.95);
+  opacity: 0.5;
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 0;
 }
 
 /* === 우물 정(井) 창살 띠 — 가로 2획 + 세로 2획 === */
