@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Inter, Gowun_Batang, Yeon_Sung } from "next/font/google";
+import { Geist, Inter, Gowun_Batang, Yeon_Sung, Noto_Serif_KR } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import "./globals.css";
 
@@ -25,6 +25,12 @@ const yeonSung = Yeon_Sung({
   subsets: ["latin"],
 });
 
+const notoSerifKR = Noto_Serif_KR({
+  variable: "--font-noto-serif-kr",
+  weight: ["400", "700"],
+  subsets: ["latin"],          // CJK 글리프는 unicode-range로 자동 subset
+});
+
 export const metadata: Metadata = {
   title: "KSaju · Korean fortune, made cosmic",
   description: "Authentic Korean saju for the K-content generation. Discover your inyeon.",
@@ -36,7 +42,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geist.variable} ${inter.variable} ${gowunBatang.variable} ${yeonSung.variable} antialiased bg-background text-foreground font-sans`}
+        className={`${geist.variable} ${inter.variable} ${gowunBatang.variable} ${yeonSung.variable} ${notoSerifKR.variable} antialiased bg-background text-foreground font-sans`}
       >
         <ThemeProvider
           attribute="class"

@@ -40,6 +40,13 @@
   --input: rgba(26, 26, 46, 0.08);
   --ring: var(--color-jindallae);
   --radius: 0.75rem;
+
+  /* === 오행(五行) 컬러 — 사주 페이지 === */
+  --color-wuxing-mok:  #5E8B5E;  /* 木 Wood — 녹색 */
+  --color-wuxing-hwa:  var(--color-jindallae);   /* 火 Fire — 진달래 재사용 */
+  --color-wuxing-to:   var(--color-dancheong);   /* 土 Earth — 단청황 재사용 */
+  --color-wuxing-geum: #A8A8B0;  /* 金 Metal — 은빛 */
+  --color-wuxing-su:   var(--color-cheongja);    /* 水 Water — 청자 재사용 */
 }
 
 /* === DARK MODE — Cosmic Korean === */
@@ -73,6 +80,13 @@
   --border: rgba(255, 246, 229, 0.12);
   --input: rgba(255, 246, 229, 0.08);
   --ring: var(--color-saju-pink);
+
+  /* === 오행 컬러 (Dark) === */
+  --color-wuxing-mok:  #7BA67B;   /* 더 밝은 녹색 */
+  --color-wuxing-hwa:  var(--color-saju-pink);
+  --color-wuxing-to:   var(--color-korean-gold);
+  --color-wuxing-geum: #C6C6CE;   /* 더 밝은 은빛 */
+  --color-wuxing-su:   #88B0BC;
 }
 
 /* === Tailwind v4 @theme inline — 폰트 변수 매핑 === */
@@ -106,6 +120,12 @@
   --color-border:                 var(--border);
   --color-input:                  var(--input);
   --color-ring:                   var(--ring);
+
+  --color-wuxing-mok:  var(--color-wuxing-mok);
+  --color-wuxing-hwa:  var(--color-wuxing-hwa);
+  --color-wuxing-to:   var(--color-wuxing-to);
+  --color-wuxing-geum: var(--color-wuxing-geum);
+  --color-wuxing-su:   var(--color-wuxing-su);
 }
 
 /* === 페이지 배경 유틸리티 — 모드 적응 ===
@@ -172,7 +192,11 @@
 
 /* === 한자/한글 텍스트 강조 유틸리티 === */
 .hanja {
-  font-family: var(--font-serif);
+  font-family:
+    var(--font-gowun-batang),
+    var(--font-noto-serif-kr),
+    "Noto Sans CJK KR",
+    Georgia, serif;
   color: var(--accent);
   letter-spacing: 0.05em;
 }
