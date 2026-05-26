@@ -6,6 +6,25 @@
 
 ## 2026-05-27 (수)
 
+### 🔭 향후 계획 (decompose) — 다음 세션부터
+
+사용자 비전 확장 정리. **사주 중심 + 가벼운 fun 운세 + 궁합은 '인연' 별도 페이지.** "깊은 상담/리딩 금지(depth 비경쟁)" 원칙 유지 — 운세는 규칙기반 짧고 fun한 카드, LLM 미사용.
+
+- **시각 검증(사이클 5~8):** ✅ 사용자 확인 통과 (폼→사주 뷰→궁합 모달 정상). 발견: "사주 운세 리딩" 부재 → 아래 사이클 9로 반영.
+- **사이클 9 (계획) — Fun 운세 리딩 + SNS 공유 UI**
+  - 규칙기반: 일간(Day Master)·오행밸런스로 금전/연애/올 한해 등 운세를 **짧고 fun한 영문 카드**로 매핑(레이블 테이블 방식, `compatibility.ts`의 funLabel 패턴 차용). LLM 안 씀.
+  - `src/lib/fortune.ts`(규칙·테이블) + `src/components/fortune/`(운세 카드) + SNS 공유 요약 UI.
+  - 사주 결과 뷰에 "Your fortune" 섹션/탭으로.
+- **사이클 10 (계획) — 멀티페이지 골격 + 내비**: 단일 페이지 → 라우트 분리(`/` 내 사주, `/inyeon` 인연) + 메뉴/네비. App Router.
+- **사이클 11 (계획) — '인연' 페이지 (궁합 이전 + 확장)**
+  - (a) K-pop 스타 궁합: 기존 `CompatibilitySection`/`CompatibilityModal`을 `/inyeon`으로 이동(사주 뷰 인라인에서 제거).
+  - (b) **일반 상대 궁합**: 상대 생일 입력 폼 → `calcUserSaju`(재사용) → `calcCompatibility`로 두 사람 점수.
+- **공통 기반 (계획) — 이미지 export**: 운세·궁합 공유 PNG(9:16, html-to-image). step 7/9. 운세·인연 공유 UI 공통 기반.
+
+**재사용 자산 메모:** `calcUserSaju`(server action) 상대 사주에도 재사용. `compatForIdol`/`calcCompatibility`/`normalizeIdolSaju` client-safe. `saju-display.ts`(오행색/일간키워드) 운세 카드에도 활용. me 기둥은 `userSaju.pillars`에서 직접 추출(server-only `toCompatPillars` 회피 — 사이클 8 참고).
+
+---
+
 ### 사이클 6: manseryeok 사용자 사주 변환 — 완료 ✅
 
 **구현 결과:** `0202524`(server-only 인프라) + `2f6f197`(변환 lib+타입+action). `src/lib/saju.ts`(`birthToSaju`/`toCompatPillars`) + `src/app/actions/saju.ts`(`calcUserSaju`) + UserSaju 타입. 9 테스트 → 전체 **96 tests pass**, tsc/eslint/`next build` clean (페이지 여전히 static, manseryeok 서버측만). RM/Jin known-answer가 아이돌 DB 값과 정확히 일치 확인.

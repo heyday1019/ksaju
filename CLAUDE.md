@@ -36,9 +36,13 @@
 
 ## 📦 MVP 범위 (v1) — 딱 이것만
 
-> **🔄 방향 업데이트 (2026-05-27):** 사용자 결정으로 **"내 사주가 메인, 아이돌 궁합은 fun 부가 기능"**으로 피벗.
-> 핵심 흐름은 `생일 입력 → 내 사주 결과(메인) → (부가) 최애와 궁합 → 공유`. 아래 원문 흐름은 궁합 중심이었음.
-> 단 "깊은 리딩 금지 / depth 비경쟁" 원칙은 유지(가벼운 사주 카드). 향후 본 섹션 정식 재작성 필요.
+> **🔄 방향 업데이트 (2026-05-27):** 사용자 결정으로 **"내 사주가 메인"**으로 피벗 + 범위 확장.
+> 새 구조: **① 내 사주 + 가벼운 fun 운세(금전/연애/올해) ② '인연' 별도 페이지 = K-pop 스타 궁합 + 일반 상대 궁합.**
+> - 핵심 흐름: `생일 입력 → 내 사주 결과(+fun 운세) → 공유` / 별도 메뉴 `인연`에서 궁합.
+> - 멀티페이지(라우팅 `/`, `/inyeon`)로 골격 전환 예정.
+> - 운세는 **규칙기반 짧고 fun한 카드**(LLM 미사용) — "깊은 리딩 금지 / depth 비경쟁" 원칙 유지.
+> - 상세 decompose(사이클 9 운세 / 10 멀티페이지 / 11 인연)는 `task-log.md` 2026-05-27 "향후 계획" 참고.
+> - ⚠️ 본 MVP 섹션·포지셔닝 원문은 궁합 중심이었음 → 향후 정식 재작성 필요.
 
 **핵심 사용자 흐름:**
 1. 랜딩 (한지 미감, 밝고 fun)
@@ -139,6 +143,12 @@ const r = calcCompatibility(me, idol);
    - ✅ 궁합 + 결과 모달 (`src/components/compat/` CompatibilitySection+CompatibilityModal, 3 tests). 사주 뷰 인라인 IdolPicker → `compatForIdol` → 점수·레이블·breakdown·양쪽 사주미니·ksaju.me 워터마크 모달. "Check another idol" 루프
    - 🔨 이미지 export/다운로드 (9:16 PNG, html-to-image) — 다음 사이클 (step 7/9)
 9. ⏳ Vercel 배포 + ksaju.me 연결
+
+### 🔭 향후 계획 (2026-05-27 방향 확장 — 상세는 task-log.md "향후 계획")
+10. ⏳ **Fun 운세 리딩** (`src/lib/fortune.ts` 규칙기반 + `src/components/fortune/`) — 일간·오행밸런스 → 금전/연애/올해 짧고 fun한 카드(LLM 미사용) + SNS 공유 UI
+11. ⏳ **멀티페이지 골격 + 내비** — 라우트 분리(`/` 내 사주, `/inyeon` 인연)
+12. ⏳ **'인연' 페이지** — (a) 기존 궁합(CompatibilitySection/Modal)을 `/inyeon`으로 이동, (b) 일반 상대 궁합(상대 생일 입력→`calcUserSaju` 재사용→`calcCompatibility`)
+13. ⏳ **이미지 export 공통 기반** — 운세·궁합 공유 PNG(9:16, html-to-image)
 
 ## 📣 마케팅 (병행)
 
