@@ -136,7 +136,8 @@ const r = calcCompatibility(me, idol);
 7. ⏳ 공유 카드 컴포넌트 (한지 미감, 9:16, 이미지 익스포트)
 8. **결과 + 공유 흐름** (사주 중심 피벗 — 아래 방향 업데이트 참고)
    - ✅ '내 사주' 인페이지 결과 뷰 (`src/components/saju/` SajuResult+PillarsGrid+WuxingBalance, `src/lib/saju-display.ts`, 12 tests). 폼→`calcUserSaju`→4기둥·일간·오행밸런스·KST 뷰. KstResultModal 은퇴
-   - 🔨 궁합 + SNS 공유 모달 (아이돌 선택 → `compatForIdol` → 예쁜 공유 모달) — 다음 사이클
+   - ✅ 궁합 + 결과 모달 (`src/components/compat/` CompatibilitySection+CompatibilityModal, 3 tests). 사주 뷰 인라인 IdolPicker → `compatForIdol` → 점수·레이블·breakdown·양쪽 사주미니·ksaju.me 워터마크 모달. "Check another idol" 루프
+   - 🔨 이미지 export/다운로드 (9:16 PNG, html-to-image) — 다음 사이클 (step 7/9)
 9. ⏳ Vercel 배포 + ksaju.me 연결
 
 ## 📣 마케팅 (병행)

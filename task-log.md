@@ -30,7 +30,11 @@
 - 테스트(node env, TDD): RM/Jin known-answer, 타임존 변환으로 day pillar 달라지는 케이스, no-time→hour null, toCompatPillars 3기둥.
 - **비범위:** UI/페이지 연결 (다음 사이클). 이번엔 변환 엔진 + action까지.
 
-### 사이클 8: 궁합 + 결과 모달 (티저 → 실기능) — 결정/구현
+### 사이클 8: 궁합 + 결과 모달 (티저 → 실기능) — 완료 ✅
+
+**구현 결과:** `feat(compat)` 커밋. `src/components/compat/`(CompatibilitySection+CompatibilityModal), SajuResult 티저→실섹션 교체. 3 테스트 → 전체 **111 tests pass**, tsc/eslint/`next build`(static) clean. me 기둥은 userSaju.pillars 인라인 추출(server-only toCompatPillars 회피). 이미지 export는 다음.
+
+**결정:**
 
 **결정:** IdolPicker는 **사주 뷰 인라인**(티저 교체). 범위는 **궁합 결과 모달 UI만**(이미지 export/다운로드는 다음 step 7/9).
 
