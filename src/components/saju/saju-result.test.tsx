@@ -52,9 +52,10 @@ describe("SajuResult", () => {
     expect(screen.getByText(/Year of the Monkey/)).toBeInTheDocument();
   });
 
-  it("궁합 티저는 비활성(다음 사이클)", () => {
+  it("궁합 섹션(아이돌 검색)을 렌더한다", () => {
     render(<SajuResult userSaju={RM} kst={KST} onEdit={() => {}} />);
-    expect(screen.getByRole("button", { name: /coming soon/i })).toBeDisabled();
+    expect(screen.getByText(/check compatibility with your bias/i)).toBeInTheDocument();
+    expect(screen.getByRole("searchbox")).toBeInTheDocument();
   });
 
   it("Edit 버튼이 onEdit을 호출한다", async () => {

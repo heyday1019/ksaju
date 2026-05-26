@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { PillarsGrid } from "./pillars-grid";
 import { WuxingBalance } from "./wuxing-balance";
+import { CompatibilitySection } from "@/components/compat/compatibility-section";
 import { dayMasterInfo, wuxingBalance, WUXING_META } from "@/lib/saju-display";
 import type { UserSaju } from "@/lib/saju-types";
 import type { KSTResult } from "@/lib/kst-types";
@@ -79,18 +80,8 @@ export function SajuResult({ userSaju, kst, onEdit }: SajuResultProps) {
         </p>
       </section>
 
-      {/* 궁합 티저 (다음 사이클) */}
-      <section className="rounded-xl border border-dashed border-accent/50 bg-accent/5 p-4 text-center">
-        <p className="font-display font-semibold">
-          Check compatibility with your bias ✨
-        </p>
-        <p className="mb-2 text-xs text-muted-foreground">
-          Match your saju with your favorite K-pop idol.
-        </p>
-        <Button disabled className="w-full">
-          Coming soon
-        </Button>
-      </section>
+      {/* 궁합 부가 섹션 */}
+      <CompatibilitySection userSaju={userSaju} />
 
       <Button
         variant="ghost"
