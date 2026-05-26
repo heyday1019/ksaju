@@ -125,7 +125,9 @@ const r = calcCompatibility(me, idol);
 2. ✅ 한지 라이트 테마 + Cosmic 다크 토글 (백의민족 피벗 사이클)
 3. ✅ KST 출생시각 변환기 (랜딩 hero card)
 4. ✅ **궁합 계산 엔진** (`src/lib/compatibility.ts`, 23 tests) — 한자 4기둥 2개 → 점수+레이블
-5. 🔨 **아이돌 DB 통합 + 검색·선택 UX** (DB: `data/ksaju-idol-db.json` 76명 준비됨) — 다음 사이클
+5. **아이돌 DB 통합 + 검색·선택 UX** (DB: `data/ksaju-idol-db.json` 76명)
+   - ✅ DB 연동 레이어 (`src/lib/idols.ts`, 18 tests) — 로드·검색·`compatForIdol` 래퍼, 엔진과 연결
+   - 🔨 검색·선택 React 컴포넌트 (UX) — 진행 중
 6. ⏳ 사용자 사주 한자 변환 (manseryeok) — 궁합에 me 측 입력 공급
 7. ⏳ 공유 카드 컴포넌트 (한지 미감, 9:16, 이미지 익스포트)
 8. ⏳ 결과 + 공유 흐름 (랜딩 폼 → 아이돌 선택 → 궁합 결과 카드)
