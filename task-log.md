@@ -6,7 +6,11 @@
 
 ## 2026-05-27 (수)
 
-### 사이클 6: manseryeok 사용자 사주 변환 — 결정 사항 (구현 진행)
+### 사이클 6: manseryeok 사용자 사주 변환 — 완료 ✅
+
+**구현 결과:** `0202524`(server-only 인프라) + `2f6f197`(변환 lib+타입+action). `src/lib/saju.ts`(`birthToSaju`/`toCompatPillars`) + `src/app/actions/saju.ts`(`calcUserSaju`) + UserSaju 타입. 9 테스트 → 전체 **96 tests pass**, tsc/eslint/`next build` clean (페이지 여전히 static, manseryeok 서버측만). RM/Jin known-answer가 아이돌 DB 값과 정확히 일치 확인.
+
+**확정된 결정 사항:**
 
 브레인스토밍으로 확정된 결정:
 

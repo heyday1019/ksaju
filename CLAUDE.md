@@ -74,7 +74,7 @@
 - Tailwind v4 (CSS-first `@theme` 블록, globals.css에 토큰)
 - shadcn/ui (Maia 프리셋, Radix 기반) — form/select 포함
 - Supabase (SSR) — 백엔드/DB (Phase 후반)
-- **사용자 사주 변환(예정):** `@fullstackfamily/manseryeok` 1.0.8 (KASI 기반, 진태양시 보정). 사용자 생일 → 4기둥 한자 변환에 사용.
+- **사용자 사주 변환(완료):** `@fullstackfamily/manseryeok` 1.0.8 (KASI 기반, 진태양시 보정). `src/lib/saju.ts`의 `birthToSaju`가 사용자 생일 → 4기둥 한자 변환. server-only + `calcUserSaju` Server Action 경유(~300KB를 클라이언트에서 제외).
 - **궁합 엔진(완료):** `src/lib/compatibility.ts` — 한자 4기둥 2개를 받아 0-100 점수 + fun 레이블 산출. 명리학 규칙(천간합/충, 오행 상생·상극, 지지 삼합/육합/충) 기반. 23개 vitest 테스트.
 - 보조: date-fns-tz, next-themes, next-intl, react-hook-form, zod, vitest
 - 배포: Vercel (마지막 단계), 도메인 ksaju.me
@@ -128,7 +128,7 @@ const r = calcCompatibility(me, idol);
 5. **아이돌 DB 통합 + 검색·선택 UX** (DB: `data/ksaju-idol-db.json` 76명)
    - ✅ DB 연동 레이어 (`src/lib/idols.ts`, 18 tests) — 로드·검색·`compatForIdol` 래퍼, 엔진과 연결
    - ✅ 검색·선택 컴포넌트 (`src/components/idols/` IdolPicker+IdolCard, 8 tests, RTL+happy-dom) — onSelect까지. 페이지 연결·궁합결과는 다음 사이클
-6. ⏳ 사용자 사주 한자 변환 (manseryeok) — 궁합에 me 측 입력 공급
+6. ✅ **사용자 사주 한자 변환 (manseryeok)** — `src/lib/saju.ts`(server-only) `birthToSaju`/`toCompatPillars` + `src/app/actions/saju.ts` `calcUserSaju` Server Action. BirthData→convertToKST→calculateSaju, 4기둥(시주 포함). 9 tests (RM/Jin known-answer = 아이돌 DB와 일치). 궁합 me 측 입력 공급
 7. ⏳ 공유 카드 컴포넌트 (한지 미감, 9:16, 이미지 익스포트)
 8. ⏳ 결과 + 공유 흐름 (랜딩 폼 → 아이돌 선택 → 궁합 결과 카드)
 9. ⏳ Vercel 배포 + ksaju.me 연결
