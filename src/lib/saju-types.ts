@@ -73,3 +73,19 @@ export type SipSinLabels = {
   ko: string;             // "정관"
   en: string;             // "Direct Officer"
 };
+
+/**
+ * manseryeok 변환 결과(사용자 사주). 궁합 me-측 입력 + 공유카드 사주미니용.
+ * 위의 풍부한 `SajuResult`(보류된 자체계산 사이클)와는 별개의 경량 타입.
+ * 클라이언트는 manseryeok import 없이 이 타입만 `import type` 한다.
+ */
+export type UserSaju = {
+  pillars: {
+    year: string; // 예 "壬申"
+    month: string; // 예 "己酉"
+    day: string; // 예 "辛卯"  ← day[0] = 일간(Day Master)
+    hour: string | null; // 출생시각 unknown → null
+  };
+  dayMaster: string; // 일간 한자 (day[0])
+  isTimeCorrected: boolean; // 진태양시 보정 적용 여부
+};
