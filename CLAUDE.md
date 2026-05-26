@@ -36,6 +36,10 @@
 
 ## 📦 MVP 범위 (v1) — 딱 이것만
 
+> **🔄 방향 업데이트 (2026-05-27):** 사용자 결정으로 **"내 사주가 메인, 아이돌 궁합은 fun 부가 기능"**으로 피벗.
+> 핵심 흐름은 `생일 입력 → 내 사주 결과(메인) → (부가) 최애와 궁합 → 공유`. 아래 원문 흐름은 궁합 중심이었음.
+> 단 "깊은 리딩 금지 / depth 비경쟁" 원칙은 유지(가벼운 사주 카드). 향후 본 섹션 정식 재작성 필요.
+
 **핵심 사용자 흐름:**
 1. 랜딩 (한지 미감, 밝고 fun)
 2. 내 생일 입력 (+ 출생시간 선택사항)
@@ -130,7 +134,9 @@ const r = calcCompatibility(me, idol);
    - ✅ 검색·선택 컴포넌트 (`src/components/idols/` IdolPicker+IdolCard, 8 tests, RTL+happy-dom) — onSelect까지. 페이지 연결·궁합결과는 다음 사이클
 6. ✅ **사용자 사주 한자 변환 (manseryeok)** — `src/lib/saju.ts`(server-only) `birthToSaju`/`toCompatPillars` + `src/app/actions/saju.ts` `calcUserSaju` Server Action. BirthData→convertToKST→calculateSaju, 4기둥(시주 포함). 9 tests (RM/Jin known-answer = 아이돌 DB와 일치). 궁합 me 측 입력 공급
 7. ⏳ 공유 카드 컴포넌트 (한지 미감, 9:16, 이미지 익스포트)
-8. ⏳ 결과 + 공유 흐름 (랜딩 폼 → 아이돌 선택 → 궁합 결과 카드)
+8. **결과 + 공유 흐름** (사주 중심 피벗 — 아래 방향 업데이트 참고)
+   - ✅ '내 사주' 인페이지 결과 뷰 (`src/components/saju/` SajuResult+PillarsGrid+WuxingBalance, `src/lib/saju-display.ts`, 12 tests). 폼→`calcUserSaju`→4기둥·일간·오행밸런스·KST 뷰. KstResultModal 은퇴
+   - 🔨 궁합 + SNS 공유 모달 (아이돌 선택 → `compatForIdol` → 예쁜 공유 모달) — 다음 사이클
 9. ⏳ Vercel 배포 + ksaju.me 연결
 
 ## 📣 마케팅 (병행)

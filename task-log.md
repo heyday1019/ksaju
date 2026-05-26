@@ -30,7 +30,11 @@
 - 테스트(node env, TDD): RM/Jin known-answer, 타임존 변환으로 day pillar 달라지는 케이스, no-time→hour null, toCompatPillars 3기둥.
 - **비범위:** UI/페이지 연결 (다음 사이클). 이번엔 변환 엔진 + action까지.
 
-### 사이클 7: '내 사주' 인페이지 결과 뷰 (사주 중심 피벗) — 결정 사항 (구현 진행)
+### 사이클 7: '내 사주' 인페이지 결과 뷰 (사주 중심 피벗) — 완료 ✅
+
+**구현 결과:** `0a864d2`. page.tsx form↔result 상태머신(`convertToKST`+`calcUserSaju`→사주 뷰), `src/lib/saju-display.ts`, `src/components/saju/`(SajuResult+PillarsGrid+WuxingBalance), birth-form 로딩 prop, KstResultModal 은퇴. 12 테스트 → 전체 **108 tests pass**, tsc/eslint(기존 경고만)/`next build` clean(페이지 static). CLAUDE.md 방향 업데이트 노트 + 로드맵 step 8 갱신.
+
+**결정 사항:**
 
 **⚠️ 포지셔닝 피벗:** 사용자가 "내 사주가 메인, 아이돌 궁합은 fun 부가 기능"으로 방향 조정. CLAUDE.md의 궁합 중심 포지셔닝과 다름 → 구현 후 CLAUDE.md MVP/포지셔닝 업데이트 필요. 단 "깊은 리딩 금지/depth 비경쟁" 원칙은 유지(가벼운 사주 카드).
 
