@@ -30,6 +30,7 @@ import type { z } from "zod";
 type BirthFormProps = {
   onSubmit: (data: BirthData) => void;
   defaultTimezone?: string;
+  submitting?: boolean;
 };
 
 // birthSchema는 .superRefine를 거쳐 ZodEffects가 되므로 z.input을 써서 폼 입력 타입과 일치
@@ -53,7 +54,7 @@ function gmtLabelFor(iana: string): string {
   }
 }
 
-export function BirthForm({ onSubmit, defaultTimezone }: BirthFormProps) {
+export function BirthForm({ onSubmit, defaultTimezone, submitting }: BirthFormProps) {
   const form = useForm<FormValues>({
     resolver: zodResolver(birthSchema),
     defaultValues: {
@@ -197,8 +198,8 @@ export function BirthForm({ onSubmit, defaultTimezone }: BirthFormProps) {
           )}
         />
 
-        <Button type="submit" size="lg" className="w-full">
-          Discover your saju
+        <Button type="submit" size="lg" className="w-full" disabled={submitting}>
+          {submitting ? "Reading your saju…" : "Discover your saju"}
         </Button>
       </form>
     </Form>
