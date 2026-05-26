@@ -30,6 +30,18 @@
 - 테스트(node env, TDD): RM/Jin known-answer, 타임존 변환으로 day pillar 달라지는 케이스, no-time→hour null, toCompatPillars 3기둥.
 - **비범위:** UI/페이지 연결 (다음 사이클). 이번엔 변환 엔진 + action까지.
 
+### 사이클 8: 궁합 + 결과 모달 (티저 → 실기능) — 결정/구현
+
+**결정:** IdolPicker는 **사주 뷰 인라인**(티저 교체). 범위는 **궁합 결과 모달 UI만**(이미지 export/다운로드는 다음 step 7/9).
+
+**설계:** `src/components/compat/`
+- `CompatibilitySection`(client): IdolPicker + selectedIdol/modal 상태. me 기둥은 `userSaju.pillars`에서 직접 추출(toCompatPillars는 server-only saju.ts에 있어 client import 불가 → 인라인). `compatForIdol(me, idol)`(idols.ts, client-safe) 호출.
+- `CompatibilityModal`(presentational Dialog): 점수·fun레이블·breakdown(일간/오행/지지 note)·양쪽 사주미니·ksaju.me 워터마크·"For entertainment 🌙"·"Check another idol".
+- SajuResult 티저 `<section>` → `<CompatibilitySection userSaju>`로 교체.
+- 테스트: Section RTL(아이돌 선택→모달 점수 노출), Modal RTL(결과 렌더·onClose).
+
+---
+
 ### 사이클 7: '내 사주' 인페이지 결과 뷰 (사주 중심 피벗) — 완료 ✅
 
 **구현 결과:** `0a864d2`. page.tsx form↔result 상태머신(`convertToKST`+`calcUserSaju`→사주 뷰), `src/lib/saju-display.ts`, `src/components/saju/`(SajuResult+PillarsGrid+WuxingBalance), birth-form 로딩 prop, KstResultModal 은퇴. 12 테스트 → 전체 **108 tests pass**, tsc/eslint(기존 경고만)/`next build` clean(페이지 static). CLAUDE.md 방향 업데이트 노트 + 로드맵 step 8 갱신.
