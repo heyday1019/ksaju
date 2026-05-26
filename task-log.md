@@ -30,6 +30,24 @@
 - 테스트(node env, TDD): RM/Jin known-answer, 타임존 변환으로 day pillar 달라지는 케이스, no-time→hour null, toCompatPillars 3기둥.
 - **비범위:** UI/페이지 연결 (다음 사이클). 이번엔 변환 엔진 + action까지.
 
+### 사이클 7: '내 사주' 인페이지 결과 뷰 (사주 중심 피벗) — 결정 사항 (구현 진행)
+
+**⚠️ 포지셔닝 피벗:** 사용자가 "내 사주가 메인, 아이돌 궁합은 fun 부가 기능"으로 방향 조정. CLAUDE.md의 궁합 중심 포지셔닝과 다름 → 구현 후 CLAUDE.md MVP/포지셔닝 업데이트 필요. 단 "깊은 리딩 금지/depth 비경쟁" 원칙은 유지(가벼운 사주 카드).
+
+| 항목 | 결정 |
+|------|------|
+| **플로우** | 단일 페이지 상태머신: `form → calcUserSaju → 인페이지 '내 사주' 뷰`. 기존 KstResultModal 은퇴(내용 흡수) |
+| **메인 화면** | 내 사주 결과가 메인. 궁합+SNS공유는 다음 사이클에 예쁜 모달로 |
+| **사주 카드 내용** | 4기둥(한자+한글+오행색) + 일간 강조+fun키워드 + 오행밸런스 + 기존 KST·12지지·funfact |
+| **결과 표시** | 인페이지 전체 뷰 |
+| **이번 범위** | '내 사주' 인페이지 뷰만. 궁합/공유 모달은 다음. **티저 버튼 포함**, **서브컴포넌트 분리** |
+
+**설계 요약:**
+- 데이터: `convertToKST`(client, KST·지지·funfact) + `calcUserSaju`(server action, 4기둥). 제출 시 로딩.
+- `src/lib/saju-display.ts`(client-safe): `elementOf`, `WUXING_META`(token mok/hwa/to/geum/su), `pillarBreakdown`, `wuxingBalance`, `dayMasterInfo`(DAY_MASTER_KEYWORDS).
+- `src/components/saju/`: 컨테이너 `saju-result.tsx` + 서브컴포넌트 `pillars-grid.tsx`, `wuxing-balance.tsx`. "Check compatibility ✨" 티저(비활성, 다음 사이클) + "Edit my info".
+- 검증: `saju-display.test.ts`(node) + `saju-result.test.tsx`(RTL). page는 next build+수동.
+
 ---
 
 ## 2026-05-26 (화)
