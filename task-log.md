@@ -4,7 +4,31 @@
 
 ---
 
-## 2026-05-26 (월)
+## 2026-05-27 (수)
+
+### 사이클 6: manseryeok 사용자 사주 변환 — 결정 사항 (구현 진행)
+
+브레인스토밍으로 확정된 결정:
+
+| 항목 | 결정 |
+|------|------|
+| **실행 위치** | Server Action (서버) — manseryeok ~300KB를 클라이언트 번들에서 제외 |
+| **기둥 범위** | 4기둥 전체(시주 포함). 궁합은 3기둥만 소비하나 공유카드 사주미니용으로 시주 확보 |
+| **시간/타임존** | `BirthData → convertToKST → KST 일시 → calculateSaju` (기존 KST 변환기 재사용, CLAUDE.md 흐름도 일치). 진태양시 보정은 기본값(서울 127°, 시주에만 영향) |
+| **구조** | A안 — 순수 `birthToSaju` lib + 얇은 Server Action 래퍼 |
+
+**사전 검증:** `calculateSaju(1992,9,12)` → 壬申/己酉/辛卯 = 아이돌 DB의 RM 사전계산값과 **정확히 일치** (Jin도 일치). 라이브러리가 DB와 동일 소스 → RM/Jin을 known-answer 테스트로 사용.
+
+**설계 요약:**
+- `src/lib/saju.ts` (`import "server-only"`): manseryeok + convertToKST import. `birthToSaju(birth): UserSaju`, `toCompatPillars(saju): SajuPillars`. 시간 미입력 시 hour pillar null.
+- `src/lib/saju-types.ts`에 `UserSaju { pillars:{year,month,day,hour:string|null}, dayMaster, isTimeCorrected }` 추가 (클라이언트 안전 — manseryeok 미import → `import type` 가능).
+- `src/app/actions/saju.ts` (`"use server"`): `calcUserSaju(birth)` — birthSchema 검증 후 birthToSaju. Next.js 16 server action 규약은 구현 전 `node_modules/next/dist/docs` 확인.
+- 테스트(node env, TDD): RM/Jin known-answer, 타임존 변환으로 day pillar 달라지는 케이스, no-time→hour null, toCompatPillars 3기둥.
+- **비범위:** UI/페이지 연결 (다음 사이클). 이번엔 변환 엔진 + action까지.
+
+---
+
+## 2026-05-26 (화)
 
 ### 오늘 한 일 (진행 중)
 
