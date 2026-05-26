@@ -4,6 +4,41 @@
 
 ---
 
+## 2026-05-26 (월)
+
+### 오늘 한 일 (진행 중)
+
+#### 사이클 5a: 아이돌 DB 연동 레이어 (완료 ✅)
+
+- **세션 복구:** 직전 세션이 용량 제한으로 중단. git 워킹트리는 클린(스태시·미저장 변경 없음)이라, 만들려던 "아이돌 DB ↔ compatibility 엔진 연동 모듈"은 **저장 전 유실**된 것으로 판단 → 재작성.
+- **`src/lib/idols.ts` 신규** (`5c0b96d`)
+  - `data/ksaju-idol-db.json`(76명/14그룹) 로드 + 스키마 검증 (필수필드·중복id·`dayMaster===day.hanja[0]` 통과)
+  - 타입 `Idol`/`IdolSaju`/`IdolPillar`, exports `idols`/`groups`
+  - `getIdolById`, `getIdolsByGroup`, `searchIdols`(이름/그룹·대소문자무시·부분일치·빈쿼리=전체), `compatForIdol`(=normalizeIdolSaju+calcCompatibility 래퍼)
+  - `idols.test.ts` 18 tests → 전체 **79 tests pass**, tsc/eslint clean
+  - DB JSON도 함께 커밋(모듈의 import 의존)
+- **CLAUDE.md 로드맵 업데이트** (`4ceabca`): step 5를 (✅ DB 연동 레이어) + (🔨 검색·선택 UX)로 분리
+
+#### 사이클 5b: 아이돌 검색·선택 UX (IdolPicker) — 결정 사항 (구현 진행 예정)
+
+브레인스토밍으로 확정된 결정:
+
+| 항목 | 결정 |
+|------|------|
+| **탐색 방식** | 검색 + 그룹 브라우징 (검색바 + 기본 그룹별 목록) |
+| **산출물 범위** | 피커 컴포넌트만 (궁합 결과·페이지 연결은 다음 사이클). "나" 사주(manseryeok) 아직 없음 |
+| **검증** | RTL + happy-dom 컴포넌트 테스트 도입 (전역 env는 node 유지, 컴포넌트 테스트만 `@vitest-environment happy-dom` pragma) |
+| **구조** | B안 — 컨테이너 `IdolPicker` + 순수 `IdolCard` 분리 |
+
+**설계 요약:**
+- `src/components/idols/idol-card.tsx` — 순수 프레젠테이션. props `idol`/`selected`/`onSelect`. 모노그램 아바타(이름 첫 글자) + 이름 + 그룹. **공식 사진·로고 없음**(CLAUDE.md). 선택 시 `border-primary`+`bg-primary/5`. radiogroup 내 `role="radio"`+`aria-checked`.
+- `src/components/idols/idol-picker.tsx` — `"use client"` 컨테이너. props `onSelect(idol)`/`className?`. 내부 상태 `query`/`selectedId`. 검색바(shadcn Input) + query 빈값→그룹 브라우징(`groups`×`getIdolsByGroup`), query 있음→`searchIdols` 플랫 필터, 0건→empty state. 카드 탭→`onSelect`.
+- 한지 디자인 토큰(`border-border`/`font-display`/`text-primary`/`muted-foreground`), 반응형 그리드(모바일 2열/데스크탑 3~4열).
+- devDeps 추가: `@testing-library/react`, `@testing-library/user-event`, `@testing-library/jest-dom`, `happy-dom`. vitest `setupFiles`로 jest-dom matcher 등록.
+- **비범위:** 앱 페이지/플로우 연결, 궁합 결과 표시 (다음 사이클). 컴포넌트는 RTL로만 검증, 아직 마운트 안 됨.
+
+---
+
 ## 2026-05-22 (금)
 
 ### 오늘 한 일 — KST 변환기 마무리 + 코드 리뷰 fix
