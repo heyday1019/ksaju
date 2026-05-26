@@ -19,7 +19,11 @@
   - DB JSON도 함께 커밋(모듈의 import 의존)
 - **CLAUDE.md 로드맵 업데이트** (`4ceabca`): step 5를 (✅ DB 연동 레이어) + (🔨 검색·선택 UX)로 분리
 
-#### 사이클 5b: 아이돌 검색·선택 UX (IdolPicker) — 결정 사항 (구현 진행 예정)
+#### 사이클 5b: 아이돌 검색·선택 UX (IdolPicker) — 완료 ✅
+
+**구현 결과:** `8e4a7a1`(테스트 인프라) + `6d2de7f`(컴포넌트). IdolCard/IdolPicker + 8 컴포넌트 테스트 → 전체 **87 tests pass**, tsc/eslint/`next build` clean. onSelect까지 동작, 아직 페이지에 마운트 안 됨(설계대로).
+
+**확정된 결정 사항:**
 
 브레인스토밍으로 확정된 결정:
 
