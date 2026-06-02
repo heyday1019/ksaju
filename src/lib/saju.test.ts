@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { birthToSaju, toCompatPillars } from "./saju";
+import { birthToSaju, toCompatPillars, dateToLuck } from "./saju";
 import type { BirthData } from "./kst-types";
 
 const seoul = (
@@ -73,5 +73,21 @@ describe("toCompatPillars", () => {
       day: s.pillars.day,
     });
     expect(p).not.toHaveProperty("hour");
+  });
+});
+
+describe("dateToLuck", () => {
+  it("2026-06-02(KST) → 세운 연주 = 丙午", () => {
+    // 정오 UTC로 만들어도 Asia/Seoul 기준 같은 날짜
+    const now = new Date("2026-06-02T03:00:00Z"); // = 2026-06-02 12:00 KST
+    const luck = dateToLuck(now);
+    expect(luck.yearPillar).toBe("丙午");
+  });
+
+  it("월운 월주는 천간+지지 2글자 한자", () => {
+    const now = new Date("2026-06-02T03:00:00Z");
+    const luck = dateToLuck(now);
+    expect(luck.monthPillar).toHaveLength(2);
+    expect(luck.yearPillar).toHaveLength(2);
   });
 });

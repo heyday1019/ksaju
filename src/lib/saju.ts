@@ -7,9 +7,10 @@
 import "server-only";
 
 import { calculateSaju } from "@fullstackfamily/manseryeok";
+import { formatInTimeZone } from "date-fns-tz";
 import { convertToKST } from "./kst-converter";
 import type { BirthData } from "./kst-types";
-import type { UserSaju } from "./saju-types";
+import type { UserSaju, CurrentLuck } from "./saju-types";
 import type { SajuPillars } from "./compatibility";
 
 /**
@@ -46,5 +47,28 @@ export function toCompatPillars(saju: UserSaju): SajuPillars {
     year: saju.pillars.year,
     month: saju.pillars.month,
     day: saju.pillars.day,
+  };
+}
+
+/**
+ * 주어진 시각의 세운(연주)/월운(월주) 간지. 오늘 KST 날짜 정오로 manseryeok 호출.
+ * 연·월 기둥은 시각 무관(절기/입춘은 날짜 기준)이라 정오 고정으로 충분.
+ * @param now 기준 시각(보통 new Date()). 테스트 주입용으로 인자화.
+ */
+export function dateToLuck(now: Date): CurrentLuck {
+  const year = Number(formatInTimeZone(now, "Asia/Seoul", "yyyy"));
+  const month = Number(formatInTimeZone(now, "Asia/Seoul", "M"));
+  const day = Number(formatInTimeZone(now, "Asia/Seoul", "d"));
+  const saju = birthToSaju({
+    year,
+    month,
+    day,
+    hour: 12,
+    minute: 0,
+    timezone: "Asia/Seoul",
+  });
+  return {
+    yearPillar: saju.pillars.year,
+    monthPillar: saju.pillars.month,
   };
 }
