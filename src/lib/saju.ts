@@ -59,6 +59,8 @@ export function dateToLuck(now: Date): CurrentLuck {
   const year = Number(formatInTimeZone(now, "Asia/Seoul", "yyyy"));
   const month = Number(formatInTimeZone(now, "Asia/Seoul", "M"));
   const day = Number(formatInTimeZone(now, "Asia/Seoul", "d"));
+  // `now`의 KST 날짜를 위에서 이미 추출했으므로 timezone:"Asia/Seoul"+정오는
+  // convertToKST를 무손실 왕복(no-op)으로 통과. manseryeok 접근을 DRY하게 재사용.
   const saju = birthToSaju({
     year,
     month,

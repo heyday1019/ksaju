@@ -84,10 +84,9 @@ describe("dateToLuck", () => {
     expect(luck.yearPillar).toBe("丙午");
   });
 
-  it("월운 월주는 천간+지지 2글자 한자", () => {
+  it("2026-06-02(KST) → 월운 월주 = 癸巳", () => {
     const now = new Date("2026-06-02T03:00:00Z");
     const luck = dateToLuck(now);
-    expect(luck.monthPillar).toHaveLength(2);
-    expect(luck.yearPillar).toHaveLength(2);
+    expect(luck.monthPillar).toBe("癸巳");
   });
 });
