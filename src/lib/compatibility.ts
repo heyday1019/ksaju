@@ -12,6 +12,7 @@ import {
   EARTHLY_BRANCHES,
   WUXING_PRODUCE,
   WUXING_CONTROL,
+  STEM_COMBO,
 } from "./saju-data";
 import type { WuXing } from "./saju-types";
 
@@ -55,14 +56,7 @@ const BRANCH_ELEMENT: Record<string, WuXing> = Object.fromEntries(
   EARTHLY_BRANCHES.map((b) => [b.char, b.element]),
 );
 
-// --- 천간 합(끌림) / 충(충돌) ---
-const STEM_COMBO: [string, string][] = [
-  ["甲", "己"],
-  ["乙", "庚"],
-  ["丙", "辛"],
-  ["丁", "壬"],
-  ["戊", "癸"],
-];
+// --- 천간 충(충돌) ---
 const STEM_CLASH: [string, string][] = [
   ["甲", "庚"],
   ["乙", "辛"],
@@ -94,8 +88,11 @@ const BRANCH_CLASH: [string, string][] = [
   ["巳", "亥"],
 ];
 
-const inPairs = (a: string, b: string, list: [string, string][]) =>
-  list.some(([x, y]) => (x === a && y === b) || (x === b && y === a));
+const inPairs = (
+  a: string,
+  b: string,
+  list: readonly (readonly [string, string])[],
+) => list.some(([x, y]) => (x === a && y === b) || (x === b && y === a));
 const inTrio = (a: string, b: string, list: string[][]) =>
   list.some((t) => t.includes(a) && t.includes(b) && a !== b);
 

@@ -85,6 +85,16 @@ export const OSEO_DUN: Record<HeavenlyStem, HeavenlyStem> = {
   戊: "壬", 癸: "壬",
 };
 
+// 천간 합(끌림) — 5쌍. 궁합·운세 양쪽에서 재사용하는 단일 출처.
+// 甲己 · 乙庚 · 丙辛 · 丁壬 · 戊癸
+export const STEM_COMBO: readonly [HeavenlyStem, HeavenlyStem][] = [
+  ["甲", "己"],
+  ["乙", "庚"],
+  ["丙", "辛"],
+  ["丁", "壬"],
+  ["戊", "癸"],
+] as const;
+
 // 일간 keyword — 사주 페이지 DayMasterCard에서 사용
 export const DAY_MASTER_KEYWORDS: Record<HeavenlyStem, string> = {
   甲: "Yang Wood — a tall tree, upright and resolute",

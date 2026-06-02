@@ -89,3 +89,12 @@ export type UserSaju = {
   dayMaster: string; // 일간 한자 (day[0])
   isTimeCorrected: boolean; // 진태양시 보정 적용 여부
 };
+
+/**
+ * 현재 시점의 세운(연주)/월운(월주) 간지. fortune.ts가 'This Year' 카드 계산에 사용.
+ * 시각 무관(절기/입춘은 날짜 기준)이므로 서버에서 오늘 KST 정오 기준으로 산출.
+ */
+export type CurrentLuck = {
+  yearPillar: string; // 예 "丙午"
+  monthPillar: string; // 예 "癸巳"
+};
