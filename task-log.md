@@ -4,6 +4,64 @@
 
 ---
 
+## 2026-06-02 (화)
+
+### 사이클 9: Fun 운세 리딩 — 진행 중 🔨 (백엔드/엔진 완료, UI 미완)
+
+**방향:** '내 사주' 결과 뷰에 규칙기반·짧고 fun한 영문 운세 카드 4종(**Money / Love / Career / This Year**)을 추가. 명리학 십신(十神) lite 규칙으로 일간·오행밸런스·현재 세운(연주)/월운(월주)에서 **결정적**으로 산출. LLM 미사용. 공유는 **비활성 티저 버튼**만(실제 이미지 export는 후속 공통기반).
+
+**브레인스토밍 결정 사항:**
+
+| 항목 | 결정 |
+|------|------|
+| **카테고리** | Money / Love / Career / Time(월간·한해) 4종 |
+| **시간 운세** | 현재 연·월 간지 **자체 계산**(세운+월운). manseryeok에 오늘 KST 정오를 넣어 절기/입춘 경계 정확 처리(직접 절기 로직 안 짬) |
+| **표시 위치** | 오행 섹션 다음 **인라인 'Your Fortune' 섹션(항상 표시)**, 그 아래 궁합 |
+| **공유 범위** | **비활성 Share 티저 버튼**만(이미지 export는 후속) |
+| **엔진 구조** | 접근법 A — 순수 client `fortune.ts`(compatibility.ts 패턴) + `calcCurrentLuck` 서버액션 |
+
+**문서:**
+- spec: `docs/superpowers/specs/2026-06-02-fun-fortune-reading-design.md` (`717798d`)
+- plan: `docs/superpowers/plans/2026-06-02-fun-fortune-reading.md` (`4c11672`, 8 TDD 태스크)
+
+**실행 방식:** Subagent-Driven Development (태스크별 implementer → 스펙 리뷰 → 코드 품질 리뷰).
+
+**완료된 태스크 (Task 1~4, 커밋 최신순):**
+
+| SHA | 태스크 | 내용 |
+|-----|--------|------|
+| `f5c2e2b` | T4 fix(I2) | `LOVE` 테이블을 `Record<HeavenlyStem,...>`로 → 10천간 완전성 컴파일 타임 강제 + undefined-spread 위험 제거 |
+| `3a6607a` | **Task 4** | **`src/lib/fortune.ts` 운세 엔진** + `fortune.test.ts` 9 테스트. `calcFortune(userSaju, luck)` → 4카드. client-safe(manseryeok 미import) |
+| `c6da362` | Task 3 | `calcCurrentLuck()` 서버액션 (`src/app/actions/saju.ts`) — `dateToLuck(new Date())` 위임 |
+| `7c4bd02` | T2 fix | dateToLuck proxy 호출 주석 + 월운 known-answer(癸巳) 테스트 강화 |
+| `984f674` | Task 2 | `dateToLuck(now)` (`src/lib/saju.ts`, server-only) — 오늘 KST 정오 → manseryeok → 연주/월주. known-answer: 2026 → **丙午** ✅ |
+| `a4a8785` | Task 1 | `CurrentLuck` 타입(saju-types) + `STEM_COMBO`를 saju-data로 승격(단일 출처) + compatibility.ts가 공유 |
+
+- **검증:** Task 1~4 각각 스펙 리뷰 + 코드 품질 리뷰 통과(모두 APPROVED). 전체 테스트 통과(fortune 9 + dateToLuck 2 추가). tsc clean.
+- **알려진 known-answer 확인:** 2026 연주 = 丙午, 2026-06-02 월주 = 癸巳 (manseryeok 출력, 손계산과 일치).
+- **엔진 규칙 요약(fortune.ts):** Money=재성(`WUXING_CONTROL[dm]`) 오행 개수 tier / Career=관성(dm을 극하는 오행) 개수 tier / Love=일간 천간 10종 아키타입 테이블 / This Year=일간 vs 올해 연간 관계(합/같음/생/극) + 이번달 월운 서브라인. 개수는 `wuxingBalance` 사용. tier 0→none·1-2→some·3+→strong.
+
+### 🔭 남은 작업 (다음 세션 — Task 5~8, plan 파일 그대로 실행)
+
+> plan: `docs/superpowers/plans/2026-06-02-fun-fortune-reading.md` 의 **Task 5부터**. base SHA = `f5c2e2b`.
+
+- **Task 5 — `src/components/fortune/fortune-card.tsx`** (프레젠테이션): `FortuneCard` 데이터 1개 렌더. 오행 액센트색(`ACCENT` 리터럴, wuxing-balance.tsx 패턴 차용), 제목·이모지·tierLabel 배지·line·subLine. 단독 테스트 없음(Section 테스트가 커버).
+- **Task 6 — `src/components/fortune/fortune-section.tsx`** (컨테이너, `"use client"`): `calcFortune(userSaju, luck)` → 4카드 그리드(모바일 1열/sm 2열) + **비활성** "Share ☮ (soon)" 버튼 + "For entertainment 🌙". RTL 테스트(`fortune-section.test.tsx`, happy-dom): 4카드 제목 렌더 + Share 버튼 disabled.
+- **Task 7 — 통합:** `SajuResult`에 `currentLuck: CurrentLuck` prop 추가, 오행 섹션과 궁합 섹션 **사이**에 `<FortuneSection userSaju={userSaju} luck={currentLuck} />` 삽입. `page.tsx`의 `handleSubmit`에서 `calcUserSaju`와 `calcCurrentLuck()`를 `Promise.all`로 병렬 호출, `currentLuck` state 추가 → SajuResult에 전달. 분기 조건에 `!currentLuck` 추가. **전체 테스트 + tsc + `next build` 회귀.**
+- **Task 8 — 마무리:** 수동 시각 검증(운세 4카드 노출/다크/모바일/Share 비활성) → 검증 회귀(vitest/tsc/eslint) → task-log + CLAUDE.md step 10 ✅ 갱신 → 커밋. 이후 **finishing-a-development-branch** + 최종 코드 리뷰.
+
+### 다음 세션 첫 액션
+1. `git branch --show-current` → `dev` 확인, `git log --oneline -3` (HEAD = `f5c2e2b`)
+2. `npx vitest run` 으로 현재 그린 상태 확인
+3. subagent-driven-development 스킬 재개 → plan의 **Task 5** implementer 디스패치(base `f5c2e2b`)
+4. plan 파일에 각 태스크의 완전한 코드가 들어 있으니 그대로 사용. fortune-card/section 코드, 테스트, 통합 diff 모두 명시됨.
+
+### 미해결/주의
+- 코드 품질 리뷰 deferred(비차단, 향후 시간 날 때): T2 I1(`controllerOf` 역방향 룩업 테이블화), T4 M1(`inPairs` 중복 — 3번째 소비자 생기면 saju-data로 통합), M3(`tierLabel "Steady"` MONEY/LOVE 충돌 — UI에서 tierLabel을 key로 안 쓰면 무해), M4(stemRelation의 same/control/neutral 분기 직접 테스트 미보강).
+- 워킹트리에 미추적 자산(`bi8Au.png`, `watermark.pen`, `scripts/`, `stamp-watermark*.png` 등) 있음 — 이번 작업과 무관, 그대로 둠.
+
+---
+
 ## 2026-05-27 (수)
 
 ### 🔭 향후 계획 (decompose) — 다음 세션부터
