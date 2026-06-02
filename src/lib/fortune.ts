@@ -8,7 +8,7 @@
 // ============================================================
 import { WUXING_PRODUCE, WUXING_CONTROL, STEM_COMBO } from "./saju-data";
 import { elementOf, wuxingBalance } from "./saju-display";
-import type { WuXing, UserSaju, CurrentLuck } from "./saju-types";
+import type { WuXing, HeavenlyStem, UserSaju, CurrentLuck } from "./saju-types";
 
 export type FortuneKey = "money" | "love" | "career" | "time";
 
@@ -68,7 +68,8 @@ const CAREER: Record<Tier, { tierLabel: string; line: string }> = {
   },
 };
 
-const LOVE: Record<string, { tierLabel: string; line: string }> = {
+// HeavenlyStem 키로 강제 → 10천간 완전성을 컴파일 타임에 보장(누락 시 tsc 에러).
+const LOVE: Record<HeavenlyStem, { tierLabel: string; line: string }> = {
   甲: { tierLabel: "Devoted", line: "Loyal — you love with steady, rooted devotion 🌳" },
   乙: { tierLabel: "Tender", line: "Soft-hearted — you wrap gently around the right one 🌿" },
   丙: { tierLabel: "Radiant", line: "You fall fast and bright — a whole sunrise ☀️" },
@@ -134,8 +135,8 @@ export function calcFortune(userSaju: UserSaju, luck: CurrentLuck): FortuneCard[
     ...MONEY[moneyTier],
   };
 
-  // Love — 일간 천간 아키타입
-  const loveEntry = LOVE[dmStem];
+  // Love — 일간 천간 아키타입 (dayMaster는 string 타입이라 cast)
+  const loveEntry = LOVE[dmStem as HeavenlyStem];
   const love: FortuneCard = {
     key: "love",
     title: "Love",
