@@ -4,6 +4,32 @@
 
 ---
 
+## 2026-06-05 (금)
+
+### 사이클 12: '인연' 페이지 (궁합 이전 + 일반 상대 궁합) — 구현 완료 ✅ (수동 시각 검증만 남음)
+
+> CLAUDE.md 로드맵 **step 12**. 선행: 사이클 11(`/inyeon` 플레이스홀더). 다음은 step 13 "이미지 export 공통 기반".
+
+**구현 결과:** `/inyeon` 플레이스홀더를 실제 '인연' 페이지로 교체. (a) K-pop 최애 궁합을 홈→`/inyeon` 이전(홈 `SajuResult`는 인라인 `CompatibilitySection` 제거 → `/inyeon` CTA 링크), (b) 일반 상대 궁합 `PartnerCompatSection`(이름 optional + 생일 → `calcUserSaju` → `calcCompatibility`) 추가. `CompatibilityModal`을 아이돌 전용→범용(`idol`→`other:{name,sub?,pillars}`)으로 일반화해 두 케이스 재사용. 홈↔인연 본인 사주 공유는 `src/lib/saju-storage.ts`(localStorage `ksaju:userSaju:v1`). `BirthForm`에 `submitLabel`/`submittingLabel` props 추가. `/inyeon`은 얇은 server wrapper(`page.tsx` metadata 유지) + client `InyeonView` 패턴. 전체 **133 tests pass**, tsc clean, `next build` 성공(`/`·`/inyeon` 모두 static ○), eslint 기존 경고 2건만.
+
+**커밋(최신순):**
+- `feat(home)` T7: 홈 saveUserSaju + SajuResult 인라인 궁합 → `/inyeon` CTA (+테스트 갱신)
+- `feat(inyeon)` T6: page → server wrapper(InyeonView 렌더), 플레이스홀더 page.test.tsx 제거
+- `feat(inyeon)` T5: `InyeonView` — storage 로드 + 아이돌·상대 두 섹션 (+2 tests)
+- `7769a41` T4-fix: PartnerCompatSection 이중제출 가드 + stale 결과 리셋
+- `2a74382` T4: `PartnerCompatSection` 일반 상대 궁합
+- `99b13c0` T3: `CompatibilityModal` 범용화 (idol→other)
+- `0670523` T2: `BirthForm` submit/submitting 라벨 props
+- `4a71a1c` T1: `saju-storage.ts` localStorage 영속
+
+**브레인스토밍 결정:** 범위=한 사이클에 a+b 모두 / 크로스페이지=localStorage 영속 / 레이아웃=세로 스택 / 상대 이름 optional 추가(모달 "You × {name}").
+
+**남은 것:** Task 8 수동 시각 검증(홈 사주→CTA→/inyeon 자동표시→아이돌+상대 궁합 모달, 새로고침 후 me 유지, 미저장 새 브라우저 폴백 폼) → finishing-a-development-branch(main 로컬 병합, dev 유지, push origin main dev).
+
+**Deferred(비차단):** BirthForm "Born in" 라벨이 상대 컨텍스트에선 모호(다음 BirthForm 수정 시) / Them 폴백·에러경로 테스트 보강 / saju 요약카드 일간·오행 미표시(기둥만).
+
+---
+
 ## 2026-06-04 (목)
 
 ### 사이클 11: 멀티페이지 골격 + 내비 — 구현 완료 ✅ (수동 시각 검증만 남음)
