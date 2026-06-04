@@ -145,7 +145,7 @@ const r = calcCompatibility(me, idol);
 9. ⏳ Vercel 배포 + ksaju.me 연결
 
 ### 🔭 향후 계획 (2026-05-27 방향 확장 — 상세는 task-log.md "향후 계획")
-10. ⏳ **Fun 운세 리딩** (`src/lib/fortune.ts` 규칙기반 + `src/components/fortune/`) — 일간·오행밸런스 → 금전/연애/올해 짧고 fun한 카드(LLM 미사용) + SNS 공유 UI
+10. ✅ **Fun 운세 리딩** — `src/lib/fortune.ts`(규칙엔진, 9 tests) `calcFortune(userSaju, luck)` → **Money/Love/Career/This Year** 4카드. 십신 lite 규칙(재성·관성 오행 개수 tier / 일간 천간 아키타입 / 일간 vs 세운 관계 + 월운 서브라인), LLM 미사용. 세운/월운은 `calcCurrentLuck` 서버액션(`saju.ts`의 `dateToLuck`, manseryeok 재사용·절기 정확). UI `src/components/fortune/`(FortuneSection+FortuneCard, 2 tests), SajuResult 오행↔궁합 사이 인라인. 공유는 **비활성 티저**(실제 이미지 export는 step 13). spec/plan: `docs/superpowers/{specs,plans}/2026-06-02-fun-fortune-reading*`
 11. ⏳ **멀티페이지 골격 + 내비** — 라우트 분리(`/` 내 사주, `/inyeon` 인연)
 12. ⏳ **'인연' 페이지** — (a) 기존 궁합(CompatibilitySection/Modal)을 `/inyeon`으로 이동, (b) 일반 상대 궁합(상대 생일 입력→`calcUserSaju` 재사용→`calcCompatibility`)
 13. ⏳ **이미지 export 공통 기반** — 운세·궁합 공유 PNG(9:16, html-to-image)
