@@ -57,10 +57,10 @@ describe("SajuResult", () => {
     expect(screen.getByText(/Year of the Monkey/)).toBeInTheDocument();
   });
 
-  it("궁합 섹션(아이돌 검색)을 렌더한다", () => {
+  it("'인연' 페이지로 가는 궁합 CTA 링크를 렌더한다", () => {
     render(<SajuResult userSaju={RM} kst={KST} currentLuck={LUCK} onEdit={() => {}} />);
-    expect(screen.getByText(/check compatibility with your bias/i)).toBeInTheDocument();
-    expect(screen.getByRole("searchbox")).toBeInTheDocument();
+    const cta = screen.getByRole("link", { name: /인연.*compatibility/i });
+    expect(cta).toHaveAttribute("href", "/inyeon");
   });
 
   it("Edit 버튼이 onEdit을 호출한다", async () => {

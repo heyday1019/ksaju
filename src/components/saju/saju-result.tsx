@@ -1,9 +1,9 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { PillarsGrid } from "./pillars-grid";
 import { WuxingBalance } from "./wuxing-balance";
-import { CompatibilitySection } from "@/components/compat/compatibility-section";
 import { FortuneSection } from "@/components/fortune/fortune-section";
 import { dayMasterInfo, wuxingBalance, WUXING_META } from "@/lib/saju-display";
 import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
@@ -85,8 +85,13 @@ export function SajuResult({ userSaju, kst, currentLuck, onEdit }: SajuResultPro
         </p>
       </section>
 
-      {/* 궁합 부가 섹션 */}
-      <CompatibilitySection userSaju={userSaju} />
+      {/* 궁합 CTA → '인연' 페이지 */}
+      <Link
+        href="/inyeon"
+        className="block w-full rounded-xl bg-gradient-to-br from-primary to-accent px-4 py-3 text-center font-display font-semibold text-primary-foreground shadow-sm transition-opacity hover:opacity-90"
+      >
+        Check your 인연 (compatibility) ✨ →
+      </Link>
 
       <Button
         variant="ghost"

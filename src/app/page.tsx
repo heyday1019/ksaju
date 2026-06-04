@@ -12,6 +12,7 @@ import { BirthForm } from "@/components/kst/birth-form";
 import { SajuResult } from "@/components/saju/saju-result";
 import { convertToKST } from "@/lib/kst-converter";
 import { calcUserSaju, calcCurrentLuck } from "@/app/actions/saju";
+import { saveUserSaju } from "@/lib/saju-storage";
 import type { BirthData, KSTResult } from "@/lib/kst-types";
 import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 
@@ -40,6 +41,7 @@ export default function Home() {
       setKst(kstResult);
       setUserSaju(saju);
       setCurrentLuck(luck);
+      saveUserSaju(saju); // 홈↔인연 공유용 영속
       setView("result");
     } catch (err) {
       console.error("Saju calculation failed:", err);
