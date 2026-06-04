@@ -29,8 +29,11 @@ export function PartnerCompatSection({ userSaju }: { userSaju: UserSaju }) {
   const [error, setError] = useState<string | null>(null);
 
   const handlePartner = async (birth: BirthData) => {
+    if (submitting) return; // 중복 제출 가드
     setError(null);
     setSubmitting(true);
+    setPartnerPillars(null);
+    setResult(null);
     try {
       const partner = await calcUserSaju(birth);
       const pillars: SajuPillars = {
