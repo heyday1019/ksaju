@@ -12,9 +12,9 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { BirthForm } from "@/components/kst/birth-form";
 import { SajuResult } from "@/components/saju/saju-result";
 import { convertToKST } from "@/lib/kst-converter";
-import { calcUserSaju } from "@/app/actions/saju";
+import { calcUserSaju, calcCurrentLuck } from "@/app/actions/saju";
 import type { BirthData, KSTResult } from "@/lib/kst-types";
-import type { UserSaju } from "@/lib/saju-types";
+import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 
 const subscribeTz = () => () => {};
 const getTzSnapshot = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -24,6 +24,7 @@ export default function Home() {
   const [view, setView] = useState<"form" | "result">("form");
   const [userSaju, setUserSaju] = useState<UserSaju | null>(null);
   const [kst, setKst] = useState<KSTResult | null>(null);
+  const [currentLuck, setCurrentLuck] = useState<CurrentLuck | null>(null);
   const [submitting, setSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const defaultTz = useSyncExternalStore(subscribeTz, getTzSnapshot, getTzServerSnapshot);
@@ -33,9 +34,13 @@ export default function Home() {
     setSubmitting(true);
     try {
       const kstResult = convertToKST(data);
-      const saju = await calcUserSaju(data);
+      const [saju, luck] = await Promise.all([
+        calcUserSaju(data),
+        calcCurrentLuck(),
+      ]);
       setKst(kstResult);
       setUserSaju(saju);
+      setCurrentLuck(luck);
       setView("result");
     } catch (err) {
       console.error("Saju calculation failed:", err);
@@ -81,7 +86,7 @@ export default function Home() {
               className="changsal-band absolute top-0 left-0 right-0 h-[18px] z-10"
               style={{ backgroundSize: "40px 18px" }}
             />
-            {view === "form" || !userSaju || !kst ? (
+            {view === "form" || !userSaju || !kst || !currentLuck ? (
               <>
                 <CardHeader>
                   <CardTitle className="text-2xl">When were you born?</CardTitle>
@@ -110,6 +115,7 @@ export default function Home() {
                 <SajuResult
                   userSaju={userSaju}
                   kst={kst}
+                  currentLuck={currentLuck}
                   onEdit={() => setView("form")}
                 />
               </CardContent>

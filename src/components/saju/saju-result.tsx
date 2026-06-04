@@ -4,18 +4,20 @@ import { Button } from "@/components/ui/button";
 import { PillarsGrid } from "./pillars-grid";
 import { WuxingBalance } from "./wuxing-balance";
 import { CompatibilitySection } from "@/components/compat/compatibility-section";
+import { FortuneSection } from "@/components/fortune/fortune-section";
 import { dayMasterInfo, wuxingBalance, WUXING_META } from "@/lib/saju-display";
-import type { UserSaju } from "@/lib/saju-types";
+import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 import type { KSTResult } from "@/lib/kst-types";
 
 type SajuResultProps = {
   userSaju: UserSaju;
   kst: KSTResult;
+  currentLuck: CurrentLuck;
   onEdit: () => void;
 };
 
 /** '내 사주' 인페이지 결과 뷰 (메인). 궁합·공유는 다음 사이클 모달. */
-export function SajuResult({ userSaju, kst, onEdit }: SajuResultProps) {
+export function SajuResult({ userSaju, kst, currentLuck, onEdit }: SajuResultProps) {
   const dm = dayMasterInfo(userSaju.dayMaster);
   const dmMeta = WUXING_META[dm.element];
   const balance = wuxingBalance(userSaju);
@@ -56,6 +58,9 @@ export function SajuResult({ userSaju, kst, onEdit }: SajuResultProps) {
         </p>
         <WuxingBalance balance={balance} />
       </section>
+
+      {/* 운세 (Your Fortune) */}
+      <FortuneSection userSaju={userSaju} luck={currentLuck} />
 
       {/* KST · 12지지 · fun fact (기존 모달에서 흡수) */}
       <section className="space-y-2 rounded-xl border border-border p-3">
