@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { IdolPicker } from "@/components/idols/idol-picker";
 import { CompatibilityModal } from "./compatibility-modal";
 import { compatForIdol, type Idol } from "@/lib/idols";
-import type { SajuPillars } from "@/lib/compatibility";
+import { normalizeIdolSaju, type SajuPillars } from "@/lib/compatibility";
 import type { UserSaju } from "@/lib/saju-types";
 
 /**
@@ -50,8 +50,13 @@ export function CompatibilitySection({ userSaju }: { userSaju: UserSaju }) {
           open={open}
           onClose={() => setOpen(false)}
           mePillars={mePillars}
-          idol={idol}
+          other={{
+            name: idol.name,
+            sub: idol.group,
+            pillars: normalizeIdolSaju(idol.saju),
+          }}
           result={result}
+          closeLabel="← Check another idol"
         />
       )}
     </section>

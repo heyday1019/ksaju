@@ -1,58 +1,55 @@
 // @vitest-environment happy-dom
 import { describe, it, expect, vi } from "vitest";
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { render, screen, within } from "@testing-library/react";
 import { CompatibilityModal } from "./compatibility-modal";
-import { compatForIdol } from "@/lib/idols";
-import type { Idol } from "@/lib/idols";
-import type { SajuPillars } from "@/lib/compatibility";
+import type { CompatibilityResult, SajuPillars } from "@/lib/compatibility";
 
-const me: SajuPillars = { year: "壬申", month: "己酉", day: "辛卯" };
-const idol: Idol = {
-  id: "jin-bts",
-  name: "Jin",
-  group: "BTS",
-  birthdate: "1992-12-04",
-  saju: {
-    year: { kr: "임신", hanja: "壬申" },
-    month: { kr: "신해", hanja: "辛亥" },
-    day: { kr: "갑인", hanja: "甲寅" },
-    dayMaster: "甲",
+const ME: SajuPillars = { year: "壬申", month: "己酉", day: "辛卯" };
+const OTHER_PILLARS: SajuPillars = { year: "甲子", month: "丙寅", day: "戊辰" };
+
+const RESULT: CompatibilityResult = {
+  score: 72,
+  label: "Steady & flowing 🏔️💧",
+  breakdown: {
+    dayMaster: { score: 28, type: "same", note: "Kindred spirits (비화)" },
+    elementBalance: { score: 22 },
+    branch: { score: 22, type: "same", note: "Same wavelength" },
   },
 };
-const result = compatForIdol(me, idol);
 
-describe("CompatibilityModal", () => {
-  it("점수·레이블·아이돌명을 렌더한다", () => {
+describe("CompatibilityModal (범용)", () => {
+  it("아이돌 케이스: name·sub·점수를 노출", () => {
     render(
       <CompatibilityModal
         open
         onClose={() => {}}
-        mePillars={me}
-        idol={idol}
-        result={result}
+        mePillars={ME}
+        other={{ name: "RM", sub: "BTS", pillars: OTHER_PILLARS }}
+        result={RESULT}
       />,
     );
-    expect(screen.getByText(String(result.score))).toBeInTheDocument();
-    expect(screen.getByText(result.label)).toBeInTheDocument();
-    expect(screen.getByText(/You × Jin/)).toBeInTheDocument();
-    expect(screen.getByText("ksaju.me")).toBeInTheDocument();
+    const dialog = screen.getByRole("dialog");
+    expect(within(dialog).getByText("/100")).toBeInTheDocument();
+    expect(within(dialog).getByText(/RM · BTS/)).toBeInTheDocument();
+    expect(within(dialog).getByText("You")).toBeInTheDocument();
   });
 
-  it("'Check another idol'이 onClose를 호출한다", async () => {
+  it("상대 케이스: sub 없이 name만 노출 + closeLabel 적용", () => {
     const onClose = vi.fn();
     render(
       <CompatibilityModal
         open
         onClose={onClose}
-        mePillars={me}
-        idol={idol}
-        result={result}
+        mePillars={ME}
+        other={{ name: "Alex", pillars: OTHER_PILLARS }}
+        result={RESULT}
+        closeLabel="← Check someone else"
       />,
     );
-    await userEvent.click(
-      screen.getByRole("button", { name: /check another idol/i }),
-    );
-    expect(onClose).toHaveBeenCalledOnce();
+    const dialog = screen.getByRole("dialog");
+    expect(within(dialog).getByText(/You × Alex/)).toBeInTheDocument();
+    expect(
+      within(dialog).getByRole("button", { name: /check someone else/i }),
+    ).toBeInTheDocument();
   });
 });
