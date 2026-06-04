@@ -6,7 +6,7 @@
 
 ## 2026-06-05 (금)
 
-### 사이클 12: '인연' 페이지 (궁합 이전 + 일반 상대 궁합) — 구현 완료 ✅ (수동 시각 검증만 남음)
+### 사이클 12: '인연' 페이지 (궁합 이전 + 일반 상대 궁합) — 완료 ✅ (main 병합·push 완료)
 
 > CLAUDE.md 로드맵 **step 12**. 선행: 사이클 11(`/inyeon` 플레이스홀더). 다음은 step 13 "이미지 export 공통 기반".
 
@@ -24,9 +24,35 @@
 
 **브레인스토밍 결정:** 범위=한 사이클에 a+b 모두 / 크로스페이지=localStorage 영속 / 레이아웃=세로 스택 / 상대 이름 optional 추가(모달 "You × {name}").
 
-**남은 것:** Task 8 수동 시각 검증(홈 사주→CTA→/inyeon 자동표시→아이돌+상대 궁합 모달, 새로고침 후 me 유지, 미저장 새 브라우저 폴백 폼) → finishing-a-development-branch(main 로컬 병합, dev 유지, push origin main dev).
+**마무리:** `dev`→`main` fast-forward 병합, `origin/main`·`origin/dev` push 완료(`196b377`). dev 영속 브랜치 유지.
+
+**남은 검증(직접):** `npm run dev` 수동 시각 검증 — 홈 사주→CTA→/inyeon 자동표시→아이돌+상대 궁합 모달, 새로고침 후 me 유지, 미저장 새 브라우저 폴백 폼.
 
 **Deferred(비차단):** BirthForm "Born in" 라벨이 상대 컨텍스트에선 모호(다음 BirthForm 수정 시) / Them 폴백·에러경로 테스트 보강 / saju 요약카드 일간·오행 미표시(기둥만).
+
+---
+
+## 🎯 다음 할 일 — 사이클 13: 이미지 export 공통 기반 (CLAUDE.md step 13)
+
+> **MVP의 가장 큰 남은 조각이자 바이럴의 핵심.** 운세·궁합 결과를 SNS 공유용 PNG로 내보내기. 현재 FortuneSection 공유는 비활성 티저, 궁합 모달엔 워터마크만 있고 다운로드 없음.
+
+**목표:** 9:16 세로 카드 PNG 다운로드(IG Story/TikTok 규격). 운세 카드 + 궁합 결과 두 곳에서 재사용 가능한 공통 export 기반.
+
+**기술 후보:** `html-to-image`(toPng) — DOM→PNG. 폰트/이미지 CORS·웹폰트 임베딩 주의. 대안 `dom-to-image-more`, `modern-screenshot`. (정식 결정은 브레인스토밍에서.)
+
+**브레인스토밍에서 정할 것:**
+1. 공유 카드 디자인 — 화면 표시용 UI를 그대로 캡처할지 vs 전용 9:16 export 레이아웃(오프스크린)을 따로 만들지.
+2. 대상 범위 — 이번 사이클에 운세+궁합 둘 다? 아니면 궁합부터?
+3. 워터마크/브랜딩 — ksaju.me 로고·QR·"For entertainment 🌙" 배치.
+4. 폰트 임베딩 전략(한글 명조/한자 깨짐 방지) + 모바일 사파리 다운로드 UX(공유시트 vs 다운로드).
+5. 이미지 생성 위치 — 클라이언트 onClick 캡처(번들 크기 vs 서버 렌더).
+
+**선행 참고:**
+- 운세 공유 티저: `src/components/fortune/fortune-section.tsx`("Share ✨ (soon)" 비활성 버튼).
+- 궁합 모달: `src/components/compat/compatibility-modal.tsx`(양쪽 사주미니 + ksaju.me 워터마크 — export 대상 후보).
+- 워크플로: brainstorming → writing-plans → subagent-driven-development → finishing. 태스크별 커밋.
+
+**그 다음(step 9):** Vercel 배포 + ksaju.me 도메인 연결 → 소프트 론칭. (마케팅 병행: IG/TikTok 팬덤 빌딩.)
 
 ---
 
