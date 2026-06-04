@@ -32,7 +32,7 @@ export function FortuneSection({
 
       <div className="space-y-1 text-center">
         <Button variant="outline" size="sm" disabled className="w-full">
-          Share ☮ (soon)
+          Share ✨ (soon)
         </Button>
         <p className="text-[10px] text-muted-foreground">For entertainment 🌙</p>
       </div>
