@@ -4,6 +4,31 @@
 
 ---
 
+## 2026-06-04 (목)
+
+### 사이클 11: 멀티페이지 골격 + 내비 — 구현 완료 ✅ (수동 시각 검증만 남음)
+
+> **번호 정리:** CLAUDE.md 로드맵 **step 11**(멀티페이지 골격) 기준으로 본 사이클을 "사이클 11"로 표기. (과거 task-log 2026-05-27 decompose가 "사이클 10=멀티페이지"로 적었던 것과 어긋났음 → step 번호 기준으로 통일.) 다음은 CLAUDE.md **step 12** "인연 페이지".
+
+**구현 결과:** 단일 라우트 `/`를 `/`(내 사주)+`/inyeon`(인연 'Coming soon' 플레이스홀더)로 분리. 공유 chrome(한지 배경·창살·ㅎ)+슬림 헤더(로고+My Saju/Inyeon 네비+테마토글, `usePathname` 활성표시)를 루트 `layout.tsx`로 추출. 홈 page.tsx는 콘텐츠(히어로+Card)만. 전체 **128 tests pass**, tsc clean, `next build` 성공(`/`·`/inyeon` 모두 static ○), eslint 기존 경고 2건만.
+
+**커밋(최신순):**
+- `fc5c1a5` T3: chrome를 루트 layout으로 이동 + page.tsx 콘텐츠화 (원자적; 세션 제한으로 중단된 subagent를 컨트롤러가 직접 마무리)
+- `6b4a3e3` T2: `/inyeon` 'Coming soon' 플레이스홀더 (+RTL 1 test)
+- `f2ae057` T1: `SiteHeader` (로고+네비+테마토글, +RTL 3 tests)
+- `df69cf1` plan · `cf5c66d` spec
+
+**리뷰:** T1·T2 스펙+품질 APPROVED. T3 스펙 APPROVED. T3 코드품질 리뷰가 CHANGES REQUESTED(I-1 이중 min-h-screen, I-2 overflow-hidden)를 냈으나 **기술 검증 후 둘 다 기각**: (I-1) min-height는 중첩 시 합산 안 됨(2×viewport 아님) + 제안 수정안은 flex 센터링 체인을 깨뜨림(컬럼 min-h-screen은 load-bearing); (I-2) main은 max-height 없어 콘텐츠만큼 자라 in-flow 클립 없음(body 스크롤), overflow-hidden은 음수오프셋 ㅎ의 양축 bleed를 의도적 클립. **결정적 근거: 리팩터 전 단일페이지(사용자 검증 통과)와 동일 패턴 → 신규 회귀 아님.** Task 4 수동 시각 검증에서 두 페이지 스크롤바/클리핑 명시 확인 예정.
+
+**Deferred(비차단):** SiteHeader 활성링크 `font-medium`/`font-semibold` 중복(동작 무관)·focus-visible 링 / inyeon `&amp;`→`&` / 헤더 모바일 메뉴(현재 슬림 한 줄로 충분).
+
+### 다음 작업 — 사이클 12 (CLAUDE.md step 12) '인연' 페이지
+- (a) 기존 `CompatibilitySection`/`CompatibilityModal`을 `/`(SajuResult 인라인)에서 `/inyeon`으로 이전.
+- (b) 일반 상대 궁합: `/inyeon`에 상대 생일 입력 폼 → `calcUserSaju` 재사용 → `calcCompatibility`.
+- **크로스 페이지 상태 결정 필요**: `/inyeon`이 사용자 본인 사주를 어떻게 확보? (localStorage 영속 / 레이아웃 client Context / 재입력 중 택1) — 사이클 12 브레인스토밍 첫 질문.
+
+---
+
 ## 2026-06-02 (화)
 
 ### 사이클 9: Fun 운세 리딩 — 구현 완료 ✅ (수동 시각 검증만 남음)
