@@ -41,6 +41,19 @@ Open the generated `*.vercel.app` URL and check:
 - <https://ksaju.me/robots.txt> and <https://ksaju.me/sitemap.xml> resolve.
 - Re-check the OG card for the real domain on <https://www.opengraph.xyz>.
 
+## 6. Turn on analytics (optional, anytime)
+
+The app runs fine without analytics — events simply no-op until a key is present.
+
+1. Create a project at <https://posthog.com> (free tier). Copy the **Project API key** (`phc_...`).
+2. In Vercel → Project → **Settings → Environment Variables**, add for Production + Preview:
+   - `NEXT_PUBLIC_POSTHOG_KEY` = your `phc_...` key
+   - `NEXT_PUBLIC_POSTHOG_HOST` = `https://us.i.posthog.com` (or `https://eu.i.posthog.com`)
+3. Redeploy (Vercel → Deployments → Redeploy) so the new env vars are baked in.
+4. For local dev, copy `.env.example` to `.env.local` and fill the same values.
+5. In PostHog, build a funnel: `$pageview → saju_calculated → idol_picked → compat_revealed → card_shared`,
+   and a breakdown of `idol_picked` by the `idol` property for most-picked bias.
+
 ## Rollback
 
 Vercel → **Deployments** → pick a previous healthy deployment → **Promote to Production**.
