@@ -6,6 +6,40 @@
 
 ## 2026-06-05 (금)
 
+### 사이클 13: 이미지 export 공통 기반 — 구현 완료 ✅ (수동 시각 검증 + 브랜치 마무리 남음)
+
+> CLAUDE.md 로드맵 **step 13**(+step 7/8 부분 충족). 선행: 사이클 12(범용 `CompatibilityModal`). 다음은 step 9 Vercel 배포.
+
+**구현 결과:** 운세·궁합 공유 PNG의 **재사용 export 엔진** + 궁합 결과 9:16 카드. 모달 본문이 카드 자체(미리보기=export)가 되고 Share ✨ 버튼이 클라이언트에서 `html-to-image`로 캡처 → Web Share API(파일)→다운로드 폴백. 전체 **142 tests pass**, tsc clean, eslint 기존 경고 2건만, `next build` 성공(`/`·`/inyeon` 모두 static ○ — `html-to-image`는 client-only라 static export 무해).
+
+**브레인스토밍 결정:** 캡처전략=전용 9:16 오프스크린 레이아웃(화면UI 캡처 X) / 범위=공통엔진+**궁합 카드만**(운세는 다음 사이클 엔진 재사용) / 전달=**Web Share + 다운로드 폴백** / 카드 본문=모달 미리보기 겸용(A안) / 생성=클라이언트 onClick / 폰트=next/font self-host + `document.fonts.ready` / 브랜딩=워드마크+entertainment(QR 보류).
+
+**커밋(최신순):**
+- `9286237` T5: 모달 본문=9:16 share card + Share 버튼 (+smoke test, 3 cases)
+- `26a9d91` T4: `CompatShareCard` 전용 9:16 export 레이아웃 (+render test, `CompatOther` 카드로 이전)
+- `1ccd659` T3-fix: share-image 테스트 불필요 `@ts-expect-error` 제거(TS2578)
+- `7538150` T3: `useShareImage` 훅 — 비동기 share 상태 래퍼
+- `8f9863b` T2: `share-image.ts` 엔진 — 캡처 + web-share/download (7 tests)
+- `31ff707` T1: `html-to-image` 의존성 추가
+- `44c8e94` plan · `6cf8f6d` spec
+
+**신규 파일:** `src/lib/share-image.ts`(+test) · `src/hooks/use-share-image.ts` · `src/components/compat/compat-share-card.tsx`(+test). **수정:** `compatibility-modal.tsx`(본문 교체) · `package.json`.
+
+**리뷰:** T2~T5 각 독립 spec+quality 리뷰 통과(SPEC ✅/QUALITY ✅, T5 INTEGRATION ✅). 주목할 deviation: T4 테스트 픽스처가 무효 `type:"combine"`→유효 union(`"combo"`/`"three-harmony"`)으로 정정 + RM 2곳 렌더로 `getAllByText` 사용(둘 다 정당). T3에서 plan 테스트의 `@ts-expect-error`가 실제론 불필요(cast가 delete를 합법화)해 TS2578 → 제거. T5 smoke test는 plan의 `/close/i` 쿼리가 Radix 내장 X("Close")와 ghost 버튼 양쪽 매칭 → 모호 → 인라인 에러 메시지 대기로 교체.
+
+**Deferred(비차단):** `useShareImage`의 inline `shareMeta` 객체가 매 렌더 새 참조(콜드 경로라 무해) / 운세 `FortuneShareCard`(다음 사이클) / 모달 카드가 width 360 고정이라 좁은 폰에서 `transform: scale` 미적용(현재 dialog max-w-[360px]로 충분, 추후 반응형 스케일 검토).
+
+**남은 것:** ① 사용자 수동 시각 검증(아래 체크리스트) ② 최종 코드리뷰 ③ `finishing-a-development-branch`(feat/image-export → main 병합·push).
+
+**수동 시각 검증 체크리스트(`npm run dev`):**
+1. `/inyeon` → 사주 입력/복원 → 아이돌 선택 → 모달에 9:16 카드(점수·label·양쪽 미니사주 한자 비공백·`ksaju.me`·`For entertainment 🌙`).
+2. Share ✨(데스크톱) → `ksaju-compat.png` 다운로드 → 한글/한자 글리프 정상(폰트 임베딩)·~1080×1920.
+3. 다크모드 토글 → 카드 가독성.
+4. 모바일 뷰포트(iPhone) → 카드 fit·Share 동작.
+5. 에러 경로(오프라인 등) → 인라인 "Couldn't create image — try again" + 모달 유지.
+
+---
+
 ### 사이클 12: '인연' 페이지 (궁합 이전 + 일반 상대 궁합) — 완료 ✅ (main 병합·push 완료)
 
 > CLAUDE.md 로드맵 **step 12**. 선행: 사이클 11(`/inyeon` 플레이스홀더). 다음은 step 13 "이미지 export 공통 기반".

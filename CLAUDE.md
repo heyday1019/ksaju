@@ -137,18 +137,18 @@ const r = calcCompatibility(me, idol);
    - ✅ DB 연동 레이어 (`src/lib/idols.ts`, 18 tests) — 로드·검색·`compatForIdol` 래퍼, 엔진과 연결
    - ✅ 검색·선택 컴포넌트 (`src/components/idols/` IdolPicker+IdolCard, 8 tests, RTL+happy-dom) — onSelect까지. 페이지 연결·궁합결과는 다음 사이클
 6. ✅ **사용자 사주 한자 변환 (manseryeok)** — `src/lib/saju.ts`(server-only) `birthToSaju`/`toCompatPillars` + `src/app/actions/saju.ts` `calcUserSaju` Server Action. BirthData→convertToKST→calculateSaju, 4기둥(시주 포함). 9 tests (RM/Jin known-answer = 아이돌 DB와 일치). 궁합 me 측 입력 공급
-7. ⏳ 공유 카드 컴포넌트 (한지 미감, 9:16, 이미지 익스포트)
+7. ✅ 공유 카드 컴포넌트 (한지 미감, 9:16, 이미지 익스포트) — 궁합용 `CompatShareCard`(360×640 @3x→1080×1920) 완료. 운세 카드는 다음 사이클(엔진 재사용). 상세 step 13
 8. **결과 + 공유 흐름** (사주 중심 피벗 — 아래 방향 업데이트 참고)
    - ✅ '내 사주' 인페이지 결과 뷰 (`src/components/saju/` SajuResult+PillarsGrid+WuxingBalance, `src/lib/saju-display.ts`, 12 tests). 폼→`calcUserSaju`→4기둥·일간·오행밸런스·KST 뷰. KstResultModal 은퇴
    - ✅ 궁합 + 결과 모달 (`src/components/compat/` CompatibilitySection+CompatibilityModal, 3 tests). 사주 뷰 인라인 IdolPicker → `compatForIdol` → 점수·레이블·breakdown·양쪽 사주미니·ksaju.me 워터마크 모달. "Check another idol" 루프
-   - 🔨 이미지 export/다운로드 (9:16 PNG, html-to-image) — 다음 사이클 (step 7/9)
+   - ✅ 이미지 export/다운로드 (궁합 9:16 PNG, html-to-image) — step 13 완료. Share ✨ → Web Share(파일)/다운로드 폴백
 9. ⏳ Vercel 배포 + ksaju.me 연결
 
 ### 🔭 향후 계획 (2026-05-27 방향 확장 — 상세는 task-log.md "향후 계획")
 10. ✅ **Fun 운세 리딩** — `src/lib/fortune.ts`(규칙엔진, 9 tests) `calcFortune(userSaju, luck)` → **Money/Love/Career/This Year** 4카드. 십신 lite 규칙(재성·관성 오행 개수 tier / 일간 천간 아키타입 / 일간 vs 세운 관계 + 월운 서브라인), LLM 미사용. 세운/월운은 `calcCurrentLuck` 서버액션(`saju.ts`의 `dateToLuck`, manseryeok 재사용·절기 정확). UI `src/components/fortune/`(FortuneSection+FortuneCard, 2 tests), SajuResult 오행↔궁합 사이 인라인. 공유는 **비활성 티저**(실제 이미지 export는 step 13). spec/plan: `docs/superpowers/{specs,plans}/2026-06-02-fun-fortune-reading*`
 11. ✅ **멀티페이지 골격 + 내비** — 라우트 분리(`/` 내 사주, `/inyeon` 인연 'Coming soon' 플레이스홀더). 공유 chrome(한지·창살·ㅎ)+슬림 헤더(`src/components/layout/site-header.tsx`, 로고+네비+테마토글, `usePathname` 활성표시, 3 tests)를 루트 `layout.tsx`로 추출. 홈은 콘텐츠만. 두 라우트 static 빌드. 궁합 이전·일반 상대 궁합은 사이클 12. spec/plan: `docs/superpowers/{specs,plans}/2026-06-04-multipage-skeleton*`
 12. ✅ **'인연' 페이지** — `/inyeon` 실제 구현(server wrapper `page.tsx` metadata 유지 + client `src/components/inyeon/inyeon-view.tsx`, 2 tests). (a) 기존 K-pop 최애 궁합을 홈→`/inyeon` 이동(홈 `SajuResult`는 인라인 궁합 제거, `/inyeon` CTA 링크로 교체), (b) 일반 상대 궁합 `src/components/compat/partner-compat-section.tsx`(이름 optional+생일→`calcUserSaju`→`calcCompatibility`). `CompatibilityModal` 범용화(`idol`→`other:{name,sub?,pillars}`), `src/lib/saju-storage.ts`(localStorage `ksaju:userSaju:v1`)로 홈↔인연 me 공유, `BirthForm` submit/submitting 라벨 props화. 두 라우트 static. spec/plan: `docs/superpowers/{specs,plans}/2026-06-04-inyeon-compatibility*`
-13. ⏳ **이미지 export 공통 기반** — 운세·궁합 공유 PNG(9:16, html-to-image)
+13. ✅ **이미지 export 공통 기반** — 재사용 export 엔진(`src/lib/share-image.ts`: `nodeToPngBlob`/`canShareFiles`/`shareOrDownloadPng`, 7 tests · `src/hooks/use-share-image.ts`: `useShareImage`) + 궁합 전용 `CompatShareCard`(`src/components/compat/compat-share-card.tsx`, 9:16 360×640 @pixelRatio 3→1080×1920). `CompatibilityModal` 본문=축소 미리보기 카드(미리보기=export) + Share ✨ 버튼. 클라이언트 `html-to-image` 캡처(폰트 `document.fonts.ready` 대기) → Web Share API(파일)→`<a download>` 폴백(AbortError=정상). 전체 142 tests pass, tsc/eslint clean, `next build` static(`/`·`/inyeon` ○). **운세 공유는 비활성 티저 유지**(엔진 재사용은 다음 사이클). spec/plan: `docs/superpowers/{specs,plans}/2026-06-05-image-export*`
 
 ## 📣 마케팅 (병행)
 
