@@ -6,6 +6,30 @@
 
 ## 2026-06-05 (금)
 
+### 사이클 14: 프로덕션 런치 준비 — 구현 완료 ✅ (배포 실행은 사용자 런북)
+
+> CLAUDE.md 로드맵 **step 9**(Vercel 배포)의 선행 dev 작업. 다음은 사용자가 `docs/deploy-runbook.md` 실행(push→Vercel→DNS).
+
+**구현 결과:** `ksaju.me` 소프트 론칭 준비. 소셜 링크 프리뷰(루트 metadata `metadataBase`+OpenGraph+Twitter 카드 + 코드생성 `opengraph-image.tsx`(next/og 1200×630, 한지 팔레트·井 모티프·Latin)), 검색엔진 기본(`robots.ts` 전체허용+sitemap / `sitemap.ts` `/`·`/inyeon`), 피벗 잔재 정리. 전체 **146 tests pass**(robots/sitemap +2), tsc clean, eslint 기존 경고 2건만, `next build` 성공 — `/`·`/inyeon`·`/opengraph-image`·`/robots.txt`·`/sitemap.xml` 모두 static ○.
+
+**브레인스토밍 결정:** 스코프=폴리시 먼저 후 배포 / OG 이미지=코드생성(next/og), Latin v1(CJK 폰트 임베딩 보류) / robots=indexable / 배포·DNS=사용자 런북 분리(env var 0, zero-config).
+
+**커밋(최신순):**
+- `docs: deploy runbook` (T6) · 이후 docs 마무리(T7)
+- `feat(seo): metadataBase + OpenGraph + Twitter` (T4)
+- `feat(seo): code-generated 1200x630 OG image (next/og)` (T3)
+- `feat(seo): sitemap.xml — / and /inyeon` (T2)
+- `feat(seo): robots.txt — allow all + sitemap reference` (T1)
+- plan · spec (`74bcdd9`)
+
+**신규:** `src/app/robots.ts`(+test) · `src/app/sitemap.ts`(+test) · `src/app/opengraph-image.tsx` · `docs/deploy-runbook.md`. **수정:** `src/app/layout.tsx`(metadata 확장).
+
+**plan 대비 deviation:** Task 5(`_org` 잔재 삭제) — `layout_org.tsx`/`page_org.tsx`/`globals_org.css`는 **gitignore된 untracked 로컬 파일**(추적된 적 없음)로 판명 → 워킹트리에서만 rm, 커밋 없음(추적 대상 0). 결과(잔재 제거)는 동일.
+
+**남은 것:** ① 사용자 수동 시각 검증(빌드/OG 카드) ② `docs/deploy-runbook.md` 실행(push→Vercel import→ksaju.me DNS) ③ 브랜치 마무리(feat/launch-readiness → main).
+
+---
+
 ### 사이클 13: 이미지 export 공통 기반 — 구현 완료 ✅ (수동 시각 검증 + 브랜치 마무리 남음)
 
 > CLAUDE.md 로드맵 **step 13**(+step 7/8 부분 충족). 선행: 사이클 12(범용 `CompatibilityModal`). 다음은 step 9 Vercel 배포.

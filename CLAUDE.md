@@ -142,7 +142,7 @@ const r = calcCompatibility(me, idol);
    - ✅ '내 사주' 인페이지 결과 뷰 (`src/components/saju/` SajuResult+PillarsGrid+WuxingBalance, `src/lib/saju-display.ts`, 12 tests). 폼→`calcUserSaju`→4기둥·일간·오행밸런스·KST 뷰. KstResultModal 은퇴
    - ✅ 궁합 + 결과 모달 (`src/components/compat/` CompatibilitySection+CompatibilityModal, 3 tests). 사주 뷰 인라인 IdolPicker → `compatForIdol` → 점수·레이블·breakdown·양쪽 사주미니·ksaju.me 워터마크 모달. "Check another idol" 루프
    - ✅ 이미지 export/다운로드 (궁합 9:16 PNG, html-to-image) — step 13 완료. Share ✨ → Web Share(파일)/다운로드 폴백
-9. ⏳ Vercel 배포 + ksaju.me 연결
+9. 🔨 Vercel 배포 + ksaju.me 연결 — **런치 준비 완료(사이클 14)**: OG/Twitter 카드 + 코드생성 `opengraph-image.tsx`(next/og 1200×630) + `robots.ts`/`sitemap.ts` + 루트 metadata(`metadataBase`) + `_org` 잔재 제거. 배포 실행(push→Vercel import→DNS)은 `docs/deploy-runbook.md` 사용자 실행. spec/plan: `docs/superpowers/{specs,plans}/2026-06-05-launch-readiness*`
 
 ### 🔭 향후 계획 (2026-05-27 방향 확장 — 상세는 task-log.md "향후 계획")
 10. ✅ **Fun 운세 리딩** — `src/lib/fortune.ts`(규칙엔진, 9 tests) `calcFortune(userSaju, luck)` → **Money/Love/Career/This Year** 4카드. 십신 lite 규칙(재성·관성 오행 개수 tier / 일간 천간 아키타입 / 일간 vs 세운 관계 + 월운 서브라인), LLM 미사용. 세운/월운은 `calcCurrentLuck` 서버액션(`saju.ts`의 `dateToLuck`, manseryeok 재사용·절기 정확). UI `src/components/fortune/`(FortuneSection+FortuneCard, 2 tests), SajuResult 오행↔궁합 사이 인라인. 공유는 **비활성 티저**(실제 이미지 export는 step 13). spec/plan: `docs/superpowers/{specs,plans}/2026-06-02-fun-fortune-reading*`
