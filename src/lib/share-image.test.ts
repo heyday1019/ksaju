@@ -56,7 +56,8 @@ describe("shareOrDownloadPng", () => {
     const share = vi.fn().mockResolvedValue(undefined);
     (navigator as unknown as { canShare: unknown }).canShare = vi.fn(() => true);
     (navigator as unknown as { share: unknown }).share = share;
-    await shareOrDownloadPng(PNG, "ksaju.png", { title: "T" });
+    const outcome = await shareOrDownloadPng(PNG, "ksaju.png", { title: "T" });
+    expect(outcome).toBe("web_share");
     expect(share).toHaveBeenCalledTimes(1);
     const arg = share.mock.calls[0][0];
     expect(arg.files[0]).toBeInstanceOf(File);
@@ -69,13 +70,15 @@ describe("shareOrDownloadPng", () => {
     (navigator as unknown as { canShare: unknown }).canShare = vi.fn(() => true);
     (navigator as unknown as { share: unknown }).share = vi.fn().mockRejectedValue(err);
     const click = vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {});
-    await shareOrDownloadPng(PNG, "ksaju.png");
+    const outcome = await shareOrDownloadPng(PNG, "ksaju.png");
+    expect(outcome).toBe("cancelled");
     expect(click).not.toHaveBeenCalled();
   });
 
   it("falls back to anchor download when share is unsupported", async () => {
     const click = vi.spyOn(HTMLAnchorElement.prototype, "click").mockImplementation(() => {});
-    await shareOrDownloadPng(PNG, "ksaju.png");
+    const outcome = await shareOrDownloadPng(PNG, "ksaju.png");
+    expect(outcome).toBe("download");
     expect(click).toHaveBeenCalledTimes(1);
     expect(globalThis.URL.createObjectURL).toHaveBeenCalledWith(PNG);
   });

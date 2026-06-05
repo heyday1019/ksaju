@@ -5,6 +5,7 @@ import {
   nodeToPngBlob,
   shareOrDownloadPng,
   type ShareMeta,
+  type ShareOutcome,
 } from "@/lib/share-image";
 
 export type ShareStatus = "idle" | "rendering" | "error";
@@ -16,9 +17,14 @@ export type ShareStatus = "idle" | "rendering" | "error";
  */
 export function useShareImage(
   ref: RefObject<HTMLElement | null>,
-  opts: { fileName: string; shareMeta?: ShareMeta; pixelRatio?: number },
+  opts: {
+    fileName: string;
+    shareMeta?: ShareMeta;
+    pixelRatio?: number;
+    onShared?: (method: Exclude<ShareOutcome, "cancelled">) => void;
+  },
 ) {
-  const { fileName, shareMeta, pixelRatio } = opts;
+  const { fileName, shareMeta, pixelRatio, onShared } = opts;
   const [status, setStatus] = useState<ShareStatus>("idle");
 
   const share = useCallback(async () => {
@@ -27,12 +33,13 @@ export function useShareImage(
     setStatus("rendering");
     try {
       const blob = await nodeToPngBlob(node, { pixelRatio });
-      await shareOrDownloadPng(blob, fileName, shareMeta);
+      const outcome = await shareOrDownloadPng(blob, fileName, shareMeta);
       setStatus("idle");
+      if (outcome !== "cancelled") onShared?.(outcome);
     } catch {
       setStatus("error");
     }
-  }, [ref, fileName, shareMeta, pixelRatio]);
+  }, [ref, fileName, shareMeta, pixelRatio, onShared]);
 
   return { share, status };
 }

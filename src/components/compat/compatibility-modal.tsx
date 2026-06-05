@@ -21,6 +21,7 @@ type CompatibilityModalProps = {
   other: CompatOther;
   result: CompatibilityResult;
   closeLabel?: string;
+  onShared?: (method: "web_share" | "download") => void;
 };
 
 /**
@@ -35,6 +36,7 @@ export function CompatibilityModal({
   other,
   result,
   closeLabel = "← Close",
+  onShared,
 }: CompatibilityModalProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const { share, status } = useShareImage(cardRef, {
@@ -43,6 +45,7 @@ export function CompatibilityModal({
       title: "My KSaju compatibility",
       text: `You × ${other.name}: ${result.score}/100 — ksaju.me`,
     },
+    onShared,
   });
 
   const shareLabel = status === "rendering" ? "Creating…" : "Share ✨";

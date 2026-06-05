@@ -3,6 +3,9 @@ import { toBlob } from "html-to-image";
 /** Metadata passed to the native share sheet. */
 export type ShareMeta = { title?: string; text?: string };
 
+/** Which delivery path the share took. "cancelled" = user dismissed the share sheet. */
+export type ShareOutcome = "web_share" | "download" | "cancelled";
+
 /**
  * Capture a DOM node to a PNG Blob. Waits for web fonts (Korean serif / hanja)
  * to load first so glyphs don't render blank. Defaults to pixelRatio 3 so a
@@ -40,19 +43,20 @@ export async function shareOrDownloadPng(
   blob: Blob,
   fileName: string,
   shareMeta: ShareMeta = {},
-): Promise<void> {
+): Promise<ShareOutcome> {
   const file = new File([blob], fileName, { type: "image/png" });
 
   if (canShareFiles(file) && typeof navigator.share === "function") {
     try {
       await navigator.share({ files: [file], ...shareMeta });
-      return;
+      return "web_share";
     } catch (err) {
-      if (err instanceof Error && err.name === "AbortError") return;
+      if (err instanceof Error && err.name === "AbortError") return "cancelled";
       // Any other share failure → fall through to download.
     }
   }
   downloadBlob(blob, fileName);
+  return "download";
 }
 
 function downloadBlob(blob: Blob, fileName: string): void {
