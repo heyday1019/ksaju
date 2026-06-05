@@ -3,6 +3,7 @@ import { Geist, Inter, Gowun_Batang, Yeon_Sung, Noto_Serif_KR } from "next/font/
 import { ThemeProvider } from "next-themes";
 import { SiteHeader } from "@/components/layout/site-header";
 import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
+import { SiteFooter } from "@/components/layout/site-footer";
 import "./globals.css";
 
 const geist = Geist({
@@ -87,6 +88,7 @@ export default function RootLayout({
               <SiteHeader />
               <AnalyticsProvider />
               <div className="flex flex-1 flex-col">{children}</div>
+              <SiteFooter />
             </div>
 
             {/* 페이지 하단 창살 */}
