@@ -13,6 +13,7 @@ import { SajuResult } from "@/components/saju/saju-result";
 import { convertToKST } from "@/lib/kst-converter";
 import { calcUserSaju, calcCurrentLuck } from "@/app/actions/saju";
 import { saveUserSaju } from "@/lib/saju-storage";
+import { track, ageBucket } from "@/lib/analytics";
 import type { BirthData, KSTResult } from "@/lib/kst-types";
 import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 
@@ -43,6 +44,7 @@ export default function Home() {
       setCurrentLuck(luck);
       saveUserSaju(saju); // 홈↔인연 공유용 영속
       setView("result");
+      track("saju_calculated", { age_bucket: ageBucket(data.year) });
     } catch (err) {
       console.error("Saju calculation failed:", err);
       setErrorMessage(

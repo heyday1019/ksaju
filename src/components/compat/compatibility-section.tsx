@@ -6,6 +6,8 @@ import { CompatibilityModal } from "./compatibility-modal";
 import { compatForIdol, type Idol } from "@/lib/idols";
 import { normalizeIdolSaju, type SajuPillars } from "@/lib/compatibility";
 import type { UserSaju } from "@/lib/saju-types";
+import { track, scoreBucket } from "@/lib/analytics";
+import { HEAVENLY_STEMS } from "@/lib/saju-data";
 
 /**
  * '내 사주' 뷰 안의 궁합 부가 섹션.
@@ -28,6 +30,11 @@ export function CompatibilitySection({ userSaju }: { userSaju: UserSaju }) {
   const result = idol ? compatForIdol(mePillars, idol) : null;
 
   const handleSelect = (picked: Idol) => {
+    const element =
+      HEAVENLY_STEMS.find((s) => s.char === picked.saju.dayMaster)?.element ?? "unknown";
+    track("idol_picked", { idol: picked.name, group: picked.group, element });
+    const r = compatForIdol(mePillars, picked);
+    track("compat_revealed", { kind: "idol", score_bucket: scoreBucket(r.score) });
     setIdol(picked);
     setOpen(true);
   };
@@ -57,6 +64,7 @@ export function CompatibilitySection({ userSaju }: { userSaju: UserSaju }) {
           }}
           result={result}
           closeLabel="← Check another idol"
+          onShared={(method) => track("card_shared", { kind: "idol", method })}
         />
       )}
     </section>

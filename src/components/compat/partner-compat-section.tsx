@@ -9,6 +9,7 @@ import { calcCompatibility } from "@/lib/compatibility";
 import type { SajuPillars, CompatibilityResult } from "@/lib/compatibility";
 import type { BirthData } from "@/lib/kst-types";
 import type { UserSaju } from "@/lib/saju-types";
+import { track, scoreBucket } from "@/lib/analytics";
 
 /** 일반 상대 궁합: 상대 이름(optional)+생일 → calcUserSaju → calcCompatibility → 범용 모달. */
 export function PartnerCompatSection({ userSaju }: { userSaju: UserSaju }) {
@@ -42,8 +43,11 @@ export function PartnerCompatSection({ userSaju }: { userSaju: UserSaju }) {
         day: partner.pillars.day,
       };
       setPartnerPillars(pillars);
-      setResult(calcCompatibility(mePillars, pillars));
+      const compat = calcCompatibility(mePillars, pillars);
+      setResult(compat);
       setOpen(true);
+      track("partner_submitted");
+      track("compat_revealed", { kind: "partner", score_bucket: scoreBucket(compat.score) });
     } catch (err) {
       console.error("Partner saju failed:", err);
       setError("Couldn't read that birth date. Please double-check and try again.");
@@ -98,6 +102,7 @@ export function PartnerCompatSection({ userSaju }: { userSaju: UserSaju }) {
           other={{ name: partnerName.trim() || "Them", pillars: partnerPillars }}
           result={result}
           closeLabel="← Check someone else"
+          onShared={(method) => track("card_shared", { kind: "partner", method })}
         />
       )}
     </section>
