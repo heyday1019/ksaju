@@ -6,6 +6,22 @@
 
 ## 2026-06-05 (금)
 
+### 사이클 15: 프로덕트 분석 (PostHog, cookieless) — 구현 완료 ✅ (사용자가 키로 활성화)
+
+> 맥락: ksaju.me Vercel 라이브(`ksaju-green.vercel.app`). 사용자의 "관리자 대시보드 + 구글 로그인" 요청을 **호스티드 분석으로 리프레임**(대시보드/인증 자체 구축 안 함 — 1인 개발 시간 보호). 다음 후보: LLM fun 리딩(공유 욕구 폭발 레버) / About·FAQ·Terms trust 페이지 / 카드·아이돌 비주얼 폴리시.
+
+**구현 결과:** 유입·퍼널을 자체 대시보드/인증 없이 측정. 얇은 래퍼 `src/lib/analytics.ts`(`initAnalytics`/`track`/`ageBucket`/`scoreBucket`)가 `posthog-js`를 cookieless(메모리)·익명으로 init하고 **키 없으면 전부 no-op**(로컬/CI/키없는 Vercel 무영향). `AnalyticsProvider`(루트 layout)가 init+SPA 페이지뷰. 6 이벤트: `$pageview`·`saju_calculated`(age_bucket)·`idol_picked`(idol/group/element)·`partner_submitted`·`compat_revealed`(kind/score_bucket)·`card_shared`(kind/method). `shareOrDownloadPng`가 `ShareOutcome`(web_share/download/cancelled) 반환 → `useShareImage` `onShared` → 섹션이 method 트래킹. `/privacy` 페이지 + 슬림 footer 추가. 전체 **150 tests pass**, tsc clean, eslint 기존 2건만, `next build` 성공(키 없이도 — `/privacy` 포함 static ○).
+
+**브레인스토밍 결정:** 자체 대시보드/인증 미구축(호스티드 PostHog) / cookieless 무배너(unique 정확도 희생 수용) / 원시 DOB 미전송(연령 버킷만) / Privacy만 이번 사이클(About·FAQ·Terms 후속) / PostHog 단일소스(Vercel Analytics 제외).
+
+**커밋(최신순):** `feat(privacy)`(T6) · `feat(analytics): funnel events`(T5) · `feat(share): onShared method`(T4) · `feat(analytics): AnalyticsProvider`(T3) · `feat(analytics): PostHog wrapper`(T2) · `build: posthog-js`(T1) · `docs: env+runbook`(T7) · plan·spec(`6da6b6f`).
+
+**신규:** `src/lib/analytics.ts`(+test) · `src/components/analytics/analytics-provider.tsx` · `src/app/privacy/page.tsx` · `src/components/layout/site-footer.tsx` · `.env.example`. **수정:** `share-image.ts`(+test)·`use-share-image.ts`·`compatibility-modal.tsx`·`layout.tsx`·`page.tsx`·`inyeon-view.tsx`·`compatibility-section.tsx`·`partner-compat-section.tsx`·`.gitignore`(`!.env.example`)·`docs/deploy-runbook.md`.
+
+**남은 것(사용자):** ① PostHog 프로젝트 생성 → `NEXT_PUBLIC_POSTHOG_KEY`를 Vercel env + `.env.local`에 추가 → redeploy(`docs/deploy-runbook.md` §6) ② PostHog에서 퍼널·idol 브레이크다운 구성 ③ 브랜치 마무리(feat/analytics-posthog → main).
+
+---
+
 ### 사이클 14: 프로덕션 런치 준비 — 구현 완료 ✅ (배포 실행은 사용자 런북)
 
 > CLAUDE.md 로드맵 **step 9**(Vercel 배포)의 선행 dev 작업. 다음은 사용자가 `docs/deploy-runbook.md` 실행(push→Vercel→DNS).

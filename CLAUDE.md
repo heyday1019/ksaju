@@ -156,6 +156,7 @@ const r = calcCompatibility(me, idol);
 - 콘텐츠 = 앱 화면 녹화 ("I checked my saju compatibility with my bias")
 - n8n 자동화 파이프라인 (콘텐츠 준비 → 이미지 → 게시 → 추적)
 - 출시 6-8주 전부터 팬덤 빌딩, 웨이트리스트
+- **분석(사이클 15):** PostHog cookieless·익명. 퍼널(`$pageview→saju_calculated→idol_picked→compat_revealed→card_shared`) + age_bucket·국가(GeoIP). 자체 대시보드/로그인 미구축 — PostHog 호스티드 대시보드 사용. `NEXT_PUBLIC_POSTHOG_KEY` env로 활성화(없으면 no-op). 키없이 동작.
 
 ## 💰 목표 / 성공 기준
 
