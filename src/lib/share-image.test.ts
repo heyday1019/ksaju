@@ -18,9 +18,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  // @ts-expect-error cleanup test-only globals
   delete (navigator as unknown as { share?: unknown }).share;
-  // @ts-expect-error cleanup test-only globals
   delete (navigator as unknown as { canShare?: unknown }).canShare;
 });
 
