@@ -6,6 +6,43 @@
 
 ## 2026-06-05 (금)
 
+### 🗺️ 남은 작업 / 로드맵 (2026-06-05 기준)
+
+**현재 상태:** ksaju.me MVP가 Vercel에 라이브(`ksaju-green.vercel.app`, `main` 자동배포). 이미지 export·런치메타·분석까지 완료. `main`=`origin/main` 동기화됨.
+
+**진행 중:** 사이클 16(궁합 카드 fun 리딩) — 스펙 완료, **사용자 스펙 리뷰 → plan → 구현** 대기.
+
+**남은 작업 (우선순위순):**
+1. 🔨 **사이클 16 — 궁합 카드 fun 리딩** (진행 중): 스펙 승인 → plan → 구현(`data/ksaju-readings.json` 28 스니펫 저작 + `reading.ts` + 카드 히어로). 공유 욕구 레버.
+2. ⏳ **사용자: ksaju.me 커스텀 도메인 연결** — `docs/deploy-runbook.md` §4 (Vercel Domains + 레지스트라 DNS). 현재 `*.vercel.app`만.
+3. ⏳ **사용자: 프로덕션 분석 활성화** — PostHog 키를 **Vercel env**(Production/Preview)에 추가 + redeploy(`docs/deploy-runbook.md` §6). 로컬 `.env.local`은 검증 완료(이벤트 수신 확인). PostHog에서 퍼널·idol 브레이크다운·age_bucket 대시보드 구성.
+4. ⏳ **trust 페이지** (About / FAQ / Terms) — SEO·AdSense·신뢰. Privacy는 사이클 15에서 출하됨. footer 확장.
+5. ⏳ **카드·아이돌 비주얼 폴리시** — 아이돌 아바타 오행별 색상(火→핑크/水→청자/木→녹색/金→회색/土→갈색), 동명이인 name+group 구분, 입력폼 출생시간 툴팁, 카드 한자 간격.
+6. ⏳ **운세(fortune) 공유 카드** — 사이클 13 이미지 export 엔진 재사용(`FortuneShareCard`). 현재 운세 Share는 비활성 티저.
+7. 💤 (보류) 런타임 LLM 리딩·유료 IAP·POD 굿즈·회원 계정 — 트래픽 데이터(분석) 본 뒤 판단.
+
+**검증 베이스라인:** 전체 150 tests pass, tsc/eslint clean, `next build` static OK.
+
+---
+
+### 사이클 16: 궁합 카드 fun 리딩 (큐레이티드 라이브러리) — 스펙 완료 🔨 (plan/구현 대기)
+
+> 사용자 갭 #1(🔴). "점수+레이블=분석, 내러티브=감정 — 사람은 감정을 공유한다." 공유 욕구 레버.
+
+**결정(브레인스토밍):** 런타임 LLM 미사용 — LLM은 **오프라인 저작 도구**. 큐레이티드 라이브러리(`data/ksaju-readings.json`, 28 스니펫 = 25 정렬 오행쌍 + 3 점수티어) → `getReading()` 순수·결정적 함수(`fortune.ts` 패턴). 내러티브=카드 **감정 히어로**, breakdown 불릿 **제거**. 아이돌+상대 둘 다 자동. 영문·fun·건전(teen)·2-3줄·전 라인 사용자 리뷰.
+
+**상태:** spec 작성·커밋(`89a95cc`, `docs/superpowers/specs/2026-06-05-fun-reading-design.md`) → **사용자 스펙 리뷰 대기** → writing-plans → 구현(28 카피 저작은 구현 중, 출하 전 사용자 검토).
+
+---
+
+### 사이클 13.5: `/inyeon` 아이돌 그룹 아코디언 — 완료 ✅ (main 병합·push)
+
+> 사용자 피드백: 아이돌 전체가 펼쳐져 일반 상대 궁합 폼이 한참 아래로 밀려 첫 방문자가 못 봄.
+
+**구현 결과:** `IdolPicker` 브라우즈 모드를 아코디언으로 — 그룹 헤더=토글 버튼(이름+멤버수, ▸/▾), **한 번에 하나만 펼침**, 기본 전부 접힘 → 목록이 짧아져 "Or someone else" 폼이 fold 위로. 검색 모드는 플랫 결과 유지. aria-expanded/controls. 테스트 7개로 갱신(접힘 기본·펼침/접힘·아코디언 전환·그룹 내 단일선택). 커밋 `a436e3f`. 144 tests pass·tsc·lint·build OK. `main` 병합·push 완료.
+
+---
+
 ### 사이클 15: 프로덕트 분석 (PostHog, cookieless) — 구현 완료 ✅ (사용자가 키로 활성화)
 
 > 맥락: ksaju.me Vercel 라이브(`ksaju-green.vercel.app`). 사용자의 "관리자 대시보드 + 구글 로그인" 요청을 **호스티드 분석으로 리프레임**(대시보드/인증 자체 구축 안 함 — 1인 개발 시간 보호). 다음 후보: LLM fun 리딩(공유 욕구 폭발 레버) / About·FAQ·Terms trust 페이지 / 카드·아이돌 비주얼 폴리시.
