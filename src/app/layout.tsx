@@ -32,9 +32,27 @@ const notoSerifKR = Noto_Serif_KR({
   subsets: ["latin"],          // CJK 글리프는 unicode-range로 자동 subset
 });
 
+const SITE_TITLE = "KSaju · Korean fortune, made cosmic";
+const SITE_DESCRIPTION =
+  "Authentic Korean saju for the K-content generation. Discover your inyeon.";
+
 export const metadata: Metadata = {
-  title: "KSaju · Korean fortune, made cosmic",
-  description: "Authentic Korean saju for the K-content generation. Discover your inyeon.",
+  metadataBase: new URL("https://ksaju.me"),
+  title: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    url: "https://ksaju.me",
+    siteName: "KSaju",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+  },
 };
 
 export default function RootLayout({
