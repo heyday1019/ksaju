@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Inter, Gowun_Batang, Yeon_Sung, Noto_Serif_KR } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { SiteHeader } from "@/components/layout/site-header";
+import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
 import "./globals.css";
 
 const geist = Geist({
@@ -84,6 +85,7 @@ export default function RootLayout({
             {/* 콘텐츠 컬럼: 공통 헤더 + 페이지 콘텐츠 */}
             <div className="relative z-10 flex min-h-screen flex-col">
               <SiteHeader />
+              <AnalyticsProvider />
               <div className="flex flex-1 flex-col">{children}</div>
             </div>
 
