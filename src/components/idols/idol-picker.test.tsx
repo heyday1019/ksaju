@@ -6,15 +6,44 @@ import { IdolPicker } from "./idol-picker";
 import { idols } from "@/lib/idols";
 
 describe("IdolPicker", () => {
-  it("기본 상태(빈 검색)에서 그룹 브라우징으로 전체 아이돌을 렌더한다", () => {
+  it("기본 상태(빈 검색): 그룹은 모두 접혀 있고 토글 버튼만 보인다", () => {
     render(<IdolPicker onSelect={() => {}} />);
-    // 그룹 헤딩 노출
-    expect(screen.getByRole("heading", { name: "BTS" })).toBeInTheDocument();
-    // 전체 아이돌이 radio로 렌더됨
-    expect(screen.getAllByRole("radio")).toHaveLength(idols.length);
+    // 그룹 토글 버튼 노출
+    expect(screen.getByRole("button", { name: /BTS/ })).toBeInTheDocument();
+    // 접힌 상태 → 아이돌 카드(radio) 없음
+    expect(screen.queryAllByRole("radio")).toHaveLength(0);
   });
 
-  it("검색어를 입력하면 매칭 결과만 남는다", async () => {
+  it("그룹 토글을 누르면 해당 그룹 멤버만 펼쳐지고, 다시 누르면 접힌다", async () => {
+    render(<IdolPicker onSelect={() => {}} />);
+    const btsToggle = screen.getByRole("button", { name: /BTS/ });
+    await userEvent.click(btsToggle);
+    const radios = screen.getAllByRole("radio");
+    expect(radios.length).toBeGreaterThan(0);
+    // 펼쳐진 카드는 모두 BTS
+    for (const r of radios) {
+      expect(within(r).getByText("BTS")).toBeInTheDocument();
+    }
+    expect(btsToggle).toHaveAttribute("aria-expanded", "true");
+    // 다시 누르면 접힘
+    await userEvent.click(btsToggle);
+    expect(screen.queryAllByRole("radio")).toHaveLength(0);
+    expect(btsToggle).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("아코디언: 다른 그룹을 열면 이전 그룹이 닫힌다", async () => {
+    render(<IdolPicker onSelect={() => {}} />);
+    await userEvent.click(screen.getByRole("button", { name: /BTS/ }));
+    expect(screen.getAllByRole("radio").length).toBeGreaterThan(0);
+    await userEvent.click(screen.getByRole("button", { name: /BLACKPINK/ }));
+    const radios = screen.getAllByRole("radio");
+    // 이제 BLACKPINK 멤버만 노출
+    for (const r of radios) {
+      expect(within(r).getByText("BLACKPINK")).toBeInTheDocument();
+    }
+  });
+
+  it("검색어를 입력하면 그룹 접힘과 무관하게 매칭 결과를 플랫하게 보여준다", async () => {
     render(<IdolPicker onSelect={() => {}} />);
     await userEvent.type(screen.getByRole("searchbox"), "blackpink");
     const radios = screen.getAllByRole("radio");
@@ -44,8 +73,9 @@ describe("IdolPicker", () => {
     expect(rm).toHaveAttribute("aria-checked", "true");
   });
 
-  it("단일 선택: 다른 카드를 고르면 이전 선택이 해제된다", async () => {
+  it("단일 선택: 같은 그룹 내 다른 카드를 고르면 이전 선택이 해제된다", async () => {
     render(<IdolPicker onSelect={() => {}} />);
+    await userEvent.click(screen.getByRole("button", { name: /BTS/ }));
     const radios = screen.getAllByRole("radio");
     await userEvent.click(radios[0]);
     await userEvent.click(radios[1]);
