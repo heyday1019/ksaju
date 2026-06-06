@@ -1,5 +1,6 @@
 import { forwardRef } from "react";
 import type { CompatibilityResult, SajuPillars } from "@/lib/compatibility";
+import { getReading } from "@/lib/reading";
 
 /** Compatibility counterpart (idol or general partner) shown on the card. */
 export type CompatOther = { name: string; sub?: string; pillars: SajuPillars };
@@ -31,6 +32,7 @@ function MiniSaju({ label, pillars }: { label: string; pillars: SajuPillars }) {
 export const CompatShareCard = forwardRef<HTMLDivElement, CompatShareCardProps>(
   function CompatShareCard({ mePillars, other, result }, ref) {
     const headerLabel = other.sub ? `${other.name} · ${other.sub}` : other.name;
+    const reading = getReading(mePillars, other.pillars, result.score);
     return (
       <div
         ref={ref}
@@ -57,22 +59,15 @@ export const CompatShareCard = forwardRef<HTMLDivElement, CompatShareCardProps>(
             </p>
           </div>
 
+          <p className="font-serif text-base leading-relaxed text-foreground">
+            {reading}
+          </p>
+
           <div className="flex w-full items-center justify-around rounded-xl border border-border bg-card/60 py-4">
             <MiniSaju label="You" pillars={mePillars} />
             <span className="font-calli text-3xl text-accent">×</span>
             <MiniSaju label={other.name} pillars={other.pillars} />
           </div>
-
-          <ul className="space-y-1 text-left text-xs text-muted-foreground">
-            <li>
-              <strong className="text-primary">Day Master:</strong>{" "}
-              {result.breakdown.dayMaster.note}
-            </li>
-            <li>
-              <strong className="text-primary">Branch:</strong>{" "}
-              {result.breakdown.branch.note}
-            </li>
-          </ul>
         </div>
 
         <div className="w-full pb-9">

@@ -2,6 +2,7 @@
 import { describe, it, expect } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { CompatShareCard } from "./compat-share-card";
+import { getReading } from "@/lib/reading";
 import type { CompatibilityResult, SajuPillars } from "@/lib/compatibility";
 
 const ME: SajuPillars = { year: "壬申", month: "己酉", day: "辛卯" };
@@ -31,5 +32,11 @@ describe("CompatShareCard", () => {
     expect(screen.getAllByText(/RM/).length).toBeGreaterThan(0);
     expect(screen.getByText("ksaju.me")).toBeInTheDocument();
     expect(screen.getByText(/For entertainment/)).toBeInTheDocument();
+    // reading hero is rendered; analytical breakdown is gone
+    expect(
+      screen.getByText(getReading(ME, OTHER, RESULT.score)),
+    ).toBeInTheDocument();
+    expect(screen.queryByText(/Day Master:/)).not.toBeInTheDocument();
+    expect(screen.queryByText(/Branch:/)).not.toBeInTheDocument();
   });
 });
