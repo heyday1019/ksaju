@@ -20,9 +20,9 @@ describe("FortuneSection", () => {
     expect(screen.getByText(/This Year/)).toBeInTheDocument();
   });
 
-  it("Share 티저 버튼은 비활성(disabled)이다", () => {
+  it("Share 버튼이 활성화되어 있다", () => {
     render(<FortuneSection userSaju={RM} luck={LUCK} />);
     const share = screen.getByRole("button", { name: /share/i });
-    expect(share).toBeDisabled();
+    expect(share).toBeEnabled();
   });
 });

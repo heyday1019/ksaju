@@ -1,13 +1,15 @@
 "use client";
 
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { FortuneCard } from "./fortune-card";
+import { FortuneShareModal } from "./fortune-share-modal";
 import { calcFortune } from "@/lib/fortune";
+import { track } from "@/lib/analytics";
 import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 
 /**
- * '내 사주' 뷰 안의 운세 섹션. calcFortune → 4카드 그리드 + 비활성 Share 티저.
- * 실제 공유(이미지 export)는 후속 공통기반 사이클.
+ * '내 사주' 뷰 안의 운세 섹션. calcFortune → 4카드 그리드 + Share(공유 카드 모달).
  */
 export function FortuneSection({
   userSaju,
@@ -17,6 +19,7 @@ export function FortuneSection({
   luck: CurrentLuck;
 }) {
   const cards = calcFortune(userSaju, luck);
+  const [shareOpen, setShareOpen] = useState(false);
 
   return (
     <section className="space-y-3 rounded-xl border border-border bg-secondary/30 p-4">
@@ -31,11 +34,24 @@ export function FortuneSection({
       </div>
 
       <div className="space-y-1 text-center">
-        <Button variant="outline" size="sm" disabled className="w-full">
-          Share ✨ (soon)
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setShareOpen(true)}
+          className="w-full"
+        >
+          Share ✨
         </Button>
         <p className="text-[10px] text-muted-foreground">For entertainment 🌙</p>
       </div>
+
+      <FortuneShareModal
+        open={shareOpen}
+        onClose={() => setShareOpen(false)}
+        userSaju={userSaju}
+        luck={luck}
+        onShared={(method) => track("card_shared", { kind: "fortune", method })}
+      />
     </section>
   );
 }
