@@ -10,10 +10,10 @@
 
 **현재 상태:** ksaju.me MVP가 Vercel에 라이브(`ksaju-green.vercel.app`, `main` 자동배포). 이미지 export·런치메타·분석까지 완료. `main`=`origin/main` 동기화됨.
 
-**진행 중:** 사이클 16(궁합 카드 fun 리딩) — 스펙 완료, **사용자 스펙 리뷰 → plan → 구현** 대기.
+**진행 중:** 사이클 16(궁합 카드 fun 리딩) — 구현 완료(154 tests·tsc·lint·build green, 카피 사용자 승인). **수동 시각 검증 + 브랜치 마무리(feat/compat-reading → main)** 만 남음.
 
 **남은 작업 (우선순위순):**
-1. 🔨 **사이클 16 — 궁합 카드 fun 리딩** (진행 중): 스펙 승인 → plan → 구현(`data/ksaju-readings.json` 28 스니펫 저작 + `reading.ts` + 카드 히어로). 공유 욕구 레버.
+1. ✅ **사이클 16 — 궁합 카드 fun 리딩** (구현 완료): `data/ksaju-readings.json`(25 쌍+3 티어) + `reading.ts` `getReading` + 카드 히어로. 남은 것: 수동 시각 검증·브랜치 마무리.
 2. ⏳ **사용자: ksaju.me 커스텀 도메인 연결** — `docs/deploy-runbook.md` §4 (Vercel Domains + 레지스트라 DNS). 현재 `*.vercel.app`만.
 3. ⏳ **사용자: 프로덕션 분석 활성화** — PostHog 키를 **Vercel env**(Production/Preview)에 추가 + redeploy(`docs/deploy-runbook.md` §6). 로컬 `.env.local`은 검증 완료(이벤트 수신 확인). PostHog에서 퍼널·idol 브레이크다운·age_bucket 대시보드 구성.
 4. ⏳ **trust 페이지** (About / FAQ / Terms) — SEO·AdSense·신뢰. Privacy는 사이클 15에서 출하됨. footer 확장.
@@ -21,17 +21,29 @@
 6. ⏳ **운세(fortune) 공유 카드** — 사이클 13 이미지 export 엔진 재사용(`FortuneShareCard`). 현재 운세 Share는 비활성 티저.
 7. 💤 (보류) 런타임 LLM 리딩·유료 IAP·POD 굿즈·회원 계정 — 트래픽 데이터(분석) 본 뒤 판단.
 
-**검증 베이스라인:** 전체 150 tests pass, tsc/eslint clean, `next build` static OK.
+**검증 베이스라인:** 전체 154 tests pass, tsc/eslint clean, `next build` static OK.
 
 ---
 
-### 사이클 16: 궁합 카드 fun 리딩 (큐레이티드 라이브러리) — 스펙 완료 🔨 (plan/구현 대기)
+### 사이클 16: 궁합 카드 fun 리딩 (큐레이티드 라이브러리) — 구현 완료 ✅ (수동 시각 검증만 남음)
 
 > 사용자 갭 #1(🔴). "점수+레이블=분석, 내러티브=감정 — 사람은 감정을 공유한다." 공유 욕구 레버.
 
 **결정(브레인스토밍):** 런타임 LLM 미사용 — LLM은 **오프라인 저작 도구**. 큐레이티드 라이브러리(`data/ksaju-readings.json`, 28 스니펫 = 25 정렬 오행쌍 + 3 점수티어) → `getReading()` 순수·결정적 함수(`fortune.ts` 패턴). 내러티브=카드 **감정 히어로**, breakdown 불릿 **제거**. 아이돌+상대 둘 다 자동. 영문·fun·건전(teen)·2-3줄·전 라인 사용자 리뷰.
 
-**상태:** spec 작성·커밋(`89a95cc`, `docs/superpowers/specs/2026-06-05-fun-reading-design.md`) → **사용자 스펙 리뷰 대기** → writing-plans → 구현(28 카피 저작은 구현 중, 출하 전 사용자 검토).
+**구현 결과:** 궁합 공유 카드에 개인화된 2-3줄 fun 내러티브를 점수/레이블 바로 아래 **감정 히어로**로 추가하고, 분석 breakdown 불릿(Day Master/Branch)을 카드에서 제거. `getReading(mePillars, otherPillars, score)`는 **내 일간 오행 × 상대 일간 오행 × 점수 티어**(high≥75/mid 50-74/low<50)로 정적 JSON에서 결정적 선택 — 런타임 LLM·API키·KV 0. `STEM_ELEMENT`는 `HEAVENLY_STEMS`(saju-data)에서 파생(compatibility.ts의 private STEM_ELEMENT와 동일 소스, DRY). `CompatShareCard`가 보유 props로 내부 직접 호출 → 아이돌(CompatibilitySection)·상대(PartnerCompatSection) **둘 다 자동 적용**(prop 스레딩·모달/섹션 변경 0). 전체 **154 tests pass**(reading 4 신규 + 카드 테스트 갱신), tsc clean, lint 신규 경고 0(기존 2건만), `next build` 성공(전 라우트 static ○). 카피 28라인 **사용자 리뷰 통과(수정 없이 승인)**.
+
+**커밋(최신순):**
+- `e701063` T3: 리딩=카드 히어로, breakdown 불릿 제거 (카드+테스트 갱신)
+- `9533d06` T2: `getReading` 결정적 순수함수 (오행쌍 × 점수티어, 4 tests)
+- `f701ffc` T1: `data/ksaju-readings.json` 큐레이티드 카피 (25 쌍 + 3 티어)
+- `1ddd924` plan · `89a95cc` spec
+
+**신규:** `data/ksaju-readings.json` · `src/lib/reading.ts`(+test). **수정:** `src/components/compat/compat-share-card.tsx`(+test).
+
+**남은 것:** ① 사용자 수동 시각 검증(`npm run dev`: `/inyeon` → 아이돌/상대 궁합 → 모달 카드에 리딩이 점수 아래 노출·breakdown 불릿 부재·Share PNG에 포함·다크/모바일) ② `finishing-a-development-branch`(feat/compat-reading → main 병합·push).
+
+**향후 시임:** LLM 라이브 생성 업그레이드 시 동일 `getReading` 시그니처 뒤로 교체 가능(설계상 열어둠).
 
 ---
 
