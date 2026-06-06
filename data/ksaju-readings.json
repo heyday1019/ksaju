@@ -1,0 +1,44 @@
+{
+  "pairs": {
+    "wood": {
+      "wood": "Two Wood spirits — you grow toward the same sun, roots quietly tangling.",
+      "fire": "Your Wood feeds their Fire — you make them blaze, they make you feel alive.",
+      "earth": "Your Wood reaches into their Earth — you push, they hold steady. Grounded growth.",
+      "metal": "Your Wood meets their Metal — they trim your wild branches. Sparks, then shape.",
+      "water": "Your Wood drinks their Water — they pour, you bloom. Easy, nourishing energy."
+    },
+    "fire": {
+      "wood": "Your Fire is fed by their Wood — they hand you fuel, you light up the room together.",
+      "fire": "Your Fire meets their Fire — twin sparks that just get each other.",
+      "earth": "Your Fire warms their Earth — you bring the heat, they make it home.",
+      "metal": "Your Fire meets their Metal — you melt their cool exterior. Intense, transformative.",
+      "water": "Your Fire meets their Water — steam, tension, and undeniable pull."
+    },
+    "earth": {
+      "wood": "Your Earth holds their Wood — you steady them, they keep you growing. Quiet teamwork.",
+      "fire": "Your Earth soaks up their Fire — they spark you, you give them somewhere to land.",
+      "earth": "Two Earth souls — solid, loyal, unshakeable. The kind that lasts.",
+      "metal": "Your Earth births their Metal — you ground them, they sharpen you. A natural fit.",
+      "water": "Your Earth meets their Water — you shape their flow, they soften your edges."
+    },
+    "metal": {
+      "wood": "Your Metal meets their Wood — you cut through their tangle. Push-pull with purpose.",
+      "fire": "Your Metal meets their Fire — they melt you down and remake you. Risky, electric.",
+      "earth": "Your Metal is forged in their Earth — they ground you, you give them an edge.",
+      "metal": "Two Metal hearts — sharp minds, high standards, real respect when you click.",
+      "water": "Your Metal feeds their Water — you give them shape, they keep you flowing. Cool and clear."
+    },
+    "water": {
+      "wood": "Your Water feeds their Wood — you pour, they bloom. You help each other grow.",
+      "fire": "Your Water meets their Fire — opposites that sizzle. Cool meets heat, sparks fly.",
+      "earth": "Your Water meets their Earth — they channel your flow. Steady banks for a restless current.",
+      "metal": "Your Water is poured from their Metal — they shape you, you keep them shining. Smooth.",
+      "water": "Two Water souls — deep, intuitive, flowing as one. You read each other without words."
+    }
+  },
+  "tiers": {
+    "high": "You'd shine brightest side by side. ✨",
+    "mid": "Different energies, real spark — worth the dance. 💫",
+    "low": "Opposites that test each other — handle with care. 🌙"
+  }
+}
