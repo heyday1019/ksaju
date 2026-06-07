@@ -4,6 +4,30 @@
 
 ---
 
+## 2026-06-08 (월)
+
+### 사이클 17: 운세(fortune) 공유 카드 (9:16 PNG) — 구현 완료 ✅ (수동 시각 검증만 남음)
+
+> 로드맵 잔여항목 #6(2026-06-05 기준). "내 사주" 운세의 Share가 비활성 티저였음 → 사이클 13 이미지 export 엔진(`share-image.ts`/`useShareImage`)과 사이클 13 `CompatShareCard`·`CompatibilityModal` 패턴을 재사용해 활성화. 주말 네트워크 중단 후 재개(2026-06-08).
+
+**결정(spec/plan):** 신규 엔진·궁합·카피·데이터·i18n·런타임 LLM **0**. 전용 9:16 `FortuneShareCard`(360×640 → pixelRatio 3 → 1080×1920)가 `calcFortune`을 내부 직접 호출(prop 스레딩 없음, `CompatShareCard`가 `getReading` 부르는 패턴과 동일). 모달 본문=카드(미리보기=export). `FortuneSection`의 disabled Share 티저 → 활성 버튼 + 모달 + `card_shared {kind:"fortune"}` 분석 이벤트.
+
+**구현 결과:** 일간 히어로(한자+오행 라벨+키워드) + 4운세(Money/Love/Career/This Year, 오행색 티어 배지) + `ksaju.me`/`For entertainment 🌙` 워터마크의 9:16 카드. 자동 검증 **157 tests pass**(card render + modal smoke 2 + section Share enabled), tsc clean, lint 신규 경고 0(기존 form.tsx/saju-data.ts 2건만), `next build` 성공(`/`·`/inyeon` static ○).
+
+**커밋(최신순):**
+- `5907752` T3: Share 활성화 — 카드 모달 오픈 + `card_shared` 분석
+- `ba03773` T2: `FortuneShareModal` — 미리보기 본문 + Share 버튼
+- `d091397` T1: 9:16 `FortuneShareCard`(일간 히어로 + 4운세)
+- `8b99bc0` plan · `2755f19` spec
+
+**신규:** `src/components/fortune/fortune-share-card.tsx`(+test) · `fortune-share-modal.tsx`(+test). **수정:** `fortune-section.tsx`(+test, Share 활성화).
+
+**재사용 무변경:** `share-image.ts`, `use-share-image.ts`, `fortune.ts`, `saju-display.ts`(`dayMasterInfo`/`WUXING_META`).
+
+**남은 것:** ① 사용자 수동 시각 검증(`npm run dev`: `/` 생일 입력 → Your Fortune 섹션 → Share ✨ → 모달 9:16 카드 노출 → PNG ~1080×1920 다운로드, 한글/한자 글리프 정상, 다크/모바일 — 4라인+히어로가 640px에서 밀도 높음, 클리핑 시 간격 조정). ② `finishing-a-development-branch`(feat/fortune-share → main 병합·push).
+
+---
+
 ## 2026-06-05 (금)
 
 ### 🗺️ 남은 작업 / 로드맵 (2026-06-05 기준)
