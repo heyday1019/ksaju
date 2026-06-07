@@ -6,7 +6,37 @@
 
 ## 2026-06-08 (월)
 
-### 사이클 17: 운세(fortune) 공유 카드 (9:16 PNG) — 구현 완료 ✅ (수동 시각 검증만 남음)
+### ▶️ 다음 세션 시작 액션 (세션 회복)
+
+**현재 위치:** 브랜치 `feat/trust-pages` (main `a8d8319`에서 분기, main=origin/main 동기화됨). 사이클 18(trust 페이지) **spec·plan 작성 완료, 구현 미착수.**
+
+**바로 할 일:** `docs/superpowers/plans/2026-06-08-trust-pages.md`의 Task 1부터 실행. `executing-plans`(인라인) 또는 `subagent-driven-development`(서브에이전트)로 진행. Task 1→6:
+1. T1 `/about` 페이지 (브랜드 보이스)
+2. T2 `/faq` 페이지 (8 Q&A)
+3. T3 `/terms` 페이지 (가벼운 디스클레이머)
+4. T4 footer nav 확장 (About·FAQ·Privacy·Terms) + footer 테스트 (TDD)
+5. T5 sitemap 확장 (6 URL, `/privacy` 포함) + 테스트 (TDD)
+6. T6 검증(suite/tsc/lint/build) + 문서 + `finishing-a-development-branch`(ff-merge → main → push)
+
+**참고:** 패턴은 `src/app/privacy/page.tsx` 미러링(정적 server 컴포넌트). 카피는 spec/plan에 전체 영문 확정본 있음(사용자 승인 완료). 신규 의존성·클라이언트 JS 없음.
+
+**커밋 상태(브랜치):** `aa1c89e` plan · `779d942` spec (둘 다 `feat/trust-pages`에만, main 미반영).
+
+---
+
+### 사이클 18: Trust 페이지 (About / FAQ / Terms) — 설계·계획 완료 🔜 (구현 대기)
+
+> 로드맵 잔여항목 #4(2026-06-05 기준). Privacy는 사이클 15 출하 → About/FAQ/Terms로 trust 세트 완성. AdSense 승인·SEO·신뢰 + footer 확장.
+
+**결정(브레인스토밍):** ① 3개 별도 라우트(`/about`·`/faq`·`/terms`) — privacy 패턴 미러, SEO/AdSense 유리, 각 페이지 공유 가능. ② About = **브랜드 보이스**("KSaju is…", 중립·확장성, 개인정보 비노출). ③ sitemap에 누락됐던 `/privacy`도 함께 등록. ④ 영어 전용·인라인 JSX(i18n/MDX 오버헤드 없음). 카피는 3페이지 전체 영문 초안을 사용자가 **검토·승인**.
+
+**범위:** 정적 server 컴포넌트 3개 + footer nav 4링크 확장 + sitemap 6 URL + footer/sitemap 테스트(TDD). **비범위:** CMS/MDX/i18n, 새 디자인 시스템, 클라이언트 JS·분석, privacy 재설계.
+
+**산출물:** spec `docs/superpowers/specs/2026-06-08-trust-pages-design.md`(`779d942`) · plan `docs/superpowers/plans/2026-06-08-trust-pages.md`(`aa1c89e`). **구현은 다음 세션** — 위 "다음 세션 시작 액션" 참고.
+
+---
+
+### 사이클 17: 운세(fortune) 공유 카드 (9:16 PNG) — 완료 ✅ (main 병합·push)
 
 > 로드맵 잔여항목 #6(2026-06-05 기준). "내 사주" 운세의 Share가 비활성 티저였음 → 사이클 13 이미지 export 엔진(`share-image.ts`/`useShareImage`)과 사이클 13 `CompatShareCard`·`CompatibilityModal` 패턴을 재사용해 활성화. 주말 네트워크 중단 후 재개(2026-06-08).
 
