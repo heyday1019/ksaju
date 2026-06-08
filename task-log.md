@@ -6,6 +6,14 @@
 
 ## 2026-06-08 (월)
 
+### ✅ 사이클 19 구현 완료 (카드/아이돌 비주얼 폴리시)
+
+**결과:** plan Task 1→5 전부 실행 완료(인라인). 순수 프레젠테이션 폴리시 4종 — ① IdolCard 아바타 모노그램을 일간 오행 튼트(/15)+오행색 글자로(`elementOf(idol.saju.dayMaster)`), ② 공유 카드 미니사주 한자 오행색+균일 간격(신규 `HanjaPillars`) & PillarsGrid char 간격, ③ IdolCard 결합 `aria-label`("이름, 그룹"), ④ BirthForm 출생시간 카피 친근화(한국어 전문용어 제거, 선택·정확도 명확화). DRY: 공유 `ELEMENT_TEXT` 맵을 `saju-display.ts`에 추가해 PillarsGrid·CompatShareCard가 공유. TDD: idol-card 오행클래스+aria-label, compat-card 오행색, ELEMENT_TEXT 단언. **162 tests pass**(158+4), tsc clean, lint=기존 2 warning만, `next build` 성공(6 라우트 static ○). dev 검증: 홈 출생시간 신규 카피 노출·구 "12지지" 제거 확인. 시각(아바타 색/한자 간격)은 테스트+빌드로 검증, 최종 eyeball은 사용자 몫.
+
+**커밋(브랜치 `feat/visual-polish`):** `47aca69` ELEMENT_TEXT+grid · `c3b72b9` idol avatar · `48d3e25` compat mini-saju · `fc1fe1b` form copy (+ spec `aa5a52a`·plan `ad1f8cd`·본 docs). 이후 `finishing-a-development-branch`로 main ff-merge·push.
+
+---
+
 ### ✅ 사이클 18 구현 완료 (trust 페이지)
 
 **결과:** plan Task 1→6 전부 실행 완료. `/about`·`/faq`·`/terms` 정적 server 컴포넌트 신규(privacy 패턴 미러) + footer nav 4링크(About·FAQ·Privacy·Terms, `flex-wrap`) + sitemap 6 URL(`/privacy` 포함). footer/sitemap TDD 테스트 추가. **158 tests pass**, tsc clean, lint=기존 2 warning만(`form.tsx` ref·`saju-data.ts` YinYang), `next build` 성공(6 라우트 모두 static ○). dev curl 검증: 전 라우트 200 + 콘텐츠 마커·footer 4링크 확인.
