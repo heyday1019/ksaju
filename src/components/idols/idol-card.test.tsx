@@ -41,4 +41,15 @@ describe("IdolCard", () => {
     await userEvent.click(screen.getByRole("radio"));
     expect(onSelect).toHaveBeenCalledExactlyOnceWith(RM);
   });
+
+  it("tints the avatar by the idol's day-master element (辛 → metal)", () => {
+    render(<IdolCard idol={RM} selected={false} onSelect={() => {}} />);
+    // monogram is the single-letter "R" span
+    expect(screen.getByText("R")).toHaveClass("text-wuxing-geum");
+  });
+
+  it("exposes a combined name+group accessible label", () => {
+    render(<IdolCard idol={RM} selected={false} onSelect={() => {}} />);
+    expect(screen.getByRole("radio", { name: "RM, BTS" })).toBeInTheDocument();
+  });
 });
