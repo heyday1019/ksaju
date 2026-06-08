@@ -1,10 +1,10 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
 import { BirthForm } from "@/components/kst/birth-form";
 import { CompatibilitySection } from "@/components/compat/compatibility-section";
 import { PartnerCompatSection } from "@/components/compat/partner-compat-section";
+import { SajuSummaryBar } from "./saju-summary-bar";
 import { Card, CardContent } from "@/components/ui/card";
 import { calcUserSaju } from "@/app/actions/saju";
 import { loadUserSaju, saveUserSaju } from "@/lib/saju-storage";
@@ -95,22 +95,7 @@ export function InyeonView() {
         ) : (
           <div className="space-y-6">
             {/* 내 사주 요약 */}
-            <section className="flex items-center justify-between rounded-xl bg-primary/5 px-4 py-3">
-              <div>
-                <p className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-                  Your saju · 사주
-                </p>
-                <p className="hanja mt-1 text-lg font-bold">
-                  {me.pillars.year} · {me.pillars.month} · {me.pillars.day}
-                </p>
-              </div>
-              <Link
-                href="/"
-                className="text-xs text-primary underline-offset-2 hover:underline"
-              >
-                Edit on home →
-              </Link>
-            </section>
+            <SajuSummaryBar saju={me} />
 
             {/* K-pop 최애 궁합 */}
             <CompatibilitySection userSaju={me} />
