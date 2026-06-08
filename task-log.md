@@ -34,6 +34,14 @@
 
 ---
 
+### ✅ 사이클 20 구현 완료 (아이돌 DB 확장 — 보이그룹 배치)
+
+**결과:** plan Task 1→4 전부 실행 완료. `data/ksaju-idol-db.json` **76→101명 / 14→19그룹** — SEVENTEEN·NCT·ATEEZ·ZEROBASEONE·RIIZE 각 5명(합계 25명) 추가. 재사용 생성기 `scripts/seed-idols.mjs`(`npm run seed:idols`)가 큐레이트 `scripts/idol-seed.json`(WebSearch ≥2출처 생일 검증)을 manseryeok `calculateSaju`로 계산·병합(self-check·idempotent). `src/lib/idols.test.ts`에 재생성 불변 테스트 추가 — DB 전 엔트리(old+new)를 manseryeok 라이브 계산값과 대조·고정. `idols.ts`·UI 무변경. **164 tests pass**(162+2), tsc clean, lint=기존 2 warning만, `next build` 성공(6 라우트 static ○). 아이돌 픽커 최종 eyeball은 사용자 몫.
+
+**커밋(브랜치 `feat/idol-db-expansion`):** `c50b3d9` regeneration test · `1bf7d64` seed list · `df28db7` generator + DB expansion (+ spec `4c9e8f0`·plan `a5104e1`·본 docs). 컨트롤러가 main ff-merge·push 처리.
+
+---
+
 ### ✅ 사이클 19 구현 완료 (카드/아이돌 비주얼 폴리시)
 
 **결과:** plan Task 1→5 전부 실행 완료(인라인). 순수 프레젠테이션 폴리시 4종 — ① IdolCard 아바타 모노그램을 일간 오행 튼트(/15)+오행색 글자로(`elementOf(idol.saju.dayMaster)`), ② 공유 카드 미니사주 한자 오행색+균일 간격(신규 `HanjaPillars`) & PillarsGrid char 간격, ③ IdolCard 결합 `aria-label`("이름, 그룹"), ④ BirthForm 출생시간 카피 친근화(한국어 전문용어 제거, 선택·정확도 명확화). DRY: 공유 `ELEMENT_TEXT` 맵을 `saju-display.ts`에 추가해 PillarsGrid·CompatShareCard가 공유. TDD: idol-card 오행클래스+aria-label, compat-card 오행색, ELEMENT_TEXT 단언. **162 tests pass**(158+4), tsc clean, lint=기존 2 warning만, `next build` 성공(6 라우트 static ○). dev 검증: 홈 출생시간 신규 카피 노출·구 "12지지" 제거 확인. 시각(아바타 색/한자 간격)은 테스트+빌드로 검증, 최종 eyeball은 사용자 몫.

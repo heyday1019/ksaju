@@ -112,11 +112,11 @@ const r = calcCompatibility(me, idol);
 
 ## 🎴 아이돌 DB
 
-- **위치:** `data/ksaju-idol-db.json` (76명 / 14개 그룹, 사주 사전 계산됨)
-- **그룹:** BTS, BLACKPINK, NewJeans, IVE, aespa, LE SSERAFIM, TWICE, Stray Kids, ENHYPEN, TXT, ITZY, (G)I-DLE, Red Velvet, IU
+- **위치:** `data/ksaju-idol-db.json` (**101명 / 19개 그룹**, 사주 사전 계산됨)
+- **그룹:** BTS, BLACKPINK, NewJeans, IVE, aespa, LE SSERAFIM, TWICE, Stray Kids, ENHYPEN, TXT, ITZY, (G)I-DLE, Red Velvet, IU, SEVENTEEN, NCT, ATEEZ, ZEROBASEONE, RIIZE
 - **스키마:** `{ id, name, group, birthdate, saju: { year:{kr,hanja}, month:{kr,hanja}, day:{kr,hanja}, dayMaster } }`
 - ⚠️ NewJeans/IVE/LE SSERAFIM 생일은 웹 검증됨. 나머지는 재확인 권장(나무위키)
-- 확장: 인기 그룹·멤버 추가 가능 (SEVENTEEN, NCT 등)
+- **DB 확장 방법:** `scripts/idol-seed.json`(WebSearch 검증 생일 큐레이션) 편집 후 `npm run seed:idols` 실행 → `scripts/seed-idols.mjs`가 manseryeok `calculateSaju`로 사주 계산·병합(self-check·idempotent). `src/lib/idols.test.ts`의 재생성 불변 테스트가 전 엔트리(old+new)를 manseryeok에 고정.
 
 ## 🧮 궁합 계산 로직 (설계 예정 — 다음 작업)
 
@@ -153,6 +153,7 @@ const r = calcCompatibility(me, idol);
 17. ✅ **운세(fortune) 공유 카드 (9:16 PNG)** — '내 사주' 운세의 비활성 Share 티저 → 활성화. 전용 9:16 `src/components/fortune/fortune-share-card.tsx`(`FortuneShareCard`, 360×640 → pixelRatio 3 → 1080×1920)가 `calcFortune`을 내부 직접 호출 → 일간 히어로(한자+오행라벨+키워드) + 4운세(Money/Love/Career/This Year, 오행색 티어배지) + `ksaju.me`/`For entertainment 🌙`. `fortune-share-modal.tsx`(`FortuneShareModal`)는 본문=카드(미리보기=export) + `useShareImage` 캡처(사이클 13 엔진 재사용, 신규 export 코드 0). `fortune-section.tsx`가 Share 버튼 활성화 + 모달 + `card_shared {kind:"fortune"}` 분석. 157 tests, tsc/lint clean, static. spec/plan: `docs/superpowers/{specs,plans}/2026-06-06-fortune-share-card*`
 18. ✅ **Trust 페이지 (About / FAQ / Terms)** — Privacy(사이클 15)에 이어 trust 세트 완성. 정적 server 컴포넌트 3개 신규(`src/app/{about,faq,terms}/page.tsx`, privacy 패턴 미러 — 한지 `<article>` + `metadata` export, 클라이언트 JS·분석 없음): `/about`=브랜드 보이스("KSaju is saju, but make it K."), `/faq`=8 Q&A, `/terms`=가벼운 디스클레이머(For entertainment). footer nav를 4링크(About·FAQ·Privacy·Terms, `flex-wrap`)로 확장 + `site-footer.test.tsx` smoke(TDD), sitemap 6 URL로 확장(누락됐던 `/privacy` 포함) + 테스트 6 URL 검증(TDD). 158 tests, tsc/lint clean, `next build` 6 라우트 static ○. spec/plan: `docs/superpowers/{specs,plans}/2026-06-08-trust-pages*`
 19. ✅ **카드/아이돌 비주얼 폴리시** — 순수 프레젠테이션 폴리시 4종(새 의존성·데이터·로직 없음, 기존 오행 토큰 재사용). ① IdolCard 아바타 모노그램을 핑크→골드 고정 그라데이션 → 일간 오행 튼트(/15)+오행색 글자(`elementOf(idol.saju.dayMaster)`)로 — 사람마다 오행 색. ② 공유 카드(`CompatShareCard`) 미니사주 한자에 오행색+균일 간격(신규 `HanjaPillars`), 홈 `PillarsGrid` char 간격 정리. DRY를 위해 글자색 리터럴 맵 `ELEMENT_TEXT`를 `src/lib/saju-display.ts`에 추가해 두 곳이 공유. ③ IdolCard에 결합 `aria-label`("이름, 그룹") 추가(스크린리더 명확화). ④ `BirthForm` 출생시간 헬퍼 카피 친근화(한국어 전문용어 "12지지" 제거 + 선택·정확도 명확). TDD(idol-card 오행클래스+aria, compat-card 오행색, ELEMENT_TEXT). 162 tests, tsc/lint clean, static. spec/plan: `docs/superpowers/{specs,plans}/2026-06-08-visual-polish*`
+20. ✅ **아이돌 DB 확장(보이그룹 배치)** — `data/ksaju-idol-db.json` 76→101명/14→19그룹(SEVENTEEN·NCT·ATEEZ·ZEROBASEONE·RIIZE 각 5명). 재사용 생성기 `scripts/seed-idols.mjs`(`npm run seed:idols`)가 큐레이트 `scripts/idol-seed.json`(WebSearch ≥2출처 검증 생일)을 manseryeok `calculateSaju`로 계산·병합(self-check·idempotent). 재생성 불변 테스트로 전 엔트리(old+new)를 manseryeok에 고정. `idols.ts`·UI 무변경. 164 tests, tsc/lint clean, static. spec/plan: `docs/superpowers/{specs,plans}/2026-06-08-idol-db-expansion*`
 
 ## 📣 마케팅 (병행)
 
