@@ -168,7 +168,7 @@ export function BirthForm({
                 />
               </FormControl>
               <FormDescription className="text-xs">
-                Needed for your full saju (12지지 hour pillar).
+                Optional — add your birth time for a more accurate hour pillar and reading.
               </FormDescription>
               <FormMessage>
                 {form.formState.errors.hour?.message ||
