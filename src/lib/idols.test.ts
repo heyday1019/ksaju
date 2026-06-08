@@ -9,6 +9,7 @@ import {
   type Idol,
 } from "./idols";
 import { calcCompatibility, normalizeIdolSaju } from "./compatibility";
+import { calculateSaju } from "@fullstackfamily/manseryeok";
 
 // === 데이터 로드 / 무결성 ===
 describe("idols 데이터 로드", () => {
@@ -36,6 +37,20 @@ describe("idols 데이터 로드", () => {
   it("dayMaster는 일주(day) 한자의 첫 글자와 일치한다", () => {
     for (const i of idols) {
       expect(i.saju.dayMaster).toBe(i.saju.day.hanja[0]);
+    }
+  });
+
+  it("모든 엔트리의 사주가 생일로 재계산한 결과와 일치한다", () => {
+    for (const i of idols) {
+      const [y, m, d] = i.birthdate.split("-").map(Number);
+      const s = calculateSaju(y, m, d);
+      expect(i.saju.year.hanja).toBe(s.yearPillarHanja);
+      expect(i.saju.year.kr).toBe(s.yearPillar);
+      expect(i.saju.month.hanja).toBe(s.monthPillarHanja);
+      expect(i.saju.month.kr).toBe(s.monthPillar);
+      expect(i.saju.day.hanja).toBe(s.dayPillarHanja);
+      expect(i.saju.day.kr).toBe(s.dayPillar);
+      expect(i.saju.dayMaster).toBe(s.dayPillarHanja[0]);
     }
   });
 });
