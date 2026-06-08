@@ -41,6 +41,19 @@ export const WUXING_META: Record<
   water: { token: "su", label: "Water", hanja: "水", emoji: "💧" },
 };
 
+/**
+ * 오행 → 글자색 클래스 (globals.css `--color-wuxing-*`).
+ * Tailwind v4 JIT가 정적 리터럴만 스캔하므로 문자열 리터럴 맵으로 유지.
+ * PillarsGrid · CompatShareCard 미니사주가 공유.
+ */
+export const ELEMENT_TEXT: Record<WuXing, string> = {
+  wood: "text-wuxing-mok",
+  fire: "text-wuxing-hwa",
+  earth: "text-wuxing-to",
+  metal: "text-wuxing-geum",
+  water: "text-wuxing-su",
+};
+
 /** "辛卯" → 천간/지지 각 글자 + 오행 */
 export function pillarBreakdown(pillar: string) {
   return {

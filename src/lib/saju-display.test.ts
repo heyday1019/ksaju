@@ -2,6 +2,7 @@ import { describe, it, expect } from "vitest";
 import {
   elementOf,
   WUXING_META,
+  ELEMENT_TEXT,
   pillarBreakdown,
   wuxingBalance,
   dayMasterInfo,
@@ -72,6 +73,18 @@ describe("dayMasterInfo", () => {
       char: "辛",
       element: "metal",
       keyword: DAY_MASTER_KEYWORDS["辛"],
+    });
+  });
+});
+
+describe("ELEMENT_TEXT", () => {
+  it("maps each element to its literal wuxing text-color class", () => {
+    expect(ELEMENT_TEXT).toEqual({
+      wood: "text-wuxing-mok",
+      fire: "text-wuxing-hwa",
+      earth: "text-wuxing-to",
+      metal: "text-wuxing-geum",
+      water: "text-wuxing-su",
     });
   });
 });
