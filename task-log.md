@@ -6,6 +6,34 @@
 
 ## 2026-06-08 (월)
 
+### 📌 오늘 요약 (2026-06-08)
+
+주말 네트워크 중단 후 재개. 하루에 **3개 사이클을 출하**(모두 `main` ff-merge·push 완료).
+
+- **사이클 17 — 운세 공유 카드(9:16 PNG):** 비활성 Share 티저 → 활성화. 전용 `FortuneShareCard`/`FortuneShareModal`, 사이클 13 export 엔진 재사용(신규 export 코드 0). (157 tests)
+- **사이클 18 — Trust 페이지:** `/about`·`/faq`·`/terms` 정적 페이지(privacy 패턴 미러) + footer nav 4링크 + sitemap 6 URL(`/privacy` 포함). footer/sitemap TDD. (158 tests)
+- **사이클 19 — 카드/아이돌 비주얼 폴리시:** IdolCard 오행 컬러 아바타 + 공유 카드 미니사주 오행색·간격 + 공유 `ELEMENT_TEXT` 맵 + name/group aria-label + 출생시간 카피 친근화. TDD. (162 tests)
+- **워크플로:** 각 사이클 brainstorm → spec → plan → 인라인 실행(executing-plans, 태스크별 커밋) → `finishing-a-development-branch`(ff-merge). 전부 사용자 검토·승인 게이트 통과.
+- **인프라:** git repo-local 신원 설정(`heyday1019` / `heyday1019@gmail.com`) — auto-config 경고 해소. 사이클 19 코드 커밋부터 적용(이전 커밋 author는 불변).
+- **상태:** 테스트 157→162, tsc/lint clean(기존 2 warning만), `next build` 6 라우트 static ○. 라이브 `ksaju-green.vercel.app`(auto-deploy from main).
+
+### ▶️ 다음 세션 시작 액션 (세션 회복)
+
+**현재 위치:** `main`(= origin/main 동기화, `30f7bc3`). 작업 브랜치 없음. 큰 비주얼 폴리시 번들 종료.
+
+**개발 후보(추천순):**
+1. **아이돌 DB 확장** — `data/ksaju-idol-db.json`에 인기 그룹 추가(SEVENTEEN, NCT 등) + 기존 생일 나무위키 재검증(NewJeans/IVE/LE SSERAFIM만 검증됨). 사주는 manseryeok로 사전계산. 바이럴 커버리지↑, 저위험. 스키마/`normalizeIdolSaju` 그대로.
+2. **`/inyeon` UX 다듬기** — 일반 상대 궁합 흐름·빈 상태·CTA 카피 등 사용성 개선.
+3. **사이클 19 최종 eyeball(사용자)** — `/inyeon` 픽커 아바타 오행색이 사람마다 다른지 + 공유 카드 미니사주 한자 색·간격 시각 확인(다크/모바일). 어긋나면 미세 조정 사이클.
+
+**사용자(비개발) 대기 작업:**
+- `ksaju.me` 커스텀 도메인 DNS 연결(`docs/deploy-runbook.md` §4).
+- Vercel env에 `NEXT_PUBLIC_POSTHOG_KEY` + `NEXT_PUBLIC_POSTHOG_HOST` 추가 후 재배포 → 프로덕션 분석 활성화.
+
+**보류 💤(트래픽 데이터 후 결정):** 런타임 LLM 리딩, 유료 IAP, POD 굿즈, 회원 계정.
+
+---
+
 ### ✅ 사이클 19 구현 완료 (카드/아이돌 비주얼 폴리시)
 
 **결과:** plan Task 1→5 전부 실행 완료(인라인). 순수 프레젠테이션 폴리시 4종 — ① IdolCard 아바타 모노그램을 일간 오행 튼트(/15)+오행색 글자로(`elementOf(idol.saju.dayMaster)`), ② 공유 카드 미니사주 한자 오행색+균일 간격(신규 `HanjaPillars`) & PillarsGrid char 간격, ③ IdolCard 결합 `aria-label`("이름, 그룹"), ④ BirthForm 출생시간 카피 친근화(한국어 전문용어 제거, 선택·정확도 명확화). DRY: 공유 `ELEMENT_TEXT` 맵을 `saju-display.ts`에 추가해 PillarsGrid·CompatShareCard가 공유. TDD: idol-card 오행클래스+aria-label, compat-card 오행색, ELEMENT_TEXT 단언. **162 tests pass**(158+4), tsc clean, lint=기존 2 warning만, `next build` 성공(6 라우트 static ○). dev 검증: 홈 출생시간 신규 카피 노출·구 "12지지" 제거 확인. 시각(아바타 색/한자 간격)은 테스트+빌드로 검증, 최종 eyeball은 사용자 몫.
