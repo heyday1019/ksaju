@@ -1,6 +1,7 @@
 import { forwardRef } from "react";
 import type { CompatibilityResult, SajuPillars } from "@/lib/compatibility";
 import { getReading } from "@/lib/reading";
+import { elementOf, ELEMENT_TEXT } from "@/lib/saju-display";
 
 /** Compatibility counterpart (idol or general partner) shown on the card. */
 export type CompatOther = { name: string; sub?: string; pillars: SajuPillars };
@@ -11,15 +12,27 @@ type CompatShareCardProps = {
   result: CompatibilityResult;
 };
 
+function HanjaPillars({ pillars }: { pillars: SajuPillars }) {
+  const cells = [pillars.year, pillars.month, pillars.day];
+  return (
+    <span className="hanja inline-flex items-center justify-center gap-2 text-xl font-bold">
+      {cells.map((p, i) => (
+        <span key={i} className="inline-flex gap-0.5">
+          <span className={ELEMENT_TEXT[elementOf(p[0])]}>{p[0]}</span>
+          <span className={ELEMENT_TEXT[elementOf(p[1])]}>{p[1]}</span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function MiniSaju({ label, pillars }: { label: string; pillars: SajuPillars }) {
   return (
     <div className="text-center">
       <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
         {label}
       </p>
-      <p className="hanja text-xl font-bold">
-        {pillars.year} {pillars.month} {pillars.day}
-      </p>
+      <HanjaPillars pillars={pillars} />
     </div>
   );
 }

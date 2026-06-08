@@ -39,4 +39,16 @@ describe("CompatShareCard", () => {
     expect(screen.queryByText(/Day Master:/)).not.toBeInTheDocument();
     expect(screen.queryByText(/Branch:/)).not.toBeInTheDocument();
   });
+
+  it("colors the mini-saju hanja by element (辛 in 辛卯 → metal)", () => {
+    const { container } = render(
+      <CompatShareCard
+        mePillars={ME}
+        other={{ name: "RM", sub: "BTS", pillars: OTHER }}
+        result={RESULT}
+      />,
+    );
+    // ME.day = 辛卯 → 辛 is metal → text-wuxing-geum
+    expect(container.querySelector(".text-wuxing-geum")).not.toBeNull();
+  });
 });
