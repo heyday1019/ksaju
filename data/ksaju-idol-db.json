@@ -1594,5 +1594,530 @@
       },
       "dayMaster": "丁"
     }
+  },
+  {
+    "id": "s-coups-seventeen",
+    "name": "S.Coups",
+    "group": "SEVENTEEN",
+    "birthdate": "1995-08-08",
+    "saju": {
+      "year": {
+        "kr": "을해",
+        "hanja": "乙亥"
+      },
+      "month": {
+        "kr": "갑신",
+        "hanja": "甲申"
+      },
+      "day": {
+        "kr": "신미",
+        "hanja": "辛未"
+      },
+      "dayMaster": "辛"
+    }
+  },
+  {
+    "id": "jeonghan-seventeen",
+    "name": "Jeonghan",
+    "group": "SEVENTEEN",
+    "birthdate": "1995-10-04",
+    "saju": {
+      "year": {
+        "kr": "을해",
+        "hanja": "乙亥"
+      },
+      "month": {
+        "kr": "을유",
+        "hanja": "乙酉"
+      },
+      "day": {
+        "kr": "무진",
+        "hanja": "戊辰"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "hoshi-seventeen",
+    "name": "Hoshi",
+    "group": "SEVENTEEN",
+    "birthdate": "1996-06-15",
+    "saju": {
+      "year": {
+        "kr": "병자",
+        "hanja": "丙子"
+      },
+      "month": {
+        "kr": "갑오",
+        "hanja": "甲午"
+      },
+      "day": {
+        "kr": "계미",
+        "hanja": "癸未"
+      },
+      "dayMaster": "癸"
+    }
+  },
+  {
+    "id": "mingyu-seventeen",
+    "name": "Mingyu",
+    "group": "SEVENTEEN",
+    "birthdate": "1997-04-06",
+    "saju": {
+      "year": {
+        "kr": "정축",
+        "hanja": "丁丑"
+      },
+      "month": {
+        "kr": "갑진",
+        "hanja": "甲辰"
+      },
+      "day": {
+        "kr": "무인",
+        "hanja": "戊寅"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "vernon-seventeen",
+    "name": "Vernon",
+    "group": "SEVENTEEN",
+    "birthdate": "1998-02-18",
+    "saju": {
+      "year": {
+        "kr": "무인",
+        "hanja": "戊寅"
+      },
+      "month": {
+        "kr": "갑인",
+        "hanja": "甲寅"
+      },
+      "day": {
+        "kr": "병신",
+        "hanja": "丙申"
+      },
+      "dayMaster": "丙"
+    }
+  },
+  {
+    "id": "taeyong-nct",
+    "name": "Taeyong",
+    "group": "NCT",
+    "birthdate": "1995-07-01",
+    "saju": {
+      "year": {
+        "kr": "을해",
+        "hanja": "乙亥"
+      },
+      "month": {
+        "kr": "임오",
+        "hanja": "壬午"
+      },
+      "day": {
+        "kr": "계사",
+        "hanja": "癸巳"
+      },
+      "dayMaster": "癸"
+    }
+  },
+  {
+    "id": "mark-nct",
+    "name": "Mark",
+    "group": "NCT",
+    "birthdate": "1999-08-02",
+    "saju": {
+      "year": {
+        "kr": "기묘",
+        "hanja": "己卯"
+      },
+      "month": {
+        "kr": "신미",
+        "hanja": "辛未"
+      },
+      "day": {
+        "kr": "병술",
+        "hanja": "丙戌"
+      },
+      "dayMaster": "丙"
+    }
+  },
+  {
+    "id": "jaehyun-nct",
+    "name": "Jaehyun",
+    "group": "NCT",
+    "birthdate": "1997-02-14",
+    "saju": {
+      "year": {
+        "kr": "정축",
+        "hanja": "丁丑"
+      },
+      "month": {
+        "kr": "임인",
+        "hanja": "壬寅"
+      },
+      "day": {
+        "kr": "정해",
+        "hanja": "丁亥"
+      },
+      "dayMaster": "丁"
+    }
+  },
+  {
+    "id": "haechan-nct",
+    "name": "Haechan",
+    "group": "NCT",
+    "birthdate": "2000-06-06",
+    "saju": {
+      "year": {
+        "kr": "경진",
+        "hanja": "庚辰"
+      },
+      "month": {
+        "kr": "임오",
+        "hanja": "壬午"
+      },
+      "day": {
+        "kr": "을미",
+        "hanja": "乙未"
+      },
+      "dayMaster": "乙"
+    }
+  },
+  {
+    "id": "jeno-nct",
+    "name": "Jeno",
+    "group": "NCT",
+    "birthdate": "2000-04-23",
+    "saju": {
+      "year": {
+        "kr": "경진",
+        "hanja": "庚辰"
+      },
+      "month": {
+        "kr": "경진",
+        "hanja": "庚辰"
+      },
+      "day": {
+        "kr": "신해",
+        "hanja": "辛亥"
+      },
+      "dayMaster": "辛"
+    }
+  },
+  {
+    "id": "hongjoong-ateez",
+    "name": "Hongjoong",
+    "group": "ATEEZ",
+    "birthdate": "1998-11-07",
+    "saju": {
+      "year": {
+        "kr": "무인",
+        "hanja": "戊寅"
+      },
+      "month": {
+        "kr": "임술",
+        "hanja": "壬戌"
+      },
+      "day": {
+        "kr": "무오",
+        "hanja": "戊午"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "seonghwa-ateez",
+    "name": "Seonghwa",
+    "group": "ATEEZ",
+    "birthdate": "1998-04-03",
+    "saju": {
+      "year": {
+        "kr": "무인",
+        "hanja": "戊寅"
+      },
+      "month": {
+        "kr": "을묘",
+        "hanja": "乙卯"
+      },
+      "day": {
+        "kr": "경진",
+        "hanja": "庚辰"
+      },
+      "dayMaster": "庚"
+    }
+  },
+  {
+    "id": "san-ateez",
+    "name": "San",
+    "group": "ATEEZ",
+    "birthdate": "1999-07-10",
+    "saju": {
+      "year": {
+        "kr": "기묘",
+        "hanja": "己卯"
+      },
+      "month": {
+        "kr": "신미",
+        "hanja": "辛未"
+      },
+      "day": {
+        "kr": "계해",
+        "hanja": "癸亥"
+      },
+      "dayMaster": "癸"
+    }
+  },
+  {
+    "id": "wooyoung-ateez",
+    "name": "Wooyoung",
+    "group": "ATEEZ",
+    "birthdate": "1999-11-26",
+    "saju": {
+      "year": {
+        "kr": "기묘",
+        "hanja": "己卯"
+      },
+      "month": {
+        "kr": "을해",
+        "hanja": "乙亥"
+      },
+      "day": {
+        "kr": "임오",
+        "hanja": "壬午"
+      },
+      "dayMaster": "壬"
+    }
+  },
+  {
+    "id": "yeosang-ateez",
+    "name": "Yeosang",
+    "group": "ATEEZ",
+    "birthdate": "1999-06-15",
+    "saju": {
+      "year": {
+        "kr": "기묘",
+        "hanja": "己卯"
+      },
+      "month": {
+        "kr": "경오",
+        "hanja": "庚午"
+      },
+      "day": {
+        "kr": "무술",
+        "hanja": "戊戌"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "sung-hanbin-zerobaseone",
+    "name": "Sung Hanbin",
+    "group": "ZEROBASEONE",
+    "birthdate": "2001-06-13",
+    "saju": {
+      "year": {
+        "kr": "신사",
+        "hanja": "辛巳"
+      },
+      "month": {
+        "kr": "갑오",
+        "hanja": "甲午"
+      },
+      "day": {
+        "kr": "정미",
+        "hanja": "丁未"
+      },
+      "dayMaster": "丁"
+    }
+  },
+  {
+    "id": "zhang-hao-zerobaseone",
+    "name": "Zhang Hao",
+    "group": "ZEROBASEONE",
+    "birthdate": "2000-07-25",
+    "saju": {
+      "year": {
+        "kr": "경진",
+        "hanja": "庚辰"
+      },
+      "month": {
+        "kr": "계미",
+        "hanja": "癸未"
+      },
+      "day": {
+        "kr": "갑신",
+        "hanja": "甲申"
+      },
+      "dayMaster": "甲"
+    }
+  },
+  {
+    "id": "kim-jiwoong-zerobaseone",
+    "name": "Kim Jiwoong",
+    "group": "ZEROBASEONE",
+    "birthdate": "1998-12-14",
+    "saju": {
+      "year": {
+        "kr": "무인",
+        "hanja": "戊寅"
+      },
+      "month": {
+        "kr": "갑자",
+        "hanja": "甲子"
+      },
+      "day": {
+        "kr": "을미",
+        "hanja": "乙未"
+      },
+      "dayMaster": "乙"
+    }
+  },
+  {
+    "id": "seok-matthew-zerobaseone",
+    "name": "Seok Matthew",
+    "group": "ZEROBASEONE",
+    "birthdate": "2002-05-28",
+    "saju": {
+      "year": {
+        "kr": "임오",
+        "hanja": "壬午"
+      },
+      "month": {
+        "kr": "을사",
+        "hanja": "乙巳"
+      },
+      "day": {
+        "kr": "병신",
+        "hanja": "丙申"
+      },
+      "dayMaster": "丙"
+    }
+  },
+  {
+    "id": "han-yujin-zerobaseone",
+    "name": "Han Yujin",
+    "group": "ZEROBASEONE",
+    "birthdate": "2007-03-20",
+    "saju": {
+      "year": {
+        "kr": "정해",
+        "hanja": "丁亥"
+      },
+      "month": {
+        "kr": "계묘",
+        "hanja": "癸卯"
+      },
+      "day": {
+        "kr": "계축",
+        "hanja": "癸丑"
+      },
+      "dayMaster": "癸"
+    }
+  },
+  {
+    "id": "shotaro-riize",
+    "name": "Shotaro",
+    "group": "RIIZE",
+    "birthdate": "2000-11-25",
+    "saju": {
+      "year": {
+        "kr": "경진",
+        "hanja": "庚辰"
+      },
+      "month": {
+        "kr": "정해",
+        "hanja": "丁亥"
+      },
+      "day": {
+        "kr": "정해",
+        "hanja": "丁亥"
+      },
+      "dayMaster": "丁"
+    }
+  },
+  {
+    "id": "sungchan-riize",
+    "name": "Sungchan",
+    "group": "RIIZE",
+    "birthdate": "2001-09-13",
+    "saju": {
+      "year": {
+        "kr": "신사",
+        "hanja": "辛巳"
+      },
+      "month": {
+        "kr": "정유",
+        "hanja": "丁酉"
+      },
+      "day": {
+        "kr": "기묘",
+        "hanja": "己卯"
+      },
+      "dayMaster": "己"
+    }
+  },
+  {
+    "id": "wonbin-riize",
+    "name": "Wonbin",
+    "group": "RIIZE",
+    "birthdate": "2002-03-02",
+    "saju": {
+      "year": {
+        "kr": "임오",
+        "hanja": "壬午"
+      },
+      "month": {
+        "kr": "임인",
+        "hanja": "壬寅"
+      },
+      "day": {
+        "kr": "기사",
+        "hanja": "己巳"
+      },
+      "dayMaster": "己"
+    }
+  },
+  {
+    "id": "sohee-riize",
+    "name": "Sohee",
+    "group": "RIIZE",
+    "birthdate": "2003-11-21",
+    "saju": {
+      "year": {
+        "kr": "계미",
+        "hanja": "癸未"
+      },
+      "month": {
+        "kr": "계해",
+        "hanja": "癸亥"
+      },
+      "day": {
+        "kr": "무술",
+        "hanja": "戊戌"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "anton-riize",
+    "name": "Anton",
+    "group": "RIIZE",
+    "birthdate": "2004-03-21",
+    "saju": {
+      "year": {
+        "kr": "갑신",
+        "hanja": "甲申"
+      },
+      "month": {
+        "kr": "정묘",
+        "hanja": "丁卯"
+      },
+      "day": {
+        "kr": "기해",
+        "hanja": "己亥"
+      },
+      "dayMaster": "己"
+    }
   }
 ]

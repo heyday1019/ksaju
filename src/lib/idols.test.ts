@@ -13,8 +13,14 @@ import { calculateSaju } from "@fullstackfamily/manseryeok";
 
 // === 데이터 로드 / 무결성 ===
 describe("idols 데이터 로드", () => {
-  it("76명을 로드한다", () => {
-    expect(idols.length).toBe(76);
+  it("전체 아이돌을 로드한다", () => {
+    expect(idols.length).toBe(101);
+  });
+
+  it("새 보이그룹들이 groups에 포함된다", () => {
+    for (const g of ["SEVENTEEN", "NCT", "ATEEZ", "ZEROBASEONE", "RIIZE"]) {
+      expect(groups).toContain(g);
+    }
   });
 
   it("모든 엔트리가 필수 필드를 갖는다", () => {
