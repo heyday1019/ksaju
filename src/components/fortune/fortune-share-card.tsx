@@ -37,7 +37,7 @@ export const FortuneShareCard = forwardRef<HTMLDivElement, FortuneShareCardProps
           style={{ backgroundSize: "40px 14px" }}
         />
 
-        <div className="flex w-full flex-1 flex-col items-center justify-center gap-4 px-7 pt-10">
+        <div className="flex w-full flex-1 flex-col items-center justify-center gap-3 px-7 pt-6">
           <p className="text-xs font-bold uppercase tracking-wider text-primary">
             My Saju Fortune
           </p>
