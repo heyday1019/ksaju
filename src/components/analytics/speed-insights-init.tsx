@@ -1,10 +1,5 @@
-"use client";
-import { useEffect } from "react";
-import { injectSpeedInsights } from "@vercel/speed-insights";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export function SpeedInsightsInit() {
-  useEffect(() => {
-    injectSpeedInsights();
-  }, []);
-  return null;
+  return <SpeedInsights />;
 }
