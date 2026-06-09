@@ -6,27 +6,12 @@
 
 ## 2026-06-08 (월)
 
-### ▶️ 다음 세션 시작 액션 (세션 회복 — 사이클 21 진행 중)
-
-**현재 위치:** 브랜치 `feat/inyeon-ux` (main `865f423`에서 분기). 사이클 21(`/inyeon` UX 다듬기) **Task 1만 완료, Task 2~4 미착수.** token limit으로 중단.
-
-**완료(브랜치):** spec `2b55de2` · plan `2d2f7dc` · **Task 1 `81e1277`**(신규 `SajuSummaryBar` = 오행색 한자 + 일간 줄, `inyeon-view`에 연결, `Link` 미사용 import 제거, 3 tests pass·tsc clean).
-
-**바로 할 일:** `docs/superpowers/plans/2026-06-08-inyeon-ux.md`의 **Task 2부터** 인라인(executing-plans)으로 계속:
-- **Task 2** — 픽커(`idol-picker.tsx`): 그룹 알파벳 정렬(모듈 `SORTED_GROUPS`) · 검색 `autoFocus`+힌트 줄 · 멤버수 알약 배지 · **aespa 기본 펼침**(`expandedGroup` 초기값=`SORTED_GROUPS[0]`). ⚠️ 기존 테스트 #1("모두 접힘/radio 0개")을 **aespa 펼침**으로 교체 + 정렬·힌트 테스트 2개 추가(플랜에 전체 코드 있음).
-- **Task 3** — 양 compat 섹션에 "View … result again ✨" 재오픈 버튼(`idol && !open` / `result && partnerPillars && !open`) + 재오픈 테스트 2개(모달은 `closeLabel` 버튼으로 닫음).
-- **Task 4** — 전체 게이트(**169 tests 예상**)/build + dev 시각확인 + 문서 + `finishing-a-development-branch`(ff-merge `feat/inyeon-ux`→main→push).
-
-**참고:** 결정사항 = aespa 기본 펼침, 검색 autofocus ON. 모두 프레젠테이션 폴리시(새 의존성·데이터·분석·엔진 변경 0). 플랜에 태스크별 전체 코드·테스트 수록.
-
----
-
 ### 📌 오늘 요약 (2026-06-08)
 
-주말 네트워크 중단 후 재개. 하루에 **3개 사이클 출하**(17·18·19, 모두 main) + **사이클 20 출하**(아이돌 DB 확장) + **사이클 21 착수**(`/inyeon` UX, Task 1까지).
+주말 네트워크 중단 후 재개. 하루에 **3개 사이클 출하**(17·18·19, 모두 main) + **사이클 20 출하**(아이돌 DB 확장) + **사이클 21 출하**(`/inyeon` UX 폴리시).
 
 - **사이클 20 — 아이돌 DB 확장:** DB 76→101명/14→19그룹(SEVENTEEN·NCT·ATEEZ·ZEROBASEONE·RIIZE 각 5명). 재사용 생성기 `scripts/seed-idols.mjs`(`npm run seed:idols`)가 `scripts/idol-seed.json`(WebSearch ≥2출처 검증 생일)→manseryeok 계산·병합(self-check·idempotent). 재생성 불변 테스트로 전 엔트리 고정. subagent-driven 실행. 164 tests. **main 병합·push 완료.**
-- **사이클 21 — `/inyeon` UX 다듬기(진행 중):** Task 1 `SajuSummaryBar`만 완료(위 회복 블록 참고). Task 2~4 남음.
+- **사이클 21 — `/inyeon` UX 폴리시:** spec `2b55de2` · plan `2d2f7dc` · Task 1 `81e1277`(신규 `SajuSummaryBar` = 오행색 한자 + 일간 줄, `inyeon-view` 연결) · Task 2 `2d3575e`(`idol-picker`: 알파벳 정렬 `SORTED_GROUPS` · 검색 `autoFocus`+힌트 · 멤버수 알약 배지 · aespa 기본 펼침) · Task 3 `3cb73ad`(양 compat 섹션 "View … result again ✨" 재오픈 버튼, 기존 state 재사용). 프레젠테이션 전용(새 의존성·데이터·분석·엔진 변경 0). TDD(+5 tests). **169 tests**, tsc clean, lint 2 기존경고만, `/`·`/inyeon` static build ○. dev 부팅·라우트 200 확인(인터랙티브 픽커/바는 localStorage 저장 사주에 게이트 → 브라우저 세션 필요, 동작은 유닛테스트 커버). ff-merge `feat/inyeon-ux`→main→push.
 - **git 신원:** repo-local `heyday1019`/`heyday1019@gmail.com`(사이클 19부터 적용).
 
 — 이하 같은 날짜 이전 기록 —
