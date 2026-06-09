@@ -16,20 +16,20 @@ type CompatShareCardProps = {
 function HanjaPillars({ pillars }: { pillars: SajuPillars }) {
   const cells = [pillars.year, pillars.month, pillars.day];
   return (
-    <span className="hanja inline-flex items-center justify-center gap-2 text-xl font-bold">
+    <div className="hanja flex items-center justify-center gap-1.5 text-xl font-bold">
       {cells.map((p, i) => (
         <span key={i} className="inline-flex gap-0.5">
           <span className={ELEMENT_TEXT[elementOf(p[0])]}>{p[0]}</span>
           <span className={ELEMENT_TEXT[elementOf(p[1])]}>{p[1]}</span>
         </span>
       ))}
-    </span>
+    </div>
   );
 }
 
 function MiniSaju({ label, pillars }: { label: string; pillars: SajuPillars }) {
   return (
-    <div className="text-center">
+    <div className="min-w-0 flex-1 text-center">
       <p className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
         {label}
       </p>
@@ -77,9 +77,9 @@ export const CompatShareCard = forwardRef<HTMLDivElement, CompatShareCardProps>(
             {reading}
           </p>
 
-          <div className="flex w-full items-center justify-around rounded-xl border border-border bg-card/60 py-4">
+          <div className="flex w-full items-center gap-2 rounded-xl border border-border bg-card/60 px-4 py-4">
             <MiniSaju label="You" pillars={mePillars} />
-            <span className="font-calli text-3xl text-accent">×</span>
+            <span className="flex-shrink-0 font-calli text-3xl text-accent">×</span>
             <MiniSaju label={other.name} pillars={other.pillars} />
           </div>
         </div>
