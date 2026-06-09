@@ -22,6 +22,8 @@
     "@radix-ui/react-slot": "^1.2.4",
     "@supabase/ssr": "^0.10.3",
     "@supabase/supabase-js": "^2.106.0",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "date-fns": "^4.2.1",
@@ -43,6 +45,7 @@
     "zod": "^4.4.3"
   },
   "devDependencies": {
+    "@playwright/test": "^1.60.0",
     "@tailwindcss/postcss": "^4",
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
@@ -53,6 +56,7 @@
     "eslint": "^9",
     "eslint-config-next": "^16.2.6",
     "happy-dom": "^20.9.0",
+    "playwright": "^1.60.0",
     "qrcode": "^1.5.4",
     "sharp": "^0.34.5",
     "tailwindcss": "^4",
