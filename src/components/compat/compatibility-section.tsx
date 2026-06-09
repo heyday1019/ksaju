@@ -52,6 +52,18 @@ export function CompatibilitySection({ userSaju }: { userSaju: UserSaju }) {
 
       <IdolPicker onSelect={handleSelect} />
 
+      {idol && !open && (
+        <div className="text-center">
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="text-sm text-primary underline-offset-2 hover:underline"
+          >
+            View {idol.name} result again ✨
+          </button>
+        </div>
+      )}
+
       {idol && result && (
         <CompatibilityModal
           open={open}

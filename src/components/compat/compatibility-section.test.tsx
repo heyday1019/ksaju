@@ -21,4 +21,19 @@ describe("CompatibilitySection", () => {
     expect(within(dialog).getByText("/100")).toBeInTheDocument();
     expect(within(dialog).getByText("You")).toBeInTheDocument();
   });
+
+  it("모달을 닫으면 결과 다시보기 버튼으로 재오픈할 수 있다", async () => {
+    render(<CompatibilitySection userSaju={RM} />);
+    await userEvent.type(screen.getByRole("searchbox"), "rm");
+    await userEvent.click(screen.getByRole("radio"));
+    await screen.findByRole("dialog");
+    await userEvent.click(
+      screen.getByRole("button", { name: /check another idol/i }),
+    );
+    const again = await screen.findByRole("button", {
+      name: /view rm result again/i,
+    });
+    await userEvent.click(again);
+    expect(await screen.findByRole("dialog")).toBeInTheDocument();
+  });
 });

@@ -33,4 +33,25 @@ describe("PartnerCompatSection", () => {
     expect(within(dialog).getByText("/100")).toBeInTheDocument();
     expect(within(dialog).getByText(/You × Alex/)).toBeInTheDocument();
   });
+
+  it("모달을 닫으면 결과 다시보기 버튼으로 재오픈할 수 있다", async () => {
+    render(<PartnerCompatSection userSaju={ME} />);
+    await userEvent.type(screen.getByLabelText(/their name/i), "Alex");
+    const dateInput = document.querySelector(
+      'input[type="date"]',
+    ) as HTMLInputElement;
+    await userEvent.type(dateInput, "1998-05-20");
+    await userEvent.click(
+      screen.getByRole("button", { name: /reveal compatibility/i }),
+    );
+    await screen.findByRole("dialog");
+    await userEvent.click(
+      screen.getByRole("button", { name: /check someone else/i }),
+    );
+    const again = await screen.findByRole("button", {
+      name: /view alex result again/i,
+    });
+    await userEvent.click(again);
+    expect(await screen.findByRole("dialog")).toBeInTheDocument();
+  });
 });

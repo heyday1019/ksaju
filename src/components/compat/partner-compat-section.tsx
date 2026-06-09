@@ -94,6 +94,18 @@ export function PartnerCompatSection({ userSaju }: { userSaju: UserSaju }) {
         submittingLabel="Reading…"
       />
 
+      {result && partnerPillars && !open && (
+        <div className="text-center">
+          <button
+            type="button"
+            onClick={() => setOpen(true)}
+            className="text-sm text-primary underline-offset-2 hover:underline"
+          >
+            View {partnerName.trim() || "their"} result again ✨
+          </button>
+        </div>
+      )}
+
       {result && partnerPillars && (
         <CompatibilityModal
           open={open}
