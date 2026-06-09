@@ -4,6 +4,20 @@
 
 ---
 
+## 2026-06-09 (화)
+
+### 📌 오늘 요약 (2026-06-09)
+
+**사이클 22 — 공유 카드 유입 마그넷(브랜디드 QR 푸터) 출하.** subagent-driven 실행.
+
+- **방향:** 다음 사이클 brainstorm → 성장·바이럴 레버 → 약한 고리=카드(유입 마그넷) → 사용자가 만든 낙관(사주 도장)으로 **브랜디드 QR**(낙관 중앙 삽입) → 두 공유 카드 공통 푸터.
+- **구현:** ① 1회 생성기 `scripts/gen-qr.mjs`(`npm run gen:qr`)가 `qrcode`(레벨 H)+`sharp`로 낙관(`scripts/assets/stamp-saju.png`, 우하단 워터마크 센터-크롭)을 중앙 합성 → `public/ksaju-qr.png` 커밋. `qrcode`·`sharp`=devDep, 런타임 의존성 0. QR 디코드 검증=`https://ksaju.me`. ② 신규 공통 `src/components/share/share-card-footer.tsx`(`ShareCardFooter`)가 QR+"Make yours → ksaju.me"+디스클레이머 → `CompatShareCard`·`FortuneShareCard` 둘 다 교체(DRY). ③ 두 모달 캡션 "make yours at ksaju.me" 훅. ④ 루트 잔재 정리(.gitignore + 임시 json 4개 제거).
+- **커밋:** spec `8e12d39` · plan `04201b3` · Task1 `fbe237d`+`5891ae5`(QR 에셋·경로 정리) · Task2 `02e80d0`(footer) · Task3 `78d45c5`(두 카드 연결) · Task4 `8e7a6ff`(캡션).
+- **상태:** 170 tests(169+footer 1), tsc clean, lint 2 기존경고만, `next build` 전 라우트 static ○.
+- **⚠️ 사용자 후속:** QR은 **ksaju.me DNS 연결 후에만 라이브**(그 전엔 스캔 실패). **육안 확인 권장:** 두 공유 카드 푸터가 640px 안에서 클리핑 없이 들어가는지(특히 운세 카드, 추정 슬랙 ~28px) + 라이트/다크/모바일. localStorage 사주 게이트라 브라우저 세션 필요.
+
+---
+
 ## 2026-06-08 (월)
 
 ### 📌 오늘 요약 (2026-06-08)
