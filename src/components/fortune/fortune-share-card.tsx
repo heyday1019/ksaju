@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import { calcFortune } from "@/lib/fortune";
 import { dayMasterInfo, WUXING_META } from "@/lib/saju-display";
 import type { UserSaju, CurrentLuck, WuXing } from "@/lib/saju-types";
+import { ShareCardFooter } from "@/components/share/share-card-footer";
 
 // 정적 오행 색 클래스 (Tailwind v4 JIT 스캔용 리터럴) — fortune-card.tsx와 동일 패턴.
 const ACCENT: Record<WuXing, string> = {
@@ -75,14 +76,7 @@ export const FortuneShareCard = forwardRef<HTMLDivElement, FortuneShareCardProps
           </ul>
         </div>
 
-        <div className="w-full pb-9">
-          <p className="font-display text-base font-semibold text-primary">
-            ksaju.me
-          </p>
-          <p className="text-[11px] text-muted-foreground">
-            For entertainment 🌙
-          </p>
-        </div>
+        <ShareCardFooter />
 
         <div
           className="changsal-band absolute bottom-0 left-0 right-0 h-[14px]"

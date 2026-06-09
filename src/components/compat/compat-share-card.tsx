@@ -2,6 +2,7 @@ import { forwardRef } from "react";
 import type { CompatibilityResult, SajuPillars } from "@/lib/compatibility";
 import { getReading } from "@/lib/reading";
 import { elementOf, ELEMENT_TEXT } from "@/lib/saju-display";
+import { ShareCardFooter } from "@/components/share/share-card-footer";
 
 /** Compatibility counterpart (idol or general partner) shown on the card. */
 export type CompatOther = { name: string; sub?: string; pillars: SajuPillars };
@@ -83,14 +84,7 @@ export const CompatShareCard = forwardRef<HTMLDivElement, CompatShareCardProps>(
           </div>
         </div>
 
-        <div className="w-full pb-9">
-          <p className="font-display text-base font-semibold text-primary">
-            ksaju.me
-          </p>
-          <p className="text-[11px] text-muted-foreground">
-            For entertainment 🌙
-          </p>
-        </div>
+        <ShareCardFooter />
 
         <div
           className="changsal-band absolute bottom-0 left-0 right-0 h-[14px]"
