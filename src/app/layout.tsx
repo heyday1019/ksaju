@@ -34,26 +34,68 @@ const notoSerifKR = Noto_Serif_KR({
   subsets: ["latin"],          // CJK 글리프는 unicode-range로 자동 subset
 });
 
-const SITE_TITLE = "KSaju · Korean fortune, made cosmic";
-const SITE_DESCRIPTION =
-  "Authentic Korean saju for the K-content generation. Discover your inyeon.";
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ksaju.me";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://ksaju.me"),
-  title: SITE_TITLE,
-  description: SITE_DESCRIPTION,
-  openGraph: {
-    title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
-    url: "https://ksaju.me",
-    siteName: "KSaju",
-    locale: "en_US",
-    type: "website",
+  metadataBase: new URL(siteUrl),
+
+  title: {
+    default: "KSaju · Korean Saju Compatibility for K-pop Fans",
+    template: "%s · KSaju",
   },
+  description:
+    "Discover your Korean saju (사주) compatibility with your bias. " +
+    "1,000 years of Korean fortune wisdom, made shareable for the K-content generation.",
+
+  keywords: ["saju", "korean fortune", "kpop compatibility", "kpop saju", "inyeon", "사주"],
+
+  alternates: {
+    canonical: "/",
+  },
+
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: siteUrl,
+    siteName: "KSaju",
+    title: "KSaju · Korean Saju Compatibility for K-pop Fans",
+    description: "Saju, but make it K. Find your bias compatibility in seconds.",
+    images: [
+      {
+        url: "/og-default.png",
+        width: 1200,
+        height: 630,
+        alt: "KSaju — Korean saju compatibility for K-pop fans",
+      },
+    ],
+  },
+
   twitter: {
     card: "summary_large_image",
-    title: SITE_TITLE,
-    description: SITE_DESCRIPTION,
+    title: "KSaju · Korean Saju Compatibility for K-pop Fans",
+    description: "Saju, but make it K. Find your bias compatibility in seconds.",
+    images: ["/og-default.png"],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FBF6E8" },
+    { media: "(prefers-color-scheme: dark)", color: "#0F0828" },
+  ],
+
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
   },
 };
 
