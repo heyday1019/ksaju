@@ -37,7 +37,7 @@ export function FortuneShareModal({
     fileName: "ksaju-fortune.png",
     shareMeta: {
       title: "My KSaju fortune",
-      text: "My saju fortune — ksaju.me",
+      text: "My saju fortune — make yours at ksaju.me",
     },
     onShared,
   });

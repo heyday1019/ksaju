@@ -43,7 +43,7 @@ export function CompatibilityModal({
     fileName: "ksaju-compat.png",
     shareMeta: {
       title: "My KSaju compatibility",
-      text: `You × ${other.name}: ${result.score}/100 — ksaju.me`,
+      text: `You × ${other.name}: ${result.score}/100 — make yours at ksaju.me`,
     },
     onShared,
   });
