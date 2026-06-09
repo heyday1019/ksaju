@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Inter, Gowun_Batang, Yeon_Sung, Noto_Serif_KR } from "next/font/google";
 import { ThemeProvider } from "next-themes";
 import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import { SiteHeader } from "@/components/layout/site-header";
 import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
 import { SiteFooter } from "@/components/layout/site-footer";
