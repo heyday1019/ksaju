@@ -14,11 +14,11 @@ import { calculateSaju } from "@fullstackfamily/manseryeok";
 // === 데이터 로드 / 무결성 ===
 describe("idols 데이터 로드", () => {
   it("전체 아이돌을 로드한다", () => {
-    expect(idols.length).toBe(101);
+    expect(idols.length).toBe(124);
   });
 
-  it("새 보이그룹들이 groups에 포함된다", () => {
-    for (const g of ["SEVENTEEN", "NCT", "ATEEZ", "ZEROBASEONE", "RIIZE"]) {
+  it("신규 그룹들이 groups에 포함된다", () => {
+    for (const g of ["SEVENTEEN", "NCT", "ATEEZ", "ZEROBASEONE", "RIIZE", "EXO", "SHINee", "MAMAMOO", "GOT7", "NMIXX"]) {
       expect(groups).toContain(g);
     }
   });

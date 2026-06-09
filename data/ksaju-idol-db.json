@@ -2119,5 +2119,488 @@
       },
       "dayMaster": "己"
     }
+  },
+  {
+    "id": "baekhyun-exo",
+    "name": "Baekhyun",
+    "group": "EXO",
+    "birthdate": "1992-05-06",
+    "saju": {
+      "year": {
+        "kr": "임신",
+        "hanja": "壬申"
+      },
+      "month": {
+        "kr": "을사",
+        "hanja": "乙巳"
+      },
+      "day": {
+        "kr": "임오",
+        "hanja": "壬午"
+      },
+      "dayMaster": "壬"
+    }
+  },
+  {
+    "id": "chanyeol-exo",
+    "name": "Chanyeol",
+    "group": "EXO",
+    "birthdate": "1992-11-27",
+    "saju": {
+      "year": {
+        "kr": "임신",
+        "hanja": "壬申"
+      },
+      "month": {
+        "kr": "신해",
+        "hanja": "辛亥"
+      },
+      "day": {
+        "kr": "정미",
+        "hanja": "丁未"
+      },
+      "dayMaster": "丁"
+    }
+  },
+  {
+    "id": "d-o-exo",
+    "name": "D.O.",
+    "group": "EXO",
+    "birthdate": "1993-01-12",
+    "saju": {
+      "year": {
+        "kr": "임신",
+        "hanja": "壬申"
+      },
+      "month": {
+        "kr": "계축",
+        "hanja": "癸丑"
+      },
+      "day": {
+        "kr": "계사",
+        "hanja": "癸巳"
+      },
+      "dayMaster": "癸"
+    }
+  },
+  {
+    "id": "kai-exo",
+    "name": "Kai",
+    "group": "EXO",
+    "birthdate": "1994-01-14",
+    "saju": {
+      "year": {
+        "kr": "계유",
+        "hanja": "癸酉"
+      },
+      "month": {
+        "kr": "을축",
+        "hanja": "乙丑"
+      },
+      "day": {
+        "kr": "경자",
+        "hanja": "庚子"
+      },
+      "dayMaster": "庚"
+    }
+  },
+  {
+    "id": "sehun-exo",
+    "name": "Sehun",
+    "group": "EXO",
+    "birthdate": "1994-04-12",
+    "saju": {
+      "year": {
+        "kr": "갑술",
+        "hanja": "甲戌"
+      },
+      "month": {
+        "kr": "무진",
+        "hanja": "戊辰"
+      },
+      "day": {
+        "kr": "무진",
+        "hanja": "戊辰"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "onew-shinee",
+    "name": "Onew",
+    "group": "SHINee",
+    "birthdate": "1989-12-14",
+    "saju": {
+      "year": {
+        "kr": "기사",
+        "hanja": "己巳"
+      },
+      "month": {
+        "kr": "병자",
+        "hanja": "丙子"
+      },
+      "day": {
+        "kr": "무신",
+        "hanja": "戊申"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "key-shinee",
+    "name": "Key",
+    "group": "SHINee",
+    "birthdate": "1991-09-23",
+    "saju": {
+      "year": {
+        "kr": "신미",
+        "hanja": "辛未"
+      },
+      "month": {
+        "kr": "정유",
+        "hanja": "丁酉"
+      },
+      "day": {
+        "kr": "병신",
+        "hanja": "丙申"
+      },
+      "dayMaster": "丙"
+    }
+  },
+  {
+    "id": "minho-shinee",
+    "name": "Minho",
+    "group": "SHINee",
+    "birthdate": "1991-12-09",
+    "saju": {
+      "year": {
+        "kr": "신미",
+        "hanja": "辛未"
+      },
+      "month": {
+        "kr": "경자",
+        "hanja": "庚子"
+      },
+      "day": {
+        "kr": "계축",
+        "hanja": "癸丑"
+      },
+      "dayMaster": "癸"
+    }
+  },
+  {
+    "id": "taemin-shinee",
+    "name": "Taemin",
+    "group": "SHINee",
+    "birthdate": "1993-07-18",
+    "saju": {
+      "year": {
+        "kr": "계유",
+        "hanja": "癸酉"
+      },
+      "month": {
+        "kr": "기미",
+        "hanja": "己未"
+      },
+      "day": {
+        "kr": "경자",
+        "hanja": "庚子"
+      },
+      "dayMaster": "庚"
+    }
+  },
+  {
+    "id": "solar-mamamoo",
+    "name": "Solar",
+    "group": "MAMAMOO",
+    "birthdate": "1991-02-21",
+    "saju": {
+      "year": {
+        "kr": "신미",
+        "hanja": "辛未"
+      },
+      "month": {
+        "kr": "경인",
+        "hanja": "庚寅"
+      },
+      "day": {
+        "kr": "임술",
+        "hanja": "壬戌"
+      },
+      "dayMaster": "壬"
+    }
+  },
+  {
+    "id": "moonbyul-mamamoo",
+    "name": "Moonbyul",
+    "group": "MAMAMOO",
+    "birthdate": "1992-12-22",
+    "saju": {
+      "year": {
+        "kr": "임신",
+        "hanja": "壬申"
+      },
+      "month": {
+        "kr": "임자",
+        "hanja": "壬子"
+      },
+      "day": {
+        "kr": "임신",
+        "hanja": "壬申"
+      },
+      "dayMaster": "壬"
+    }
+  },
+  {
+    "id": "wheein-mamamoo",
+    "name": "Wheein",
+    "group": "MAMAMOO",
+    "birthdate": "1995-04-17",
+    "saju": {
+      "year": {
+        "kr": "을해",
+        "hanja": "乙亥"
+      },
+      "month": {
+        "kr": "경진",
+        "hanja": "庚辰"
+      },
+      "day": {
+        "kr": "무인",
+        "hanja": "戊寅"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "hwasa-mamamoo",
+    "name": "Hwasa",
+    "group": "MAMAMOO",
+    "birthdate": "1995-07-23",
+    "saju": {
+      "year": {
+        "kr": "을해",
+        "hanja": "乙亥"
+      },
+      "month": {
+        "kr": "계미",
+        "hanja": "癸未"
+      },
+      "day": {
+        "kr": "을묘",
+        "hanja": "乙卯"
+      },
+      "dayMaster": "乙"
+    }
+  },
+  {
+    "id": "mark-got7",
+    "name": "Mark",
+    "group": "GOT7",
+    "birthdate": "1993-09-04",
+    "saju": {
+      "year": {
+        "kr": "계유",
+        "hanja": "癸酉"
+      },
+      "month": {
+        "kr": "경신",
+        "hanja": "庚申"
+      },
+      "day": {
+        "kr": "무자",
+        "hanja": "戊子"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "jackson-got7",
+    "name": "Jackson",
+    "group": "GOT7",
+    "birthdate": "1994-03-28",
+    "saju": {
+      "year": {
+        "kr": "갑술",
+        "hanja": "甲戌"
+      },
+      "month": {
+        "kr": "정묘",
+        "hanja": "丁卯"
+      },
+      "day": {
+        "kr": "계축",
+        "hanja": "癸丑"
+      },
+      "dayMaster": "癸"
+    }
+  },
+  {
+    "id": "jinyoung-got7",
+    "name": "Jinyoung",
+    "group": "GOT7",
+    "birthdate": "1994-09-22",
+    "saju": {
+      "year": {
+        "kr": "갑술",
+        "hanja": "甲戌"
+      },
+      "month": {
+        "kr": "계유",
+        "hanja": "癸酉"
+      },
+      "day": {
+        "kr": "신해",
+        "hanja": "辛亥"
+      },
+      "dayMaster": "辛"
+    }
+  },
+  {
+    "id": "bambam-got7",
+    "name": "BamBam",
+    "group": "GOT7",
+    "birthdate": "1997-05-02",
+    "saju": {
+      "year": {
+        "kr": "정축",
+        "hanja": "丁丑"
+      },
+      "month": {
+        "kr": "갑진",
+        "hanja": "甲辰"
+      },
+      "day": {
+        "kr": "갑진",
+        "hanja": "甲辰"
+      },
+      "dayMaster": "甲"
+    }
+  },
+  {
+    "id": "yugyeom-got7",
+    "name": "Yugyeom",
+    "group": "GOT7",
+    "birthdate": "1997-11-17",
+    "saju": {
+      "year": {
+        "kr": "정축",
+        "hanja": "丁丑"
+      },
+      "month": {
+        "kr": "신해",
+        "hanja": "辛亥"
+      },
+      "day": {
+        "kr": "계해",
+        "hanja": "癸亥"
+      },
+      "dayMaster": "癸"
+    }
+  },
+  {
+    "id": "lily-nmixx",
+    "name": "Lily",
+    "group": "NMIXX",
+    "birthdate": "2002-10-17",
+    "saju": {
+      "year": {
+        "kr": "임오",
+        "hanja": "壬午"
+      },
+      "month": {
+        "kr": "경술",
+        "hanja": "庚戌"
+      },
+      "day": {
+        "kr": "무오",
+        "hanja": "戊午"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "haewon-nmixx",
+    "name": "Haewon",
+    "group": "NMIXX",
+    "birthdate": "2003-02-25",
+    "saju": {
+      "year": {
+        "kr": "계미",
+        "hanja": "癸未"
+      },
+      "month": {
+        "kr": "갑인",
+        "hanja": "甲寅"
+      },
+      "day": {
+        "kr": "기사",
+        "hanja": "己巳"
+      },
+      "dayMaster": "己"
+    }
+  },
+  {
+    "id": "sullyoon-nmixx",
+    "name": "Sullyoon",
+    "group": "NMIXX",
+    "birthdate": "2004-01-26",
+    "saju": {
+      "year": {
+        "kr": "계미",
+        "hanja": "癸未"
+      },
+      "month": {
+        "kr": "을축",
+        "hanja": "乙丑"
+      },
+      "day": {
+        "kr": "갑진",
+        "hanja": "甲辰"
+      },
+      "dayMaster": "甲"
+    }
+  },
+  {
+    "id": "bae-nmixx",
+    "name": "Bae",
+    "group": "NMIXX",
+    "birthdate": "2004-12-28",
+    "saju": {
+      "year": {
+        "kr": "갑신",
+        "hanja": "甲申"
+      },
+      "month": {
+        "kr": "병자",
+        "hanja": "丙子"
+      },
+      "day": {
+        "kr": "신사",
+        "hanja": "辛巳"
+      },
+      "dayMaster": "辛"
+    }
+  },
+  {
+    "id": "kyujin-nmixx",
+    "name": "Kyujin",
+    "group": "NMIXX",
+    "birthdate": "2006-05-26",
+    "saju": {
+      "year": {
+        "kr": "병술",
+        "hanja": "丙戌"
+      },
+      "month": {
+        "kr": "계사",
+        "hanja": "癸巳"
+      },
+      "day": {
+        "kr": "을묘",
+        "hanja": "乙卯"
+      },
+      "dayMaster": "乙"
+    }
   }
 ]
