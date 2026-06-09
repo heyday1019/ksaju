@@ -3,16 +3,18 @@
 // URL이나 낙관이 바뀌면 `npm run gen:qr` 재실행 후 산출물 재커밋.
 import QRCode from "qrcode";
 import sharp from "sharp";
-import path from "node:path";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
 
-const URL = "https://ksaju.me";
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const TARGET_URL = "https://ksaju.me";
 const SIZE = 900; // QR 한 변(px)
-const OUT = path.resolve("public/ksaju-qr.png");
-const STAMP = path.resolve("scripts/assets/stamp-saju.png");
+const OUT = join(root, "public", "ksaju-qr.png");
+const STAMP = join(root, "scripts", "assets", "stamp-saju.png");
 
 async function main() {
   // 1) QR (에러정정 H → 중앙 로고 가림 허용). 모듈=묵, 배경=흰색.
-  const qr = await QRCode.toBuffer(URL, {
+  const qr = await QRCode.toBuffer(TARGET_URL, {
     errorCorrectionLevel: "H",
     margin: 2,
     width: SIZE,
@@ -55,7 +57,7 @@ async function main() {
     .png()
     .toFile(OUT);
 
-  console.log(`✓ wrote ${OUT} (${SIZE}x${SIZE}, QR -> ${URL})`);
+  console.log(`✓ wrote ${OUT} (${SIZE}x${SIZE}, QR -> ${TARGET_URL})`);
 }
 
 main().catch((e) => {
