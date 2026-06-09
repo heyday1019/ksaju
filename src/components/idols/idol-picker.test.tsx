@@ -6,12 +6,34 @@ import { IdolPicker } from "./idol-picker";
 import { idols } from "@/lib/idols";
 
 describe("IdolPicker", () => {
-  it("기본 상태(빈 검색): 그룹은 모두 접혀 있고 토글 버튼만 보인다", () => {
+  it("기본 상태(빈 검색): 정렬상 첫 그룹(aespa)이 펼쳐져 멤버가 보인다", () => {
     render(<IdolPicker onSelect={() => {}} />);
-    // 그룹 토글 버튼 노출
-    expect(screen.getByRole("button", { name: /BTS/ })).toBeInTheDocument();
-    // 접힌 상태 → 아이돌 카드(radio) 없음
-    expect(screen.queryAllByRole("radio")).toHaveLength(0);
+    const aespaToggle = screen.getByRole("button", { name: /aespa/i });
+    expect(aespaToggle).toHaveAttribute("aria-expanded", "true");
+    const radios = screen.getAllByRole("radio");
+    expect(radios.length).toBeGreaterThan(0);
+    for (const r of radios) {
+      expect(within(r).getByText("aespa")).toBeInTheDocument();
+    }
+    // 다른 그룹(BTS)은 접혀 있다
+    expect(screen.getByRole("button", { name: /BTS/ })).toHaveAttribute(
+      "aria-expanded",
+      "false",
+    );
+  });
+
+  it("그룹 토글이 알파벳 순서로 렌더된다 (aespa가 BTS보다 먼저)", () => {
+    render(<IdolPicker onSelect={() => {}} />);
+    const names = screen.getAllByRole("button").map((b) => b.textContent || "");
+    const aespaIdx = names.findIndex((n) => /aespa/i.test(n));
+    const btsIdx = names.findIndex((n) => /BTS/.test(n));
+    expect(aespaIdx).toBeGreaterThanOrEqual(0);
+    expect(aespaIdx).toBeLessThan(btsIdx);
+  });
+
+  it("검색 힌트를 보여준다", () => {
+    render(<IdolPicker onSelect={() => {}} />);
+    expect(screen.getByText(/try a name or group/i)).toBeInTheDocument();
   });
 
   it("그룹 토글을 누르면 해당 그룹 멤버만 펼쳐지고, 다시 누르면 접힌다", async () => {
