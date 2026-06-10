@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import type { CompatibilityResult, SajuPillars } from "@/lib/compatibility";
 import { CompatShareCard, type CompatOther } from "./compat-share-card";
 import { useShareImage } from "@/hooks/use-share-image";
+import { track } from "@/lib/analytics";
 
 export type { CompatOther };
 
@@ -21,7 +22,6 @@ type CompatibilityModalProps = {
   other: CompatOther;
   result: CompatibilityResult;
   closeLabel?: string;
-  onShared?: (method: "web_share" | "download") => void;
 };
 
 /**
@@ -36,7 +36,6 @@ export function CompatibilityModal({
   other,
   result,
   closeLabel = "← Close",
-  onShared,
 }: CompatibilityModalProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const { share, status } = useShareImage(cardRef, {
@@ -45,7 +44,6 @@ export function CompatibilityModal({
       title: "My KSaju compatibility",
       text: `You × ${other.name}: ${result.score}/100 — make yours at ksaju.me`,
     },
-    onShared,
   });
 
   const shareLabel = status === "rendering" ? "Creating…" : "Share ✨";
@@ -70,7 +68,10 @@ export function CompatibilityModal({
 
         <div className="space-y-2 px-6 pb-6">
           <Button
-            onClick={share}
+            onClick={() => {
+              track("share_clicked", { idol_name: other.name, score: result.score });
+              share();
+            }}
             disabled={status === "rendering"}
             className="w-full"
           >

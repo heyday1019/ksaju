@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { FortuneCard } from "./fortune-card";
 import { FortuneShareModal } from "./fortune-share-modal";
 import { calcFortune } from "@/lib/fortune";
-import { track } from "@/lib/analytics";
 import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 
 /**
@@ -50,7 +49,6 @@ export function FortuneSection({
         onClose={() => setShareOpen(false)}
         userSaju={userSaju}
         luck={luck}
-        onShared={(method) => track("card_shared", { kind: "fortune", method })}
       />
     </section>
   );

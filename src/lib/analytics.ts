@@ -12,8 +12,7 @@ export type AnalyticsEvent =
   | "share_clicked"
   | "another_idol_clicked"
   | "partner_submitted"
-  | "compat_revealed"
-  | "card_shared";     // kept temporarily — removed in Task 5
+  | "compat_revealed";
 
 let initialized = false;
 

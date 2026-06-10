@@ -11,13 +11,13 @@ import { Button } from "@/components/ui/button";
 import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 import { FortuneShareCard } from "./fortune-share-card";
 import { useShareImage } from "@/hooks/use-share-image";
+import { track } from "@/lib/analytics";
 
 type FortuneShareModalProps = {
   open: boolean;
   onClose: () => void;
   userSaju: UserSaju;
   luck: CurrentLuck;
-  onShared?: (method: "web_share" | "download") => void;
 };
 
 /**
@@ -30,7 +30,6 @@ export function FortuneShareModal({
   onClose,
   userSaju,
   luck,
-  onShared,
 }: FortuneShareModalProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const { share, status } = useShareImage(cardRef, {
@@ -39,7 +38,6 @@ export function FortuneShareModal({
       title: "My KSaju fortune",
       text: "My saju fortune — make yours at ksaju.me",
     },
-    onShared,
   });
 
   const shareLabel = status === "rendering" ? "Creating…" : "Share ✨";
@@ -57,7 +55,10 @@ export function FortuneShareModal({
 
         <div className="space-y-2 px-6 pb-6">
           <Button
-            onClick={share}
+            onClick={() => {
+              track("share_clicked", { kind: "fortune" });
+              share();
+            }}
             disabled={status === "rendering"}
             className="w-full"
           >

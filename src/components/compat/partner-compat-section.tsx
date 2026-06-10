@@ -114,7 +114,6 @@ export function PartnerCompatSection({ userSaju }: { userSaju: UserSaju }) {
           other={{ name: partnerName.trim() || "Them", pillars: partnerPillars }}
           result={result}
           closeLabel="← Check someone else"
-          onShared={(method) => track("card_shared", { kind: "partner", method })}
         />
       )}
     </section>
