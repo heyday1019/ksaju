@@ -6,8 +6,7 @@ import { CompatibilityModal } from "./compatibility-modal";
 import { compatForIdol, type Idol } from "@/lib/idols";
 import { normalizeIdolSaju, type SajuPillars } from "@/lib/compatibility";
 import type { UserSaju } from "@/lib/saju-types";
-import { track, scoreBucket } from "@/lib/analytics";
-import { HEAVENLY_STEMS } from "@/lib/saju-data";
+import { track } from "@/lib/analytics";
 
 /**
  * '내 사주' 뷰 안의 궁합 부가 섹션.
@@ -17,7 +16,6 @@ export function CompatibilitySection({ userSaju }: { userSaju: UserSaju }) {
   const [idol, setIdol] = useState<Idol | null>(null);
   const [open, setOpen] = useState(false);
 
-  // me 기둥은 userSaju에서 직접 추출 (toCompatPillars는 server-only 모듈에 있음).
   const mePillars: SajuPillars = useMemo(
     () => ({
       year: userSaju.pillars.year,
@@ -30,13 +28,16 @@ export function CompatibilitySection({ userSaju }: { userSaju: UserSaju }) {
   const result = idol ? compatForIdol(mePillars, idol) : null;
 
   const handleSelect = (picked: Idol) => {
-    const element =
-      HEAVENLY_STEMS.find((s) => s.char === picked.saju.dayMaster)?.element ?? "unknown";
-    track("idol_picked", { idol: picked.name, group: picked.group, element });
+    track("idol_selected", { idol_name: picked.name, group: picked.group });
     const r = compatForIdol(mePillars, picked);
-    track("compat_revealed", { kind: "idol", score_bucket: scoreBucket(r.score) });
+    track("card_generated", { idol_name: picked.name, score: r.score });
     setIdol(picked);
     setOpen(true);
+  };
+
+  const handleClose = () => {
+    track("another_idol_clicked");
+    setOpen(false);
   };
 
   return (
@@ -67,7 +68,7 @@ export function CompatibilitySection({ userSaju }: { userSaju: UserSaju }) {
       {idol && result && (
         <CompatibilityModal
           open={open}
-          onClose={() => setOpen(false)}
+          onClose={handleClose}
           mePillars={mePillars}
           other={{
             name: idol.name,
@@ -76,7 +77,6 @@ export function CompatibilitySection({ userSaju }: { userSaju: UserSaju }) {
           }}
           result={result}
           closeLabel="← Check another idol"
-          onShared={(method) => track("card_shared", { kind: "idol", method })}
         />
       )}
     </section>
