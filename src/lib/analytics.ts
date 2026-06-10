@@ -13,7 +13,9 @@ export type AnalyticsEvent =
   | "another_idol_clicked"
   | "partner_submitted"
   | "compat_revealed"
-  | "saju_calculated"; // kept temporarily — removed in Task 3
+  | "saju_calculated"  // kept temporarily — removed in Task 3
+  | "idol_picked"      // kept temporarily — removed in Task 4
+  | "card_shared";     // kept temporarily — removed in Task 5
 
 let initialized = false;
 
