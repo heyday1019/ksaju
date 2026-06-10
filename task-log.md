@@ -16,6 +16,35 @@
 - **상태:** 170 tests(169+footer 1), tsc clean, lint 2 기존경고만, `next build` 전 라우트 static ○.
 - **⚠️ 사용자 후속:** QR은 **ksaju.me DNS 연결 후에만 라이브**(그 전엔 스캔 실패). **육안 확인 권장:** 두 공유 카드 푸터가 640px 안에서 클리핑 없이 들어가는지(특히 운세 카드, 추정 슬랙 ~28px) + 라이트/다크/모바일. localStorage 사주 게이트라 브라우저 세션 필요.
 
+**오후 추가 작업:**
+
+- **사이클 23 — 아이돌 DB 2차 확장:** DB **101→124명 / 19→24그룹** — EXO·SHINee·MAMAMOO·GOT7·NMIXX 각 5명 추가. `npm run seed:idols` 스크립트 재사용(WebSearch 검증 생일). `idols.ts`·UI 무변경. (`13bd775`)
+- **런치 준비 보완 — SEO/OG:** layout 메타데이터 확장(환경변수 URL·OG이미지·robots·themeColor·아이콘) + 소셜 OG 이미지 신규 생성(1200×630 274KB, `next/og`). (`81d6b22` · `96dee53`)
+- **버그픽스 — compat-card:** 미니사주 한자 중앙정렬 + 박스 오버플로 수정. (`82ee92e`)
+- **Vercel Analytics + Speed Insights 통합:** `@vercel/analytics` + `@vercel/speed-insights` 추가. import 경로·클라이언트 wrapper 픽스 3회 → `@vercel/speed-insights/next` 정식 설치로 확정. 총 4커밋(`4101461`·`3837dc1`·`be6746f`·`ba6ec13`).
+
+---
+
+## 2026-06-10 (수)
+
+### 📌 오늘 요약 (2026-06-10)
+
+**FAQ 연락처 이메일 변경 (소규모 콘텐츠 패치).**
+
+- `/faq` 페이지 contact 링크 `hello@ksaju.me` → `ksaju.korea@gmail.com` (`src/app/faq/page.tsx`). ksaju.me 도메인 메일이 아직 미활성 상태이므로 Gmail 주소로 임시 교체.
+- 커밋·푸시 완료.
+
+### ▶️ 다음 세션 시작 액션
+
+**현재 위치:** `main`(= origin/main 동기화). 배포: `ksaju-green.vercel.app` auto-deploy.
+
+**우선순위 후속 작업:**
+1. **ksaju.me DNS 연결** — `docs/deploy-runbook.md` §4 (사용자 직접 작업).
+2. **PostHog 분석 활성화** — Vercel env에 `NEXT_PUBLIC_POSTHOG_KEY` + `NEXT_PUBLIC_POSTHOG_HOST` 추가 후 재배포.
+3. **ksaju.me 도메인 메일 활성화 후 FAQ 이메일 재변경** — `hello@ksaju.me`로 복구 예정.
+
+**보류 💤(트래픽 데이터 후 결정):** 런타임 LLM 리딩, 유료 IAP, POD 굿즈, 회원 계정.
+
 ---
 
 ## 2026-06-08 (월)

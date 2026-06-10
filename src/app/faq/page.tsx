@@ -96,9 +96,9 @@ export default function FaqPage() {
             We&apos;d love to hear it. Reach us at{" "}
             <a
               className="text-primary underline-offset-2 hover:underline"
-              href="mailto:hello@ksaju.me"
+              href="mailto:ksaju.korea@gmail.com"
             >
-              hello@ksaju.me
+              ksaju.korea@gmail.com
             </a>
             .
           </p>
