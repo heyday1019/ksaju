@@ -13,7 +13,7 @@ import { SajuResult } from "@/components/saju/saju-result";
 import { convertToKST } from "@/lib/kst-converter";
 import { calcUserSaju, calcCurrentLuck } from "@/app/actions/saju";
 import { saveUserSaju } from "@/lib/saju-storage";
-import { track, ageBucket } from "@/lib/analytics";
+import { track } from "@/lib/analytics";
 import type { BirthData, KSTResult } from "@/lib/kst-types";
 import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 
@@ -31,6 +31,7 @@ export default function Home() {
   const defaultTz = useSyncExternalStore(subscribeTz, getTzSnapshot, getTzServerSnapshot);
 
   const handleSubmit = async (data: BirthData) => {
+    track("birth_submitted", { has_time: data.hour !== undefined });
     setErrorMessage(null);
     setSubmitting(true);
     try {
@@ -42,9 +43,8 @@ export default function Home() {
       setKst(kstResult);
       setUserSaju(saju);
       setCurrentLuck(luck);
-      saveUserSaju(saju); // 홈↔인연 공유용 영속
+      saveUserSaju(saju);
       setView("result");
-      track("saju_calculated", { age_bucket: ageBucket(data.year) });
     } catch (err) {
       console.error("Saju calculation failed:", err);
       setErrorMessage(

@@ -8,7 +8,7 @@ import { SajuSummaryBar } from "./saju-summary-bar";
 import { Card, CardContent } from "@/components/ui/card";
 import { calcUserSaju } from "@/app/actions/saju";
 import { loadUserSaju, saveUserSaju } from "@/lib/saju-storage";
-import { track, ageBucket } from "@/lib/analytics";
+import { track } from "@/lib/analytics";
 import type { BirthData } from "@/lib/kst-types";
 import type { UserSaju } from "@/lib/saju-types";
 
@@ -38,7 +38,7 @@ export function InyeonView() {
       const saju = await calcUserSaju(birth);
       saveUserSaju(saju);
       setMe(saju);
-      track("saju_calculated", { age_bucket: ageBucket(birth.year) });
+      track("birth_submitted", { has_time: birth.hour !== undefined });
     } catch (err) {
       console.error("Self saju failed:", err);
       setError("Couldn't read that birth date. Please double-check and try again.");
