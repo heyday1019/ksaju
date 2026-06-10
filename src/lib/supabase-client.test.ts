@@ -3,7 +3,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 
 const createBrowserClientMock = vi.fn(() => ({ supabase: "mock-client" }));
 vi.mock("@supabase/ssr", () => ({
-  createBrowserClient: (...a: unknown[]) => createBrowserClientMock(...a),
+  createBrowserClient: createBrowserClientMock,
 }));
 
 beforeEach(() => {
