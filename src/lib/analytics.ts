@@ -1,14 +1,19 @@
 import posthog from "posthog-js";
+import { track as vercelTrack } from "@vercel/analytics";
+import { getSupabaseClient } from "./supabase-client";
 
 export type AgeBucket = "<13" | "13-17" | "18-24" | "25-34" | "35+";
 
 export type AnalyticsEvent =
   | "$pageview"
-  | "saju_calculated"
-  | "idol_picked"
+  | "birth_submitted"
+  | "idol_selected"
+  | "card_generated"
+  | "share_clicked"
+  | "another_idol_clicked"
   | "partner_submitted"
   | "compat_revealed"
-  | "card_shared";
+  | "saju_calculated"; // kept temporarily — removed in Task 3
 
 let initialized = false;
 
@@ -20,21 +25,36 @@ export function initAnalytics(): void {
   if (!key) return;
   posthog.init(key, {
     api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST ?? "https://us.i.posthog.com",
-    persistence: "memory", // cookieless — no consent banner needed
-    person_profiles: "never", // anonymous events only
-    capture_pageview: false, // captured manually on route change
+    persistence: "memory",
+    person_profiles: "never",
+    capture_pageview: false,
   });
   initialized = true;
 }
 
-/** Send an event. No-ops until initialized; never throws into the app. */
+/** Send an event to all configured sinks. Each sink is independent — never throws into the app. */
 export function track(event: AnalyticsEvent, props?: Record<string, unknown>): void {
-  if (!initialized) return;
-  try {
-    posthog.capture(event, props);
-  } catch {
-    // analytics must never break the app
+  if (typeof window === "undefined") return;
+
+  // PostHog (no-op until initAnalytics called with valid key)
+  if (initialized) {
+    try {
+      posthog.capture(event, props);
+    } catch { /* analytics must never break the app */ }
   }
+
+  // Vercel Analytics (no-op outside Vercel deployment)
+  try {
+    vercelTrack(event, props as Record<string, string | number | boolean | null> | undefined);
+  } catch { /* analytics must never break the app */ }
+
+  // Supabase (fire-and-forget, no-op when env vars absent)
+  try {
+    const sb = getSupabaseClient();
+    if (sb) {
+      void sb.from("analytics_events").insert({ event, props: props ?? null });
+    }
+  } catch { /* analytics must never break the app */ }
 }
 
 /** Coarse age bucket from birth year (no raw DOB ever leaves the client). */

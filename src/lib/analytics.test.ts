@@ -1,6 +1,7 @@
 // @vitest-environment happy-dom
 import { describe, it, expect, vi, beforeEach } from "vitest";
 
+// ── Mock declarations (hoisted by vitest) ──────────────────────────────────
 const init = vi.fn();
 const capture = vi.fn();
 vi.mock("posthog-js", () => ({
@@ -10,11 +11,30 @@ vi.mock("posthog-js", () => ({
   },
 }));
 
+const vercelTrackMock = vi.fn();
+vi.mock("@vercel/analytics", () => ({
+  track: (...a: unknown[]) => vercelTrackMock(...a),
+}));
+
+const insertMock = vi.fn().mockResolvedValue({ data: null, error: null });
+const fromMock = vi.fn(() => ({ insert: insertMock }));
+const sbClientMock = { from: fromMock };
+const getSupabaseClientMock = vi.fn(() => sbClientMock as unknown);
+vi.mock("./supabase-client", () => ({
+  getSupabaseClient: () => getSupabaseClientMock(),
+}));
+// ──────────────────────────────────────────────────────────────────────────
+
 beforeEach(() => {
   vi.resetModules();
   vi.unstubAllEnvs();
   init.mockClear();
   capture.mockClear();
+  vercelTrackMock.mockClear();
+  fromMock.mockClear();
+  insertMock.mockClear();
+  getSupabaseClientMock.mockClear();
+  getSupabaseClientMock.mockReturnValue(sbClientMock);
 });
 
 describe("ageBucket", () => {
@@ -45,7 +65,7 @@ describe("scoreBucket", () => {
 });
 
 describe("init/track gating", () => {
-  it("no-ops init and track when no key is set", async () => {
+  it("no-ops posthog init and capture when no key is set", async () => {
     const mod = await import("./analytics");
     mod.initAnalytics();
     mod.track("$pageview");
@@ -53,7 +73,7 @@ describe("init/track gating", () => {
     expect(capture).not.toHaveBeenCalled();
   });
 
-  it("inits cookieless and captures events when a key is set", async () => {
+  it("inits cookieless and captures to posthog when a key is set", async () => {
     vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "phc_test");
     const mod = await import("./analytics");
     mod.initAnalytics();
@@ -61,7 +81,52 @@ describe("init/track gating", () => {
       "phc_test",
       expect.objectContaining({ persistence: "memory", person_profiles: "never" }),
     );
-    mod.track("saju_calculated", { age_bucket: "18-24" });
-    expect(capture).toHaveBeenCalledWith("saju_calculated", { age_bucket: "18-24" });
+    mod.track("$pageview", { age_bucket: "18-24" });
+    expect(capture).toHaveBeenCalledWith("$pageview", { age_bucket: "18-24" });
+  });
+});
+
+describe("multi-sink track()", () => {
+  it("calls Vercel and Supabase regardless of PostHog init state", async () => {
+    const mod = await import("./analytics");
+    // PostHog not initialized (no key)
+    mod.track("birth_submitted", { has_time: false });
+    expect(capture).not.toHaveBeenCalled();
+    expect(vercelTrackMock).toHaveBeenCalledWith("birth_submitted", { has_time: false });
+    expect(fromMock).toHaveBeenCalledWith("analytics_events");
+    expect(insertMock).toHaveBeenCalledWith({
+      event: "birth_submitted",
+      props: { has_time: false },
+    });
+  });
+
+  it("calls all 3 sinks when PostHog key is set", async () => {
+    vi.stubEnv("NEXT_PUBLIC_POSTHOG_KEY", "phc_test");
+    const mod = await import("./analytics");
+    mod.initAnalytics();
+    mod.track("idol_selected", { idol_name: "RM", group: "BTS" });
+    expect(capture).toHaveBeenCalledWith("idol_selected", { idol_name: "RM", group: "BTS" });
+    expect(vercelTrackMock).toHaveBeenCalledWith("idol_selected", {
+      idol_name: "RM",
+      group: "BTS",
+    });
+    expect(fromMock).toHaveBeenCalledWith("analytics_events");
+  });
+
+  it("Supabase no-ops when getSupabaseClient returns null", async () => {
+    getSupabaseClientMock.mockReturnValueOnce(null);
+    const mod = await import("./analytics");
+    mod.track("card_generated", { idol_name: "Jennie", score: 80 });
+    expect(vercelTrackMock).toHaveBeenCalled();
+    expect(fromMock).not.toHaveBeenCalled();
+  });
+
+  it("Supabase insert uses null props when props are undefined", async () => {
+    const mod = await import("./analytics");
+    mod.track("another_idol_clicked");
+    expect(insertMock).toHaveBeenCalledWith({
+      event: "another_idol_clicked",
+      props: null,
+    });
   });
 });
