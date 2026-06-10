@@ -29,21 +29,37 @@
 
 ### 📌 오늘 요약 (2026-06-10)
 
-**FAQ 연락처 이메일 변경 (소규모 콘텐츠 패치).**
+**이메일 변경 + 사이클 24 완료.**
 
-- `/faq` 페이지 contact 링크 `hello@ksaju.me` → `ksaju.korea@gmail.com` (`src/app/faq/page.tsx`). ksaju.me 도메인 메일이 아직 미활성 상태이므로 Gmail 주소로 임시 교체.
-- 커밋·푸시 완료.
+**소규모 콘텐츠 패치:**
+- `/faq`·`/privacy`·`/terms` 3개 페이지 contact 이메일 `hello@ksaju.me` → `ksaju.korea@gmail.com`. ksaju.me 도메인 메일 미활성으로 Gmail 임시 교체. (`5bb60cd`)
+
+**사이클 24 — 멀티-싱크 Analytics (PostHog + Vercel Analytics + Supabase):**
+- **방향:** 기존 PostHog 단독 → `track()` 1회 호출로 3개 싱크 동시 발송. 새 Supabase 프로젝트(`jmybnyzuausflyzvuwcf`) 신규 생성.
+- **구현:**
+  - `src/lib/supabase-client.ts` (신규) — `createBrowserClient` 싱글톤, SSR 가드, env var 없으면 null 반환.
+  - `src/lib/analytics.ts` — `track()` 확장: PostHog·`vercelTrack`·Supabase INSERT 각각 독립 try-catch(fire-and-forget). `AnalyticsEvent` 타입 갱신(신규 5종 추가, 구형 3종 제거).
+  - 신규 이벤트 5종 연결: `birth_submitted`(`page.tsx` try 성공 후) · `idol_selected` · `card_generated` · `share_clicked`(`kind:"compat"|"fortune"` 통일) · `another_idol_clicked`.
+  - `onShared` prop 전면 제거(fortune·compat 두 모달).
+  - `.env.example` Supabase 변수 추가. `docs/supabase-migration.sql` (analytics_events 테이블 + RLS anon insert 정책, idempotent DDL).
+- **테스트:** `src/lib/supabase-client.test.ts` 신규(3 tests) + `analytics.test.ts` 멀티싱크 4 tests 추가. 177 tests 전체 pass.
+- **커밋:** Task1(supabase-client) `3440204` · Task2(analytics track) `5af8b29` · Task3(birth_submitted) `0683fd9` · Task4(idol/card/another) `7b9294e` · Task5(share_clicked + onShared 제거) `5af8b29` → 최종 픽스 `075a8be`(birth_submitted 위치 + share_clicked kind 통일).
+- **실 동작 확인:** Supabase SQL Editor에서 `analytics_events` 테이블 생성 → 로컬 앱 생일 Submit → Supabase `insert ok: birth_submitted` Console 확인. Vercel Analytics도 동시 수신 확인.
+- **상태:** 177 tests, tsc/lint clean, `next build` static ○, origin/main 최신.
 
 ### ▶️ 다음 세션 시작 액션
 
-**현재 위치:** `main`(= origin/main 동기화). 배포: `ksaju-green.vercel.app` auto-deploy.
+**현재 위치:** `main`(= origin/main 동기화, `075a8be`). 배포: `ksaju-green.vercel.app` auto-deploy.
 
-**우선순위 후속 작업:**
-1. **ksaju.me DNS 연결** — `docs/deploy-runbook.md` §4 (사용자 직접 작업).
-2. **PostHog 분석 활성화** — Vercel env에 `NEXT_PUBLIC_POSTHOG_KEY` + `NEXT_PUBLIC_POSTHOG_HOST` 추가 후 재배포.
-3. **ksaju.me 도메인 메일 활성화 후 FAQ 이메일 재변경** — `hello@ksaju.me`로 복구 예정.
+**사용자 후속 작업:**
+1. **ksaju.me DNS 연결** — `docs/deploy-runbook.md` §4.
+2. **ksaju.me 도메인 메일 활성화 후 FAQ/Privacy/Terms 이메일 `hello@ksaju.me`로 복구.**
 
-**보류 💤(트래픽 데이터 후 결정):** 런타임 LLM 리딩, 유료 IAP, POD 굿즈, 회원 계정.
+**개발 후보(트래픽 데이터 쌓인 뒤):**
+- Supabase analytics 대시보드 쿼리 작성(퍼널: birth→idol→card→share).
+- 런타임 LLM 리딩, 유료 IAP, POD 굿즈, 회원 계정(보류).
+
+**보류 💤:** 런타임 LLM 리딩, 유료 IAP, POD 굿즈, 회원 계정.
 
 ---
 
