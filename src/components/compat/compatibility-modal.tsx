@@ -69,7 +69,7 @@ export function CompatibilityModal({
         <div className="space-y-2 px-6 pb-6">
           <Button
             onClick={() => {
-              track("share_clicked", { idol_name: other.name, score: result.score });
+              track("share_clicked", { kind: "compat", idol_name: other.name, score: result.score });
               share();
             }}
             disabled={status === "rendering"}

@@ -31,7 +31,6 @@ export default function Home() {
   const defaultTz = useSyncExternalStore(subscribeTz, getTzSnapshot, getTzServerSnapshot);
 
   const handleSubmit = async (data: BirthData) => {
-    track("birth_submitted", { has_time: data.hour !== undefined });
     setErrorMessage(null);
     setSubmitting(true);
     try {
@@ -45,6 +44,7 @@ export default function Home() {
       setCurrentLuck(luck);
       saveUserSaju(saju);
       setView("result");
+      track("birth_submitted", { has_time: data.hour !== undefined });
     } catch (err) {
       console.error("Saju calculation failed:", err);
       setErrorMessage(
