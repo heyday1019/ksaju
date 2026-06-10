@@ -74,10 +74,10 @@ export default function TermsPage() {
           Questions? Reach us at{" "}
           <a
             className="text-primary underline-offset-2 hover:underline"
-            href="mailto:hello@ksaju.me"
+            href="mailto:ksaju.korea@gmail.com"
           >
-            hello@ksaju.me
-          </a>
+            ksaju.korea@gmail.com
+</a>
           .
         </p>
 

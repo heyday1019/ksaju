@@ -43,8 +43,8 @@ export default function PrivacyPage() {
 
         <p className="text-muted-foreground">
           Questions? Reach out at{" "}
-          <a className="text-primary underline-offset-2 hover:underline" href="mailto:hello@ksaju.me">
-            hello@ksaju.me
+          <a className="text-primary underline-offset-2 hover:underline" href="mailto:ksaju.korea@gmail.com">
+            ksaju.korea@gmail.com
           </a>
           .
         </p>
