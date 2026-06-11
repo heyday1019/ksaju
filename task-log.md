@@ -4,6 +4,45 @@
 
 ---
 
+## 2026-06-11 (목)
+
+### 📌 오늘 요약 (2026-06-11)
+
+**어드민 대시보드 404 픽스 + 사이클 25 (오늘의 운세) 출하 + ksaju.me 라이브.**
+
+**어드민 대시보드 404 픽스 (이전 세션):**
+- 원인: 파일명 `admin-page.tsx`(잘못됨) → `page.tsx`(정상), 미커밋 파일, Next.js 16 `searchParams` async 미처리. 수정·커밋·push 완료.
+
+**사이클 25 — 오늘의 운세 (Daily Fortune):**
+- **방향:** `SajuResult` 최상단에 일간(日干) × 오늘 일주(日柱) 기반 개인화 1문장 운세 카드 + 9:16 PNG 공유. OpenRouter(Claude Haiku) → Supabase 일별 캐시(일간당 하루 최대 1회 LLM 호출) → 정적 FALLBACK. 새 npm 패키지 0.
+- **구현:**
+  - `src/lib/fortune.ts` — `stemRelation`·`TimeRel` export 추가(API route 재사용).
+  - `docs/supabase-migration.sql` — `daily_fortunes` DDL 추가(`date+day_master` unique).
+  - `.env.example` — `OPENROUTER_API_KEY` 추가.
+  - `src/app/api/daily-fortune/route.ts` — GET `?dayMaster=X`: KST 오늘 날짜 → `birthToSaju` 오늘 일주 → `stemRelation` 관계 → Supabase SELECT → hit 반환 / miss → OpenRouter `anthropic/claude-haiku-4-5-20251001`(max_tokens 120, temp 0.8) → Supabase upsert → 반환. `revalidate=86400`. 에러 시 FALLBACK(6종 relation).
+  - `src/components/fortune/DailyFortuneShareCard.tsx` — 9:16 360×640, `DailyFortuneData` 타입 canonical 소스, `ShareCardFooter` 재사용.
+  - `src/components/fortune/DailyFortuneShareModal.tsx` — `useShareImage` 재사용, `share_clicked {kind:"daily_fortune"}` 분석.
+  - `src/components/DailyFortune.tsx` — "use client", `useEffect` fetch, 로딩 스켈레톤 → 전체 카드(오늘 일주 한자·메시지·에너지 별·럭키 컬러·Share 버튼).
+  - `src/components/saju/saju-result.tsx` — `<DailyFortune dayMaster={userSaju.dayMaster} />` 최상단 삽입.
+- **커밋:** Task1 `92f4805` · Task2+env `e8f332f` · Task3(route) `06ef6ad` · Task4(card) `7b25c05` · Task5(modal) `7f3f1d9` · Task6(component) `3f4e431` · Task7(integration) `4c76971`.
+- **상태:** 192 tests pass, tsc/lint clean, `next build` static(`/api/daily-fortune` = `ƒ`), origin/main push 완료.
+- **사용자 완료:** Supabase SQL Editor `daily_fortunes` DDL 실행 ✅ / Vercel + `.env.local` `OPENROUTER_API_KEY` 추가 ✅.
+
+**ksaju.me 라이브 ✅:** DNS 연결 완료 → ksaju.me에서 서비스 중.
+
+### ▶️ 다음 세션 시작 액션
+
+**현재 위치:** `main`(= origin/main 동기화, `4c76971`). 배포: ksaju.me 라이브.
+
+**개발 후보:**
+1. **어드민 대시보드 — Daily Fortune 공유 카운터** — `share_clicked {kind:"daily_fortune"}` 이벤트 이미 쌓임. 기존 `/admin` funnel 카드에 daily_fortune share 수 추가. 소규모.
+2. **아이돌 DB 3차 확장** — 추가 그룹(EXID·BIGBANG·aespa 전원 등). `npm run seed:idols` 재사용.
+3. **ksaju.me 도메인 메일 활성화 후 FAQ/Privacy/Terms 이메일 `hello@ksaju.me` 복구.** (사용자 작업)
+
+**보류 💤:** 런타임 LLM 리딩 고도화, 유료 IAP, POD 굿즈, 회원 계정.
+
+---
+
 ## 2026-06-09 (화)
 
 ### 📌 오늘 요약 (2026-06-09)
