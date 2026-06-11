@@ -30,14 +30,39 @@
 
 **ksaju.me 라이브 ✅:** DNS 연결 완료 → ksaju.me에서 서비스 중.
 
+**오후 추가 작업 — Admin 실시간 데이터 버그 수정 + 사이클 26 플랜:**
+
+**Admin 분석 대시보드 버그 3종 수정 (`539461e` · `be790c9`):**
+
+1. **Supabase insert 무음 실패 (핵심 버그)** — `analytics.ts`의 `void sb.from(...).insert(...)` 패턴이 원인. supabase-js v2는 `.insert()`가 lazy PromiseLike를 반환하며 `.then()`을 호출해야 HTTP 요청이 실제로 발송됨. `void`는 반환값만 버릴 뿐 `.then()`을 호출하지 않아 **모든 Supabase insert가 전송되지 않았음**. → `.then(({ error }) => console.error(...))` 패턴으로 수정. 에러 로깅도 추가.
+2. **Admin 쿼리 스키마 불일치** — `analytics_events` 테이블에는 `idol_name`, `group_name`, `score` 컬럼이 없음(모두 `props` JSONB 안). admin `page.tsx`가 없는 컬럼을 직접 SELECT → Supabase가 빈 데이터 반환. → 모든 쿼리를 `props` JSONB 추출 방식으로 재작성. `idol_selected` props의 group 키는 `group`(not `group_name`) 임도 수정.
+3. **페이지 캐싱** — `export const dynamic = "force-dynamic"; export const revalidate = 0;` 추가. `fetchedAt` timestamp 반환.
+4. **AdminDashboard 자동 새로고침** — 30초 자동 폴링(`router.refresh()`), 카운트다운 표시, 마지막 업데이트 시각 표시, 새로고침 버튼 로딩 상태.
+5. **`daily_fortunes` RLS** — Supabase가 자동 활성화한 RLS를 마이그레이션에 명시(`alter table daily_fortunes enable row level security`). daily-fortune API route catch에 에러 로깅 추가.
+- **변경 파일:** `src/lib/analytics.ts` · `src/app/admin/page.tsx` · `src/components/admin/AdminDashboard.tsx` · `src/app/api/daily-fortune/route.ts` · `docs/supabase-migration.sql`
+- **상태:** tsc/lint clean, push 완료. 배포 후 새 이벤트부터 Supabase에 정상 누적 시작.
+
+**사이클 26 플랜 작성 — 로그인 없는 사용자 기억 시스템:**
+- **목표:** 재방문 시 생일 재입력 없이 바로 오늘의 운세/결과로 진입.
+- **설계:**
+  - `src/lib/user-identity.ts` (신규): `getOrCreateUID()`(localStorage `ksaju_uid` UUID), `saveBirthData/loadBirthData()`(localStorage `ksaju:birthData:v1`), `getUserProfile/saveUserProfile/saveEmail()`(Supabase `anon_users` upsert, anon key, fire-and-forget).
+  - Supabase `anon_users` 테이블: `uid(text PK), birthdate(date), birth_time(time), timezone, day_master, email, last_visit, created_at` + RLS(anon INSERT/SELECT/UPDATE all).
+  - `src/components/home/returning-user-banner.tsx` (신규): "Welcome back ✨ 甲 day master →" 배너 + "Not you? Change birthday" 버튼.
+  - `src/app/page.tsx` 수정: view 상태 `"form" | "welcome" | "result"` 3단계. mount useEffect에서 localStorage 확인 → welcome 뷰. handleContinue: `convertToKST` + `calcCurrentLuck` → result. handleReset: localStorage 삭제 → form.
+- **플랜 파일:** `docs/superpowers/plans/2026-06-11-user-identity.md`
+- **테스트 기준:** 기존 192 tests 유지 + `user-identity.test.ts`(getOrCreateUID/saveBirthData/loadBirthData/getUserProfile/saveUserProfile/saveEmail) + `returning-user-banner.test.tsx`(4케이스).
+- **상태:** 플랜만 작성, 미구현(다음 세션).
+
 ### ▶️ 다음 세션 시작 액션
 
-**현재 위치:** `main`(= origin/main 동기화, `4c76971`). 배포: ksaju.me 라이브.
+**현재 위치:** `main`(`be790c9`). 배포: ksaju.me 라이브.
 
-**개발 후보:**
-1. **어드민 대시보드 — Daily Fortune 공유 카운터** — `share_clicked {kind:"daily_fortune"}` 이벤트 이미 쌓임. 기존 `/admin` funnel 카드에 daily_fortune share 수 추가. 소규모.
-2. **아이돌 DB 3차 확장** — 추가 그룹(EXID·BIGBANG·aespa 전원 등). `npm run seed:idols` 재사용.
-3. **ksaju.me 도메인 메일 활성화 후 FAQ/Privacy/Terms 이메일 `hello@ksaju.me` 복구.** (사용자 작업)
+**최우선 (다음 세션):**
+- **사이클 26 — 사용자 기억 시스템 구현.** 플랜: `docs/superpowers/plans/2026-06-11-user-identity.md`. Task 4개.
+  - Task 1: Supabase `anon_users` DDL → SQL Editor 실행(사용자 수동)
+  - Task 2: `src/lib/user-identity.ts` + 테스트
+  - Task 3: `src/components/home/returning-user-banner.tsx` + 테스트
+  - Task 4: `src/app/page.tsx` 연결
 
 **보류 💤:** 런타임 LLM 리딩 고도화, 유료 IAP, POD 굿즈, 회원 계정.
 
