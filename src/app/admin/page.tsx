@@ -1,0 +1,122 @@
+// src/app/admin/page.tsx
+// KSaju Admin Dashboard — 실시간 analytics_events 시각화
+// Supabase → 서버 컴포넌트로 직접 쿼리 (SSR, 노출 없음)
+//
+// 환경변수 필요:
+//   NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (서버 전용)
+//   ADMIN_PASSWORD (미들웨어 인증용)
+
+import { createClient } from "@supabase/supabase-js";
+import AdminDashboard from "@/components/admin/AdminDashboard";
+
+// ─── 서버사이드 쿼리 ──────────────────────────────────────────────
+
+async function getAnalytics(days: number = 7) {
+  const supabase = createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.SUPABASE_SERVICE_ROLE_KEY! // 서버 전용 — 클라이언트 노출 금지
+  );
+
+  const since = new Date();
+  since.setDate(since.getDate() - days);
+  const sinceISO = since.toISOString();
+
+  // 1. 전체 이벤트 카운트 (퍼널)
+  const { data: funnelRaw } = await supabase
+    .from("analytics_events")
+    .select("event")
+    .gte("created_at", sinceISO);
+
+  const counts = (funnelRaw || []).reduce<Record<string, number>>((acc, r) => {
+    acc[r.event] = (acc[r.event] || 0) + 1;
+    return acc;
+  }, {});
+
+  // 2. 인기 아이돌 TOP 15
+  const { data: idolRaw } = await supabase
+    .from("analytics_events")
+    .select("idol_name, group_name")
+    .eq("event", "idol_selected")
+    .gte("created_at", sinceISO)
+    .not("idol_name", "is", null);
+
+  const idolMap = new Map<string, { name: string; group: string; count: number }>();
+  (idolRaw || []).forEach((r) => {
+    const key = r.idol_name;
+    if (!idolMap.has(key)) idolMap.set(key, { name: r.idol_name, group: r.group_name || "", count: 0 });
+    idolMap.get(key)!.count++;
+  });
+  const idolTop = Array.from(idolMap.values())
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 15);
+
+  // 3. 일별 트렌드 (최근 7일)
+  const { data: trendRaw } = await supabase
+    .from("analytics_events")
+    .select("event, created_at")
+    .in("event", ["birth_submitted", "card_generated", "share_clicked"])
+    .gte("created_at", sinceISO)
+    .order("created_at", { ascending: true });
+
+  const trendMap = new Map<string, { submitted: number; generated: number; shared: number }>();
+  for (let i = days - 1; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate() - i);
+    const key = d.toISOString().slice(0, 10);
+    trendMap.set(key, { submitted: 0, generated: 0, shared: 0 });
+  }
+  (trendRaw || []).forEach((r) => {
+    const key = r.created_at.slice(0, 10);
+    if (!trendMap.has(key)) return;
+    const day = trendMap.get(key)!;
+    if (r.event === "birth_submitted") day.submitted++;
+    if (r.event === "card_generated") day.generated++;
+    if (r.event === "share_clicked") day.shared++;
+  });
+  const trend = Array.from(trendMap.entries()).map(([date, v]) => ({ date, ...v }));
+
+  // 4. 최근 이벤트 20개 (라이브 피드)
+  const { data: recentRaw } = await supabase
+    .from("analytics_events")
+    .select("id, event, idol_name, group_name, score, created_at")
+    .order("created_at", { ascending: false })
+    .limit(20);
+
+  // 5. 그룹별 비율
+  const groupMap = new Map<string, number>();
+  (idolRaw || []).forEach((r) => {
+    const g = r.group_name || "Other";
+    groupMap.set(g, (groupMap.get(g) || 0) + 1);
+  });
+  const groupData = Array.from(groupMap.entries())
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 6)
+    .map(([group, count]) => ({ group, count }));
+
+  return {
+    funnel: {
+      birth_submitted: counts["birth_submitted"] || 0,
+      idol_selected: counts["idol_selected"] || 0,
+      card_generated: counts["card_generated"] || 0,
+      share_clicked: counts["share_clicked"] || 0,
+      another_idol_clicked: counts["another_idol_clicked"] || 0,
+    },
+    idolTop,
+    trend,
+    recent: recentRaw || [],
+    groupData,
+    days,
+  };
+}
+
+// ─── 페이지 컴포넌트 ──────────────────────────────────────────────
+
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ days?: string }>;
+}) {
+  const { days: daysParam } = await searchParams;
+  const days = parseInt(daysParam || "7", 10);
+  const data = await getAnalytics(days);
+  return <AdminDashboard data={data} />;
+}
