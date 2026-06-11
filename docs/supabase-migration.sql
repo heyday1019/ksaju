@@ -25,3 +25,17 @@ begin
       with check (true);
   end if;
 end $$;
+
+-- Daily Fortune cache table (cycle 23)
+create table if not exists daily_fortunes (
+  id           uuid        primary key default gen_random_uuid(),
+  date         date        not null,
+  day_master   text        not null,
+  today_pillar text        not null,
+  relation     text        not null,
+  message      text        not null,
+  energy       integer     not null check (energy >= 1 and energy <= 5),
+  lucky_color  text        not null,
+  created_at   timestamptz not null default now(),
+  unique(date, day_master)
+);
