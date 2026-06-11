@@ -6,6 +6,9 @@
 //   NEXT_PUBLIC_SUPABASE_URL, SUPABASE_SERVICE_ROLE_KEY (서버 전용)
 //   ADMIN_PASSWORD (미들웨어 인증용)
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 import { createClient } from "@supabase/supabase-js";
 import AdminDashboard from "@/components/admin/AdminDashboard";
 
@@ -92,6 +95,29 @@ async function getAnalytics(days: number = 7) {
     .slice(0, 6)
     .map(([group, count]) => ({ group, count }));
 
+  // 6. share_clicked kind 분해 (compat / fortune / daily_fortune)
+  const { data: shareKindRaw } = await supabase
+    .from("analytics_events")
+    .select("props")
+    .eq("event", "share_clicked")
+    .gte("created_at", sinceISO);
+
+  const shareByKind = { compat: 0, fortune: 0, daily_fortune: 0 };
+  (shareKindRaw || []).forEach((r) => {
+    const kind = (r.props as Record<string, unknown> | null)?.kind;
+    if (kind === "compat") shareByKind.compat++;
+    else if (kind === "fortune") shareByKind.fortune++;
+    else if (kind === "daily_fortune") shareByKind.daily_fortune++;
+  });
+
+  // 7. daily_fortunes — 오늘(KST) 캐시된 일간 수
+  const kstNow = new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" });
+  const todayStr = new Date(kstNow).toISOString().slice(0, 10);
+  const { count: dailyFortuneToday } = await supabase
+    .from("daily_fortunes")
+    .select("id", { count: "exact", head: true })
+    .eq("date", todayStr);
+
   return {
     funnel: {
       birth_submitted: counts["birth_submitted"] || 0,
@@ -104,6 +130,8 @@ async function getAnalytics(days: number = 7) {
     trend,
     recent: recentRaw || [],
     groupData,
+    shareByKind,
+    dailyFortuneToday: dailyFortuneToday ?? 0,
     days,
   };
 }

@@ -20,6 +20,8 @@ interface TrendEntry { date: string; submitted: number; generated: number; share
 interface RecentEvent { id: number; event: string; idol_name: string | null; group_name: string | null; score: number | null; created_at: string }
 interface GroupEntry { group: string; count: number }
 
+interface ShareByKind { compat: number; fortune: number; daily_fortune: number }
+
 interface Props {
   data: {
     funnel: FunnelData;
@@ -27,6 +29,8 @@ interface Props {
     trend: TrendEntry[];
     recent: RecentEvent[];
     groupData: GroupEntry[];
+    shareByKind: ShareByKind;
+    dailyFortuneToday: number;
     days: number;
   };
 }
@@ -173,7 +177,7 @@ function LiveFeed({ events }: { events: RecentEvent[] }) {
 // ─── 메인 대시보드 ──────────────────────────────────────────────
 
 export default function AdminDashboard({ data }: Props) {
-  const { funnel, idolTop, trend, recent, groupData, days } = data;
+  const { funnel, idolTop, trend, recent, groupData, shareByKind, dailyFortuneToday, days } = data;
   const router = useRouter();
   const [, startTransition] = useTransition();
   const [filterGroup, setFilterGroup] = useState("all");
@@ -319,6 +323,74 @@ export default function AdminDashboard({ data }: Props) {
           </div>
           <IdolRankList idols={idolTop} filterGroup={filterGroup} />
         </div>
+      </div>
+
+      {/* Daily Fortune 섹션 */}
+      <div className="bg-white dark:bg-[#1a1535] rounded-2xl border border-[#E8E0D0] dark:border-[#2a2545] p-4 mb-4">
+        <div className="text-[11px] uppercase tracking-widest text-[#888] mb-3">오늘의 운세 (Daily Fortune)</div>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+          <MetricCard
+            label="Daily Fortune 공유"
+            value={shareByKind.daily_fortune.toLocaleString()}
+            sub={`전체 공유 ${funnel.share_clicked}건 중`}
+          />
+          <MetricCard
+            label="운세 공유"
+            value={shareByKind.fortune.toLocaleString()}
+            sub="Your Fortune 카드"
+          />
+          <MetricCard
+            label="궁합 공유"
+            value={shareByKind.compat.toLocaleString()}
+            sub="인연 궁합 카드"
+          />
+          <MetricCard
+            label="오늘 일간 캐시"
+            value={`${dailyFortuneToday}/10`}
+            sub="KST 기준 오늘"
+            warn={dailyFortuneToday === 0}
+          />
+        </div>
+        {/* 공유 kind 비율 바 */}
+        {funnel.share_clicked > 0 && (
+          <div>
+            <div className="text-[11px] text-[#888] mb-1">공유 종류 비율</div>
+            <div className="flex h-4 rounded overflow-hidden gap-0.5">
+              {shareByKind.compat > 0 && (
+                <div
+                  className="flex items-center justify-center text-[9px] font-medium text-white"
+                  style={{ width: `${Math.round(shareByKind.compat / funnel.share_clicked * 100)}%`, background: "#88B0BC" }}
+                  title={`궁합 ${shareByKind.compat}건`}
+                >
+                  {shareByKind.compat / funnel.share_clicked > 0.12 ? "궁합" : ""}
+                </div>
+              )}
+              {shareByKind.fortune > 0 && (
+                <div
+                  className="flex items-center justify-center text-[9px] font-medium text-white"
+                  style={{ width: `${Math.round(shareByKind.fortune / funnel.share_clicked * 100)}%`, background: "#C49A3F" }}
+                  title={`운세 ${shareByKind.fortune}건`}
+                >
+                  {shareByKind.fortune / funnel.share_clicked > 0.12 ? "운세" : ""}
+                </div>
+              )}
+              {shareByKind.daily_fortune > 0 && (
+                <div
+                  className="flex items-center justify-center text-[9px] font-medium text-white"
+                  style={{ width: `${Math.round(shareByKind.daily_fortune / funnel.share_clicked * 100)}%`, background: "#C8385A" }}
+                  title={`Daily ${shareByKind.daily_fortune}건`}
+                >
+                  {shareByKind.daily_fortune / funnel.share_clicked > 0.12 ? "Daily" : ""}
+                </div>
+              )}
+            </div>
+            <div className="flex gap-3 mt-1.5">
+              <span className="flex items-center gap-1 text-[11px]"><span className="w-2 h-2 rounded-sm inline-block bg-[#88B0BC]" /><span className="text-[#888]">궁합 {shareByKind.compat}</span></span>
+              <span className="flex items-center gap-1 text-[11px]"><span className="w-2 h-2 rounded-sm inline-block bg-[#C49A3F]" /><span className="text-[#888]">운세 {shareByKind.fortune}</span></span>
+              <span className="flex items-center gap-1 text-[11px]"><span className="w-2 h-2 rounded-sm inline-block bg-[#C8385A]" /><span className="text-[#888]">Daily {shareByKind.daily_fortune}</span></span>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* 그룹 비율 바 */}
