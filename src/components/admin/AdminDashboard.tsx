@@ -3,7 +3,7 @@
 // 한지 라이트 테마 기반 KSaju Admin Dashboard
 // Chart.js 없이 순수 Tailwind + CSS로 구현 (번들 최소화)
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 
 // ─── 타입 ──────────────────────────────────────────────────────
@@ -32,6 +32,7 @@ interface Props {
     shareByKind: ShareByKind;
     dailyFortuneToday: number;
     days: number;
+    fetchedAt: string;
   };
 }
 
@@ -176,12 +177,41 @@ function LiveFeed({ events }: { events: RecentEvent[] }) {
 
 // ─── 메인 대시보드 ──────────────────────────────────────────────
 
+const AUTO_REFRESH_INTERVAL = 30_000; // 30초
+
 export default function AdminDashboard({ data }: Props) {
-  const { funnel, idolTop, trend, recent, groupData, shareByKind, dailyFortuneToday, days } = data;
+  const { funnel, idolTop, trend, recent, groupData, shareByKind, dailyFortuneToday, days, fetchedAt } = data;
   const router = useRouter();
-  const [, startTransition] = useTransition();
+  const [isPending, startTransition] = useTransition();
   const [filterGroup, setFilterGroup] = useState("all");
   const [activeTab, setActiveTab] = useState<"funnel" | "trend" | "feed">("funnel");
+  const [lastUpdated, setLastUpdated] = useState(fetchedAt);
+  const [countdown, setCountdown] = useState(AUTO_REFRESH_INTERVAL / 1000);
+
+  const refresh = useCallback(() => {
+    startTransition(() => {
+      router.refresh();
+      setCountdown(AUTO_REFRESH_INTERVAL / 1000);
+    });
+  }, [router]);
+
+  // 30초 자동 새로고침
+  useEffect(() => {
+    const interval = setInterval(refresh, AUTO_REFRESH_INTERVAL);
+    return () => clearInterval(interval);
+  }, [refresh]);
+
+  // 카운트다운 표시
+  useEffect(() => {
+    const tick = setInterval(() => setCountdown((c) => Math.max(0, c - 1)), 1000);
+    return () => clearInterval(tick);
+  }, []);
+
+  // fetchedAt이 바뀌면(새 데이터 도착) 카운트다운 리셋
+  useEffect(() => {
+    setLastUpdated(fetchedAt);
+    setCountdown(AUTO_REFRESH_INTERVAL / 1000);
+  }, [fetchedAt]);
 
   const handleDays = (d: string) => {
     startTransition(() => router.push(`/admin?days=${d}`));
@@ -206,6 +236,12 @@ export default function AdminDashboard({ data }: Props) {
           </span>
         </div>
         <div className="flex items-center gap-3">
+          <div className="hidden md:flex flex-col items-end">
+            <span className="text-[10px] text-[#bbb]">
+              마지막 업데이트: {new Date(lastUpdated).toLocaleTimeString("ko-KR", { hour: "2-digit", minute: "2-digit", second: "2-digit" })}
+            </span>
+            <span className="text-[10px] text-[#bbb]">다음 갱신: {countdown}초 후</span>
+          </div>
           <select
             className="text-[12px] bg-[#F5F0E8] dark:bg-[#1a1535] border border-[#E0D8CC] dark:border-[#2a2545] rounded-lg px-3 py-1.5 text-[#1A1A2E] dark:text-[#FFF6E5]"
             value={days}
@@ -216,11 +252,12 @@ export default function AdminDashboard({ data }: Props) {
             <option value="90">최근 90일</option>
           </select>
           <button
-            onClick={() => router.refresh()}
-            className="text-[12px] bg-[#5ca88a22] text-[#5ca88a] border border-[#5ca88a44] rounded-full px-3 py-1 flex items-center gap-1 hover:bg-[#5ca88a33] transition-colors"
+            onClick={refresh}
+            disabled={isPending}
+            className="text-[12px] bg-[#5ca88a22] text-[#5ca88a] border border-[#5ca88a44] rounded-full px-3 py-1 flex items-center gap-1 hover:bg-[#5ca88a33] transition-colors disabled:opacity-50"
           >
-            <span className="w-1.5 h-1.5 rounded-full bg-[#5ca88a] animate-pulse inline-block" />
-            새로고침
+            <span className={`w-1.5 h-1.5 rounded-full bg-[#5ca88a] inline-block ${isPending ? "animate-spin" : "animate-pulse"}`} />
+            {isPending ? "갱신 중..." : "새로고침"}
           </button>
         </div>
       </div>

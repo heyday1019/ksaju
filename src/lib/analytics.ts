@@ -51,9 +51,15 @@ export function track(event: AnalyticsEvent, props?: Record<string, unknown>): v
   try {
     const sb = getSupabaseClient();
     if (sb) {
-      void sb.from("analytics_events").insert({ event, props: props ?? null });
+      sb.from("analytics_events")
+        .insert({ event, props: props ?? null })
+        .then(({ error }) => {
+          if (error) console.error("[analytics] Supabase insert failed:", error.message, error.details);
+        });
+    } else {
+      console.warn("[analytics] Supabase client unavailable — check NEXT_PUBLIC_SUPABASE_URL / NEXT_PUBLIC_SUPABASE_ANON_KEY");
     }
-  } catch { /* analytics must never break the app */ }
+  } catch (e) { console.error("[analytics] Supabase unexpected error:", e); }
 }
 
 /** Coarse age bucket from birth year (no raw DOB ever leaves the client). */
