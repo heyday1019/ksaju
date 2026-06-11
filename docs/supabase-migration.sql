@@ -39,3 +39,7 @@ create table if not exists daily_fortunes (
   created_at   timestamptz not null default now(),
   unique(date, day_master)
 );
+
+-- Enable RLS (server-only table — service role key bypasses RLS entirely)
+-- No anon/authenticated policies needed; direct client access is intentionally blocked.
+alter table daily_fortunes enable row level security;

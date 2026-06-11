@@ -139,8 +139,8 @@ Respond ONLY with valid JSON — no markdown, no extra text:
         lucky_color: parsed.lucky_color,
       },
     );
-  } catch {
-    // Fallback — static message, not saved to DB
+  } catch (err) {
+    console.error("[daily-fortune] LLM/upsert failed, using fallback:", err);
     return NextResponse.json({
       id: "fallback",
       date: todayStr,
