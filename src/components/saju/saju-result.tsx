@@ -5,8 +5,9 @@ import { Button } from "@/components/ui/button";
 import { PillarsGrid } from "./pillars-grid";
 import { WuxingBalance } from "./wuxing-balance";
 import { FortuneSection } from "@/components/fortune/fortune-section";
+import { DailyFortune } from "@/components/DailyFortune";
 import { dayMasterInfo, wuxingBalance, WUXING_META } from "@/lib/saju-display";
-import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
+import type { UserSaju, CurrentLuck, HeavenlyStem } from "@/lib/saju-types";
 import type { KSTResult } from "@/lib/kst-types";
 
 type SajuResultProps = {
@@ -24,6 +25,9 @@ export function SajuResult({ userSaju, kst, currentLuck, onEdit }: SajuResultPro
 
   return (
     <div className="space-y-6">
+      {/* 오늘의 운세 */}
+      <DailyFortune dayMaster={userSaju.dayMaster as HeavenlyStem} />
+
       <header className="text-center">
         <p className="text-[10px] font-bold uppercase tracking-wider text-primary">
           Your Saju · 사주
