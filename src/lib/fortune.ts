@@ -82,7 +82,7 @@ const LOVE: Record<HeavenlyStem, { tierLabel: string; line: string }> = {
   癸: { tierLabel: "Intuitive", line: "You read hearts like gentle rain 🌧️" },
 };
 
-type TimeRel = "combo" | "same" | "generate-me" | "i-generate" | "control" | "neutral";
+export type TimeRel = "combo" | "same" | "generate-me" | "i-generate" | "control" | "neutral";
 
 const TIME: Record<TimeRel, { tierLabel: string; line: string }> = {
   combo: { tierLabel: "Magnetic", line: "A magnetic year — say yes to the spark ✨" },
@@ -103,7 +103,7 @@ const TIME_MONTH: Record<TimeRel, string> = {
 };
 
 // 일간 stem vs 다른 stem(연간/월간)의 관계
-function stemRelation(dmStem: string, otherStem: string): TimeRel {
+export function stemRelation(dmStem: string, otherStem: string): TimeRel {
   if (inPairs(dmStem, otherStem, STEM_COMBO)) return "combo";
   const e1 = elementOf(dmStem);
   const e2 = elementOf(otherStem);

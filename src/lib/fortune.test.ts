@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { calcFortune } from "./fortune";
+import { calcFortune, stemRelation, type TimeRel } from "./fortune";
 import type { UserSaju, CurrentLuck } from "./saju-types";
 
 // RM: 壬申/己酉/辛卯, 일간 辛(metal). 오행: water1, metal3, earth1, wood1, fire0
@@ -80,5 +80,28 @@ describe("calcFortune", () => {
       expect(love.line.length).toBeGreaterThan(0);
       expect(love.tierLabel.length).toBeGreaterThan(0);
     }
+  });
+});
+
+describe("stemRelation (exported)", () => {
+  it("甲+己 = combo (천간합)", () => {
+    const r: TimeRel = stemRelation("甲", "己");
+    expect(r).toBe("combo");
+  });
+
+  it("甲+乙 = same (both wood)", () => {
+    expect(stemRelation("甲", "乙")).toBe("same");
+  });
+
+  it("壬+甲 = i-generate (water→wood)", () => {
+    expect(stemRelation("壬", "甲")).toBe("i-generate");
+  });
+
+  it("甲+壬 = generate-me (water→wood, wood dm is generated)", () => {
+    expect(stemRelation("甲", "壬")).toBe("generate-me");
+  });
+
+  it("丙+壬 = control (fire vs water)", () => {
+    expect(stemRelation("丙", "壬")).toBe("control");
   });
 });
