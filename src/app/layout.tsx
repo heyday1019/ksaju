@@ -75,6 +75,10 @@ export const metadata: Metadata = {
   ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
     verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION },
   }),
+  // Google AdSense 계정 연결 메타 태그 — 크롤러가 정적 HTML에서 감지
+  ...(process.env.NEXT_PUBLIC_ADSENSE_ID && {
+    other: { "google-adsense-account": process.env.NEXT_PUBLIC_ADSENSE_ID },
+  }),
 };
 
 export default async function RootLayout({
