@@ -4,6 +4,18 @@ import { render, screen } from "@testing-library/react";
 import { DailyFortune } from "./DailyFortune";
 import type { DailyFortuneData } from "@/components/fortune/DailyFortuneShareCard";
 
+const TRANSLATIONS: Record<string, string> = {
+  title: "Today's Fortune",
+  loading: "Reading the stars...",
+  shareButton: "Share ✨",
+  comeback: "Come back tomorrow for a new reading 🌙",
+};
+
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => TRANSLATIONS[key] ?? key,
+  useLocale: () => "en",
+}));
+
 const MOCK_DATA: DailyFortuneData = {
   id: "test-id",
   date: "2026-06-11",

@@ -4,10 +4,18 @@ import { birthToSaju } from "@/lib/saju";
 import { stemRelation, type TimeRel } from "@/lib/fortune";
 import { HEAVENLY_STEMS } from "@/lib/saju-data";
 import { elementOf, WUXING_META } from "@/lib/saju-display";
+import { routing, type Locale } from "@/i18n/routing";
 
 export const revalidate = 86400;
 
 const VALID_STEMS: Set<string> = new Set(HEAVENLY_STEMS.map((s) => s.char));
+
+const LANG_MAP: Record<Locale, string> = {
+  en: "English",
+  ja: "Japanese",
+  ko: "Korean",
+  "zh-TW": "Traditional Chinese",
+};
 
 const FALLBACK: Record<TimeRel, { message: string; energy: number; lucky_color: string }> = {
   combo:         { message: "Stars align perfectly today — your bias era starts now! ✨",    energy: 5, lucky_color: "Hot Pink"      },
@@ -19,7 +27,13 @@ const FALLBACK: Record<TimeRel, { message: string; energy: number; lucky_color: 
 };
 
 export async function GET(request: NextRequest) {
-  const dayMaster = request.nextUrl.searchParams.get("dayMaster");
+  const { searchParams } = request.nextUrl;
+  const dayMaster = searchParams.get("dayMaster");
+  const localeParam = searchParams.get("locale") ?? "en";
+  const locale: Locale = routing.locales.includes(localeParam as Locale)
+    ? (localeParam as Locale)
+    : "en";
+
   if (!dayMaster || !VALID_STEMS.has(dayMaster)) {
     return NextResponse.json({ error: "Invalid dayMaster" }, { status: 400 });
   }
@@ -55,21 +69,23 @@ export async function GET(request: NextRequest) {
     .select("*")
     .eq("date", todayStr)
     .eq("day_master", dayMaster)
+    .eq("locale", locale)
     .maybeSingle();
 
   if (cached) return NextResponse.json(cached);
 
   // OpenRouter generation
   const elementLabel = WUXING_META[elementOf(dayMaster)].label;
+  const lang = LANG_MAP[locale];
   const prompt = `Today's day pillar is ${todayPillar}. The user's day master is ${dayMaster} (${elementLabel}).
 Their cosmic relationship today is "${relation}".
 
-Write exactly 1 uplifting sentence (30–40 words) for a K-pop fan's daily fortune.
+Write exactly 1 uplifting sentence (30–40 words) for a K-pop fan's daily fortune in ${lang}.
 Tone: playful, Gen Z, positive. You may reference K-pop/idol culture subtly.
-Pick an energy level (1–5, where 5 is peak) and a lucky color name.
+Pick an energy level (1–5, where 5 is peak) and a lucky color name in ${lang}.
 
 Respond ONLY with valid JSON — no markdown, no extra text:
-{"message":"...","energy":4,"lucky_color":"Coral Pink"}`;
+{"message":"...","energy":4,"lucky_color":"..."}`;
 
   try {
     const llmRes = await fetch("https://openrouter.ai/api/v1/chat/completions", {
@@ -116,13 +132,14 @@ Respond ONLY with valid JSON — no markdown, no extra text:
         {
           date: todayStr,
           day_master: dayMaster,
+          locale,
           today_pillar: todayPillar,
           relation,
           message: parsed.message,
           energy,
           lucky_color: parsed.lucky_color,
         },
-        { onConflict: "date,day_master" },
+        { onConflict: "date,day_master,locale" },
       )
       .select("*")
       .maybeSingle();
@@ -132,6 +149,7 @@ Respond ONLY with valid JSON — no markdown, no extra text:
         id: "fresh",
         date: todayStr,
         day_master: dayMaster,
+        locale,
         today_pillar: todayPillar,
         relation,
         message: parsed.message,
@@ -145,6 +163,7 @@ Respond ONLY with valid JSON — no markdown, no extra text:
       id: "fallback",
       date: todayStr,
       day_master: dayMaster,
+      locale,
       today_pillar: todayPillar,
       relation,
       ...FALLBACK[relation],

@@ -85,3 +85,13 @@ begin
       on anon_users for update to anon using (true) with check (true);
   end if;
 end $$;
+
+-- daily_fortunes: locale 컬럼 추가 (Phase 2 멀티랭귀지)
+-- Supabase SQL Editor에서 실행
+ALTER TABLE daily_fortunes ADD COLUMN IF NOT EXISTS locale TEXT NOT NULL DEFAULT 'en';
+
+ALTER TABLE daily_fortunes DROP CONSTRAINT IF EXISTS daily_fortunes_date_day_master_key;
+
+ALTER TABLE daily_fortunes
+  ADD CONSTRAINT daily_fortunes_date_day_master_locale_key
+  UNIQUE (date, day_master, locale);

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { elementOf, ELEMENT_TEXT } from "@/lib/saju-display";
 import type { HeavenlyStem } from "@/lib/saju-types";
@@ -8,20 +9,22 @@ import { DailyFortuneShareModal } from "@/components/fortune/DailyFortuneShareMo
 import type { DailyFortuneData } from "@/components/fortune/DailyFortuneShareCard";
 
 export function DailyFortune({ dayMaster }: { dayMaster: HeavenlyStem }) {
+  const t = useTranslations("DailyFortune");
+  const locale = useLocale();
   const [data, setData] = useState<DailyFortuneData | null>(null);
   const [shareOpen, setShareOpen] = useState(false);
 
   useEffect(() => {
-    fetch(`/api/daily-fortune?dayMaster=${encodeURIComponent(dayMaster)}`)
+    fetch(`/api/daily-fortune?dayMaster=${encodeURIComponent(dayMaster)}&locale=${locale}`)
       .then((r) => r.json() as Promise<DailyFortuneData>)
       .then(setData)
       .catch(() => {});
-  }, [dayMaster]);
+  }, [dayMaster, locale]);
 
   if (!data) {
     return (
       <section
-        aria-label="Loading today's fortune"
+        aria-label={t("loading")}
         className="animate-pulse space-y-3 rounded-xl border border-border bg-secondary/30 p-4"
       >
         <div className="mx-auto h-3 w-32 rounded bg-muted" />
@@ -45,7 +48,7 @@ export function DailyFortune({ dayMaster }: { dayMaster: HeavenlyStem }) {
   return (
     <section className="space-y-3 rounded-xl border border-border bg-secondary/30 p-4">
       <p className="text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-        ✦ Today&apos;s Fortune · 오늘의 운세
+        ✦ {t("title")} · 오늘의 운세
       </p>
       <p className="text-center text-xs text-muted-foreground">
         {dateStr} ·{" "}
@@ -71,10 +74,10 @@ export function DailyFortune({ dayMaster }: { dayMaster: HeavenlyStem }) {
           className="w-full"
           onClick={() => setShareOpen(true)}
         >
-          Share ✨
+          {t("shareButton")}
         </Button>
         <p className="text-[10px] text-muted-foreground">
-          Come back tomorrow for a new reading 🌙
+          {t("comeback")}
         </p>
       </div>
 
