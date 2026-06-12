@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Geist,
   Inter,
@@ -32,6 +32,13 @@ const notoSerifKR = Noto_Serif_KR({
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://ksaju.me";
 
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#FBF6E8" },
+    { media: "(prefers-color-scheme: dark)", color: "#0F0828" },
+  ],
+};
+
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
@@ -63,10 +70,6 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1 },
   },
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#FBF6E8" },
-    { media: "(prefers-color-scheme: dark)", color: "#0F0828" },
-  ],
   icons: { icon: "/favicon.ico", apple: "/apple-touch-icon.png" },
   // Google Search Console 소유권 인증 — GSC에서 받은 값을 Vercel 환경변수에 추가
   ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {

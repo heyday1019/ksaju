@@ -6,6 +6,28 @@
 
 ## 2026-06-12 (금)
 
+### 📌 Google Search Console + AdSense 등록 (사용자 수동 액션 대기)
+
+코드 준비 완료 (`89439ed` — `feat(seo): Google Search Console + AdSense env-var hooks`):
+- `layout.tsx` — `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` 환경변수 있으면 `<meta name="google-site-verification">` 자동 주입
+- `layout.tsx` — `NEXT_PUBLIC_ADSENSE_ID` 환경변수 있으면 AdSense `<Script>` 자동 활성화
+- `.env.example` — 두 변수 문서화
+
+**Search Console 등록 순서:**
+1. search.google.com/search-console → 속성 추가 → `https://ksaju.me` → "HTML 태그" 인증
+2. `content="..."` 값 복사
+3. Vercel → Settings → Environment Variables → `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` 추가 → Redeploy
+4. GSC로 돌아와 "확인" 클릭
+5. Sitemaps → `sitemap.xml` 제출
+
+**AdSense 등록 순서 (Search Console 인증 후):**
+1. adsense.google.com → 사이트 추가 → `ksaju.me`
+2. `ca-pub-XXXXXXXXXXXXXXXX` 복사
+3. Vercel → `NEXT_PUBLIC_ADSENSE_ID` 추가 → Redeploy
+4. Google 심사 대기 (1~2주)
+
+---
+
 ### ✅ Trust 페이지 멀티랭귀지 + 404 수정 (완료)
 
 **문제:** `(static)` 라우트 그룹이 next-intl 미들웨어와 충돌 — `/about` → 내부 `/en/about` 리라이트 → 404.
