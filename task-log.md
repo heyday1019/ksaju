@@ -4,7 +4,79 @@
 
 ---
 
+## 2026-06-12 (금)
+
+### ✅ 사이클 26 — 로그인 없는 사용자 기억 시스템 (완료)
+
+**목표:** 재방문 시 생일 재입력 없이 바로 오늘의 운세/결과로 진입.
+
+**구현:**
+- `docs/supabase-migration.sql` — `anon_users` 테이블 + RLS 3종(insert/select/update) 추가 (`3e47c06`)
+- `src/lib/user-identity.ts` (신규) — `getOrCreateUID`/`saveBirthData`/`loadBirthData`/`getUserProfile`/`saveUserProfile`/`saveEmail`, 13 tests (`4833326`)
+- `src/components/home/returning-user-banner.tsx` (신규) — "Welcome back ✨" 일간 히어로 배너, Continue/Change birthday, 4 tests (`176846c`)
+- `src/app/[locale]/page.tsx` — `"form"|"welcome"|"result"` 3-way view, `useEffect` 재방문 감지, `handleContinue`/`handleReset`, `saveBirthData`+`saveUserProfile` fire-and-forget 연결 (`eabdec7`)
+- `src/components/home/returning-user-banner.test.tsx` — `afterEach` import 수정 (`0fa069e`)
+
+**상태:** 212 tests pass, tsc/lint clean, `next build` ✅, `feat/multilang` push 완료.
+
+**⚠️ 사용자 수동 액션 필요:** Supabase SQL Editor에서 `docs/supabase-migration.sql` 전체 실행 (`anon_users` 테이블 생성).
+
+**브랜치 노트:** 사이클 26 코드는 `feat/multilang` 브랜치에 있음 (multilang 재구조화로 `src/app/[locale]/page.tsx` 경로 사용). Tasks 1-2는 `main`에도 포함. Tasks 3-4는 multilang 병합 시 함께 반영됨.
+
+---
+
 ## 2026-06-11 (목)
+
+### 🔭 Phase 2 브레인스토밍 — 글로벌 멀티랭귀지 (세션 중단, 미완성)
+
+> 토큰 한도로 설계 섹션 1 제시 후 중단. 다음 세션에서 섹션 2부터 이어서 진행.
+
+**확정된 결정 사항:**
+
+| 항목 | 결정 |
+|------|------|
+| **목표** | 일본어 출시를 발판으로 글로벌 멀티랭귀지 인프라 구축 |
+| **언어** | EN(기본) · JA · KO · ZH-TW (번체, 4개) |
+| **URL 구조** | Sub-path — `/`=영어, `/ja/` `/ko/` `/zh-TW/` |
+| **구현 방식** | next-intl v4 `localePrefix: 'as-needed'` (이미 설치됨) |
+| **언어 전환** | 헤더 수동 스위처 (자동 감지·리디렉션 없음) |
+| **번역 Phase 2** | 코어 플로우(`/`, `/inyeon`) + UI + 운세 정적 텍스트 + Daily Fortune LLM |
+| **번역 Phase 3** | Trust 페이지(`/about` `/faq` `/privacy` `/terms`) |
+| **운세 번역** | 전부 번역 — UI·readings.json·fortune.ts·Daily Fortune LLM(locale 파라미터) |
+
+**아키텍처 핵심 (Approach A, 확정):**
+```
+ksaju.me/          → EN (prefix 없음)
+ksaju.me/ja/       → JA
+ksaju.me/ko/       → KO
+ksaju.me/zh-TW/    → ZH-TW
+ksaju.me/admin     → 변경 없음 (locale 미적용)
+```
+
+**신규 파일 (예정):**
+- `src/i18n/routing.ts` — locales/defaultLocale/localePrefix 설정
+- `src/i18n/request.ts` — next-intl 서버 설정 (messages 로드)
+- `src/i18n/navigation.ts` — locale-aware Link/useRouter/usePathname
+- `src/messages/{en,ja,ko,zh-TW}.json` — 번역 파일 4벌
+- `data/readings/{en,ja,ko,zh-TW}.json` — 궁합 리딩 locale별 분리
+
+**기존 파일 변경 예정:**
+- `src/middleware.ts` — admin auth + next-intl middleware 병합
+- `src/app/` → `src/app/[locale]/` 구조 이동 (코어 2페이지)
+- `/api/daily-fortune/route.ts` — `?locale=` 파라미터 추가
+- `docs/supabase-migration.sql` — `daily_fortunes` 테이블에 `locale` 컬럼 추가
+- `src/app/sitemap.ts` — 전 locale URL 포함
+
+**다음 세션 시작 액션 (브레인스토밍 재개):**
+1. 섹션 2: 파일 구조 및 라우팅 상세 설계 제시 → 승인
+2. 섹션 3: 번역 인프라 (messages JSON 구조, i18n config)
+3. 섹션 4: 언어 스위처 UI
+4. 섹션 5: Fortune / Daily Fortune locale 처리
+5. 섹션 6: Phase 2/3 단계별 범위
+6. 섹션 7: 테스트 전략
+7. 설계 승인 → spec 문서 작성 → writing-plans 스킬 호출
+
+---
 
 ### 📌 오늘 요약 (2026-06-11)
 
