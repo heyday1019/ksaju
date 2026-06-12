@@ -1,7 +1,11 @@
 // @vitest-environment happy-dom
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { FortuneSection } from "./fortune-section";
+
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => key,
+}));
 import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 
 const RM: UserSaju = {
@@ -14,10 +18,11 @@ const LUCK: CurrentLuck = { yearPillar: "丙午", monthPillar: "癸巳" };
 describe("FortuneSection", () => {
   it("운세 4카드 제목을 렌더한다", () => {
     render(<FortuneSection userSaju={RM} luck={LUCK} />);
-    expect(screen.getByText(/Money/)).toBeInTheDocument();
-    expect(screen.getByText(/Love/)).toBeInTheDocument();
-    expect(screen.getByText(/Career/)).toBeInTheDocument();
-    expect(screen.getByText(/This Year/)).toBeInTheDocument();
+    // mock returns key as-is, so t("money") → "money", rendered as "💰 money" etc.
+    expect(screen.getAllByText(/💰/)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/💘/)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/👑/)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/✨/)[0]).toBeInTheDocument();
   });
 
   it("Share 버튼이 활성화되어 있다", () => {

@@ -1,4 +1,7 @@
+"use client";
+
 import { forwardRef } from "react";
+import { useTranslations } from "next-intl";
 import { calcFortune } from "@/lib/fortune";
 import { dayMasterInfo, WUXING_META } from "@/lib/saju-display";
 import type { UserSaju, CurrentLuck, WuXing } from "@/lib/saju-types";
@@ -23,6 +26,7 @@ type FortuneShareCardProps = { userSaju: UserSaju; luck: CurrentLuck };
  */
 export const FortuneShareCard = forwardRef<HTMLDivElement, FortuneShareCardProps>(
   function FortuneShareCard({ userSaju, luck }, ref) {
+    const t = useTranslations("Fortune");
     const cards = calcFortune(userSaju, luck);
     const dm = dayMasterInfo(userSaju.dayMaster);
     const meta = WUXING_META[dm.element];
@@ -60,7 +64,7 @@ export const FortuneShareCard = forwardRef<HTMLDivElement, FortuneShareCardProps
               >
                 <div className="flex items-center justify-between">
                   <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground">
-                    {card.emoji} {card.title}
+                    {card.emoji} {t(card.key)}
                   </span>
                   <span
                     className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${ACCENT[card.element]}`}

@@ -1,7 +1,11 @@
 // @vitest-environment happy-dom
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { FortuneShareModal } from "./fortune-share-modal";
+
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => key,
+}));
 import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 
 const RM: UserSaju = {
@@ -17,7 +21,7 @@ describe("FortuneShareModal", () => {
       <FortuneShareModal open onClose={() => {}} userSaju={RM} luck={LUCK} />,
     );
     expect(screen.getByText(/My Saju Fortune/i)).toBeInTheDocument();
-    expect(screen.getByText(/Money/)).toBeInTheDocument();
+    expect(screen.getAllByText(/💰/)[0]).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /share/i })).toBeEnabled();
   });
 

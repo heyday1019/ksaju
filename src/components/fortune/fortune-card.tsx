@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import { WUXING_META } from "@/lib/saju-display";
 import type { WuXing } from "@/lib/saju-types";
 import type { FortuneCard as FortuneCardData } from "@/lib/fortune";
@@ -13,12 +14,13 @@ const ACCENT: Record<WuXing, string> = {
 
 /** 운세 카드 1개 (제목·이모지·tier 배지·fun 라인). */
 export function FortuneCard({ card }: { card: FortuneCardData }) {
+  const t = useTranslations("Fortune");
   const meta = WUXING_META[card.element];
   return (
     <div className="flex flex-col gap-1 rounded-xl border border-border bg-card p-3">
       <div className="flex items-center justify-between">
         <span className="text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-          {card.emoji} {card.title}
+          {card.emoji} {t(card.key)}
         </span>
         <span
           className={`rounded-full px-2 py-0.5 text-[10px] font-semibold ${ACCENT[card.element]}`}

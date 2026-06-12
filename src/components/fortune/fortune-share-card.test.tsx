@@ -1,7 +1,11 @@
 // @vitest-environment happy-dom
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import { FortuneShareCard } from "./fortune-share-card";
+
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => key,
+}));
 import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 
 const RM: UserSaju = {
@@ -20,10 +24,11 @@ describe("FortuneShareCard", () => {
     expect(
       screen.getByText((_, el) => el?.textContent === "辛 Metal"),
     ).toBeInTheDocument();
-    expect(screen.getByText(/Money/)).toBeInTheDocument();
-    expect(screen.getByText(/Love/)).toBeInTheDocument();
-    expect(screen.getByText(/Career/)).toBeInTheDocument();
-    expect(screen.getByText(/This Year/)).toBeInTheDocument();
+    // mock returns key as-is: t("money") → "money", rendered as "💰 money" etc.
+    expect(screen.getAllByText(/💰/)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/💘/)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/👑/)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/✨/)[0]).toBeInTheDocument();
     expect(screen.getByText("ksaju.me")).toBeInTheDocument();
     expect(screen.getByText(/For entertainment/)).toBeInTheDocument();
   });

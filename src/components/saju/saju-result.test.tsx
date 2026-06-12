@@ -3,6 +3,11 @@ import { describe, it, expect, vi } from "vitest";
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SajuResult } from "./saju-result";
+
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => key,
+  useLocale: () => "en",
+}));
 import { DAY_MASTER_KEYWORDS } from "@/lib/saju-data";
 import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 import type { KSTResult } from "@/lib/kst-types";

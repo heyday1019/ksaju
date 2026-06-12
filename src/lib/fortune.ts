@@ -14,7 +14,6 @@ export type FortuneKey = "money" | "love" | "career" | "time";
 
 export interface FortuneCard {
   key: FortuneKey;
-  title: string;
   emoji: string;
   element: WuXing; // 액센트색 토큰용 (WUXING_META)
   tierLabel: string; // 짧은 등급/무드 워드
@@ -129,7 +128,6 @@ export function calcFortune(userSaju: UserSaju, luck: CurrentLuck): FortuneCard[
   const moneyTier = tierOf(balance[wealthEl]);
   const money: FortuneCard = {
     key: "money",
-    title: "Money",
     emoji: "💰",
     element: wealthEl,
     ...MONEY[moneyTier],
@@ -139,7 +137,6 @@ export function calcFortune(userSaju: UserSaju, luck: CurrentLuck): FortuneCard[
   const loveEntry = LOVE[dmStem as HeavenlyStem];
   const love: FortuneCard = {
     key: "love",
-    title: "Love",
     emoji: "💘",
     element: dmEl,
     ...loveEntry,
@@ -150,7 +147,6 @@ export function calcFortune(userSaju: UserSaju, luck: CurrentLuck): FortuneCard[
   const careerTier = tierOf(balance[officerEl]);
   const career: FortuneCard = {
     key: "career",
-    title: "Career",
     emoji: "👑",
     element: officerEl,
     ...CAREER[careerTier],
@@ -163,7 +159,6 @@ export function calcFortune(userSaju: UserSaju, luck: CurrentLuck): FortuneCard[
   const monthRel = stemRelation(dmStem, monthStem);
   const time: FortuneCard = {
     key: "time",
-    title: "This Year",
     emoji: "✨",
     element: elementOf(yearStem),
     ...TIME[yearRel],

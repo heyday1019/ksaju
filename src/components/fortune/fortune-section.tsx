@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { FortuneCard } from "./fortune-card";
 import { FortuneShareModal } from "./fortune-share-modal";
@@ -17,13 +18,14 @@ export function FortuneSection({
   userSaju: UserSaju;
   luck: CurrentLuck;
 }) {
+  const t = useTranslations("Fortune");
   const cards = calcFortune(userSaju, luck);
   const [shareOpen, setShareOpen] = useState(false);
 
   return (
     <section className="space-y-3 rounded-xl border border-border bg-secondary/30 p-4">
       <p className="text-center text-[10px] font-bold uppercase tracking-wider text-muted-foreground">
-        Your Fortune · 운세
+        {t("sectionTitle")} · 운세
       </p>
 
       <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -39,9 +41,9 @@ export function FortuneSection({
           onClick={() => setShareOpen(true)}
           className="w-full"
         >
-          Share ✨
+          {t("shareButton")}
         </Button>
-        <p className="text-[10px] text-muted-foreground">For entertainment 🌙</p>
+        <p className="text-[10px] text-muted-foreground">{t("disclaimer")}</p>
       </div>
 
       <FortuneShareModal
