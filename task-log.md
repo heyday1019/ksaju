@@ -6,6 +6,28 @@
 
 ## 2026-06-12 (금)
 
+### ✅ Phase 2 — 글로벌 멀티랭귀지 인프라 (완료)
+
+**목표:** next-intl v4 기반 4개 언어(EN·JA·KO·ZH-TW) 인프라 구축 + 전체 UI 번역 연결.
+
+**구현 (Tasks 1-8):**
+- `src/i18n/routing.ts` / `request.ts` / `navigation.ts` — next-intl v4 `localePrefix: 'as-needed'` 설정 (Task 1, 기존 커밋)
+- `src/components/layout/app-chrome.tsx` (신규) — ThemeProvider+chrome+SiteHeader+Footer 추출. `src/app/[locale]/layout.tsx` 신규, `(static)/layout.tsx` 신규, 파일 구조 이전 (Task 2)
+- `messages/en.json` — 10 네임스페이스 완성 (SiteHeader·SiteFooter·LocaleSwitcher·Home·BirthForm·SajuResult·Fortune·DailyFortune·Inyeon·CompatibilityModal·Common) (Task 3)
+- `messages/{ja,ko,zh-TW}.json` — 3 로케일 번역 파일 (Task 4)
+- `src/components/layout/locale-switcher.tsx` (신규) — Globe dropdown, hugeicons, shadcn DropdownMenu. `SiteHeader` 연결 (Task 5)
+- `fortune.ts` `FortuneCard.title` 제거 + `fortune-card.tsx`/`fortune-section.tsx`/`fortune-share-card.tsx` `useTranslations("Fortune")` 연결 (Task 6)
+- `src/app/api/daily-fortune/route.ts` — `?locale=` 파라미터, `LANG_MAP`, Supabase locale 컬럼 필터, DDL `docs/supabase-migration.sql` 추가 (Task 7)
+- `src/app/sitemap.ts` — 4 locale × 코어 2 URL + trust 4 URL(EN only) = 14 URL (Task 8)
+
+**테스트:** 222 tests pass, tsc clean, `next build` ✅ (8 static routes + 4 dynamic).
+
+**⚠️ 사용자 수동 액션 필요:**
+1. Supabase SQL Editor → `docs/supabase-migration.sql` 전체 실행 (`anon_users` + `daily_fortunes` locale DDL)
+2. JA·KO·ZH-TW 번역 검토 (기계번역 초안, `/ja/` `/ko/` `/zh-TW/` 실제 확인)
+
+---
+
 ### ✅ 사이클 26 — 로그인 없는 사용자 기억 시스템 (완료)
 
 **목표:** 재방문 시 생일 재입력 없이 바로 오늘의 운세/결과로 진입.
