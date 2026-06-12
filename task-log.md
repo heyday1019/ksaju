@@ -6,6 +6,46 @@
 
 ## 2026-06-12 (금)
 
+### ✅ Daily Fortune + Fun Fact 매일 변경 버그 수정 (완료)
+
+**문제 1 — Daily Fortune 어제 내용 반복:**
+`export const revalidate = 86400` 가 Next.js/Vercel CDN에서 API 응답 전체를 86400초 캐싱. Supabase `(date × dayMaster × locale)` 캐시는 정확했지만, CDN이 route handler 자체를 실행하지 않고 어제 응답을 그대로 반환했음.
+
+**수정:** `revalidate = 86400` → `dynamic = "force-dynamic"` (route.ts). Route handler가 매 요청마다 실행되어 Supabase 캐시 레이어가 정상 동작.
+
+**문제 2 — Fun Fact 항상 동일:**
+`buildFunFact()` 는 사용자 출생지와 KST 날짜 차이를 계산하는 정적 메시지 (생일 데이터 기반, 영원히 불변). 사용자가 매일 바뀌길 기대.
+
+**수정:** `src/lib/daily-fact.ts` (신규) — 36개 사주 관련 fun fact 풀, `getDailyFact(dayMaster, today)` 가 `(KST day-of-year + stem-index × 7) % 36` 으로 결정적 선택. 같은 사용자도 매일 다른 fact, 같은 날도 일간마다 다른 fact. `SajuResult` 에서 `kst.funFact` 대신 `getDailyFact(userSaju.dayMaster)` 사용, 라벨 "Fun fact:" → "Today's saju tip ✨".
+
+**커밋:** `6685428` | 231 tests pass, tsc clean.
+
+---
+
+### 타로 카드 기능 브레인스토밍 (미완성)
+
+**결정:**
+- 표준 78장 덱
+- **Approach C**: 정적 PDF 리딩 데이터 + LLM 사주 개인화 인사이트, Supabase 캐시 `(card_id × day_master × locale × date)`
+- 무료로 먼저 출시, 향후 크레딧 유료화 검토
+- 78장 이미지: 저작권 이슈로 Midjourney로 새로 생성 필요 (`docs/tarot-midjourney-prompts.md` 완성)
+
+**사용자 액션 필요:** `docs/tarot-midjourney-prompts.md` 의 프롬프트로 Midjourney에서 78장 생성 후 공유
+
+---
+
+### ✅ 연락 이메일 변경 완료
+
+FAQ/Privacy/Terms `ksaju.korea@gmail.com` → `ksaju.me@gmail.com` (커밋 `89439ed` 포함).
+
+---
+
+### ✅ Phase 2 멀티랭귀지 Analytics locale 포함 (완료)
+
+`analytics.ts` `setCurrentLocale(locale)` + `AnalyticsProvider` `useLocale()` 연동 → 모든 track() 이벤트에 `locale` 자동 추가. 이미 사이클 25 커밋(`c1edcf5`)에 포함됨.
+
+---
+
 ### 📌 Google Search Console + AdSense 등록 (사용자 수동 액션 대기)
 
 코드 준비 완료 (`89439ed` — `feat(seo): Google Search Console + AdSense env-var hooks`):
