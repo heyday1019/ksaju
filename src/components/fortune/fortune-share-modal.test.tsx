@@ -5,6 +5,7 @@ import { FortuneShareModal } from "./fortune-share-modal";
 
 vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
+  useLocale: () => "en",
 }));
 import type { UserSaju, CurrentLuck } from "@/lib/saju-types";
 

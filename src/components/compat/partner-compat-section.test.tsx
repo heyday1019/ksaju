@@ -6,6 +6,7 @@ import type { UserSaju } from "@/lib/saju-types";
 
 vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
+  useLocale: () => "en",
 }));
 
 // 상대 사주 계산(server action) 모킹 — 고정 UserSaju 반환

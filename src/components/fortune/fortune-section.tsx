@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { FortuneCard } from "./fortune-card";
 import { FortuneShareModal } from "./fortune-share-modal";
@@ -19,7 +19,8 @@ export function FortuneSection({
   luck: CurrentLuck;
 }) {
   const t = useTranslations("Fortune");
-  const cards = calcFortune(userSaju, luck);
+  const locale = useLocale();
+  const cards = calcFortune(userSaju, luck, locale);
   const [shareOpen, setShareOpen] = useState(false);
 
   return (

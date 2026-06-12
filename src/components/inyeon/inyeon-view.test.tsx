@@ -5,6 +5,7 @@ import type { UserSaju } from "@/lib/saju-types";
 
 vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
+  useLocale: () => "en",
 }));
 
 const loadMock = vi.fn();

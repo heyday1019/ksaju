@@ -1,0 +1,250 @@
+{
+  "money": {
+    "none": {
+      "tierLabel": { "en": "Free Spirit", "ko": "자유로운", "ja": "自由人", "zh-TW": "自由精靈" },
+      "line": {
+        "en": "Wealth's playing hard to get — adventure-budget era 🪙",
+        "ko": "재물이 까다롭게 구네 — 어드벤처 예산 시대 🪙",
+        "ja": "お金が焦らしてくる — アドベンチャー予算時代 🪙",
+        "zh-TW": "財富在玩欲擒故縱 — 冒險預算時代 🪙"
+      }
+    },
+    "some": {
+      "tierLabel": { "en": "Steady", "ko": "안정적", "ja": "安定", "zh-TW": "穩定" },
+      "line": {
+        "en": "Steady coins and smart little moves 💰",
+        "ko": "꾸준한 수입과 스마트한 소소한 움직임 💰",
+        "ja": "安定したコインとスマートな動き 💰",
+        "zh-TW": "穩定收入加上聰明的小動作 💰"
+      }
+    },
+    "strong": {
+      "tierLabel": { "en": "Magnet", "ko": "자석", "ja": "マグネット", "zh-TW": "磁鐵" },
+      "line": {
+        "en": "Money-magnet energy in this life 🧲",
+        "ko": "이 생에서 돈을 끌어당기는 에너지 🧲",
+        "ja": "この人生でマネーマグネットエネルギー 🧲",
+        "zh-TW": "這輩子的財富磁鐵能量 🧲"
+      }
+    }
+  },
+  "career": {
+    "none": {
+      "tierLabel": { "en": "Free Agent", "ko": "자유인", "ja": "フリーエージェント", "zh-TW": "自由人" },
+      "line": {
+        "en": "No boss energy boxing you in — born freelancer 🎈",
+        "ko": "상사 에너지에 갇히지 않는 — 타고난 프리랜서 🎈",
+        "ja": "上司エネルギーに縛られない — 生まれながらのフリーランサー 🎈",
+        "zh-TW": "不被上司能量束縛 — 天生的自由工作者 🎈"
+      }
+    },
+    "some": {
+      "tierLabel": { "en": "Climber", "ko": "등반가", "ja": "クライマー", "zh-TW": "攀升者" },
+      "line": {
+        "en": "Climbing steady, one solid step at a time 📈",
+        "ko": "꾸준히 오르는 중, 한 발 한 발 탄탄하게 📈",
+        "ja": "着実に上昇中、一歩一歩しっかりと 📈",
+        "zh-TW": "穩健攀升中，一步一個腳印 📈"
+      }
+    },
+    "strong": {
+      "tierLabel": { "en": "Leader", "ko": "리더", "ja": "リーダー", "zh-TW": "領導者" },
+      "line": {
+        "en": "Natural-leader signal — people just follow you 👑",
+        "ko": "타고난 리더 기질 — 사람들이 자연스럽게 따라온다 👑",
+        "ja": "天性のリーダーシップ — 人が自然についてくる 👑",
+        "zh-TW": "天生領導者訊號 — 人們自然跟隨你 👑"
+      }
+    }
+  },
+  "love": {
+    "甲": {
+      "tierLabel": { "en": "Devoted", "ko": "헌신적", "ja": "誠実", "zh-TW": "忠誠" },
+      "line": {
+        "en": "Loyal — you love with steady, rooted devotion 🌳",
+        "ko": "충직함 — 단단하고 뿌리 깊은 헌신으로 사랑한다 🌳",
+        "ja": "誠実 — 安定した根ざした献身で愛する 🌳",
+        "zh-TW": "忠誠 — 以穩定紮根的奉獻去愛 🌳"
+      }
+    },
+    "乙": {
+      "tierLabel": { "en": "Tender", "ko": "다정함", "ja": "優しさ", "zh-TW": "溫柔" },
+      "line": {
+        "en": "Soft-hearted — you wrap gently around the right one 🌿",
+        "ko": "여린 마음 — 맞는 사람에게 부드럽게 감겨드는 🌿",
+        "ja": "優しい心 — 相手にそっと寄り添う 🌿",
+        "zh-TW": "溫柔心 — 你輕輕圍繞著對的人 🌿"
+      }
+    },
+    "丙": {
+      "tierLabel": { "en": "Radiant", "ko": "빛나는", "ja": "輝き", "zh-TW": "燦爛" },
+      "line": {
+        "en": "You fall fast and bright — a whole sunrise ☀️",
+        "ko": "빠르고 환하게 빠져든다 — 한 편의 일출처럼 ☀️",
+        "ja": "すぐに明るく恋に落ちる — まるで日の出 ☀️",
+        "zh-TW": "你愛得快而燦爛 — 整個日出般的存在 ☀️"
+      }
+    },
+    "丁": {
+      "tierLabel": { "en": "Slow-burn", "ko": "은은한불꽃", "ja": "じわじわ", "zh-TW": "慢熱" },
+      "line": {
+        "en": "Warm and intimate — a candle that stays lit 🕯️",
+        "ko": "따뜻하고 친밀한 — 꺼지지 않는 촛불 🕯️",
+        "ja": "温かく親密 — ずっと灯り続けるろうそく 🕯️",
+        "zh-TW": "溫暖而親密 — 持續燃燒的蠟燭 🕯️"
+      }
+    },
+    "戊": {
+      "tierLabel": { "en": "Steady", "ko": "든든함", "ja": "安定", "zh-TW": "穩固" },
+      "line": {
+        "en": "Your love is a safe, solid mountain 🏔️",
+        "ko": "내 사랑은 안전하고 단단한 산 🏔️",
+        "ja": "あなたの愛は安全で堅固な山 🏔️",
+        "zh-TW": "你的愛是安全穩固的山 🏔️"
+      }
+    },
+    "己": {
+      "tierLabel": { "en": "Nurturing", "ko": "포근함", "ja": "包容", "zh-TW": "滋養" },
+      "line": {
+        "en": "The comfort partner everyone feels at home with 🌾",
+        "ko": "모두가 편안함을 느끼는 안식처 같은 파트너 🌾",
+        "ja": "誰もが家にいるように感じる安らぎのパートナー 🌾",
+        "zh-TW": "讓所有人都感到像在家一樣的舒適夥伴 🌾"
+      }
+    },
+    "庚": {
+      "tierLabel": { "en": "All-in", "ko": "올인", "ja": "全力投球", "zh-TW": "全力以赴" },
+      "line": {
+        "en": "Bold and all-or-nothing in romance ⚔️",
+        "ko": "연애에서는 대담하고 전부 아니면 전무 ⚔️",
+        "ja": "恋愛では大胆でオールオアナッシング ⚔️",
+        "zh-TW": "在愛情中大膽，全力以赴 ⚔️"
+      }
+    },
+    "辛": {
+      "tierLabel": { "en": "Refined", "ko": "정제된", "ja": "洗練", "zh-TW": "精煉" },
+      "line": {
+        "en": "Picky in the best possible way — quality only 💎",
+        "ko": "최선의 방식으로 까다로운 — 퀄리티만 추구 💎",
+        "ja": "最高の意味で気難しい — 質のみ 💎",
+        "zh-TW": "以最好的方式挑剔 — 只追求品質 💎"
+      }
+    },
+    "壬": {
+      "tierLabel": { "en": "Free", "ko": "자유로움", "ja": "自由", "zh-TW": "自由" },
+      "line": {
+        "en": "A free spirit who loves deep and wide 🌊",
+        "ko": "깊고 넓게 사랑하는 자유로운 영혼 🌊",
+        "ja": "深く広く愛する自由な魂 🌊",
+        "zh-TW": "深情廣愛的自由靈魂 🌊"
+      }
+    },
+    "癸": {
+      "tierLabel": { "en": "Intuitive", "ko": "직관적", "ja": "直感的", "zh-TW": "直覺" },
+      "line": {
+        "en": "You read hearts like gentle rain 🌧️",
+        "ko": "부드러운 빗속에서 마음을 읽는다 🌧️",
+        "ja": "柔らかな雨のように心を読む 🌧️",
+        "zh-TW": "你像細雨般讀懂心意 🌧️"
+      }
+    }
+  },
+  "time": {
+    "combo": {
+      "tierLabel": { "en": "Magnetic", "ko": "매력적", "ja": "磁力", "zh-TW": "磁力" },
+      "line": {
+        "en": "A magnetic year — say yes to the spark ✨",
+        "ko": "마그네틱한 한 해 — 불꽃에 YES라고 답해 ✨",
+        "ja": "マグネティックな一年 — スパークにイエスと言って ✨",
+        "zh-TW": "充滿磁力的一年 — 對那份火花說是 ✨"
+      },
+      "subLine": {
+        "en": "sparks fly ✨",
+        "ko": "불꽃이 튄다 ✨",
+        "ja": "火花が散る ✨",
+        "zh-TW": "火花四濺 ✨"
+      }
+    },
+    "same": {
+      "tierLabel": { "en": "At Home", "ko": "편안함", "ja": "くつろぎ", "zh-TW": "如家" },
+      "line": {
+        "en": "Your element's year — you feel right at home 🏠",
+        "ko": "내 오행의 해 — 편안하게 집에 있는 기분 🏠",
+        "ja": "自分の五行の年 — 家にいるような安心感 🏠",
+        "zh-TW": "你的元素之年 — 感覺就在家裡 🏠"
+      },
+      "subLine": {
+        "en": "in your element 🙂",
+        "ko": "내 기운 그대로 🙂",
+        "ja": "自分らしくいられる 🙂",
+        "zh-TW": "元素自在 🙂"
+      }
+    },
+    "generate-me": {
+      "tierLabel": { "en": "Lucky", "ko": "행운의", "ja": "ラッキー", "zh-TW": "幸運" },
+      "line": {
+        "en": "Carried and supported all year long 🍀",
+        "ko": "일 년 내내 지지받고 응원받는 느낌 🍀",
+        "ja": "一年中運ばれ支えられる 🍀",
+        "zh-TW": "全年都被承載與支持 🍀"
+      },
+      "subLine": {
+        "en": "you're supported 🍀",
+        "ko": "응원받는 중 🍀",
+        "ja": "支えられている 🍀",
+        "zh-TW": "你被支持著 🍀"
+      }
+    },
+    "i-generate": {
+      "tierLabel": { "en": "Giving", "ko": "베푸는", "ja": "与える", "zh-TW": "付出" },
+      "line": {
+        "en": "You give a lot this year — remember to refill 🫖",
+        "ko": "올 한 해 많이 베푸는 해 — 채우는 것도 잊지 마 🫖",
+        "ja": "今年はたくさん与える — 自分も補充するのを忘れずに 🫖",
+        "zh-TW": "今年你付出很多 — 記得補充自己 🫖"
+      },
+      "subLine": {
+        "en": "pace yourself 🫖",
+        "ko": "페이스 조절 필요 🫖",
+        "ja": "自分のペースで 🫖",
+        "zh-TW": "注意步調 🫖"
+      }
+    },
+    "control": {
+      "tierLabel": { "en": "Spicy", "ko": "짜릿한", "ja": "スパイシー", "zh-TW": "刺激" },
+      "line": {
+        "en": "A spicy year — growth through a little friction 🌶️",
+        "ko": "매콤한 한 해 — 약간의 마찰을 통한 성장 🌶️",
+        "ja": "スパイシーな一年 — 少しの摩擦を通じた成長 🌶️",
+        "zh-TW": "辛辣的一年 — 在一點摩擦中成長 🌶️"
+      },
+      "subLine": {
+        "en": "push through 🌶️",
+        "ko": "밀고 나아가 🌶️",
+        "ja": "乗り越えて 🌶️",
+        "zh-TW": "突破前行 🌶️"
+      }
+    },
+    "neutral": {
+      "tierLabel": { "en": "Easy", "ko": "여유로움", "ja": "のんびり", "zh-TW": "悠哉" },
+      "line": {
+        "en": "An easygoing, do-your-own-thing year 🌤️",
+        "ko": "여유롭게, 내 페이스대로 살아가는 한 해 🌤️",
+        "ja": "のんびり、自分らしく過ごす一年 🌤️",
+        "zh-TW": "輕鬆自在、做自己的一年 🌤️"
+      },
+      "subLine": {
+        "en": "smooth sailing 🌤️",
+        "ko": "순항 중 🌤️",
+        "ja": "順風満帆 🌤️",
+        "zh-TW": "順風順水 🌤️"
+      }
+    }
+  },
+  "thisMonthPrefix": {
+    "en": "This month:",
+    "ko": "이번 달:",
+    "ja": "今月:",
+    "zh-TW": "本月:"
+  }
+}

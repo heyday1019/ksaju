@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { calcFortune } from "@/lib/fortune";
 import { dayMasterInfo, WUXING_META } from "@/lib/saju-display";
 import type { UserSaju, CurrentLuck, WuXing } from "@/lib/saju-types";
@@ -27,7 +27,8 @@ type FortuneShareCardProps = { userSaju: UserSaju; luck: CurrentLuck };
 export const FortuneShareCard = forwardRef<HTMLDivElement, FortuneShareCardProps>(
   function FortuneShareCard({ userSaju, luck }, ref) {
     const t = useTranslations("Fortune");
-    const cards = calcFortune(userSaju, luck);
+    const locale = useLocale();
+    const cards = calcFortune(userSaju, luck, locale);
     const dm = dayMasterInfo(userSaju.dayMaster);
     const meta = WUXING_META[dm.element];
     return (
