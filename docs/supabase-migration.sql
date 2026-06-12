@@ -43,3 +43,45 @@ create table if not exists daily_fortunes (
 -- Enable RLS (server-only table — service role key bypasses RLS entirely)
 -- No anon/authenticated policies needed; direct client access is intentionally blocked.
 alter table daily_fortunes enable row level security;
+
+-- Anonymous user identity table (cycle 26)
+-- uid = crypto.randomUUID() generated on device; stored in localStorage ksaju_uid
+-- Service role reads/writes bypass RLS. Anon key uses policies below.
+create table if not exists anon_users (
+  uid        text        primary key,
+  birthdate  date        not null,
+  birth_time time,
+  timezone   text        not null default 'Asia/Seoul',
+  day_master text,
+  email      text,
+  last_visit timestamptz not null default now(),
+  created_at timestamptz not null default now()
+);
+
+alter table anon_users enable row level security;
+
+-- uid is a client-generated UUID (unguessable) — allow anon full CRUD on own row
+do $$
+begin
+  if not exists (
+    select 1 from pg_policies
+    where tablename = 'anon_users' and policyname = 'anon_users: anon insert'
+  ) then
+    create policy "anon_users: anon insert"
+      on anon_users for insert to anon with check (true);
+  end if;
+  if not exists (
+    select 1 from pg_policies
+    where tablename = 'anon_users' and policyname = 'anon_users: anon select'
+  ) then
+    create policy "anon_users: anon select"
+      on anon_users for select to anon using (true);
+  end if;
+  if not exists (
+    select 1 from pg_policies
+    where tablename = 'anon_users' and policyname = 'anon_users: anon update'
+  ) then
+    create policy "anon_users: anon update"
+      on anon_users for update to anon using (true) with check (true);
+  end if;
+end $$;
