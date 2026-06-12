@@ -56,10 +56,10 @@ describe("SajuResult", () => {
     expect(screen.getByLabelText("Metal: 3")).toBeInTheDocument();
   });
 
-  it("KST 날짜와 fun fact를 보여준다", () => {
+  it("KST 날짜와 daily saju tip을 보여준다", () => {
     render(<SajuResult userSaju={RM} kst={KST} currentLuck={LUCK} onEdit={() => {}} />);
     expect(screen.getByText(/1992년 9월 12일/)).toBeInTheDocument();
-    expect(screen.getByText(/Year of the Monkey/)).toBeInTheDocument();
+    expect(screen.getByText(/Today's saju tip/i)).toBeInTheDocument();
   });
 
   it("'인연' 페이지로 가는 궁합 CTA 링크를 렌더한다", () => {

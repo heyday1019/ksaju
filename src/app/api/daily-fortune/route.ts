@@ -6,7 +6,7 @@ import { HEAVENLY_STEMS } from "@/lib/saju-data";
 import { elementOf, WUXING_META } from "@/lib/saju-display";
 import { routing, type Locale } from "@/i18n/routing";
 
-export const revalidate = 86400;
+export const dynamic = "force-dynamic";
 
 const VALID_STEMS: Set<string> = new Set(HEAVENLY_STEMS.map((s) => s.char));
 

@@ -7,6 +7,7 @@ import { WuxingBalance } from "./wuxing-balance";
 import { FortuneSection } from "@/components/fortune/fortune-section";
 import { DailyFortune } from "@/components/DailyFortune";
 import { dayMasterInfo, wuxingBalance, WUXING_META } from "@/lib/saju-display";
+import { getDailyFact } from "@/lib/daily-fact";
 import type { UserSaju, CurrentLuck, HeavenlyStem } from "@/lib/saju-types";
 import type { KSTResult } from "@/lib/kst-types";
 
@@ -85,7 +86,8 @@ export function SajuResult({ userSaju, kst, currentLuck, onEdit }: SajuResultPro
           </p>
         )}
         <p className="border-l-[3px] border-primary bg-primary/5 px-3 py-2 text-xs">
-          <strong className="text-primary">Fun fact:</strong> {kst.funFact}
+          <strong className="text-primary">Today&apos;s saju tip ✨</strong>{" "}
+          {getDailyFact(userSaju.dayMaster)}
         </p>
       </section>
 
