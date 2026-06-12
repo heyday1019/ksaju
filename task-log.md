@@ -6,6 +6,20 @@
 
 ## 2026-06-12 (금)
 
+### ✅ Trust 페이지 멀티랭귀지 + 404 수정 (완료)
+
+**문제:** `(static)` 라우트 그룹이 next-intl 미들웨어와 충돌 — `/about` → 내부 `/en/about` 리라이트 → 404.
+
+**수정:**
+- `(static)/{about,faq,privacy,terms}` → `[locale]/{about,faq,privacy,terms}` 이동 (4 locale 자동 생성)
+- `(static)/layout.tsx` 삭제
+- `SiteFooter` — `"use client"` + `useTranslations` + `@/i18n/navigation Link` (locale-aware 링크)
+- `messages/{en,ko,ja,zh-TW}.json` — About/FAQ/Privacy/Terms 4 네임스페이스 완전 번역
+- `sitemap.ts` — trust 4 locale × 4 페이지 = 총 24 URL
+- 224 tests, tsc clean, `next build` ✅
+
+---
+
 ### ✅ Phase 2 — 글로벌 멀티랭귀지 인프라 (완료)
 
 **목표:** next-intl v4 기반 4개 언어(EN·JA·KO·ZH-TW) 인프라 구축 + 전체 UI 번역 연결.

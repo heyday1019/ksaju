@@ -26,17 +26,18 @@ describe("sitemap", () => {
     expect(urls).toContain("https://ksaju.me/zh-TW/inyeon");
   });
 
-  it("Trust 페이지 EN만 포함", () => {
+  it("Trust 페이지 4 locale 포함", () => {
     const urls = sitemap().map((e) => e.url);
     expect(urls).toContain("https://ksaju.me/about");
     expect(urls).toContain("https://ksaju.me/faq");
     expect(urls).toContain("https://ksaju.me/privacy");
     expect(urls).toContain("https://ksaju.me/terms");
-    // locale prefix trust 페이지는 Phase 3
-    expect(urls.filter((u) => u.includes("/ja/about"))).toHaveLength(0);
+    expect(urls).toContain("https://ksaju.me/ko/about");
+    expect(urls).toContain("https://ksaju.me/ja/faq");
+    expect(urls).toContain("https://ksaju.me/zh-TW/privacy");
   });
 
-  it("총 12개 URL (4 locale × 2 코어 + 4 trust EN)", () => {
-    expect(sitemap()).toHaveLength(12);
+  it("총 24개 URL (4 locale × 2 코어 + 4 locale × 4 trust)", () => {
+    expect(sitemap()).toHaveLength(24);
   });
 });

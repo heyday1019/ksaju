@@ -113,6 +113,30 @@ describe("multi-sink track()", () => {
     expect(fromMock).toHaveBeenCalledWith("analytics_events");
   });
 
+  it("setCurrentLocale prepends locale to all subsequent events", async () => {
+    const mod = await import("./analytics");
+    mod.setCurrentLocale("ja");
+    mod.track("birth_submitted", { has_time: true });
+    expect(vercelTrackMock).toHaveBeenCalledWith("birth_submitted", {
+      locale: "ja",
+      has_time: true,
+    });
+    expect(insertMock).toHaveBeenCalledWith({
+      event: "birth_submitted",
+      props: { locale: "ja", has_time: true },
+    });
+  });
+
+  it("no locale prop added when setCurrentLocale not called", async () => {
+    const mod = await import("./analytics");
+    mod.track("card_generated", { score: 85 });
+    expect(vercelTrackMock).toHaveBeenCalledWith("card_generated", { score: 85 });
+    expect(insertMock).toHaveBeenCalledWith({
+      event: "card_generated",
+      props: { score: 85 },
+    });
+  });
+
   it("Supabase no-ops when getSupabaseClient returns null", async () => {
     getSupabaseClientMock.mockReturnValueOnce(null);
     const mod = await import("./analytics");

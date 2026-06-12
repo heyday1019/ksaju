@@ -23,11 +23,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
     }),
   );
 
-  // Trust 페이지 EN만 (Phase 3에서 locale 추가)
-  const trustEntries = TRUST_ROUTES.map((route) => ({
-    url: `${BASE}${route}`,
-    lastModified,
-  }));
+  // Trust 페이지: 4 locale
+  const trustEntries = LOCALES.flatMap((locale) =>
+    TRUST_ROUTES.map((route) => {
+      const path =
+        locale === "en" ? `${BASE}${route}` : `${BASE}/${locale}${route}`;
+      return { url: path, lastModified };
+    }),
+  );
 
   return [...localeEntries, ...trustEntries];
 }

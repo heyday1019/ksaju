@@ -15,6 +15,12 @@ export type AnalyticsEvent =
   | "compat_revealed";
 
 let initialized = false;
+let currentLocale: string | undefined;
+
+/** Store the active locale so track() can attach it to every event automatically. */
+export function setCurrentLocale(locale: string): void {
+  currentLocale = locale;
+}
 
 /** Initialize PostHog in cookieless/anonymous mode. No-ops without a key. Idempotent. */
 export function initAnalytics(): void {
@@ -35,16 +41,21 @@ export function initAnalytics(): void {
 export function track(event: AnalyticsEvent, props?: Record<string, unknown>): void {
   if (typeof window === "undefined") return;
 
+  // Automatically attach locale to every event when available
+  const merged: Record<string, unknown> | undefined = currentLocale
+    ? { locale: currentLocale, ...props }
+    : props;
+
   // PostHog (no-op until initAnalytics called with valid key)
   if (initialized) {
     try {
-      posthog.capture(event, props);
+      posthog.capture(event, merged);
     } catch { /* analytics must never break the app */ }
   }
 
   // Vercel Analytics (no-op outside Vercel deployment)
   try {
-    vercelTrack(event, props as Record<string, string | number | boolean | null> | undefined);
+    vercelTrack(event, merged as Record<string, string | number | boolean | null> | undefined);
   } catch { /* analytics must never break the app */ }
 
   // Supabase (fire-and-forget, no-op when env vars absent)
@@ -52,7 +63,7 @@ export function track(event: AnalyticsEvent, props?: Record<string, unknown>): v
     const sb = getSupabaseClient();
     if (sb) {
       sb.from("analytics_events")
-        .insert({ event, props: props ?? null })
+        .insert({ event, props: merged ?? null })
         .then(({ error }) => {
           if (error) console.error("[analytics] Supabase insert failed:", error.message, error.details);
         });
