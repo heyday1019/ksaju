@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   Dialog,
   DialogContent,
@@ -39,6 +39,7 @@ export function CompatibilityModal({
   closeLabel = "← Close",
 }: CompatibilityModalProps) {
   const t = useTranslations("CompatibilityModal");
+  const locale = useLocale();
   const cardRef = useRef<HTMLDivElement>(null);
   const { share, status } = useShareImage(cardRef, {
     fileName: "ksaju-compat.png",
@@ -66,6 +67,7 @@ export function CompatibilityModal({
           mePillars={mePillars}
           other={other}
           result={result}
+          locale={locale}
         />
 
         <div className="space-y-2 px-6 pb-6">

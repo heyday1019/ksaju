@@ -11,6 +11,7 @@ type CompatShareCardProps = {
   mePillars: SajuPillars;
   other: CompatOther;
   result: CompatibilityResult;
+  locale?: string;
 };
 
 function HanjaPillars({ pillars }: { pillars: SajuPillars }) {
@@ -44,9 +45,9 @@ function MiniSaju({ label, pillars }: { label: string; pillars: SajuPillars }) {
  * off the modal's scaled preview and in the exported image.
  */
 export const CompatShareCard = forwardRef<HTMLDivElement, CompatShareCardProps>(
-  function CompatShareCard({ mePillars, other, result }, ref) {
+  function CompatShareCard({ mePillars, other, result, locale = "en" }, ref) {
     const headerLabel = other.sub ? `${other.name} · ${other.sub}` : other.name;
-    const reading = getReading(mePillars, other.pillars, result.score);
+    const reading = getReading(mePillars, other.pillars, result.score, locale);
     return (
       <div
         ref={ref}

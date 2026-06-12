@@ -1,44 +1,184 @@
 {
   "pairs": {
     "wood": {
-      "wood": "Two Wood spirits — you grow toward the same sun, roots quietly tangling.",
-      "fire": "Your Wood feeds their Fire — you make them blaze, they make you feel alive.",
-      "earth": "Your Wood reaches into their Earth — you push, they hold steady. Grounded growth.",
-      "metal": "Your Wood meets their Metal — they trim your wild branches. Sparks, then shape.",
-      "water": "Your Wood drinks their Water — they pour, you bloom. Easy, nourishing energy."
+      "wood": {
+        "en": "Two Wood spirits — you grow toward the same sun, roots quietly tangling.",
+        "ko": "두 목(木)의 영혼 — 같은 태양을 향해 자라며, 뿌리가 조용히 얽혀간다.",
+        "ja": "二つの木の魂 — 同じ太陽に向かって育ち、根が静かに絡み合う。",
+        "zh-TW": "兩個木之靈 — 朝著同一個太陽生長，根悄悄地纏繞在一起。"
+      },
+      "fire": {
+        "en": "Your Wood feeds their Fire — you make them blaze, they make you feel alive.",
+        "ko": "내 木이 상대의 火를 키운다 — 내가 빛나게 하고, 상대가 나를 살아있게 만든다.",
+        "ja": "あなたの木が相手の火を育てる — あなたが輝かせ、相手があなたを生き生きとさせる。",
+        "zh-TW": "你的木滋養了他們的火 — 你讓他們燃燒，他們讓你感到活力。"
+      },
+      "earth": {
+        "en": "Your Wood reaches into their Earth — you push, they hold steady. Grounded growth.",
+        "ko": "내 木이 상대의 土 깊이 뻗는다 — 내가 밀고, 상대가 단단히 버텨준다. 뿌리내린 성장.",
+        "ja": "あなたの木が相手の土に伸びる — あなたが押し進め、相手がしっかり支える。大地に根付く成長。",
+        "zh-TW": "你的木深入他們的土 — 你推進，他們穩固支撐。紮根的成長。"
+      },
+      "metal": {
+        "en": "Your Wood meets their Metal — they trim your wild branches. Sparks, then shape.",
+        "ko": "내 木이 상대의 金을 만난다 — 상대가 거친 가지를 다듬는다. 불꽃, 그리고 형태.",
+        "ja": "あなたの木が相手の金と出会う — 相手が荒々しい枝を整える。火花、そして形。",
+        "zh-TW": "你的木遇上他們的金 — 他們修剪你野性的枝葉。碰撞，然後成型。"
+      },
+      "water": {
+        "en": "Your Wood drinks their Water — they pour, you bloom. Easy, nourishing energy.",
+        "ko": "내 木이 상대의 水를 마신다 — 상대가 붓고, 나는 피어난다. 편안하고 영양 가득한 기운.",
+        "ja": "あなたの木が相手の水を飲む — 相手が注ぎ、あなたが咲く。穏やかで栄養満点の縁。",
+        "zh-TW": "你的木飲用他們的水 — 他們傾注，你盛開。輕鬆而滋養的能量。"
+      }
     },
     "fire": {
-      "wood": "Your Fire is fed by their Wood — they hand you fuel, you light up the room together.",
-      "fire": "Your Fire meets their Fire — twin sparks that just get each other.",
-      "earth": "Your Fire warms their Earth — you bring the heat, they make it home.",
-      "metal": "Your Fire meets their Metal — you melt their cool exterior. Intense, transformative.",
-      "water": "Your Fire meets their Water — steam, tension, and undeniable pull."
+      "wood": {
+        "en": "Your Fire is fed by their Wood — they hand you fuel, you light up the room together.",
+        "ko": "내 火가 상대의 木에서 자란다 — 상대가 연료를 건네고, 함께 공간을 밝힌다.",
+        "ja": "あなたの火が相手の木に育てられる — 相手が燃料を渡し、二人で空間を照らす。",
+        "zh-TW": "你的火被他們的木滋養 — 他們給你燃料，你們一起照亮整個空間。"
+      },
+      "fire": {
+        "en": "Your Fire meets their Fire — twin sparks that just get each other.",
+        "ko": "내 火와 상대의 火가 만난다 — 서로를 이해하는 쌍둥이 불꽃.",
+        "ja": "あなたの火が相手の火と出会う — お互いをわかり合う双子の火花。",
+        "zh-TW": "你的火遇上他們的火 — 彼此理解的雙生火花。"
+      },
+      "earth": {
+        "en": "Your Fire warms their Earth — you bring the heat, they make it home.",
+        "ko": "내 火가 상대의 土를 따뜻하게 한다 — 내가 열기를 가져오고, 상대가 그것을 집으로 만든다.",
+        "ja": "あなたの火が相手の土を温める — あなたが熱を運び、相手がそれを家にする。",
+        "zh-TW": "你的火溫暖了他們的土 — 你帶來熱度，他們讓它變成家。"
+      },
+      "metal": {
+        "en": "Your Fire meets their Metal — you melt their cool exterior. Intense, transformative.",
+        "ko": "내 火가 상대의 金을 만난다 — 차가운 겉모습을 녹인다. 강렬하고 변혁적.",
+        "ja": "あなたの火が相手の金と出会う — 相手の冷たい外見を溶かす。強烈で変容的。",
+        "zh-TW": "你的火遇上他們的金 — 融化他們冷酷的外表。強烈而轉化。"
+      },
+      "water": {
+        "en": "Your Fire meets their Water — steam, tension, and undeniable pull.",
+        "ko": "내 火가 상대의 水를 만난다 — 증기, 긴장감, 그리고 거부할 수 없는 인력.",
+        "ja": "あなたの火が相手の水と出会う — 蒸気、緊張、そして抗えない引力。",
+        "zh-TW": "你的火遇上他們的水 — 蒸氣、張力，以及難以抗拒的吸引力。"
+      }
     },
     "earth": {
-      "wood": "Your Earth holds their Wood — you steady them, they keep you growing. Quiet teamwork.",
-      "fire": "Your Earth soaks up their Fire — they spark you, you give them somewhere to land.",
-      "earth": "Two Earth souls — solid, loyal, unshakeable. The kind that lasts.",
-      "metal": "Your Earth births their Metal — you ground them, they sharpen you. A natural fit.",
-      "water": "Your Earth meets their Water — you shape their flow, they soften your edges."
+      "wood": {
+        "en": "Your Earth holds their Wood — you steady them, they keep you growing. Quiet teamwork.",
+        "ko": "내 土가 상대의 木을 지탱한다 — 내가 안정시키고, 상대가 성장하게 해준다. 조용한 팀워크.",
+        "ja": "あなたの土が相手の木を支える — あなたが安定させ、相手が成長し続ける。静かなチームワーク。",
+        "zh-TW": "你的土支撐了他們的木 — 你讓他們穩定，他們讓你持續成長。靜默的默契。"
+      },
+      "fire": {
+        "en": "Your Earth soaks up their Fire — they spark you, you give them somewhere to land.",
+        "ko": "내 土가 상대의 火를 흡수한다 — 상대가 불꽃을 주고, 나는 착지할 곳을 만들어준다.",
+        "ja": "あなたの土が相手の火を吸収する — 相手が火花を与え、あなたが着地場所を提供する。",
+        "zh-TW": "你的土吸收了他們的火 — 他們給你火花，你給他們落腳的地方。"
+      },
+      "earth": {
+        "en": "Two Earth souls — solid, loyal, unshakeable. The kind that lasts.",
+        "ko": "두 토(土)의 영혼 — 단단하고, 충직하며, 흔들리지 않는다. 오래 가는 타입.",
+        "ja": "二つの土の魂 — 堅固で、忠実で、揺るぎない。長続きするタイプ。",
+        "zh-TW": "兩個土之靈 — 堅固、忠誠、不可動搖。能夠長久的那種。"
+      },
+      "metal": {
+        "en": "Your Earth births their Metal — you ground them, they sharpen you. A natural fit.",
+        "ko": "내 土가 상대의 金을 낳는다 — 내가 뿌리내리게 하고, 상대가 나를 날카롭게 한다. 자연스러운 궁합.",
+        "ja": "あなたの土が相手の金を生み出す — あなたが根付かせ、相手があなたを磨く。自然な相性。",
+        "zh-TW": "你的土孕育了他們的金 — 你讓他們紮根，他們讓你更加敏銳。天然的契合。"
+      },
+      "water": {
+        "en": "Your Earth meets their Water — you shape their flow, they soften your edges.",
+        "ko": "내 土가 상대의 水를 만난다 — 흐름을 형성하고, 상대가 나의 모서리를 부드럽게 한다.",
+        "ja": "あなたの土が相手の水と出会う — 流れを形作り、相手があなたの角を柔らかくする。",
+        "zh-TW": "你的土遇上他們的水 — 你塑造他們的流動，他們柔化你的棱角。"
+      }
     },
     "metal": {
-      "wood": "Your Metal meets their Wood — you cut through their tangle. Push-pull with purpose.",
-      "fire": "Your Metal meets their Fire — they melt you down and remake you. Risky, electric.",
-      "earth": "Your Metal is forged in their Earth — they ground you, you give them an edge.",
-      "metal": "Two Metal hearts — sharp minds, high standards, real respect when you click.",
-      "water": "Your Metal feeds their Water — you give them shape, they keep you flowing. Cool and clear."
+      "wood": {
+        "en": "Your Metal meets their Wood — you cut through their tangle. Push-pull with purpose.",
+        "ko": "내 金이 상대의 木을 만난다 — 얽힘을 잘라낸다. 목적 있는 밀고 당기기.",
+        "ja": "あなたの金が相手の木と出会う — 絡み合いを切り抜ける。目的のある引き合い。",
+        "zh-TW": "你的金遇上他們的木 — 切穿了糾結。有目標的拉鋸。"
+      },
+      "fire": {
+        "en": "Your Metal meets their Fire — they melt you down and remake you. Risky, electric.",
+        "ko": "내 金이 상대의 火를 만난다 — 녹여서 다시 만들어진다. 위험하고 전기적.",
+        "ja": "あなたの金が相手の火と出会う — 溶かされて作り直される。リスキーで電気的。",
+        "zh-TW": "你的金遇上他們的火 — 被他們融化重塑。危險而充滿電流。"
+      },
+      "earth": {
+        "en": "Your Metal is forged in their Earth — they ground you, you give them an edge.",
+        "ko": "내 金이 상대의 土에서 단련된다 — 상대가 뿌리내리게 하고, 나는 날카로움을 준다.",
+        "ja": "あなたの金が相手の土で鍛えられる — 相手が根付かせ、あなたが鋭さを与える。",
+        "zh-TW": "你的金在他們的土中鍛造 — 他們讓你紮根，你給他們一份犀利。"
+      },
+      "metal": {
+        "en": "Two Metal hearts — sharp minds, high standards, real respect when you click.",
+        "ko": "두 금(金)의 마음 — 날카로운 사고, 높은 기준, 통할 때의 진짜 존중.",
+        "ja": "二つの金の心 — 鋭い思考、高い基準、噛み合った時の本物の尊重。",
+        "zh-TW": "兩顆金之心 — 敏銳的思維，高標準，契合時真正的相互尊重。"
+      },
+      "water": {
+        "en": "Your Metal feeds their Water — you give them shape, they keep you flowing. Cool and clear.",
+        "ko": "내 金이 상대의 水를 키운다 — 형태를 주고, 상대가 나를 계속 흐르게 한다. 쿨하고 선명.",
+        "ja": "あなたの金が相手の水を育てる — 形を与え、相手があなたを流れ続けさせる。クールで澄明。",
+        "zh-TW": "你的金滋養了他們的水 — 你給他們形態，他們讓你持續流動。清涼而清晰。"
+      }
     },
     "water": {
-      "wood": "Your Water feeds their Wood — you pour, they bloom. You help each other grow.",
-      "fire": "Your Water meets their Fire — opposites that sizzle. Cool meets heat, sparks fly.",
-      "earth": "Your Water meets their Earth — they channel your flow. Steady banks for a restless current.",
-      "metal": "Your Water is poured from their Metal — they shape you, you keep them shining. Smooth.",
-      "water": "Two Water souls — deep, intuitive, flowing as one. You read each other without words."
+      "wood": {
+        "en": "Your Water feeds their Wood — you pour, they bloom. You help each other grow.",
+        "ko": "내 水가 상대의 木을 키운다 — 내가 붓고, 상대가 피어난다. 서로 함께 자란다.",
+        "ja": "あなたの水が相手の木を育てる — あなたが注ぎ、相手が咲く。互いに成長し合う。",
+        "zh-TW": "你的水滋養了他們的木 — 你傾注，他們盛開。互相幫助彼此成長。"
+      },
+      "fire": {
+        "en": "Your Water meets their Fire — opposites that sizzle. Cool meets heat, sparks fly.",
+        "ko": "내 水가 상대의 火를 만난다 — 정반대가 지글거린다. 차가움이 열기를 만나 불꽃이 튄다.",
+        "ja": "あなたの水が相手の火と出会う — 正反対が弾ける。冷が熱に会い、火花が散る。",
+        "zh-TW": "你的水遇上他們的火 — 對立面的滋滋作響。冷與熱相遇，火花四濺。"
+      },
+      "earth": {
+        "en": "Your Water meets their Earth — they channel your flow. Steady banks for a restless current.",
+        "ko": "내 水가 상대의 土를 만난다 — 흐름을 이끈다. 쉼 없는 흐름의 안정적인 둑.",
+        "ja": "あなたの水が相手の土と出会う — 流れを導く。落ち着かない流れへの安定した岸。",
+        "zh-TW": "你的水遇上他們的土 — 他們引導你的流動。躁動水流的穩定河岸。"
+      },
+      "metal": {
+        "en": "Your Water is poured from their Metal — they shape you, you keep them shining. Smooth.",
+        "ko": "내 水가 상대의 金에서 흘러나온다 — 상대가 형태를 잡고, 나는 계속 빛나게 한다. 부드럽게.",
+        "ja": "あなたの水が相手の金から注がれる — 相手が形作り、あなたが輝き続けさせる。スムーズ。",
+        "zh-TW": "你的水從他們的金中傾出 — 他們塑造你，你讓他們持續閃耀。順暢。"
+      },
+      "water": {
+        "en": "Two Water souls — deep, intuitive, flowing as one. You read each other without words.",
+        "ko": "두 수(水)의 영혼 — 깊고, 직관적이며, 하나가 되어 흐른다. 말없이 서로를 읽는다.",
+        "ja": "二つの水の魂 — 深く、直感的で、一つとなって流れる。言葉なくお互いを読み合う。",
+        "zh-TW": "兩個水之靈 — 深邃、直覺，合而為一地流動。不需言語就能讀懂彼此。"
+      }
     }
   },
   "tiers": {
-    "high": "You'd shine brightest side by side. ✨",
-    "mid": "Different energies, real spark — worth the dance. 💫",
-    "low": "Opposites that test each other — handle with care. 🌙"
+    "high": {
+      "en": "You'd shine brightest side by side. ✨",
+      "ko": "나란히 설 때 가장 빛나는 두 사람. ✨",
+      "ja": "二人並んで、一番輝く。✨",
+      "zh-TW": "並肩而立時，你們最閃耀。✨"
+    },
+    "mid": {
+      "en": "Different energies, real spark — worth the dance. 💫",
+      "ko": "다른 기운, 진짜 불꽃 — 이 댄스는 해볼 가치가 있다. 💫",
+      "ja": "違うエネルギー、本物の火花 — このダンスの価値あり。💫",
+      "zh-TW": "不同的能量，真實的火花 — 值得這場舞蹈。💫"
+    },
+    "low": {
+      "en": "Opposites that test each other — handle with care. 🌙",
+      "ko": "서로를 시험하는 정반대 — 조심스럽게 다뤄야 할 관계. 🌙",
+      "ja": "互いを試し合う正反対 — 丁寧に扱って。🌙",
+      "zh-TW": "相互考驗的對立面 — 需要小心呵護。🌙"
+    }
   }
 }

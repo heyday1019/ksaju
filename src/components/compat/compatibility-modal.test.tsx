@@ -7,6 +7,7 @@ import type { CompatibilityResult, SajuPillars } from "@/lib/compatibility";
 
 vi.mock("next-intl", () => ({
   useTranslations: () => (key: string) => key,
+  useLocale: () => "en",
 }));
 
 vi.mock("@/lib/share-image", () => ({

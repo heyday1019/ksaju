@@ -51,4 +51,16 @@ describe("CompatShareCard", () => {
     // ME.day = 辛卯 → 辛 is metal → text-wuxing-geum
     expect(container.querySelector(".text-wuxing-geum")).not.toBeNull();
   });
+
+  it("renders ko locale reading when locale=ko", () => {
+    render(
+      <CompatShareCard
+        mePillars={ME}
+        other={{ name: "RM", sub: "BTS", pillars: OTHER }}
+        result={RESULT}
+        locale="ko"
+      />,
+    );
+    expect(screen.getByText(getReading(ME, OTHER, RESULT.score, "ko"))).toBeInTheDocument();
+  });
 });

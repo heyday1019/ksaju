@@ -3,16 +3,17 @@ import { HEAVENLY_STEMS } from "./saju-data";
 import type { WuXing } from "./saju-types";
 import type { SajuPillars } from "./compatibility";
 
-// 천간 한자 → 오행 (compatibility.ts의 STEM_ELEMENT는 private이라 동일 소스에서 재파생).
 const STEM_ELEMENT: Record<string, WuXing> = Object.fromEntries(
   HEAVENLY_STEMS.map((s) => [s.char, s.element]),
 );
 
 type ScoreTier = "high" | "mid" | "low";
+type LocaleKey = "en" | "ko" | "ja" | "zh-TW";
+const VALID_LOCALES = new Set<string>(["en", "ko", "ja", "zh-TW"]);
 
 const lib = readings as {
-  pairs: Record<WuXing, Record<WuXing, string>>;
-  tiers: Record<ScoreTier, string>;
+  pairs: Record<WuXing, Record<WuXing, Record<LocaleKey, string>>>;
+  tiers: Record<ScoreTier, Record<LocaleKey, string>>;
 };
 
 function tierOf(score: number): ScoreTier {
@@ -29,9 +30,11 @@ export function getReading(
   mePillars: SajuPillars,
   otherPillars: SajuPillars,
   score: number,
+  locale = "en",
 ): string {
   const myEl = STEM_ELEMENT[mePillars.day[0]];
   const theirEl = STEM_ELEMENT[otherPillars.day[0]];
-  const pairLine = lib.pairs[myEl][theirEl];
-  return `${pairLine} ${lib.tiers[tierOf(score)]}`;
+  const locKey = (VALID_LOCALES.has(locale) ? locale : "en") as LocaleKey;
+  const pairLine = lib.pairs[myEl][theirEl][locKey];
+  return `${pairLine} ${lib.tiers[tierOf(score)][locKey]}`;
 }
