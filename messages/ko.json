@@ -1,0 +1,68 @@
+{
+  "SiteHeader": {
+    "mySaju": "내 사주",
+    "inyeon": "인연"
+  },
+  "SiteFooter": {
+    "about": "소개",
+    "faq": "FAQ",
+    "privacy": "개인정보",
+    "terms": "이용약관",
+    "disclaimer": "For entertainment 🌙"
+  },
+  "LocaleSwitcher": {
+    "label": "언어"
+  },
+  "Home": {
+    "cardTitle": "생일을 입력하세요",
+    "cardSubtitle": "한국 표준시(KST)로 변환해드립니다",
+    "tagline": "Saju, but make it K."
+  },
+  "BirthForm": {
+    "dateLabel": "생년월일",
+    "timeLabel": "태어난 시간 (선택)",
+    "timePlaceholder": "모르면 넘어가세요",
+    "submit": "내 사주 보기 →",
+    "submitting": "계산 중..."
+  },
+  "SajuResult": {
+    "dayMasterLabel": "일간",
+    "pillarsTitle": "사주 四柱",
+    "editButton": "생일 변경"
+  },
+  "Fortune": {
+    "sectionTitle": "나의 운세",
+    "money": "재물",
+    "love": "연애",
+    "career": "직업",
+    "time": "올해",
+    "shareButton": "공유 ✨",
+    "disclaimer": "For entertainment 🌙"
+  },
+  "DailyFortune": {
+    "title": "오늘의 운세",
+    "loading": "별자리를 읽는 중...",
+    "shareButton": "공유 ✨",
+    "comeback": "내일 새로운 운세를 확인하세요 🌙"
+  },
+  "Inyeon": {
+    "title": "인연",
+    "hanja": "인 연",
+    "selfTitle": "먼저 생일을 입력하세요",
+    "selfSubtitle": "궁합을 보려면 내 사주가 필요해요.",
+    "selfSubmit": "내 사주 보기",
+    "selfSubmitting": "읽는 중...",
+    "idolSectionTitle": "K-팝 스타와의 궁합",
+    "partnerSectionTitle": "소중한 사람과의 궁합"
+  },
+  "CompatibilityModal": {
+    "viewAgain": "결과 다시 보기 ✨",
+    "checkAnother": "다른 아이돌 확인",
+    "checkSomeoneElse": "← 다른 사람 확인"
+  },
+  "Common": {
+    "loading": "로딩 중...",
+    "error": "오류가 발생했습니다",
+    "tryAgain": "다시 시도"
+  }
+}

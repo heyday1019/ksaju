@@ -1,0 +1,68 @@
+{
+  "SiteHeader": {
+    "mySaju": "我的四柱",
+    "inyeon": "緣分"
+  },
+  "SiteFooter": {
+    "about": "關於",
+    "faq": "FAQ",
+    "privacy": "隱私權",
+    "terms": "服務條款",
+    "disclaimer": "For entertainment 🌙"
+  },
+  "LocaleSwitcher": {
+    "label": "語言"
+  },
+  "Home": {
+    "cardTitle": "請輸入您的生日",
+    "cardSubtitle": "將自動換算為韓國標準時間(KST)",
+    "tagline": "Saju, but make it K."
+  },
+  "BirthForm": {
+    "dateLabel": "生日",
+    "timeLabel": "出生時間（選填）",
+    "timePlaceholder": "不知道的話可以跳過",
+    "submit": "查看我的四柱 →",
+    "submitting": "計算中..."
+  },
+  "SajuResult": {
+    "dayMasterLabel": "日主",
+    "pillarsTitle": "四柱",
+    "editButton": "更改生日"
+  },
+  "Fortune": {
+    "sectionTitle": "我的運勢",
+    "money": "財運",
+    "love": "感情",
+    "career": "事業",
+    "time": "今年",
+    "shareButton": "分享 ✨",
+    "disclaimer": "For entertainment 🌙"
+  },
+  "DailyFortune": {
+    "title": "今日運勢",
+    "loading": "正在解讀星象...",
+    "shareButton": "分享 ✨",
+    "comeback": "明天再來看新的運勢 🌙"
+  },
+  "Inyeon": {
+    "title": "緣分",
+    "hanja": "인 연",
+    "selfTitle": "請先輸入您的生日",
+    "selfSubtitle": "需要您的四柱才能查看配對。",
+    "selfSubmit": "查看我的四柱",
+    "selfSubmitting": "讀取中...",
+    "idolSectionTitle": "K-POP 配對",
+    "partnerSectionTitle": "與重要的人配對"
+  },
+  "CompatibilityModal": {
+    "viewAgain": "再次查看結果 ✨",
+    "checkAnother": "查看其他偶像",
+    "checkSomeoneElse": "← 查看其他人"
+  },
+  "Common": {
+    "loading": "載入中...",
+    "error": "發生錯誤",
+    "tryAgain": "再試一次"
+  }
+}
