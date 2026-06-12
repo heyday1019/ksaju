@@ -4,14 +4,24 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 
-const NAV = [
-  { href: "/", label: "My Saju" },
-  { href: "/inyeon", label: "Inyeon" },
-] as const;
+interface SiteHeaderProps {
+  labels?: { mySaju: string; inyeon: string };
+  showLocaleSwitcher?: boolean;
+}
+
+const DEFAULTS = { mySaju: "My Saju", inyeon: "Inyeon" };
 
 /** 모든 페이지 공통 슬림 헤더: 로고(→/) + 네비 + 테마토글. usePathname으로 활성표시. */
-export function SiteHeader() {
+export function SiteHeader({
+  labels = DEFAULTS,
+  showLocaleSwitcher = false,
+}: SiteHeaderProps) {
   const pathname = usePathname();
+
+  const nav = [
+    { href: "/", label: labels.mySaju },
+    { href: "/inyeon", label: labels.inyeon },
+  ] as const;
 
   return (
     <header className="relative z-20 flex items-center justify-between gap-4 px-6 pb-3 pt-9">
@@ -23,9 +33,11 @@ export function SiteHeader() {
       </Link>
 
       <nav aria-label="Main" className="flex items-center gap-1">
-        {NAV.map((item) => {
+        {nav.map((item) => {
           const active =
-            item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+            item.href === "/"
+              ? pathname === "/" || /^\/[a-z]{2}(-[A-Z]{2})?(\/)?$/.test(pathname)
+              : pathname.includes(item.href);
           return (
             <Link
               key={item.href}
@@ -41,6 +53,8 @@ export function SiteHeader() {
             </Link>
           );
         })}
+        {/* LocaleSwitcher: Task 5에서 구현 */}
+        {showLocaleSwitcher && null}
         <ThemeToggle />
       </nav>
     </header>
