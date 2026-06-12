@@ -2602,5 +2602,530 @@
       },
       "dayMaster": "乙"
     }
+  },
+  {
+    "id": "taeyeon-girls-generation",
+    "name": "Taeyeon",
+    "group": "Girls' Generation",
+    "birthdate": "1989-03-09",
+    "saju": {
+      "year": {
+        "kr": "기사",
+        "hanja": "己巳"
+      },
+      "month": {
+        "kr": "정묘",
+        "hanja": "丁卯"
+      },
+      "day": {
+        "kr": "무진",
+        "hanja": "戊辰"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "yoona-girls-generation",
+    "name": "Yoona",
+    "group": "Girls' Generation",
+    "birthdate": "1990-05-30",
+    "saju": {
+      "year": {
+        "kr": "경오",
+        "hanja": "庚午"
+      },
+      "month": {
+        "kr": "신사",
+        "hanja": "辛巳"
+      },
+      "day": {
+        "kr": "을미",
+        "hanja": "乙未"
+      },
+      "dayMaster": "乙"
+    }
+  },
+  {
+    "id": "tiffany-girls-generation",
+    "name": "Tiffany",
+    "group": "Girls' Generation",
+    "birthdate": "1989-08-01",
+    "saju": {
+      "year": {
+        "kr": "기사",
+        "hanja": "己巳"
+      },
+      "month": {
+        "kr": "신미",
+        "hanja": "辛未"
+      },
+      "day": {
+        "kr": "계사",
+        "hanja": "癸巳"
+      },
+      "dayMaster": "癸"
+    }
+  },
+  {
+    "id": "seohyun-girls-generation",
+    "name": "Seohyun",
+    "group": "Girls' Generation",
+    "birthdate": "1991-06-28",
+    "saju": {
+      "year": {
+        "kr": "신미",
+        "hanja": "辛未"
+      },
+      "month": {
+        "kr": "갑오",
+        "hanja": "甲午"
+      },
+      "day": {
+        "kr": "기사",
+        "hanja": "己巳"
+      },
+      "dayMaster": "己"
+    }
+  },
+  {
+    "id": "hyoyeon-girls-generation",
+    "name": "Hyoyeon",
+    "group": "Girls' Generation",
+    "birthdate": "1989-09-22",
+    "saju": {
+      "year": {
+        "kr": "기사",
+        "hanja": "己巳"
+      },
+      "month": {
+        "kr": "계유",
+        "hanja": "癸酉"
+      },
+      "day": {
+        "kr": "을유",
+        "hanja": "乙酉"
+      },
+      "dayMaster": "乙"
+    }
+  },
+  {
+    "id": "shownu-monsta-x",
+    "name": "Shownu",
+    "group": "MONSTA X",
+    "birthdate": "1992-06-18",
+    "saju": {
+      "year": {
+        "kr": "임신",
+        "hanja": "壬申"
+      },
+      "month": {
+        "kr": "병오",
+        "hanja": "丙午"
+      },
+      "day": {
+        "kr": "을축",
+        "hanja": "乙丑"
+      },
+      "dayMaster": "乙"
+    }
+  },
+  {
+    "id": "minhyuk-monsta-x",
+    "name": "Minhyuk",
+    "group": "MONSTA X",
+    "birthdate": "1993-11-03",
+    "saju": {
+      "year": {
+        "kr": "계유",
+        "hanja": "癸酉"
+      },
+      "month": {
+        "kr": "임술",
+        "hanja": "壬戌"
+      },
+      "day": {
+        "kr": "무자",
+        "hanja": "戊子"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "kihyun-monsta-x",
+    "name": "Kihyun",
+    "group": "MONSTA X",
+    "birthdate": "1993-11-22",
+    "saju": {
+      "year": {
+        "kr": "계유",
+        "hanja": "癸酉"
+      },
+      "month": {
+        "kr": "계해",
+        "hanja": "癸亥"
+      },
+      "day": {
+        "kr": "정미",
+        "hanja": "丁未"
+      },
+      "dayMaster": "丁"
+    }
+  },
+  {
+    "id": "hyungwon-monsta-x",
+    "name": "Hyungwon",
+    "group": "MONSTA X",
+    "birthdate": "1994-01-15",
+    "saju": {
+      "year": {
+        "kr": "계유",
+        "hanja": "癸酉"
+      },
+      "month": {
+        "kr": "을축",
+        "hanja": "乙丑"
+      },
+      "day": {
+        "kr": "신축",
+        "hanja": "辛丑"
+      },
+      "dayMaster": "辛"
+    }
+  },
+  {
+    "id": "joohoney-monsta-x",
+    "name": "Joohoney",
+    "group": "MONSTA X",
+    "birthdate": "1994-10-06",
+    "saju": {
+      "year": {
+        "kr": "갑술",
+        "hanja": "甲戌"
+      },
+      "month": {
+        "kr": "계유",
+        "hanja": "癸酉"
+      },
+      "day": {
+        "kr": "을축",
+        "hanja": "乙丑"
+      },
+      "dayMaster": "乙"
+    }
+  },
+  {
+    "id": "yunah-illit",
+    "name": "Yunah",
+    "group": "ILLIT",
+    "birthdate": "2004-01-15",
+    "saju": {
+      "year": {
+        "kr": "계미",
+        "hanja": "癸未"
+      },
+      "month": {
+        "kr": "을축",
+        "hanja": "乙丑"
+      },
+      "day": {
+        "kr": "계사",
+        "hanja": "癸巳"
+      },
+      "dayMaster": "癸"
+    }
+  },
+  {
+    "id": "minju-illit",
+    "name": "Minju",
+    "group": "ILLIT",
+    "birthdate": "2004-05-11",
+    "saju": {
+      "year": {
+        "kr": "갑신",
+        "hanja": "甲申"
+      },
+      "month": {
+        "kr": "기사",
+        "hanja": "己巳"
+      },
+      "day": {
+        "kr": "경인",
+        "hanja": "庚寅"
+      },
+      "dayMaster": "庚"
+    }
+  },
+  {
+    "id": "moka-illit",
+    "name": "Moka",
+    "group": "ILLIT",
+    "birthdate": "2004-10-08",
+    "saju": {
+      "year": {
+        "kr": "갑신",
+        "hanja": "甲申"
+      },
+      "month": {
+        "kr": "갑술",
+        "hanja": "甲戌"
+      },
+      "day": {
+        "kr": "경신",
+        "hanja": "庚申"
+      },
+      "dayMaster": "庚"
+    }
+  },
+  {
+    "id": "wonhee-illit",
+    "name": "Wonhee",
+    "group": "ILLIT",
+    "birthdate": "2007-06-26",
+    "saju": {
+      "year": {
+        "kr": "정해",
+        "hanja": "丁亥"
+      },
+      "month": {
+        "kr": "병오",
+        "hanja": "丙午"
+      },
+      "day": {
+        "kr": "신묘",
+        "hanja": "辛卯"
+      },
+      "dayMaster": "辛"
+    }
+  },
+  {
+    "id": "iroha-illit",
+    "name": "Iroha",
+    "group": "ILLIT",
+    "birthdate": "2008-02-04",
+    "saju": {
+      "year": {
+        "kr": "무자",
+        "hanja": "戊子"
+      },
+      "month": {
+        "kr": "갑인",
+        "hanja": "甲寅"
+      },
+      "day": {
+        "kr": "갑술",
+        "hanja": "甲戌"
+      },
+      "dayMaster": "甲"
+    }
+  },
+  {
+    "id": "yujin-kep1er",
+    "name": "Yujin",
+    "group": "Kep1er",
+    "birthdate": "1996-08-12",
+    "saju": {
+      "year": {
+        "kr": "병자",
+        "hanja": "丙子"
+      },
+      "month": {
+        "kr": "병신",
+        "hanja": "丙申"
+      },
+      "day": {
+        "kr": "신사",
+        "hanja": "辛巳"
+      },
+      "dayMaster": "辛"
+    }
+  },
+  {
+    "id": "xiaoting-kep1er",
+    "name": "Xiaoting",
+    "group": "Kep1er",
+    "birthdate": "1999-11-12",
+    "saju": {
+      "year": {
+        "kr": "기묘",
+        "hanja": "己卯"
+      },
+      "month": {
+        "kr": "을해",
+        "hanja": "乙亥"
+      },
+      "day": {
+        "kr": "무진",
+        "hanja": "戊辰"
+      },
+      "dayMaster": "戊"
+    }
+  },
+  {
+    "id": "dayeon-kep1er",
+    "name": "Dayeon",
+    "group": "Kep1er",
+    "birthdate": "2003-03-02",
+    "saju": {
+      "year": {
+        "kr": "계미",
+        "hanja": "癸未"
+      },
+      "month": {
+        "kr": "갑인",
+        "hanja": "甲寅"
+      },
+      "day": {
+        "kr": "갑술",
+        "hanja": "甲戌"
+      },
+      "dayMaster": "甲"
+    }
+  },
+  {
+    "id": "hikaru-kep1er",
+    "name": "Hikaru",
+    "group": "Kep1er",
+    "birthdate": "2004-03-12",
+    "saju": {
+      "year": {
+        "kr": "갑신",
+        "hanja": "甲申"
+      },
+      "month": {
+        "kr": "정묘",
+        "hanja": "丁卯"
+      },
+      "day": {
+        "kr": "경인",
+        "hanja": "庚寅"
+      },
+      "dayMaster": "庚"
+    }
+  },
+  {
+    "id": "bahiyyih-kep1er",
+    "name": "Bahiyyih",
+    "group": "Kep1er",
+    "birthdate": "2004-07-27",
+    "saju": {
+      "year": {
+        "kr": "갑신",
+        "hanja": "甲申"
+      },
+      "month": {
+        "kr": "신미",
+        "hanja": "辛未"
+      },
+      "day": {
+        "kr": "정미",
+        "hanja": "丁未"
+      },
+      "dayMaster": "丁"
+    }
+  },
+  {
+    "id": "saerom-fromis-9",
+    "name": "Saerom",
+    "group": "fromis_9",
+    "birthdate": "1997-01-07",
+    "saju": {
+      "year": {
+        "kr": "병자",
+        "hanja": "丙子"
+      },
+      "month": {
+        "kr": "신축",
+        "hanja": "辛丑"
+      },
+      "day": {
+        "kr": "기유",
+        "hanja": "己酉"
+      },
+      "dayMaster": "己"
+    }
+  },
+  {
+    "id": "jisun-fromis-9",
+    "name": "Jisun",
+    "group": "fromis_9",
+    "birthdate": "1998-11-23",
+    "saju": {
+      "year": {
+        "kr": "무인",
+        "hanja": "戊寅"
+      },
+      "month": {
+        "kr": "계해",
+        "hanja": "癸亥"
+      },
+      "day": {
+        "kr": "갑술",
+        "hanja": "甲戌"
+      },
+      "dayMaster": "甲"
+    }
+  },
+  {
+    "id": "jiwon-fromis-9",
+    "name": "Jiwon",
+    "group": "fromis_9",
+    "birthdate": "1998-03-20",
+    "saju": {
+      "year": {
+        "kr": "무인",
+        "hanja": "戊寅"
+      },
+      "month": {
+        "kr": "을묘",
+        "hanja": "乙卯"
+      },
+      "day": {
+        "kr": "병인",
+        "hanja": "丙寅"
+      },
+      "dayMaster": "丙"
+    }
+  },
+  {
+    "id": "chaeyoung-fromis-9",
+    "name": "Chaeyoung",
+    "group": "fromis_9",
+    "birthdate": "2000-05-14",
+    "saju": {
+      "year": {
+        "kr": "경진",
+        "hanja": "庚辰"
+      },
+      "month": {
+        "kr": "신사",
+        "hanja": "辛巳"
+      },
+      "day": {
+        "kr": "임신",
+        "hanja": "壬申"
+      },
+      "dayMaster": "壬"
+    }
+  },
+  {
+    "id": "nagyung-fromis-9",
+    "name": "Nagyung",
+    "group": "fromis_9",
+    "birthdate": "2000-06-01",
+    "saju": {
+      "year": {
+        "kr": "경진",
+        "hanja": "庚辰"
+      },
+      "month": {
+        "kr": "신사",
+        "hanja": "辛巳"
+      },
+      "day": {
+        "kr": "경인",
+        "hanja": "庚寅"
+      },
+      "dayMaster": "庚"
+    }
   }
 ]
