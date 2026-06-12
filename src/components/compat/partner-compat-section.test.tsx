@@ -4,6 +4,10 @@ import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import type { UserSaju } from "@/lib/saju-types";
 
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => key,
+}));
+
 // 상대 사주 계산(server action) 모킹 — 고정 UserSaju 반환
 vi.mock("@/app/actions/saju", () => ({
   calcUserSaju: vi.fn(async () => ({
@@ -49,7 +53,7 @@ describe("PartnerCompatSection", () => {
       screen.getByRole("button", { name: /check someone else/i }),
     );
     const again = await screen.findByRole("button", {
-      name: /view alex result again/i,
+      name: /viewAgain/i,
     });
     await userEvent.click(again);
     expect(await screen.findByRole("dialog")).toBeInTheDocument();

@@ -1,9 +1,13 @@
 // @vitest-environment happy-dom
-import { describe, it, expect } from "vitest";
+import { describe, it, expect, vi } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { CompatibilitySection } from "./compatibility-section";
 import type { UserSaju } from "@/lib/saju-types";
+
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => key,
+}));
 
 const RM: UserSaju = {
   pillars: { year: "壬申", month: "己酉", day: "辛卯", hour: null },
@@ -28,10 +32,10 @@ describe("CompatibilitySection", () => {
     await userEvent.click(screen.getByRole("radio"));
     await screen.findByRole("dialog");
     await userEvent.click(
-      screen.getByRole("button", { name: /check another idol/i }),
+      screen.getByRole("button", { name: /checkAnother/i }),
     );
     const again = await screen.findByRole("button", {
-      name: /view rm result again/i,
+      name: /viewAgain/i,
     });
     await userEvent.click(again);
     expect(await screen.findByRole("dialog")).toBeInTheDocument();

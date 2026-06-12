@@ -2,5 +2,66 @@
   "SiteHeader": {
     "mySaju": "My Saju",
     "inyeon": "Inyeon"
+  },
+  "SiteFooter": {
+    "about": "About",
+    "faq": "FAQ",
+    "privacy": "Privacy",
+    "terms": "Terms",
+    "disclaimer": "For entertainment 🌙"
+  },
+  "LocaleSwitcher": {
+    "label": "Language"
+  },
+  "Home": {
+    "cardTitle": "When were you born?",
+    "cardSubtitle": "Korea uses KST · we'll convert for you",
+    "tagline": "Saju, but make it K."
+  },
+  "BirthForm": {
+    "dateLabel": "Birth date",
+    "timeLabel": "Birth time (optional)",
+    "timePlaceholder": "Not sure — skip it",
+    "submit": "Read my saju →",
+    "submitting": "Calculating..."
+  },
+  "SajuResult": {
+    "dayMasterLabel": "Your Day Master",
+    "pillarsTitle": "Your Four Pillars",
+    "editButton": "Change birthday"
+  },
+  "Fortune": {
+    "sectionTitle": "Your Fortune",
+    "money": "Money",
+    "love": "Love",
+    "career": "Career",
+    "time": "This Year",
+    "shareButton": "Share ✨",
+    "disclaimer": "For entertainment 🌙"
+  },
+  "DailyFortune": {
+    "title": "Today's Fortune",
+    "loading": "Reading the stars...",
+    "shareButton": "Share ✨",
+    "comeback": "Come back tomorrow for a new reading 🌙"
+  },
+  "Inyeon": {
+    "title": "Inyeon",
+    "hanja": "인 연",
+    "selfTitle": "First, your birthday",
+    "selfSubtitle": "We need your saju to reveal your matches.",
+    "selfSubmit": "See my saju",
+    "selfSubmitting": "Reading...",
+    "idolSectionTitle": "K-pop Compatibility",
+    "partnerSectionTitle": "Someone Special"
+  },
+  "CompatibilityModal": {
+    "viewAgain": "View result again ✨",
+    "checkAnother": "Check another idol"
+  },
+  "Common": {
+    "loading": "Loading...",
+    "error": "Something went wrong",
+    "tryAgain": "Try again"
   }
 }

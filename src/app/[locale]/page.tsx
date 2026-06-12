@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useSyncExternalStore } from "react";
+import { useTranslations } from "next-intl";
 import {
   Card,
   CardContent,
@@ -31,6 +32,7 @@ const getTzServerSnapshot = () => undefined;
 type View = "form" | "welcome" | "result";
 
 export default function Home() {
+  const t = useTranslations("Home");
   const [view, setView] = useState<View>("form");
   const [userSaju, setUserSaju] = useState<UserSaju | null>(null);
   const [kst, setKst] = useState<KSTResult | null>(null);
@@ -122,7 +124,7 @@ export default function Home() {
         </h1>
         <p className="hanja text-5xl font-bold tracking-[0.4em]">사 주</p>
         <p className="font-serif italic text-xl text-primary">
-          Saju, but make it K.
+          {t("tagline")}
         </p>
 
         <Card className="relative overflow-hidden border-border mt-8 py-6">
@@ -151,9 +153,9 @@ export default function Home() {
           ) : (
             <>
               <CardHeader>
-                <CardTitle className="text-2xl">When were you born?</CardTitle>
+                <CardTitle className="text-2xl">{t("cardTitle")}</CardTitle>
                 <CardDescription>
-                  Korea uses KST · we&apos;ll convert for you
+                  {t("cardSubtitle")}
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">

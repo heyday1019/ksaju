@@ -3,6 +3,10 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen } from "@testing-library/react";
 import type { UserSaju } from "@/lib/saju-types";
 
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => key,
+}));
+
 const loadMock = vi.fn();
 const saveMock = vi.fn();
 vi.mock("@/lib/saju-storage", () => ({
@@ -41,7 +45,7 @@ describe("InyeonView", () => {
     loadMock.mockReturnValue(null);
     render(<InyeonView />);
     expect(
-      await screen.findByRole("button", { name: /see my saju/i }),
+      await screen.findByRole("button", { name: /selfSubmit/i }),
     ).toBeInTheDocument();
     expect(screen.queryByRole("searchbox")).not.toBeInTheDocument();
   });

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { IdolPicker } from "@/components/idols/idol-picker";
 import { CompatibilityModal } from "./compatibility-modal";
 import { compatForIdol, type Idol } from "@/lib/idols";
@@ -13,6 +14,7 @@ import { track } from "@/lib/analytics";
  * 아이돌 선택 → compatForIdol → 결과 모달. "Check another idol" 루프.
  */
 export function CompatibilitySection({ userSaju }: { userSaju: UserSaju }) {
+  const t = useTranslations("CompatibilityModal");
   const [idol, setIdol] = useState<Idol | null>(null);
   const [open, setOpen] = useState(false);
 
@@ -60,7 +62,7 @@ export function CompatibilitySection({ userSaju }: { userSaju: UserSaju }) {
             onClick={() => setOpen(true)}
             className="text-sm text-primary underline-offset-2 hover:underline"
           >
-            View {idol.name} result again ✨
+            {t("viewAgain")}
           </button>
         </div>
       )}
@@ -76,7 +78,7 @@ export function CompatibilitySection({ userSaju }: { userSaju: UserSaju }) {
             pillars: normalizeIdolSaju(idol.saju),
           }}
           result={result}
-          closeLabel="← Check another idol"
+          closeLabel={`← ${t("checkAnother")}`}
         />
       )}
     </section>

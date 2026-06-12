@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
 import { BirthForm } from "@/components/kst/birth-form";
 import { CompatibilityModal } from "./compatibility-modal";
@@ -13,6 +14,7 @@ import { track, scoreBucket } from "@/lib/analytics";
 
 /** 일반 상대 궁합: 상대 이름(optional)+생일 → calcUserSaju → calcCompatibility → 범용 모달. */
 export function PartnerCompatSection({ userSaju }: { userSaju: UserSaju }) {
+  const t = useTranslations("CompatibilityModal");
   const mePillars: SajuPillars = useMemo(
     () => ({
       year: userSaju.pillars.year,
@@ -101,7 +103,7 @@ export function PartnerCompatSection({ userSaju }: { userSaju: UserSaju }) {
             onClick={() => setOpen(true)}
             className="text-sm text-primary underline-offset-2 hover:underline"
           >
-            View {partnerName.trim() || "their"} result again ✨
+            {t("viewAgain")}
           </button>
         </div>
       )}

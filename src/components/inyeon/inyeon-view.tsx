@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useTranslations } from "next-intl";
 import { BirthForm } from "@/components/kst/birth-form";
 import { CompatibilitySection } from "@/components/compat/compatibility-section";
 import { PartnerCompatSection } from "@/components/compat/partner-compat-section";
@@ -18,6 +19,7 @@ import type { UserSaju } from "@/lib/saju-types";
  * 저장된 사주가 없으면 생일 폴백 폼으로 본인 사주 입력.
  */
 export function InyeonView() {
+  const t = useTranslations("Inyeon");
   const [me, setMe] = useState<UserSaju | null>(null);
   const [hydrated, setHydrated] = useState(false);
   const [submitting, setSubmitting] = useState(false);
@@ -52,9 +54,9 @@ export function InyeonView() {
       <div className="w-full max-w-2xl space-y-6">
         <header className="text-center">
           <h1 className="font-display text-5xl font-bold tracking-tight bg-gradient-to-br from-primary to-accent bg-clip-text text-transparent">
-            Inyeon
+            {t("title")}
           </h1>
-          <p className="hanja mt-2 text-4xl font-bold tracking-[0.3em]">인 연</p>
+          <p className="hanja mt-2 text-4xl font-bold tracking-[0.3em]">{t("hanja")}</p>
         </header>
 
         {!hydrated ? null : !me ? (
@@ -66,10 +68,10 @@ export function InyeonView() {
             <CardContent className="space-y-4 pt-4">
               <div className="text-center">
                 <p className="font-display text-lg font-semibold">
-                  First, your birthday
+                  {t("selfTitle")}
                 </p>
                 <p className="text-sm text-muted-foreground">
-                  We need your saju to reveal your matches.
+                  {t("selfSubtitle")}
                 </p>
               </div>
               {error && (
@@ -83,8 +85,8 @@ export function InyeonView() {
               <BirthForm
                 onSubmit={handleSelfBirth}
                 submitting={submitting}
-                submitLabel="See my saju"
-                submittingLabel="Reading…"
+                submitLabel={t("selfSubmit")}
+                submittingLabel={t("selfSubmitting")}
               />
             </CardContent>
             <div

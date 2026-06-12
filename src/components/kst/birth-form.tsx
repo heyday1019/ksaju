@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo } from "react";
+import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
 import type { Control, FieldValues } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -60,9 +61,10 @@ export function BirthForm({
   onSubmit,
   defaultTimezone,
   submitting,
-  submitLabel = "Discover your saju",
-  submittingLabel = "Reading your saju…",
+  submitLabel,
+  submittingLabel,
 }: BirthFormProps) {
+  const t = useTranslations("BirthForm");
   const form = useForm<FormValues>({
     resolver: zodResolver(birthSchema),
     defaultValues: {
@@ -132,7 +134,7 @@ export function BirthForm({
           name="year"
           render={() => (
             <FormItem>
-              <FormLabel>Birth date</FormLabel>
+              <FormLabel>{t("dateLabel")}</FormLabel>
               <FormControl>
                 <Input
                   type="date"
@@ -157,10 +159,7 @@ export function BirthForm({
           name="hour"
           render={() => (
             <FormItem>
-              <FormLabel>
-                Birth time{" "}
-                <span className="text-muted-foreground text-xs">(optional)</span>
-              </FormLabel>
+              <FormLabel>{t("timeLabel")}</FormLabel>
               <FormControl>
                 <Input
                   type="time"
@@ -207,7 +206,7 @@ export function BirthForm({
         />
 
         <Button type="submit" size="lg" className="w-full" disabled={submitting}>
-          {submitting ? submittingLabel : submitLabel}
+          {submitting ? (submittingLabel ?? t("submitting")) : (submitLabel ?? t("submit"))}
         </Button>
       </form>
     </Form>

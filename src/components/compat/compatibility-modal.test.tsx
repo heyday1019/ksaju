@@ -5,6 +5,10 @@ import userEvent from "@testing-library/user-event";
 import { CompatibilityModal } from "./compatibility-modal";
 import type { CompatibilityResult, SajuPillars } from "@/lib/compatibility";
 
+vi.mock("next-intl", () => ({
+  useTranslations: () => (key: string) => key,
+}));
+
 vi.mock("@/lib/share-image", () => ({
   nodeToPngBlob: vi.fn().mockRejectedValue(new Error("no canvas in test")),
   shareOrDownloadPng: vi.fn(),
