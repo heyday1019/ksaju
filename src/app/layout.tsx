@@ -6,6 +6,7 @@ import {
   Yeon_Sung,
   Noto_Serif_KR,
 } from "next/font/google";
+import Script from "next/script";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { getLocale } from "next-intl/server";
@@ -67,6 +68,10 @@ export const metadata: Metadata = {
     { media: "(prefers-color-scheme: dark)", color: "#0F0828" },
   ],
   icons: { icon: "/favicon.ico", apple: "/apple-touch-icon.png" },
+  // Google Search Console 소유권 인증 — GSC에서 받은 값을 Vercel 환경변수에 추가
+  ...(process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION && {
+    verification: { google: process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION },
+  }),
 };
 
 export default async function RootLayout({
@@ -86,6 +91,15 @@ export default async function RootLayout({
         {children}
         <Analytics />
         <SpeedInsights />
+        {/* Google AdSense — publisher ID를 Vercel 환경변수에 추가하면 활성화됨 */}
+        {process.env.NEXT_PUBLIC_ADSENSE_ID && (
+          <Script
+            async
+            src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.NEXT_PUBLIC_ADSENSE_ID}`}
+            crossOrigin="anonymous"
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );
