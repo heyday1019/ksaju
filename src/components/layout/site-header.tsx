@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { LocaleSwitcher } from "./locale-switcher";
 
 interface SiteHeaderProps {
   labels?: { mySaju: string; inyeon: string };
@@ -53,8 +54,7 @@ export function SiteHeader({
             </Link>
           );
         })}
-        {/* LocaleSwitcher: Task 5에서 구현 */}
-        {showLocaleSwitcher && null}
+        {showLocaleSwitcher && <LocaleSwitcher />}
         <ThemeToggle />
       </nav>
     </header>

@@ -9,6 +9,12 @@ vi.mock("next/navigation", () => ({ usePathname: () => nav.pathname }));
 vi.mock("next-themes", () => ({
   useTheme: () => ({ resolvedTheme: "light", setTheme: vi.fn() }),
 }));
+// LocaleSwitcher 의존성 모킹 (정적 import로 인해 필요)
+vi.mock("next-intl", () => ({ useLocale: () => "en" }));
+vi.mock("@/i18n/navigation", () => ({
+  useRouter: () => ({ replace: vi.fn() }),
+  usePathname: () => "/",
+}));
 
 import { SiteHeader } from "./site-header";
 
@@ -32,5 +38,19 @@ describe("SiteHeader", () => {
     render(<SiteHeader />);
     expect(screen.getByRole("link", { name: /My Saju/ })).toHaveAttribute("aria-current", "page");
     expect(screen.getByRole("link", { name: /Inyeon/ })).not.toHaveAttribute("aria-current");
+  });
+
+  it("labels prop으로 커스텀 네비 텍스트 렌더", () => {
+    render(
+      <SiteHeader labels={{ mySaju: "私の四柱", inyeon: "縁" }} />
+    );
+    expect(screen.getByText("私の四柱")).toBeInTheDocument();
+    expect(screen.getByText("縁")).toBeInTheDocument();
+  });
+
+  it("labels prop 미전달 시 EN 기본값 사용", () => {
+    render(<SiteHeader />);
+    expect(screen.getByText("My Saju")).toBeInTheDocument();
+    expect(screen.getByText("Inyeon")).toBeInTheDocument();
   });
 });
