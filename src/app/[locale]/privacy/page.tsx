@@ -41,8 +41,8 @@ export default async function PrivacyPage() {
 
         <p className="text-muted-foreground">
           {t("contact")}{" "}
-          <a className="text-primary underline-offset-2 hover:underline" href="mailto:ksaju.korea@gmail.com">
-            ksaju.korea@gmail.com
+          <a className="text-primary underline-offset-2 hover:underline" href="mailto:ksaju.me@gmail.com">
+            ksaju.me@gmail.com
           </a>
           .
         </p>

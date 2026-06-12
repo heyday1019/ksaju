@@ -60,8 +60,8 @@ export default async function FaqPage() {
           <h2 className="font-display text-lg font-semibold">{t("q8")}</h2>
           <p>
             {t("a8")}{" "}
-            <a className="text-primary underline-offset-2 hover:underline" href="mailto:ksaju.korea@gmail.com">
-              ksaju.korea@gmail.com
+            <a className="text-primary underline-offset-2 hover:underline" href="mailto:ksaju.me@gmail.com">
+              ksaju.me@gmail.com
             </a>
             .
           </p>

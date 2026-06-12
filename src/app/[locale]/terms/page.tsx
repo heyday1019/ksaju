@@ -48,8 +48,8 @@ export default async function TermsPage() {
 
         <p>
           {t("contact")}{" "}
-          <a className="text-primary underline-offset-2 hover:underline" href="mailto:ksaju.korea@gmail.com">
-            ksaju.korea@gmail.com
+          <a className="text-primary underline-offset-2 hover:underline" href="mailto:ksaju.me@gmail.com">
+            ksaju.me@gmail.com
           </a>
           .
         </p>
