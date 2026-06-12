@@ -48,6 +48,8 @@ src/app/page_org.tsx
 # 디자인 참고 자산 — 로컬 보존, spec에 임베드됨
 팔래트+토큰.jpg
 palnet+token.jpg
+taro-scan.pdf
+tarot-preview-*.jpg
 
 # 낙관/워터마크 작업 원본 — 로컬 보존(소스는 scripts/assets/stamp-saju.png로 편입·커밋)
 stamp-watermark.png
