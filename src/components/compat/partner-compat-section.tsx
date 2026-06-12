@@ -115,7 +115,7 @@ export function PartnerCompatSection({ userSaju }: { userSaju: UserSaju }) {
           mePillars={mePillars}
           other={{ name: partnerName.trim() || "Them", pillars: partnerPillars }}
           result={result}
-          closeLabel="← Check someone else"
+          closeLabel={t("checkSomeoneElse")}
         />
       )}
     </section>

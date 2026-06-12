@@ -57,7 +57,8 @@
   },
   "CompatibilityModal": {
     "viewAgain": "View result again ✨",
-    "checkAnother": "Check another idol"
+    "checkAnother": "Check another idol",
+    "checkSomeoneElse": "← Check someone else"
   },
   "Common": {
     "loading": "Loading...",

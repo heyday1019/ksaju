@@ -50,7 +50,7 @@ describe("PartnerCompatSection", () => {
     );
     await screen.findByRole("dialog");
     await userEvent.click(
-      screen.getByRole("button", { name: /check someone else/i }),
+      screen.getByRole("button", { name: /checkSomeoneElse/i }),
     );
     const again = await screen.findByRole("button", {
       name: /viewAgain/i,
