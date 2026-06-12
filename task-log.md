@@ -6,65 +6,100 @@
 
 ## 2026-06-12 (금)
 
-### ✅ Daily Fortune + Fun Fact 매일 변경 버그 수정 (완료)
+### ✅ 멀티랭귀지 마이그레이션 완료 확인
 
-**문제 1 — Daily Fortune 어제 내용 반복:**
-`export const revalidate = 86400` 가 Next.js/Vercel CDN에서 API 응답 전체를 86400초 캐싱. Supabase `(date × dayMaster × locale)` 캐시는 정확했지만, CDN이 route handler 자체를 실행하지 않고 어제 응답을 그대로 반환했음.
-
-**수정:** `revalidate = 86400` → `dynamic = "force-dynamic"` (route.ts). Route handler가 매 요청마다 실행되어 Supabase 캐시 레이어가 정상 동작.
-
-**문제 2 — Fun Fact 항상 동일:**
-`buildFunFact()` 는 사용자 출생지와 KST 날짜 차이를 계산하는 정적 메시지 (생일 데이터 기반, 영원히 불변). 사용자가 매일 바뀌길 기대.
-
-**수정:** `src/lib/daily-fact.ts` (신규) — 36개 사주 관련 fun fact 풀, `getDailyFact(dayMaster, today)` 가 `(KST day-of-year + stem-index × 7) % 36` 으로 결정적 선택. 같은 사용자도 매일 다른 fact, 같은 날도 일간마다 다른 fact. `SajuResult` 에서 `kst.funFact` 대신 `getDailyFact(userSaju.dayMaster)` 사용, 라벨 "Fun fact:" → "Today's saju tip ✨".
-
-**커밋:** `6685428` | 231 tests pass, tsc clean.
+이전 세션에서 완료된 Phase 2 next-intl 마이그레이션 정상 동작 검증:
+- 1979-10-19 생일 입력 → 己未 일간 정상 계산 (이전에 보고된 버그 해결됨 확인)
+- `/admin` 페이지 — next-intl 미들웨어 우회 처리로 영향 없음
+- 분석 이벤트 locale 자동 태깅 — `analytics.ts` `setCurrentLocale()` + `AnalyticsProvider` `useLocale()` 이미 `c1edcf5`에 포함 확인
 
 ---
 
-### 타로 카드 기능 브레인스토밍 (미완성)
+### ✅ 연락 이메일 변경
 
-**결정:**
-- 표준 78장 덱
-- **Approach C**: 정적 PDF 리딩 데이터 + LLM 사주 개인화 인사이트, Supabase 캐시 `(card_id × day_master × locale × date)`
-- 무료로 먼저 출시, 향후 크레딧 유료화 검토
-- 78장 이미지: 저작권 이슈로 Midjourney로 새로 생성 필요 (`docs/tarot-midjourney-prompts.md` 완성)
-
-**사용자 액션 필요:** `docs/tarot-midjourney-prompts.md` 의 프롬프트로 Midjourney에서 78장 생성 후 공유
+FAQ / Privacy / Terms 페이지의 `mailto:` 링크를 `ksaju.korea@gmail.com` → `ksaju.me@gmail.com` 으로 변경. (커밋 `89439ed`)
 
 ---
 
-### ✅ 연락 이메일 변경 완료
-
-FAQ/Privacy/Terms `ksaju.korea@gmail.com` → `ksaju.me@gmail.com` (커밋 `89439ed` 포함).
-
----
-
-### ✅ Phase 2 멀티랭귀지 Analytics locale 포함 (완료)
-
-`analytics.ts` `setCurrentLocale(locale)` + `AnalyticsProvider` `useLocale()` 연동 → 모든 track() 이벤트에 `locale` 자동 추가. 이미 사이클 25 커밋(`c1edcf5`)에 포함됨.
-
----
-
-### 📌 Google Search Console + AdSense 등록 (사용자 수동 액션 대기)
+### ✅ Google Search Console + AdSense 코드 훅 추가
 
 코드 준비 완료 (`89439ed` — `feat(seo): Google Search Console + AdSense env-var hooks`):
-- `layout.tsx` — `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` 환경변수 있으면 `<meta name="google-site-verification">` 자동 주입
-- `layout.tsx` — `NEXT_PUBLIC_ADSENSE_ID` 환경변수 있으면 AdSense `<Script>` 자동 활성화
-- `.env.example` — 두 변수 문서화
+- `layout.tsx` — `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` 있으면 `<meta name="google-site-verification">` 자동 주입
+- `layout.tsx` — `NEXT_PUBLIC_ADSENSE_ID` 있으면 AdSense `<Script>` 자동 활성화
+- `.env.example` — 두 변수 주석 포함 문서화
 
-**Search Console 등록 순서:**
+**📌 사용자 수동 액션 필요:**
+
+Search Console:
 1. search.google.com/search-console → 속성 추가 → `https://ksaju.me` → "HTML 태그" 인증
 2. `content="..."` 값 복사
 3. Vercel → Settings → Environment Variables → `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` 추가 → Redeploy
-4. GSC로 돌아와 "확인" 클릭
-5. Sitemaps → `sitemap.xml` 제출
+4. GSC에서 "확인" 클릭 → Sitemaps → `sitemap.xml` 제출
 
-**AdSense 등록 순서 (Search Console 인증 후):**
+AdSense (Search Console 인증 후):
 1. adsense.google.com → 사이트 추가 → `ksaju.me`
 2. `ca-pub-XXXXXXXXXXXXXXXX` 복사
 3. Vercel → `NEXT_PUBLIC_ADSENSE_ID` 추가 → Redeploy
 4. Google 심사 대기 (1~2주)
+
+---
+
+### 🃏 타로 카드 기능 브레인스토밍 (이미지 제작 대기 중)
+
+**결정 사항:**
+- 표준 78장 덱
+- **Approach C**: 정적 리딩 데이터 + LLM 사주 개인화 인사이트, Supabase 캐시 `(card_id × day_master × locale × date)`
+- 무료로 먼저 출시, 향후 크레딧 유료화 검토
+- 이미지: 보유 PDF(`taro-scan.pdf`)는 저작권 있을 수 있어 직접 사용 불가 → Midjourney로 78장 신규 생성
+
+**산출물:** `docs/tarot-midjourney-prompts.md` (신규, 커밋 `9764b7d`)
+- 한국 전통 미감 마스터 스타일 프롬프트
+- 22 메이저 아르카나 (광대, 술사, 무녀, 황제, 도깨비 등 한국 문화 매핑)
+- 56 마이너 아르카나 (완드=봉/불, 컵=백자/물, 소드=환도/쇠, 펜타클=엽전/흙)
+- `--ar 2:3 --style raw --v 6.1` 규격
+
+**📌 사용자 액션 필요:** Midjourney에서 78장 생성 완료 후 공유 → 개발 착수
+
+---
+
+### ✅ Daily Fortune + Fun Fact 매일 변경 버그 수정
+
+**버그 1 — Daily Fortune 어제 내용 반복:**
+
+원인: `export const revalidate = 86400` → Vercel CDN이 API 응답 전체를 86400초 캐싱. Supabase `(date × dayMaster × locale)` 캐시는 정확했지만 CDN이 route handler 자체를 실행하지 않음.
+
+수정: `revalidate = 86400` → `dynamic = "force-dynamic"` (`src/app/api/daily-fortune/route.ts`). Route handler가 매 요청마다 실행 → Supabase 날짜 캐시가 정상 동작.
+
+**버그 2 — Fun Fact 항상 동일:**
+
+원인: `buildFunFact()` 는 출생지 vs KST 시차 기반 정적 메시지 — 생일 데이터가 변하지 않으므로 영원히 동일.
+
+수정: `src/lib/daily-fact.ts` (신규, `7 tests`) — 36개 사주 관련 팁 풀, `getDailyFact(dayMaster, today)` 가 `(KST day-of-year + stem-index × 7) % 36` 으로 결정적 선택. 같은 사용자도 매일 다른 팁, 같은 날도 일간마다 다른 팁. `SajuResult` 에서 라벨 "Fun fact:" → "Today's saju tip ✨".
+
+커밋: `6685428` | 231 tests pass, tsc clean.
+
+---
+
+### ✅ Vercel 배포
+
+`main` 브랜치 push (`7b2cd4c`) → Vercel 자동 배포 트리거.
+
+포함된 변경:
+- Daily Fortune CDN 캐시 버그 수정
+- "Today's saju tip ✨" 매일 변경
+- `.gitignore` — `tarot-preview-*.jpg` 제외 추가
+
+---
+
+### 📌 다음 세션 후보 액션
+
+| 우선순위 | 작업 |
+|---------|------|
+| ⚡ 즉시 | Supabase SQL Editor에서 `docs/supabase-migration.sql` 실행 (anon_users + daily_fortunes locale 컬럼) |
+| ⚡ 즉시 | Google Search Console 소유권 인증 → Sitemap 제출 |
+| 🔜 대기 중 | Midjourney 78장 타로 이미지 생성 완료 후 타로 기능 개발 착수 |
+| 🔜 검토 | JA·KO·ZH-TW 번역 품질 검토 (`/ja/` `/ko/` `/zh-TW/` 실제 확인) |
+| 💡 선택 | AdSense 등록 (Search Console 인증 선행 필요) |
 
 ---
 
