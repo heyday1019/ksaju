@@ -4,6 +4,70 @@
 
 ---
 
+## 2026-06-13 (토)
+
+### ✅ Supabase 마이그레이션 확인
+
+`docs/supabase-migration.sql` 을 SQL Editor에서 실행 → "already exists" 메시지 = 정상 (idempotent SQL).
+3개 테이블 존재 확인:
+
+```sql
+select table_name from information_schema.tables
+where table_schema = 'public'
+  and table_name in ('analytics_events', 'daily_fortunes', 'anon_users');
+```
+
+`daily_fortunes.locale` 컬럼도 존재 확인 (`'en'::text` 기본값). DB 상태 완전 정상.
+
+---
+
+### ✅ 궁합 공유 카드 리딩 다국어화 (사이클 26a)
+
+**문제:** 일본어/한국어/繁體中文 UI에서 궁합 공유 카드 안의 리딩 텍스트가 항상 영어로 표시됨.
+
+**변경 내용:**
+
+- `data/ksaju-readings.json` — 기존 flat 문자열 구조 → `{en, ko, ja, zh-TW}` 로케일 키 구조로 전환 (25 오행 페어 × 4언어 + 3 점수 티어 × 4언어 = 112 문자열)
+- `src/lib/reading.ts` — `getReading(mePillars, otherPillars, score, locale?)` locale 인수 추가 (기본 `"en"`, 미지원 locale은 `"en"` 폴백)
+- `src/components/compat/compat-share-card.tsx` — `locale` prop 추가, `getReading`에 전달
+- `src/components/compat/compatibility-modal.tsx` — `useLocale()` 추가, 카드에 locale 전달
+- `src/components/compat/compatibility-modal.test.tsx` — `useLocale` mock 추가
+
+**Share ✨ 버튼:** 사용자 결정으로 영어 유지 (K-pop 브랜드 무드).
+
+커밋: `f6546c4` | 15 tests pass, tsc clean.
+
+---
+
+### ✅ My Saju 운세 카드 다국어화 (사이클 26b)
+
+**문제:** My Saju 운세 4카드(Money / Love / Career / This Year)의 `tierLabel`·`line`·`subLine`이 항상 영어.
+
+**Daily Fortune:** 이미 `useLocale()` → API `?locale=` 파라미터 → LLM이 해당 언어로 생성하는 구조로 정상 동작 중.
+
+**변경 내용:**
+
+- `data/ksaju-fortune-i18n.json` 신규 — money(3티어) / career(3티어) / love(10천간) / time(6관계) + `thisMonthPrefix` 전부 `{en, ko, ja, zh-TW}` 구조
+- `src/lib/fortune.ts` — `calcFortune(userSaju, luck, locale?)` locale 인수 추가; JSON에서 로케일별 텍스트 조회, 폴백 `"en"`
+- `src/components/fortune/fortune-section.tsx` — `useLocale()` 추가, `calcFortune`에 전달
+- `src/components/fortune/fortune-share-card.tsx` — 동일
+- 테스트 mock 6개 파일에 `useLocale: () => "en"` 추가 (`fortune-section`, `fortune-share-card`, `fortune-share-modal`, `inyeon-view`, `compatibility-section`, `partner-compat-section`)
+
+커밋: `53b1f37` | 19 tests pass, tsc clean, push → Vercel 자동 배포.
+
+---
+
+### 📌 다음 세션 후보 액션
+
+| 우선순위 | 작업 |
+|---------|------|
+| ⚡ 즉시 | 번역 품질 검토 — `/ja/`, `/ko/`, `/zh-TW/` 에서 궁합 카드·운세 카드 직접 확인, 어색한 문구 수정 |
+| ⚡ 즉시 | Google Search Console 소유권 인증 → Sitemap 제출 |
+| 🔜 대기 중 | Midjourney 78장 타로 이미지 생성 완료 후 타로 기능 개발 착수 |
+| 💡 선택 | AdSense 등록 (Search Console 인증 선행 필요) |
+
+---
+
 ## 2026-06-12 (금)
 
 ### ✅ 멀티랭귀지 마이그레이션 완료 확인
