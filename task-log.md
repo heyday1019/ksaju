@@ -57,14 +57,38 @@ where table_schema = 'public'
 
 ---
 
+### ✅ Google Search Console 인증 + 사이트맵 제출
+
+- Vercel 환경변수 `NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION` 추가 → 재배포 → GSC 소유권 인증 완료
+- `/sitemap.xml` 제출 완료 (사이트맵 자체는 정상 접근 가능, Google 크롤링 대기 중)
+
+---
+
+### ✅ Google AdSense 소유권 인증 완료
+
+**문제:** `NEXT_PUBLIC_ADSENSE_ID` 추가 후 재배포했으나 AdSense "사이트를 확인할 수 없습니다" 오류.
+
+**원인:** `layout.tsx`의 AdSense `<Script strategy="afterInteractive">` 는 JS 실행 후 로드 → AdSense 크롤러가 정적 HTML에서 감지 불가.
+
+**수정 (`0a26960`):** Next.js `metadata.other`를 통해 `<meta name="google-adsense-account" content="ca-pub-...">` 를 `<head>` 정적 HTML에 추가.
+
+```typescript
+...(process.env.NEXT_PUBLIC_ADSENSE_ID && {
+  other: { "google-adsense-account": process.env.NEXT_PUBLIC_ADSENSE_ID },
+}),
+```
+
+재배포 후 AdSense 소유권 인증 ✅. Google 사이트 심사 대기 중 (1~2주 소요 예정).
+
+---
+
 ### 📌 다음 세션 후보 액션
 
 | 우선순위 | 작업 |
 |---------|------|
-| ⚡ 즉시 | 번역 품질 검토 — `/ja/`, `/ko/`, `/zh-TW/` 에서 궁합 카드·운세 카드 직접 확인, 어색한 문구 수정 |
-| ⚡ 즉시 | Google Search Console 소유권 인증 → Sitemap 제출 |
+| 🔜 대기 중 | AdSense 심사 통과 확인 (1~2주 후) |
+| 🔜 검토 | 번역 품질 검토 — `/ja/`, `/ko/`, `/zh-TW/` 에서 궁합·운세 카드 직접 확인, 어색한 문구 수정 |
 | 🔜 대기 중 | Midjourney 78장 타로 이미지 생성 완료 후 타로 기능 개발 착수 |
-| 💡 선택 | AdSense 등록 (Search Console 인증 선행 필요) |
 
 ---
 
