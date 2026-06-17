@@ -114,7 +114,37 @@ where table_schema = 'public'
 - ⚠️ 스캔 흐릿한 일부 줄은 표준 의미로 해석(필요시 원문 재대조).
 - ⚠️ 책은 상업 저작물 → **의미 참고용**, 원문 복사 금지.
 
-**다음:** 타로 기능 스펙 작성 (단일 'Card of the Day' / 일 1장 고정 / 인라인 생일 / 정립 only / Approach C 캐시).
+**커밋:** `7e45f4d` (이미지 78장 + CSV theme/keywords + 스크립트 3종)
+
+---
+
+### ✅ 타로 기능 스펙 + 구현 계획 작성
+
+**브레인스토밍 결정 (4개 확정):**
+1. 단일 **Card of the Day** (1장 → 리딩 1개 → 공유 1장, 스프레드 X)
+2. **하루 1장 고정** — 전체 사주 4기둥 + KST 날짜 결정적 해시, KST 자정 갱신
+3. **인라인 생일 게이트** — localStorage 사주 있으면 바로 뽑기, 없으면 `BirthForm` 재사용
+4. **정립(upright) only**
+
+**스펙:** `docs/superpowers/specs/2026-06-17-tarot-design.md` — daily-fortune 패턴 그대로. 리딩 = OpenRouter(Haiku) + Supabase 캐시 `(date, card_id, day_master, locale)`, CSV `theme`/`keywords` 그라운딩, LLM 실패 시 정적 fallback. 데이터 = `scripts/seed-tarot.mjs`로 CSV → `data/ksaju-tarot.json`(재생성 불변 테스트). 공유는 `useShareImage`·`ShareCardFooter` 재사용. **신규 npm 0.** 커밋 `b24b2b8`.
+
+**계획:** `docs/superpowers/plans/2026-06-17-tarot.md` — **7개 TDD 태스크**(각 독립 테스트+커밋):
+1. 카드 데이터 시드 + 무결성 테스트 → 2. `tarot.ts` 결정적 뽑기 → 3. 리딩 API + Supabase 테이블 → 4. 내비 링크 i18n → 5. `/tarot` 페이지 + 사주 게이트 + reveal → 6. 리딩 fetch → 7. 9:16 공유 카드/모달. 커밋 `6b99627`.
+
+**상태:** 계획까지 완료, **구현 미착수**. 실행 방식(서브에이전트 / 인라인) 선택 대기.
+
+---
+
+### 📌 다음 세션 후보 액션
+
+| 우선순위 | 작업 |
+|---------|------|
+| ⚡ 다음 | **타로 기능 구현 착수** — `docs/superpowers/plans/2026-06-17-tarot.md` 7개 태스크 순차 실행(TDD) |
+| ⚡ 선행 | Supabase SQL Editor에서 `tarot_readings` 테이블 DDL 실행 (계획 Task 3, `docs/supabase-migration.sql`) |
+| 🔜 확인 | Vercel 환경변수 `OPENROUTER_API_KEY` 존재 확인 (daily-fortune에서 이미 설정됨 — 재사용) |
+| 🔜 검토 | 타로 메시지 JA·ZH-TW 번역 품질 검토 (계획 Task 4·5에서 추가될 `Tarot`/`SiteHeader.tarot` 키) |
+| 🔜 대기 | AdSense 심사 결과 확인 (1~2주) |
+| 💡 선택 | 타로 키워드 흐릿했던 줄 원문 재대조 (검 9 "현실의 외면", 펜타클 King "풍부한 심려" 등) |
 
 ---
 
