@@ -63,3 +63,8 @@ C：temp*.json
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# n8n - json
+n8n-tarot-workflow.json
+# 1회용 PDF 분할 산출물
+.tmp/

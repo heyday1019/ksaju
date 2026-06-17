@@ -88,7 +88,146 @@ where table_schema = 'public'
 |---------|------|
 | 🔜 대기 중 | AdSense 심사 통과 확인 (1~2주 후) |
 | 🔜 검토 | 번역 품질 검토 — `/ja/`, `/ko/`, `/zh-TW/` 에서 궁합·운세 카드 직접 확인, 어색한 문구 수정 |
-| 🔜 대기 중 | Midjourney 78장 타로 이미지 생성 완료 후 타로 기능 개발 착수 |
+| ✅ 완료 | Nano Banana Pro로 78장 타로 이미지 생성 완료 (2026-06-15) |
+| 🔜 다음 | 생성된 타로 이미지 `public/tarot/` 배치 → 타로 기능 개발 착수 |
+
+---
+
+## 2026-06-17 (화)
+
+### ✅ 타로 78장 이미지 배치 + 카드 의미(theme/keywords) 보강
+
+**목표:** 생성된 타로 이미지를 `public/tarot/`에 배치하고, 타로 리딩 LLM 그라운딩용으로 카드별 의미를 CSV에 보강.
+
+**브레인스토밍 결정:**
+- 카드 의미는 **LLM 기본지식 + `card_prompt`(장면 설명) + 책 추출 키워드** 조합으로 그라운딩.
+- 다국어 사전번역은 **비효율 → 생략**. 요약은 LLM *입력*일 뿐, 출력 언어는 프롬프트 `locale`로 결정. 영어 1벌만 유지.
+
+**`taro-scan.pdf` 판독 파이프라인 구축 (240p/105MB 스캔본, 텍스트 레이어 없음):**
+- Read 도구 100MB 초과 거부 + poppler `pdftoppm` 미설치 → **PyMuPDF**(자체 렌더러)로 페이지 → PNG 렌더 후 시각 판독.
+- `scripts/render-pdf-pages.py` (범위/목록 모드), `scripts/montage-cards.py` (마이너 카드 테마+키워드 두 페이지를 1장으로 합쳐 1회 읽기). 산출은 gitignore된 `.tmp/`.
+
+**추출 결과 — `docs/tarot-cards.csv`:**
+- `card_prompt` 뒤에 `theme`(한 줄) + `keywords`(정립 3개) 컬럼 신규. 78장 전체.
+- 책 **정방향(upright) 박스**를 영어로 정리. 메이저 22 + 마이너 56. 페이지 인덱스 어긋남은 각 카드명 배지로 전수 검증.
+- `scripts/add-tarot-keywords.py` — `(suit, rank)` 키로 CSV 보강(멱등).
+- ⚠️ 스캔 흐릿한 일부 줄은 표준 의미로 해석(필요시 원문 재대조).
+- ⚠️ 책은 상업 저작물 → **의미 참고용**, 원문 복사 금지.
+
+**다음:** 타로 기능 스펙 작성 (단일 'Card of the Day' / 일 1장 고정 / 인라인 생일 / 정립 only / Approach C 캐시).
+
+---
+
+### ✅ 랜딩 페이지 전환율 문구 개선 + FAQ 프라이버시 문구 수정 + Ko-fi 후원 섹션 추가
+
+**커밋:** `a70994b`, `0d27be2`
+
+---
+
+#### 1. 폼 상단 훅 문구 추가 (전환율 개선)
+
+- `messages/{en,ko,ja,zh-TW}.json`에 `formHook` 키 신규 추가
+- `src/app/[locale]/page.tsx` — CardHeader 아래, BirthForm 위에 한 줄 삽입
+- 영문: `"Find out your Korean saju — then check your chemistry with your K-pop bias. Free, 30 seconds. ✨"`
+- 사주 확인 + 아이돌 궁합 + 무료 + 30초를 한 줄로 전달 → 폼 입력 유도
+
+#### 2. FAQ "Do you store my birthday?" 답변 교체
+
+- 기존: `a4Before` / `a4Link` / `a4After` 3키 분리 구조 (Privacy 페이지 링크 포함)
+- 변경: 단일 `a4` 키로 통합, 링크 제거
+- 새 영문: `"Your birthday is saved locally in your browser only — never sent to our servers — so you don't have to re-enter it every visit."`
+- 서버 전송 없음 + 재방문 편의성을 명확하게 전달
+
+#### 3. Ko-fi 후원 섹션 추가
+
+- `src/app/[locale]/page.tsx` — 메인 카드 아래 항상 표시되는 정적 섹션 추가
+- 구성: 제목 / 부제 / Ko-fi 버튼(`#FF5E5B`, `rounded-xl`) / "Built solo with love from Seoul 🌾"
+- 링크: `https://ko-fi.com/ksaju` (외부, `target="_blank"`)
+- 폼·결과·웰컴 뷰 모두에서 항상 노출
+
+---
+
+### 📌 다음 세션 후보 액션
+
+| 우선순위 | 작업 |
+|---------|------|
+| 🔜 대기 | AdSense 심사 결과 확인 (1~2주) |
+| 🔜 다음 | 생성된 타로 이미지 `public/tarot/` 배치 → 타로 기능 개발 착수 |
+| 🔜 검토 | 번역 품질 검토 — `/ja/`, `/ko/`, `/zh-TW/` 직접 확인 |
+
+---
+
+## 2026-06-15 (일)
+
+### ✅ 타로카드 78장 이미지 자동 생성 완료
+
+**목표:** Nano Banana Pro (Google Gemini 3 Pro Image)로 78장 타로 이미지를 n8n으로 자동 배치 생성.
+
+---
+
+#### 생성물 (파일 3개)
+
+| 파일 | 내용 |
+|------|------|
+| `docs/tarot-imagen-consistency-guide.md` | Google Imagen용 스타일 일관성 가이드 (기존 Midjourney 프롬프트 한계 분석 + 새 마스터 스타일) |
+| `docs/tarot-cards.csv` | 78장 전체 프롬프트 (Google Sheets import용, 카드별 장면 묘사 분리) |
+| `n8n-tarot-workflow.json` | n8n 자동화 워크플로우 (Sheets 읽기 → 이미지 생성 → Drive 업로드 → 상태 업데이트) |
+
+---
+
+#### 핵심 설계 결정
+
+**일관성 문제 원인 및 해결:**
+- 기존: `[MASTER STYLE]`을 프롬프트 끝에 붙이고 Midjourney 파라미터(`--ar`, `--v`) 사용 → Gemini에서 무시됨
+- 수정: `[STYLE DNA]` 블록을 프롬프트 **앞**에 배치, HEX 색상 고정(`#0F1B5E`, `#C8385A`, `#C49A3F`), 아트 스타일 명시(`NOT anime`, `NOT Western fantasy`)
+
+**n8n 워크플로우 흐름:**
+```
+Google Sheets (pending 행 읽기)
+  → SplitInBatches (1장씩)
+  → IF status==pending
+  → Sheets Update (processing)
+  → Code: Build Full Prompt ($('Is Pending?').item.json 으로 원본 데이터 참조)
+  → Wait 3s
+  → HTTP Request (Gemini API)
+  → Code: Extract base64 (candidates[0].content.parts[].inlineData.data)
+  → Google Drive Upload
+  → Code: Build URL
+  → Sheets Update (done + url)
+  → loop back
+```
+
+---
+
+#### 디버깅 이슈 기록
+
+| 오류 | 원인 | 해결 |
+|------|------|------|
+| `imagen-3.0-generate-002 not found` | Gemini API에 Imagen 없음 | ListModels 호출 → Nano Banana Pro = `gemini-3-pro-image-preview` 확인 |
+| `Unknown name "numberOfImages"` | Gemini generateContent에 없는 파라미터 | 제거 |
+| `Root element must be a message` | raw body 안 `{{ }}` 표현식 평가 오류 | `specifyBody: json` + `request_body_obj` 객체로 전환 |
+| `SCENE: undefined` | Sheets Update 노드 output이 원본 행 데이터를 버림 | `$('Is Pending?').item.json` 으로 IF 노드에서 직접 참조 |
+| 루프 1장에서 멈춤 | connections에서 `"Generate Image (Imagen 3)"` 참조 (노드 이름 변경 후 미반영) + Skip 노드 루프백 미연결 | 연결 이름 수정 + Skip → SplitInBatches 연결 추가 |
+
+---
+
+#### 인증 설정 요약
+
+| 서비스 | n8n Credential 타입 | 비고 |
+|--------|-------------------|------|
+| Google Gemini API | Header Auth (`x-goog-api-key`) | Google AI Studio 키 |
+| Google Sheets | Google Sheets OAuth2 | Drive API도 같은 프로젝트 |
+| Google Drive | Google Drive OAuth2 | OAuth Consent Screen 테스트 사용자 추가 필요 |
+
+---
+
+### 📌 다음 세션 액션
+
+| 우선순위 | 작업 |
+|---------|------|
+| 🔜 즉시 | 생성된 78장 PNG를 `public/tarot/` 폴더에 배치 |
+| 🔜 다음 | 타로 기능 개발 — 카드 뷰어 컴포넌트, 라우트 `/tarot` |
+| 🔜 대기 | AdSense 심사 결과 확인 (1~2주)
 
 ---
 
