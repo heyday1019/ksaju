@@ -67,10 +67,11 @@ describe("tarotFallbackReading", () => {
     expect(tarotFallbackReading(getCardById(0)!, "metal")).toContain("The Fool is your card today");
   });
 
-  it("ko: uses the Korean card name + hanja element, not the English template", () => {
+  it("ko: uses the Korean card name + hangul element, not the English template", () => {
     const r = tarotFallbackReading(getCardById(0)!, "metal", "ko");
     expect(r).toContain("광대");          // The Fool's name_kr
-    expect(r).toContain("金");            // metal hanja
+    expect(r).toContain("금");            // metal element in hangul (금)
+    expect(r).not.toContain("金");        // ko reads hangul, not the CJK hanja
     expect(r).not.toContain("is your card today");
   });
 
