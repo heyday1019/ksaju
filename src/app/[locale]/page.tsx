@@ -184,6 +184,26 @@ export default function Home() {
             style={{ backgroundSize: "40px 18px" }}
           />
         </Card>
+
+        {/* Support section */}
+        <div className="mt-2 pt-6 border-t border-border/40 space-y-3">
+          <h2 className="font-display text-xl font-semibold">Enjoying KSaju? ☕</h2>
+          <p className="text-sm text-muted-foreground">
+            It&apos;s free — and your support keeps it growing.
+          </p>
+          <a
+            href="https://ko-fi.com/ksaju"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 rounded-xl px-6 py-3 font-semibold text-white transition-opacity hover:opacity-90 active:opacity-80"
+            style={{ backgroundColor: "#FF5E5B" }}
+          >
+            ☕ Buy me a coffee
+          </a>
+          <p className="text-xs text-muted-foreground/70">
+            Built solo with love from Seoul 🌾
+          </p>
+        </div>
       </div>
     </div>
   );
