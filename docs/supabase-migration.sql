@@ -95,3 +95,15 @@ ALTER TABLE daily_fortunes DROP CONSTRAINT IF EXISTS daily_fortunes_date_day_mas
 ALTER TABLE daily_fortunes
   ADD CONSTRAINT daily_fortunes_date_day_master_locale_key
   UNIQUE (date, day_master, locale);
+
+-- Tarot Card-of-the-Day readings (cached LLM output). Service-role access only.
+CREATE TABLE IF NOT EXISTS tarot_readings (
+  id          uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  date        date NOT NULL,
+  card_id     integer NOT NULL CHECK (card_id >= 0 AND card_id <= 77),
+  day_master  text NOT NULL,
+  locale      text NOT NULL DEFAULT 'en',
+  message     text NOT NULL,
+  created_at  timestamptz DEFAULT now(),
+  UNIQUE(date, card_id, day_master, locale)
+);
