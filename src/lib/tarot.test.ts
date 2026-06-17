@@ -74,6 +74,20 @@ describe("tarotFallbackReading", () => {
     expect(r).not.toContain("is your card today");
   });
 
+  it("ja: uses the hanja element and not the English template", () => {
+    const r = tarotFallbackReading(getCardById(0)!, "metal", "ja");
+    expect(r).toContain("金");            // metal hanja
+    expect(r).toContain("The Fool");      // ja uses name_en
+    expect(r).not.toContain("is your card today");
+  });
+
+  it("zh-TW: uses the hanja element and not the English template", () => {
+    const r = tarotFallbackReading(getCardById(0)!, "metal", "zh-TW");
+    expect(r).toContain("金");            // metal hanja
+    expect(r).toContain("The Fool");      // zh-TW uses name_en
+    expect(r).not.toContain("is your card today");
+  });
+
   it("unknown locale falls back to en", () => {
     expect(tarotFallbackReading(getCardById(0)!, "metal", "xx")).toContain("The Fool is your card today");
   });
