@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { drawDailyCard, kstDateString } from "@/lib/tarot";
 import { elementOf, ELEMENT_TEXT } from "@/lib/saju-display";
 import { track } from "@/lib/analytics";
+import { TarotShareModal } from "@/components/tarot/tarot-share-modal";
 import type { UserSaju } from "@/lib/saju-types";
 
 export function TarotDraw({ saju }: { saju: UserSaju }) {
@@ -13,6 +14,7 @@ export function TarotDraw({ saju }: { saju: UserSaju }) {
   const locale = useLocale();
   const [revealed, setRevealed] = useState(false);
   const [reading, setReading] = useState<string | null>(null);
+  const [shareOpen, setShareOpen] = useState(false);
   const card = drawDailyCard(saju, kstDateString());
   const accent = ELEMENT_TEXT[elementOf(saju.dayMaster)];
 
@@ -49,7 +51,24 @@ export function TarotDraw({ saju }: { saju: UserSaju }) {
           ) : (
             <p className="text-sm leading-relaxed text-foreground">&ldquo;{reading}&rdquo;</p>
           )}
+          <Button
+            variant="outline"
+            className="w-full"
+            disabled={reading === null}
+            onClick={() => setShareOpen(true)}
+          >
+            {t("shareButton")}
+          </Button>
           <p className="text-[11px] text-muted-foreground">{t("comeback")}</p>
+          {reading !== null && (
+            <TarotShareModal
+              open={shareOpen}
+              onClose={() => setShareOpen(false)}
+              saju={saju}
+              card={card}
+              reading={reading}
+            />
+          )}
         </div>
       ) : (
         <div className="flex flex-col items-center gap-4">
