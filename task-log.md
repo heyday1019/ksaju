@@ -4,6 +4,37 @@
 
 ---
 
+## 2026-06-17 (수) — 추가: 한국어 로케일 폴리시 (타로 카드명·헤더·fallback 카피)
+
+배포 사이트 한국어 확인 후 사용자 요청으로 ko 로케일 표시를 다듬음. **모두 프레젠테이션/카피 수준 — LLM 해피패스·엔진 무변경.**
+
+### ✅ 한국어 fallback 카피 리뷰 + 수정 (커밋 `f17d19a`, `e442462`)
+- 타로 fallback: `金 기운` → **`금 기운`**(한글, Gen-Z 가독성). 카드명 뒤 마침표 대신 **`!`** 종결 — `'봉의 9'`(숫자끝)·`'별'`(자음끝) 등 78장 모든 카드명에 문법적으로 안전(받침/숫자에 따라 예요/이에요 달라지는 문제 회피).
+- 데일리 운세 fallback: `control` ko 문장 잘림 수정(`…더 강하게 —` → `…더 단단하게 만들어요 —`), `generate-me` `기대세요`(중의적)→`기대도 돼요`, `골든 옐로`→`골든 옐로우`.
+
+### ✅ ko 로케일에서 카드 제목을 한국어로 (커밋 `9e2c1df` 페이지, `952ab56` 공유카드)
+- `tarot-draw.tsx`·`tarot-share-card.tsx`: ko일 때 큰 제목=`name_kr`, 부제=`name_en`(영문 부제는 CJK `hanja` 폰트 클래스 제거). 그 외 로케일 불변. `TarotShareCard`에 `locale?` prop 추가, `TarotShareModal`이 `useLocale()` 전달.
+
+### ✅ 공유카드 헤더 로케일화 + DRY 헬퍼 (커밋 `614b9a4`)
+- 신규 공용 `elementLabel(element, locale)` (`saju-display.ts`): en→영문라벨, ko→한글(목/화/토/금/수), ja/zh-TW→한자(木). `tarot.ts` fallback이 이를 재사용 → 중복 `ELEMENT_KO` 제거(한글 오행명 단일 출처).
+- 공유카드 헤더 `Card of the Day · Wood` → 로케일별(`오늘의 카드 · 목` / `今日のカード · 木` / `今日之牌 · 木`).
+
+**검증:** 신규/수정 테스트 통과(elementLabel 4 케이스, 공유카드 ko/en 제목·헤더, tarot/daily fallback). `tsc` clean. Playwright로 `/ko/tarot` 드로우→공유까지 실제 렌더 확인(제목 `봉의 9`, 헤더 `오늘의 카드 · 목`, 한자 미노출). 각 커밋 main push(Vercel 배포).
+
+**남은 영어(의도/범위 외):** 공유 모달의 sr-only `DialogTitle`("Your Card of the Day", 이미지 미포함 a11y 라벨), `Share ✨` 버튼(브랜드 무드, 사이클 26a 결정).
+
+### 🔜 다음 Task
+
+| 우선 | 항목 |
+|---|---|
+| ⚠️ 사용자 | **Vercel `OPENROUTER_API_KEY` 복구**(키/크레딧) — 현재 prod 타로·데일리운세 둘 다 fallback. 복구 시 리치 LLM 리딩(전 로케일) 자동 동작 |
+| ⚠️ 사용자 | Supabase SQL Editor에서 `tarot_readings` DDL 실행(`docs/supabase-migration.sql`, 사이클 26) |
+| 🔜 검토 | **JA·ZH-TW 번역 품질 검토** — 타로/fallback/헤더의 일본어·번체 카피(`/ja/`·`/zh-TW/`에서 직접 확인). 한국어는 이번에 검토 완료 |
+| 🔜 대기 | AdSense 심사 결과 확인(1~2주) |
+| 🔜 후보 | 다음 개발 사이클 결정(브레인스토밍) — 예: 아이돌 DB 추가 배치, 또는 보류 항목 재검토 |
+
+---
+
 ## 2026-06-17 (수) — 추가: fallback 리딩 다국어화
 
 ### ✅ 타로/데일리 운세 fallback 리딩 로케일화 (subagent-driven, 3 태스크)
