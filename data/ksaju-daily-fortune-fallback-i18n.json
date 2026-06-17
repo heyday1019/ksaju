@@ -1,0 +1,74 @@
+{
+  "combo": {
+    "energy": 5,
+    "message": {
+      "en": "Stars align perfectly today — your bias era starts now! ✨",
+      "ko": "오늘은 별이 완벽하게 정렬됐어요 — 당신의 최애 시대 시작! ✨",
+      "ja": "今日は星が完璧に並ぶ日 — あなたの推し時代の幕開け！✨",
+      "zh-TW": "今天星象完美對齊 — 你的本命時代開始了！✨"
+    },
+    "lucky_color": {
+      "en": "Hot Pink", "ko": "핫핑크", "ja": "ホットピンク", "zh-TW": "桃紅色"
+    }
+  },
+  "same": {
+    "energy": 4,
+    "message": {
+      "en": "You're fully in your element today — ride the wave! 🌊",
+      "ko": "오늘은 완전히 물 만난 날 — 흐름을 타세요! 🌊",
+      "ja": "今日はまさに本領発揮 — 波に乗っていこう！🌊",
+      "zh-TW": "今天完全是你的主場 — 順著浪潮前進吧！🌊"
+    },
+    "lucky_color": {
+      "en": "Golden Yellow", "ko": "골든 옐로", "ja": "ゴールデンイエロー", "zh-TW": "金黃色"
+    }
+  },
+  "generate-me": {
+    "energy": 4,
+    "message": {
+      "en": "The universe has your back today — lean into it! 🍀",
+      "ko": "오늘은 우주가 당신 편 — 마음껏 기대세요! 🍀",
+      "ja": "今日は宇宙が味方 — 思いきり頼っていこう！🍀",
+      "zh-TW": "今天宇宙站在你這邊 — 盡情依靠吧！🍀"
+    },
+    "lucky_color": {
+      "en": "Sage Green", "ko": "세이지 그린", "ja": "セージグリーン", "zh-TW": "鼠尾草綠"
+    }
+  },
+  "i-generate": {
+    "energy": 3,
+    "message": {
+      "en": "Your energy lights up everyone around you today! 💫",
+      "ko": "오늘은 당신의 에너지가 주변을 환하게 밝혀요! 💫",
+      "ja": "今日はあなたのエネルギーが周りを照らす！💫",
+      "zh-TW": "今天你的能量點亮了身邊每個人！💫"
+    },
+    "lucky_color": {
+      "en": "Lavender", "ko": "라벤더", "ja": "ラベンダー", "zh-TW": "薰衣草紫"
+    }
+  },
+  "control": {
+    "energy": 3,
+    "message": {
+      "en": "A little resistance makes you stronger — you've got this! 🔥",
+      "ko": "약간의 저항이 당신을 더 강하게 — 충분히 해낼 수 있어요! 🔥",
+      "ja": "ちょっとした逆風があなたを強くする — きっと大丈夫！🔥",
+      "zh-TW": "一點阻力讓你更強大 — 你一定做得到！🔥"
+    },
+    "lucky_color": {
+      "en": "Dusty Rose", "ko": "더스티 로즈", "ja": "ダスティローズ", "zh-TW": "灰玫瑰色"
+    }
+  },
+  "neutral": {
+    "energy": 3,
+    "message": {
+      "en": "A calm, steady day — perfect for planning your next era! 🌤️",
+      "ko": "잔잔하고 안정된 하루 — 다음 시대를 계획하기 딱 좋아요! 🌤️",
+      "ja": "穏やかで安定した一日 — 次の時代を計画するのにぴったり！🌤️",
+      "zh-TW": "平靜穩定的一天 — 最適合規劃你的下個時代！🌤️"
+    },
+    "lucky_color": {
+      "en": "Sky Blue", "ko": "스카이 블루", "ja": "スカイブルー", "zh-TW": "天空藍"
+    }
+  }
+}

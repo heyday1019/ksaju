@@ -5,6 +5,7 @@ import { stemRelation, type TimeRel } from "@/lib/fortune";
 import { HEAVENLY_STEMS } from "@/lib/saju-data";
 import { elementOf, WUXING_META } from "@/lib/saju-display";
 import { routing, type Locale } from "@/i18n/routing";
+import fallbackI18n from "../../../../data/ksaju-daily-fortune-fallback-i18n.json";
 
 export const dynamic = "force-dynamic";
 
@@ -17,14 +18,10 @@ const LANG_MAP: Record<Locale, string> = {
   "zh-TW": "Traditional Chinese",
 };
 
-const FALLBACK: Record<TimeRel, { message: string; energy: number; lucky_color: string }> = {
-  combo:         { message: "Stars align perfectly today — your bias era starts now! ✨",    energy: 5, lucky_color: "Hot Pink"      },
-  same:          { message: "You're fully in your element today — ride the wave! 🌊",        energy: 4, lucky_color: "Golden Yellow" },
-  "generate-me": { message: "The universe has your back today — lean into it! 🍀",           energy: 4, lucky_color: "Sage Green"    },
-  "i-generate":  { message: "Your energy lights up everyone around you today! 💫",           energy: 3, lucky_color: "Lavender"      },
-  control:       { message: "A little resistance makes you stronger — you've got this! 🔥",  energy: 3, lucky_color: "Dusty Rose"    },
-  neutral:       { message: "A calm, steady day — perfect for planning your next era! 🌤️",  energy: 3, lucky_color: "Sky Blue"      },
-};
+const FALLBACK_I18N = fallbackI18n as Record<
+  TimeRel,
+  { energy: number; message: Record<string, string>; lucky_color: Record<string, string> }
+>;
 
 export async function GET(request: NextRequest) {
   const { searchParams } = request.nextUrl;
@@ -159,6 +156,7 @@ Respond ONLY with valid JSON — no markdown, no extra text:
     );
   } catch (err) {
     console.error("[daily-fortune] LLM/upsert failed, using fallback:", err);
+    const fb = FALLBACK_I18N[relation];
     return NextResponse.json({
       id: "fallback",
       date: todayStr,
@@ -166,7 +164,9 @@ Respond ONLY with valid JSON — no markdown, no extra text:
       locale,
       today_pillar: todayPillar,
       relation,
-      ...FALLBACK[relation],
+      message: fb.message[locale] ?? fb.message.en,
+      energy: fb.energy,
+      lucky_color: fb.lucky_color[locale] ?? fb.lucky_color.en,
     });
   }
 }
