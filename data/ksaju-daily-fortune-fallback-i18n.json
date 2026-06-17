@@ -20,14 +20,14 @@
       "zh-TW": "今天完全是你的主場 — 順著浪潮前進吧！🌊"
     },
     "lucky_color": {
-      "en": "Golden Yellow", "ko": "골든 옐로", "ja": "ゴールデンイエロー", "zh-TW": "金黃色"
+      "en": "Golden Yellow", "ko": "골든 옐로우", "ja": "ゴールデンイエロー", "zh-TW": "金黃色"
     }
   },
   "generate-me": {
     "energy": 4,
     "message": {
       "en": "The universe has your back today — lean into it! 🍀",
-      "ko": "오늘은 우주가 당신 편 — 마음껏 기대세요! 🍀",
+      "ko": "오늘은 우주가 당신 편 — 마음껏 기대도 돼요! 🍀",
       "ja": "今日は宇宙が味方 — 思いきり頼っていこう！🍀",
       "zh-TW": "今天宇宙站在你這邊 — 盡情依靠吧！🍀"
     },

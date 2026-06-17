@@ -55,7 +55,7 @@ export function tarotFallbackReading(card: TarotCard, element: WuXing, locale: s
   const meta = WUXING_META[element];
   switch (loc) {
     case "ko":
-      return `오늘 당신의 카드는 '${card.name_kr}'. ${ELEMENT_KO[element]} 기운을 믿고 나아가면 좋은 일이 따라올 거예요. ✨`;
+      return `오늘 당신의 카드는 '${card.name_kr}'! ${ELEMENT_KO[element]} 기운을 믿고 나아가면 좋은 일이 따라올 거예요. ✨`;
     case "ja":
       return `今日のあなたのカードは「${card.name_en}」。${meta.hanja}のエネルギーを信じて進めば、きっと良いことが訪れます。✨`;
     case "zh-TW":
