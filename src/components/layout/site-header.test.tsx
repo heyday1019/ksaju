@@ -24,6 +24,7 @@ describe("SiteHeader", () => {
     render(<SiteHeader />);
     expect(screen.getByRole("link", { name: /My Saju/ })).toHaveAttribute("href", "/");
     expect(screen.getByRole("link", { name: /Inyeon/ })).toHaveAttribute("href", "/inyeon");
+    expect(screen.getByRole("link", { name: /Tarot/ })).toHaveAttribute("href", "/tarot");
   });
 
   it("현재 경로(/inyeon) 링크에 aria-current='page'를 표시한다", () => {
@@ -42,7 +43,7 @@ describe("SiteHeader", () => {
 
   it("labels prop으로 커스텀 네비 텍스트 렌더", () => {
     render(
-      <SiteHeader labels={{ mySaju: "私の四柱", inyeon: "縁" }} />
+      <SiteHeader labels={{ mySaju: "私の四柱", inyeon: "縁", tarot: "タロット" }} />
     );
     expect(screen.getByText("私の四柱")).toBeInTheDocument();
     expect(screen.getByText("縁")).toBeInTheDocument();

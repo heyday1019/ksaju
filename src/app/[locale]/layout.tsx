@@ -23,7 +23,7 @@ export default async function LocaleLayout({ children, params }: Props) {
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <AppChrome
-        headerLabels={{ mySaju: t("mySaju"), inyeon: t("inyeon") }}
+        headerLabels={{ mySaju: t("mySaju"), inyeon: t("inyeon"), tarot: t("tarot") }}
         showLocaleSwitcher
       >
         {children}

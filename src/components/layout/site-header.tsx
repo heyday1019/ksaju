@@ -6,11 +6,11 @@ import { ThemeToggle } from "@/components/ui/theme-toggle";
 import { LocaleSwitcher } from "./locale-switcher";
 
 interface SiteHeaderProps {
-  labels?: { mySaju: string; inyeon: string };
+  labels?: { mySaju: string; inyeon: string; tarot: string };
   showLocaleSwitcher?: boolean;
 }
 
-const DEFAULTS = { mySaju: "My Saju", inyeon: "Inyeon" };
+const DEFAULTS = { mySaju: "My Saju", inyeon: "Inyeon", tarot: "Tarot" };
 
 /** 모든 페이지 공통 슬림 헤더: 로고(→/) + 네비 + 테마토글. usePathname으로 활성표시. */
 export function SiteHeader({
@@ -22,6 +22,7 @@ export function SiteHeader({
   const nav = [
     { href: "/", label: labels.mySaju },
     { href: "/inyeon", label: labels.inyeon },
+    { href: "/tarot", label: labels.tarot },
   ] as const;
 
   return (

@@ -7,7 +7,7 @@ import { AnalyticsProvider } from "@/components/analytics/analytics-provider";
 
 interface AppChromeProps {
   children: React.ReactNode;
-  headerLabels?: { mySaju: string; inyeon: string };
+  headerLabels?: { mySaju: string; inyeon: string; tarot: string };
   showLocaleSwitcher?: boolean;
 }
 
