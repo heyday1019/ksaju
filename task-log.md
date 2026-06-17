@@ -4,7 +4,21 @@
 
 ---
 
-## 2026-06-17 (수)
+## 2026-06-17 (수) — 추가: fallback 리딩 다국어화
+
+### ✅ 타로/데일리 운세 fallback 리딩 로케일화 (subagent-driven, 3 태스크)
+
+**발단:** 사용자가 배포 사이트에서 한국어로 했는데 타로 리딩이 영어로 나옴. 진단 결과 **프로덕션 LLM이 다운**(prod `/api/tarot-reading`·`/api/daily-fortune` 둘 다 `"id":"fallback"` 영어 반환) + **fallback이 영어 전용**이라는 2중 문제. LLM 해피패스는 이미 `LANG_MAP[locale]`로 로케일화되어 있음 — fallback만 영어였음.
+
+**변경(spec·plan: `docs/superpowers/{specs,plans}/2026-06-17-fallback-i18n*`):**
+- `src/lib/tarot.ts` `tarotFallbackReading(card, element: WuXing, locale="en")` — en/ko/ja/zh-TW 템플릿. 오행 단어는 `WUXING_META`의 `.label`(en)/`.hanja`(CJK, 金/木/…) 재사용 → 신규 번역데이터 0. ko는 `name_kr`, ja/zh-TW는 `name_en`(데이터에 원어 카드명 없음), theme는 en만. unknown locale→en. 호출부(`tarot-reading/route.ts`)는 `elementOf(dayMaster)`+`locale` 전달.
+- `data/ksaju-daily-fortune-fallback-i18n.json` 신규(6 relation × {energy, message·lucky_color 4언어}). `daily-fortune/route.ts` 인라인 영어 `FALLBACK` 제거 → JSON import + `fb.message[locale] ?? fb.message.en`. en 값·energy는 기존과 byte-identical.
+- 테스트: `tarot.test.ts`(en/ko/ja/zh-TW/unknown), `daily-fortune-fallback.test.ts`(6 relation × 4 locale 무결성 + 6 en 값 고정).
+
+**검증:** 로컬 dev에서 두 엔드포인트 4언어 fallback 확인(en 불변, ko/ja/zh-TW 로케일화). 신규/관련 테스트 통과. 전체 스위트에서 idol-picker/compat-section 8건이 5s 타임아웃·ECONNREFUSED로 깜빡임(diff와 무관) → 격리 실행 시 13/13 통과 확인. opus 최종 리뷰 "ready to merge: YES"(Minor 4건, #2·#3 반영, #1 default분기로 무의미·#4 설계의도). 커밋 `79e1437`·`aff3110`·`b49c3a2`·`55c280d` → main push(Vercel 배포).
+
+**⚠️ 사용자 액션:** Vercel `OPENROUTER_API_KEY` 복구 필요(키/크레딧). 그래야 타로·데일리운세 **리치 LLM 리딩**이 다시 동작(현재는 둘 다 fallback). + `tarot_readings` DDL 실행(사이클 26).
+
 
 ### ✅ 타로 — 오늘의 카드 (Daily Fortune 미러, 7 태스크 TDD)
 
