@@ -20,9 +20,19 @@ describe("ksaju-daily-fortune-fallback-i18n.json", () => {
     }
   });
 
-  it("preserves the original English combo energy + color", () => {
-    const combo = (fallback as Record<string, { energy: number; lucky_color: Record<string, string> }>).combo;
-    expect(combo.energy).toBe(5);
-    expect(combo.lucky_color.en).toBe("Hot Pink");
+  it("preserves all original English energy + lucky_color values", () => {
+    const expected: Array<[string, number, string]> = [
+      ["combo", 5, "Hot Pink"],
+      ["same", 4, "Golden Yellow"],
+      ["generate-me", 4, "Sage Green"],
+      ["i-generate", 3, "Lavender"],
+      ["control", 3, "Dusty Rose"],
+      ["neutral", 3, "Sky Blue"],
+    ];
+    const data = fallback as Record<string, { energy: number; lucky_color: Record<string, string> }>;
+    for (const [rel, energy, color] of expected) {
+      expect(data[rel].energy).toBe(energy);
+      expect(data[rel].lucky_color.en).toBe(color);
+    }
   });
 });

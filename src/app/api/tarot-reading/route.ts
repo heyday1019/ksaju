@@ -25,7 +25,8 @@ export async function GET(request: NextRequest) {
   if (!VALID_STEMS.has(dayMaster)) return NextResponse.json({ error: "Invalid dayMaster" }, { status: 400 });
 
   const todayStr = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul" }).format(new Date());
-  const elementLabel = WUXING_META[elementOf(dayMaster)].label;
+  const element = elementOf(dayMaster);
+  const elementLabel = WUXING_META[element].label;
 
   const supabase = createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -84,7 +85,7 @@ Respond ONLY with the reading text — no JSON, no card name header, no markdown
     console.error("[tarot-reading] fallback:", err);
     return NextResponse.json({
       id: "fallback", date: todayStr, card_id: card.id, day_master: dayMaster, locale,
-      message: tarotFallbackReading(card, elementOf(dayMaster), locale),
+      message: tarotFallbackReading(card, element, locale),
     });
   }
 }
