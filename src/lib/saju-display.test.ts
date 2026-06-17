@@ -3,6 +3,7 @@ import {
   elementOf,
   WUXING_META,
   ELEMENT_TEXT,
+  elementLabel,
   pillarBreakdown,
   wuxingBalance,
   dayMasterInfo,
@@ -15,6 +16,24 @@ const RM: UserSaju = {
   dayMaster: "辛",
   isTimeCorrected: false,
 };
+
+describe("elementLabel", () => {
+  it("en → 영문 라벨", () => {
+    expect(elementLabel("metal", "en")).toBe("Metal");
+    expect(elementLabel("wood", "en")).toBe("Wood");
+  });
+  it("ko → 한글", () => {
+    expect(elementLabel("metal", "ko")).toBe("금");
+    expect(elementLabel("water", "ko")).toBe("수");
+  });
+  it("ja/zh-TW → 한자", () => {
+    expect(elementLabel("metal", "ja")).toBe("金");
+    expect(elementLabel("metal", "zh-TW")).toBe("金");
+  });
+  it("미지원 locale → en", () => {
+    expect(elementLabel("fire", "xx")).toBe("Fire");
+  });
+});
 
 describe("elementOf", () => {
   it("천간 오행", () => {

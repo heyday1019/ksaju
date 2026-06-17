@@ -41,6 +41,21 @@ export const WUXING_META: Record<
   water: { token: "su", label: "Water", hanja: "水", emoji: "💧" },
 };
 
+/** 오행 → 한글 이름 (오행: 목·화·토·금·수) */
+export const WUXING_KO: Record<WuXing, string> = {
+  wood: "목", fire: "화", earth: "토", metal: "금", water: "수",
+};
+
+/**
+ * 오행 → 로케일별 라벨. en은 영문("Wood"), ko는 한글("목"),
+ * ja/zh-TW는 한자("木", CJK에서 자연스러움). 미지원 locale은 en.
+ */
+export function elementLabel(element: WuXing, locale: string): string {
+  if (locale === "ko") return WUXING_KO[element];
+  if (locale === "ja" || locale === "zh-TW") return WUXING_META[element].hanja;
+  return WUXING_META[element].label;
+}
+
 /**
  * 오행 → 글자색 클래스 (globals.css `--color-wuxing-*`).
  * Tailwind v4 JIT가 정적 리터럴만 스캔하므로 문자열 리터럴 맵으로 유지.

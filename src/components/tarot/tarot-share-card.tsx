@@ -1,22 +1,26 @@
 "use client";
 
 import { forwardRef } from "react";
-import { dayMasterInfo, WUXING_META } from "@/lib/saju-display";
+import { dayMasterInfo, elementLabel } from "@/lib/saju-display";
 import { ShareCardFooter } from "@/components/share/share-card-footer";
 import type { TarotCard } from "@/lib/tarot";
 import type { UserSaju } from "@/lib/saju-types";
 
 type Props = { saju: UserSaju; card: TarotCard; reading: string; locale?: string };
 
+const CARD_OF_THE_DAY: Record<string, string> = {
+  en: "Card of the Day", ko: "오늘의 카드", ja: "今日のカード", "zh-TW": "今日之牌",
+};
+
 /** 9:16 tarot share card (360×640 → pixelRatio 3 → 1080×1920). Self-contained. */
 export const TarotShareCard = forwardRef<HTMLDivElement, Props>(
   function TarotShareCard({ saju, card, reading, locale = "en" }, ref) {
     const dm = dayMasterInfo(saju.dayMaster);
-    const meta = WUXING_META[dm.element];
     const isKo = locale === "ko";
     // ko locale leads with the Korean card name; other locales lead with English.
     const titleName = isKo ? card.name_kr : card.name_en;
     const subName = isKo ? card.name_en : card.name_kr;
+    const cardOfDay = CARD_OF_THE_DAY[locale] ?? CARD_OF_THE_DAY.en;
     return (
       <div
         ref={ref}
@@ -27,7 +31,7 @@ export const TarotShareCard = forwardRef<HTMLDivElement, Props>(
 
         <div className="flex w-full flex-1 flex-col items-center justify-center gap-3 px-7 pt-6">
           <p className="text-xs font-bold uppercase tracking-wider text-primary">
-            Card of the Day · {meta.label}
+            {cardOfDay} · {elementLabel(dm.element, locale)}
           </p>
 
           {/* eslint-disable-next-line @next/next/no-img-element */}

@@ -1,6 +1,6 @@
 import tarot from "../../data/ksaju-tarot.json";
 import type { WuXing, UserSaju } from "./saju-types";
-import { WUXING_META } from "./saju-display";
+import { WUXING_META, elementLabel } from "./saju-display";
 
 export type TarotCard = {
   id: number;
@@ -44,18 +44,13 @@ export function drawDailyCard(saju: UserSaju, dateStr: string): TarotCard {
 
 const FALLBACK_LOCALES = ["en", "ko", "ja", "zh-TW"] as const;
 
-/** 오행 한글 이름 — ko fallback은 한자(金) 대신 한글(금)로 읽기 쉽게. */
-const ELEMENT_KO: Record<WuXing, string> = {
-  wood: "목", fire: "화", earth: "토", metal: "금", water: "수",
-};
-
 /** Static reading used when the LLM/DB is unavailable. Localized by `locale`. */
 export function tarotFallbackReading(card: TarotCard, element: WuXing, locale: string = "en"): string {
   const loc = (FALLBACK_LOCALES as readonly string[]).includes(locale) ? locale : "en";
   const meta = WUXING_META[element];
   switch (loc) {
     case "ko":
-      return `오늘 당신의 카드는 '${card.name_kr}'! ${ELEMENT_KO[element]} 기운을 믿고 나아가면 좋은 일이 따라올 거예요. ✨`;
+      return `오늘 당신의 카드는 '${card.name_kr}'! ${elementLabel(element, "ko")} 기운을 믿고 나아가면 좋은 일이 따라올 거예요. ✨`;
     case "ja":
       return `今日のあなたのカードは「${card.name_en}」。${meta.hanja}のエネルギーを信じて進めば、きっと良いことが訪れます。✨`;
     case "zh-TW":

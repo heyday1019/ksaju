@@ -31,6 +31,17 @@ describe("TarotShareCard", () => {
     expect(screen.getByText("The Fool")).toBeInTheDocument(); // name_en now the subtitle
   });
 
+  it("ko: localizes the header (오늘의 카드 · element in hangul)", () => {
+    // saju dayMaster 辛 = metal → ko element label "금"
+    render(<TarotShareCard saju={saju} card={getCardById(0)!} reading="시작이 빛나요." locale="ko" />);
+    expect(screen.getByText("오늘의 카드 · 금")).toBeInTheDocument();
+  });
+
+  it("en: header stays English (Card of the Day · Metal)", () => {
+    render(<TarotShareCard saju={saju} card={getCardById(0)!} reading="A bright start awaits." locale="en" />);
+    expect(screen.getByText("Card of the Day · Metal")).toBeInTheDocument();
+  });
+
   it("en (default) leads with the English card name", () => {
     const { container } = render(
       <TarotShareCard saju={saju} card={getCardById(0)!} reading="A bright start awaits." locale="en" />,
