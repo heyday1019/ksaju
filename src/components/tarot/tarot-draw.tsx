@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useState, useEffect } from "react";
+import { useTranslations, useLocale } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { drawDailyCard, kstDateString } from "@/lib/tarot";
 import { elementOf, ELEMENT_TEXT } from "@/lib/saju-display";
@@ -10,9 +10,19 @@ import type { UserSaju } from "@/lib/saju-types";
 
 export function TarotDraw({ saju }: { saju: UserSaju }) {
   const t = useTranslations("Tarot");
+  const locale = useLocale();
   const [revealed, setRevealed] = useState(false);
+  const [reading, setReading] = useState<string | null>(null);
   const card = drawDailyCard(saju, kstDateString());
   const accent = ELEMENT_TEXT[elementOf(saju.dayMaster)];
+
+  useEffect(() => {
+    if (!revealed) return;
+    fetch(`/api/tarot-reading?cardId=${card.id}&dayMaster=${encodeURIComponent(saju.dayMaster)}&locale=${locale}`)
+      .then((r) => r.json() as Promise<{ message: string }>)
+      .then((d) => setReading(d.message))
+      .catch(() => setReading(null));
+  }, [revealed, card.id, saju.dayMaster, locale]);
 
   const reveal = () => {
     setRevealed(true);
@@ -34,6 +44,11 @@ export function TarotDraw({ saju }: { saju: UserSaju }) {
             <p className="hanja text-sm text-muted-foreground">{card.name_kr}</p>
             <p className="font-serif text-sm text-foreground mt-1">{card.theme}</p>
           </div>
+          {reading === null ? (
+            <p className="animate-pulse text-sm text-muted-foreground">{t("loading")}</p>
+          ) : (
+            <p className="text-sm leading-relaxed text-foreground">&ldquo;{reading}&rdquo;</p>
+          )}
           <p className="text-[11px] text-muted-foreground">{t("comeback")}</p>
         </div>
       ) : (
