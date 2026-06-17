@@ -158,6 +158,9 @@ export default function Home() {
                   {t("cardSubtitle")}
                 </CardDescription>
               </CardHeader>
+              <p className="px-6 -mt-2 mb-1 text-sm text-foreground/70 leading-snug">
+                {t("formHook")}
+              </p>
               <CardContent className="space-y-4">
                 {errorMessage && (
                   <div

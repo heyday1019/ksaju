@@ -32,13 +32,7 @@ export default async function FaqPage() {
 
         <section className="space-y-2">
           <h2 className="font-display text-lg font-semibold">{t("q4")}</h2>
-          <p>
-            {t("a4Before")}{" "}
-            <LocaleLink href="/privacy" className="text-primary underline-offset-2 hover:underline">
-              {t("a4Link")}
-            </LocaleLink>{" "}
-            {t("a4After")}
-          </p>
+          <p>{t("a4")}</p>
         </section>
 
         <section className="space-y-2">

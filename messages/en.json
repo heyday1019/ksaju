@@ -16,7 +16,8 @@
   "Home": {
     "cardTitle": "When were you born?",
     "cardSubtitle": "Korea uses KST · we'll convert for you",
-    "tagline": "Saju, but make it K."
+    "tagline": "Saju, but make it K.",
+    "formHook": "Find out your Korean saju — then check your chemistry with your K-pop bias. Free, 30 seconds. ✨"
   },
   "BirthForm": {
     "dateLabel": "Birth date",
@@ -94,9 +95,7 @@
     "q3": "How is compatibility calculated?",
     "a3": "With classic five-element rules — which elements support or clash, and how the birth pillars meet. It's a transparent rule-based score, not random and not AI mysticism.",
     "q4": "Do you store my birthday?",
-    "a4Before": "No. Your birthday is used in your browser to compute your saju. We only keep a coarse age range (like 18–24) for anonymous analytics — never your exact date. See our",
-    "a4Link": "Privacy",
-    "a4After": "page.",
+    "a4": "Your birthday is saved locally in your browser only — never sent to our servers — so you don't have to re-enter it every visit.",
     "q5": "Why K-pop idols? Where do their birthdays come from?",
     "a5": "Because checking your chemistry with your bias is fun! Idol names and birthdays are public information. We don't use official photos or logos, and KSaju isn't affiliated with any artist or label.",
     "q6": "Is it free?",
