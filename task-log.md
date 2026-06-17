@@ -4,6 +4,33 @@
 
 ---
 
+## 2026-06-17 (수)
+
+### ✅ 타로 — 오늘의 카드 (Daily Fortune 미러, 7 태스크 TDD)
+
+**목표:** `/tarot` 페이지에서 사주 기반 결정적 "오늘의 카드" 1장 → 일간 개인화 fun 리딩 → 9:16 PNG 공유.
+플랜: `docs/superpowers/plans/2026-06-17-tarot.md` (Task 1-7, 각 태스크별 커밋).
+
+**핵심 결정/구조:**
+
+- **카드 데이터:** `docs/tarot-cards.csv`(78장) → `scripts/seed-tarot.mjs`(`npm run seed:tarot`) → 커밋된 `data/ksaju-tarot.json`. element는 suit에서 파생(major→null). 무결성 테스트(`src/lib/tarot-data.test.ts`, 4 tests)가 78장·id 0..77·suit↔element·이미지 파일 존재 고정.
+- **드로우 로직(`src/lib/tarot.ts`, 8 tests):** `drawDailyCard(saju, dateStr)` = FNV-1a(4기둥+KST날짜) % 78 결정적. `kstDateString`/`getCardById`/`tarotFallbackReading`. 업라이트 전용, 리버스 없음.
+- **리딩 API(`src/app/api/tarot-reading/route.ts`):** Daily Fortune 패턴 — Supabase `tarot_readings` 캐시(키 `date,card_id,day_master,locale`) → OpenRouter `claude-haiku-4-5` (theme/keywords 그라운딩, locale별 언어) → 정적 fallback. env 없으면 fallback JSON 반환.
+- **UI:** `/tarot` 라우트 + `TarotView`(사주 게이트: localStorage 없으면 `BirthForm`, 있으면 `TarotDraw`) + `TarotDraw`(카드백→reveal→이미지+이름+theme+개인화 리딩 fetch). 색 액센트는 **읽는 사람 일간 오행**(`elementOf`+`ELEMENT_TEXT`).
+- **공유:** 사이클 13 `useShareImage` + 사이클 22 `ShareCardFooter`(QR) 재사용. `TarotShareCard`(9:16 360×640→@3 1080×1920) + `TarotShareModal`. `share_clicked {kind:"tarot"}` 분석.
+- **i18n:** SiteHeader에 Tarot 네비 링크(4언어) + `Tarot` 메시지 네임스페이스(en/ja/ko/zh-TW). 정적 영어는 없음 — 리딩 언어는 `locale` 파라미터로 LLM 처리.
+
+**제약 준수:** 새 npm 패키지 0(OpenRouter native fetch). 카드 이미지는 plain `<img>`(html-to-image 캡처 패리티).
+
+**검증:** 252 tests pass(타로 신규 15), `npx tsc --noEmit` clean, `npm run build` 성공(`/[locale]/tarot`·`/api/tarot-reading` ƒ).
+**Lint:** `tarot-view.tsx`에 `set-state-in-effect` 1건 — 홈(`[locale]/page.tsx:49`)·Admin과 동일한 기존 사주 하이드레이션 패턴(플랜 명시). 신규 회귀 아님.
+
+**배포 TODO(사용자):** Supabase SQL Editor에서 `tarot_readings` DDL 실행(`docs/supabase-migration.sql`). `OPENROUTER_API_KEY`는 Daily Fortune에서 이미 존재.
+
+**커밋:** Task 1 `aad07b7` · 2 `(daily card)` · 3 `(API)` · 4 `(nav)` · 5 `(page)` · 6 `(reading fetch)` · 7 `(share card)`.
+
+---
+
 ## 2026-06-13 (토)
 
 ### ✅ Supabase 마이그레이션 확인
