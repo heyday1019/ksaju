@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef } from "react";
+import { useLocale } from "next-intl";
 import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { TarotShareCard } from "./tarot-share-card";
@@ -12,6 +13,7 @@ import type { UserSaju } from "@/lib/saju-types";
 type Props = { open: boolean; onClose: () => void; saju: UserSaju; card: TarotCard; reading: string };
 
 export function TarotShareModal({ open, onClose, saju, card, reading }: Props) {
+  const locale = useLocale();
   const cardRef = useRef<HTMLDivElement>(null);
   const { share, status } = useShareImage(cardRef, {
     fileName: "ksaju-tarot.png",
@@ -25,7 +27,7 @@ export function TarotShareModal({ open, onClose, saju, card, reading }: Props) {
         <DialogTitle className="sr-only">Your Card of the Day</DialogTitle>
         <DialogDescription className="sr-only">A fun tarot reading for you.</DialogDescription>
 
-        <TarotShareCard ref={cardRef} saju={saju} card={card} reading={reading} />
+        <TarotShareCard ref={cardRef} saju={saju} card={card} reading={reading} locale={locale} />
 
         <div className="space-y-2 px-6 pb-6">
           <Button

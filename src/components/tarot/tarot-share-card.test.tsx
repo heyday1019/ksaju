@@ -21,4 +21,21 @@ describe("TarotShareCard", () => {
     expect(screen.getByText(/ksaju\.me/)).toBeInTheDocument();
     expect(screen.getByText(/For entertainment/)).toBeInTheDocument();
   });
+
+  it("ko: leads with the Korean card name as the title, English as subtitle", () => {
+    const { container } = render(
+      <TarotShareCard saju={saju} card={getCardById(0)!} reading="시작이 빛나요." locale="ko" />,
+    );
+    const title = container.querySelector(".font-display.text-2xl");
+    expect(title?.textContent).toBe("광대");          // name_kr leads
+    expect(screen.getByText("The Fool")).toBeInTheDocument(); // name_en now the subtitle
+  });
+
+  it("en (default) leads with the English card name", () => {
+    const { container } = render(
+      <TarotShareCard saju={saju} card={getCardById(0)!} reading="A bright start awaits." locale="en" />,
+    );
+    const title = container.querySelector(".font-display.text-2xl");
+    expect(title?.textContent).toBe("The Fool");
+  });
 });

@@ -6,13 +6,17 @@ import { ShareCardFooter } from "@/components/share/share-card-footer";
 import type { TarotCard } from "@/lib/tarot";
 import type { UserSaju } from "@/lib/saju-types";
 
-type Props = { saju: UserSaju; card: TarotCard; reading: string };
+type Props = { saju: UserSaju; card: TarotCard; reading: string; locale?: string };
 
 /** 9:16 tarot share card (360×640 → pixelRatio 3 → 1080×1920). Self-contained. */
 export const TarotShareCard = forwardRef<HTMLDivElement, Props>(
-  function TarotShareCard({ saju, card, reading }, ref) {
+  function TarotShareCard({ saju, card, reading, locale = "en" }, ref) {
     const dm = dayMasterInfo(saju.dayMaster);
     const meta = WUXING_META[dm.element];
+    const isKo = locale === "ko";
+    // ko locale leads with the Korean card name; other locales lead with English.
+    const titleName = isKo ? card.name_kr : card.name_en;
+    const subName = isKo ? card.name_en : card.name_kr;
     return (
       <div
         ref={ref}
@@ -27,11 +31,11 @@ export const TarotShareCard = forwardRef<HTMLDivElement, Props>(
           </p>
 
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={`/tarot/${card.filename}`} alt={card.name_en} className="w-40 rounded-lg shadow-md" />
+          <img src={`/tarot/${card.filename}`} alt={titleName} className="w-40 rounded-lg shadow-md" />
 
           <div>
-            <p className="font-display text-2xl font-bold text-foreground">{card.name_en}</p>
-            <p className="hanja text-sm text-muted-foreground">{card.name_kr}</p>
+            <p className="font-display text-2xl font-bold text-foreground">{titleName}</p>
+            <p className={`text-sm text-muted-foreground ${isKo ? "" : "hanja"}`}>{subName}</p>
             <p className="font-serif text-sm text-foreground mt-1">{card.theme}</p>
           </div>
 
