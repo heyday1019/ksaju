@@ -4,6 +4,17 @@
     "inyeon": "인연",
     "tarot": "타로"
   },
+  "Tarot": {
+    "title": "타로 — 오늘의 카드",
+    "subtitle": "오늘의 카드를 뽑아보세요 ✨",
+    "birthdayPrompt": "생일을 입력하면 당신만의 카드를 뽑아드려요.",
+    "birthdaySubmit": "내 카드 보기 ✨",
+    "drawButton": "카드 뽑기 🃏",
+    "loading": "카드를 읽는 중…",
+    "comeback": "하루 한 장 — 내일 다시 만나요 🌙",
+    "shareButton": "공유하기 ✨",
+    "changeBirthday": "생일 변경"
+  },
   "SiteFooter": {
     "about": "소개",
     "faq": "FAQ",

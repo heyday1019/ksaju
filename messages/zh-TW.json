@@ -4,6 +4,17 @@
     "inyeon": "緣分",
     "tarot": "塔羅"
   },
+  "Tarot": {
+    "title": "塔羅 — 今日之牌",
+    "subtitle": "抽出你今天的牌 ✨",
+    "birthdayPrompt": "輸入生日，為你抽出專屬的牌。",
+    "birthdaySubmit": "看我的牌 ✨",
+    "drawButton": "抽牌 🃏",
+    "loading": "正在讀牌…",
+    "comeback": "一天一張 — 明天再來 🌙",
+    "shareButton": "分享 ✨",
+    "changeBirthday": "更改生日"
+  },
   "SiteFooter": {
     "about": "關於",
     "faq": "FAQ",

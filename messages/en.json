@@ -4,6 +4,17 @@
     "inyeon": "Inyeon",
     "tarot": "Tarot"
   },
+  "Tarot": {
+    "title": "Tarot — Card of the Day",
+    "subtitle": "Draw your card for today ✨",
+    "birthdayPrompt": "Enter your birthday to draw your personalized card.",
+    "birthdaySubmit": "Reveal my card ✨",
+    "drawButton": "Draw your card 🃏",
+    "loading": "Reading the cards…",
+    "comeback": "One card a day — come back tomorrow 🌙",
+    "shareButton": "Share ✨",
+    "changeBirthday": "Change birthday"
+  },
   "SiteFooter": {
     "about": "About",
     "faq": "FAQ",

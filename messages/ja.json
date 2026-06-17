@@ -4,6 +4,17 @@
     "inyeon": "縁",
     "tarot": "タロット"
   },
+  "Tarot": {
+    "title": "タロット — 今日のカード",
+    "subtitle": "今日のカードを引いてみましょう ✨",
+    "birthdayPrompt": "誕生日を入力すると、あなただけのカードを引きます。",
+    "birthdaySubmit": "カードを見る ✨",
+    "drawButton": "カードを引く 🃏",
+    "loading": "カードを読み取り中…",
+    "comeback": "1日1枚 — また明日 🌙",
+    "shareButton": "シェア ✨",
+    "changeBirthday": "誕生日を変更"
+  },
   "SiteFooter": {
     "about": "About",
     "faq": "FAQ",
