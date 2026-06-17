@@ -56,9 +56,25 @@ describe("drawDailyCard", () => {
 });
 
 describe("tarotFallbackReading", () => {
-  it("includes the card name and is non-empty", () => {
-    const r = tarotFallbackReading(getCardById(0)!, "Metal");
+  it("en: includes the card name + theme and is non-empty", () => {
+    const r = tarotFallbackReading(getCardById(0)!, "metal", "en");
     expect(r).toContain("The Fool");
+    expect(r).toContain("a free spirit, unbound"); // The Fool's theme
     expect(r.length).toBeGreaterThan(20);
+  });
+
+  it("en is the default when locale is omitted", () => {
+    expect(tarotFallbackReading(getCardById(0)!, "metal")).toContain("The Fool is your card today");
+  });
+
+  it("ko: uses the Korean card name + hanja element, not the English template", () => {
+    const r = tarotFallbackReading(getCardById(0)!, "metal", "ko");
+    expect(r).toContain("광대");          // The Fool's name_kr
+    expect(r).toContain("金");            // metal hanja
+    expect(r).not.toContain("is your card today");
+  });
+
+  it("unknown locale falls back to en", () => {
+    expect(tarotFallbackReading(getCardById(0)!, "metal", "xx")).toContain("The Fool is your card today");
   });
 });

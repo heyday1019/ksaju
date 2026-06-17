@@ -84,7 +84,7 @@ Respond ONLY with the reading text — no JSON, no card name header, no markdown
     console.error("[tarot-reading] fallback:", err);
     return NextResponse.json({
       id: "fallback", date: todayStr, card_id: card.id, day_master: dayMaster, locale,
-      message: tarotFallbackReading(card, elementLabel),
+      message: tarotFallbackReading(card, elementOf(dayMaster), locale),
     });
   }
 }

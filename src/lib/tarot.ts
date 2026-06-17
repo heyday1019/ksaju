@@ -1,5 +1,6 @@
 import tarot from "../../data/ksaju-tarot.json";
 import type { WuXing, UserSaju } from "./saju-types";
+import { WUXING_META } from "./saju-display";
 
 export type TarotCard = {
   id: number;
@@ -41,7 +42,20 @@ export function drawDailyCard(saju: UserSaju, dateStr: string): TarotCard {
   return TAROT_CARDS[fnv1a(seed) % TAROT_CARDS.length];
 }
 
-/** Static reading used when the LLM/DB is unavailable. */
-export function tarotFallbackReading(card: TarotCard, elementLabel: string): string {
-  return `${card.name_en} is your card today — ${card.theme}. Let your ${elementLabel} energy lead the way, and good things will follow. ✨`;
+const FALLBACK_LOCALES = ["en", "ko", "ja", "zh-TW"] as const;
+
+/** Static reading used when the LLM/DB is unavailable. Localized by `locale`. */
+export function tarotFallbackReading(card: TarotCard, element: WuXing, locale: string = "en"): string {
+  const loc = (FALLBACK_LOCALES as readonly string[]).includes(locale) ? locale : "en";
+  const meta = WUXING_META[element];
+  switch (loc) {
+    case "ko":
+      return `오늘 당신의 카드는 '${card.name_kr}'. ${meta.hanja} 기운을 믿고 나아가면 좋은 일이 따라올 거예요. ✨`;
+    case "ja":
+      return `今日のあなたのカードは「${card.name_en}」。${meta.hanja}のエネルギーを信じて進めば、きっと良いことが訪れます。✨`;
+    case "zh-TW":
+      return `你今天的牌是「${card.name_en}」。順著你的${meta.hanja}能量前行，好事自然會來。✨`;
+    default:
+      return `${card.name_en} is your card today — ${card.theme}. Let your ${meta.label} energy lead the way, and good things will follow. ✨`;
+  }
 }
