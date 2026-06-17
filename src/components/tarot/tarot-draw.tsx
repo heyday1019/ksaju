@@ -17,6 +17,10 @@ export function TarotDraw({ saju }: { saju: UserSaju }) {
   const [shareOpen, setShareOpen] = useState(false);
   const card = drawDailyCard(saju, kstDateString());
   const accent = ELEMENT_TEXT[elementOf(saju.dayMaster)];
+  const isKo = locale === "ko";
+  // ko locale leads with the Korean card name; other locales lead with English.
+  const titleName = isKo ? card.name_kr : card.name_en;
+  const subName = isKo ? card.name_en : card.name_kr;
 
   useEffect(() => {
     if (!revealed) return;
@@ -38,12 +42,12 @@ export function TarotDraw({ saju }: { saju: UserSaju }) {
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src={`/tarot/${card.filename}`}
-            alt={card.name_en}
+            alt={titleName}
             className="mx-auto w-56 rounded-xl shadow-lg"
           />
           <div>
-            <p className={`font-display text-2xl font-bold ${accent}`}>{card.name_en}</p>
-            <p className="hanja text-sm text-muted-foreground">{card.name_kr}</p>
+            <p className={`font-display text-2xl font-bold ${accent}`}>{titleName}</p>
+            <p className={`text-sm text-muted-foreground ${isKo ? "" : "hanja"}`}>{subName}</p>
             <p className="font-serif text-sm text-foreground mt-1">{card.theme}</p>
           </div>
           {reading === null ? (
