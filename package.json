@@ -10,6 +10,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "seed:idols": "node scripts/seed-idols.mjs",
+    "seed:tarot": "node scripts/seed-tarot.mjs",
     "gen:qr": "node scripts/gen-qr.mjs",
     "gen:og": "node scripts/gen-og.mjs"
   },
