@@ -20,7 +20,9 @@ interface TrendEntry { date: string; submitted: number; generated: number; share
 interface RecentEvent { id: number; event: string; idol_name: string | null; group_name: string | null; score: number | null; created_at: string }
 interface GroupEntry { group: string; count: number }
 
-interface ShareByKind { compat: number; fortune: number; daily_fortune: number }
+interface ShareByKind { compat: number; fortune: number; daily_fortune: number; tarot: number }
+interface FeatureUsage { compatViews: number; tarotViews: number; compatShares: number; tarotShares: number }
+interface TarotEntry { id: number; name: string; count: number }
 
 interface Props {
   data: {
@@ -30,7 +32,10 @@ interface Props {
     recent: RecentEvent[];
     groupData: GroupEntry[];
     shareByKind: ShareByKind;
+    featureUsage: FeatureUsage;
+    tarotTop: TarotEntry[];
     dailyFortuneToday: number;
+    tarotReadingToday: number;
     days: number;
     fetchedAt: string;
   };
@@ -147,6 +152,60 @@ function IdolRankList({ idols, filterGroup }: { idols: IdolEntry[]; filterGroup:
   );
 }
 
+function VersusRow({ label, left, right }: { label: string; left: number; right: number }) {
+  const total = left + right;
+  const leftPct = total === 0 ? 50 : Math.round((left / total) * 100);
+  const rightPct = 100 - leftPct;
+  return (
+    <div className="mb-4 last:mb-0">
+      <div className="flex items-center justify-between text-[11px] text-[#888] mb-1">
+        <span><span className="font-medium text-[#88B0BC]">{left.toLocaleString()}</span> 궁합</span>
+        <span className="uppercase tracking-widest">{label}</span>
+        <span>타로 <span className="font-medium text-[#9b6bc8]">{right.toLocaleString()}</span></span>
+      </div>
+      <div className="flex h-6 rounded-lg overflow-hidden bg-[#EEE9DF] dark:bg-[#2a2545]">
+        <div
+          className="flex items-center justify-start pl-2 text-[10px] font-medium text-white transition-all duration-700"
+          style={{ width: `${leftPct}%`, background: "#88B0BC", minWidth: left > 0 ? "28px" : "0" }}
+        >
+          {leftPct >= 12 ? `${leftPct}%` : ""}
+        </div>
+        <div
+          className="flex items-center justify-end pr-2 text-[10px] font-medium text-white transition-all duration-700"
+          style={{ width: `${rightPct}%`, background: "#9b6bc8", minWidth: right > 0 ? "28px" : "0" }}
+        >
+          {rightPct >= 12 ? `${rightPct}%` : ""}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function TarotRankList({ cards }: { cards: TarotEntry[] }) {
+  const maxCount = cards[0]?.count || 1;
+  if (cards.length === 0) return (
+    <div className="text-[13px] text-[#aaa] text-center py-4">이 기간에 타로 데이터가 없어요</div>
+  );
+  return (
+    <div className="space-y-2 mt-2">
+      {cards.map((c, i) => (
+        <div key={c.id} className="flex items-center gap-2">
+          <div className="text-[11px] text-[#aaa] w-4">{i + 1}</div>
+          <div className="w-7 h-7 rounded-full flex items-center justify-center text-[12px] shrink-0"
+            style={{ background: "#9b6bc822", color: "#9b6bc8" }}>🔮</div>
+          <div className="flex-1 min-w-0">
+            <div className="text-[13px] font-medium text-[#1A1A2E] dark:text-[#FFF6E5] truncate">{c.name}</div>
+          </div>
+          <div className="w-20 h-1.5 bg-[#EEE9DF] dark:bg-[#2a2545] rounded overflow-hidden">
+            <div className="h-full rounded" style={{ width: `${Math.round(c.count / maxCount * 100)}%`, background: "#9b6bc8" }} />
+          </div>
+          <div className="text-[12px] text-[#888] w-6 text-right">{c.count}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
 function LiveFeed({ events }: { events: RecentEvent[] }) {
   if (events.length === 0) return (
     <div className="text-[13px] text-[#aaa] text-center py-6">아직 이벤트가 없어요</div>
@@ -180,7 +239,7 @@ function LiveFeed({ events }: { events: RecentEvent[] }) {
 const AUTO_REFRESH_INTERVAL = 30_000; // 30초
 
 export default function AdminDashboard({ data }: Props) {
-  const { funnel, idolTop, trend, recent, groupData, shareByKind, dailyFortuneToday, days, fetchedAt } = data;
+  const { funnel, idolTop, trend, recent, groupData, shareByKind, featureUsage, tarotTop, dailyFortuneToday, tarotReadingToday, days, fetchedAt } = data;
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [filterGroup, setFilterGroup] = useState("all");
@@ -291,6 +350,47 @@ export default function AdminDashboard({ data }: Props) {
           value={pct(funnel.another_idol_clicked, funnel.card_generated)}
           sub={`${funnel.another_idol_clicked}번 다시 선택`}
         />
+      </div>
+
+      {/* 궁합 vs 타로 — 핵심 비교 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+        {/* 좌: head-to-head */}
+        <div className="bg-white dark:bg-[#1a1535] rounded-2xl border border-[#E8E0D0] dark:border-[#2a2545] p-4">
+          <div className="flex items-center justify-between mb-3">
+            <div className="text-[11px] uppercase tracking-widest text-[#888]">궁합 🤍 vs 타로 🔮</div>
+            <div className="text-[10px] text-[#bbb]">최근 {days}일</div>
+          </div>
+          <VersusRow label="조회" left={featureUsage.compatViews} right={featureUsage.tarotViews} />
+          <VersusRow label="공유" left={featureUsage.compatShares} right={featureUsage.tarotShares} />
+          {/* 한 줄 결론 */}
+          <div className="mt-3 pt-3 border-t border-[#EEE9DF] dark:border-[#2a2545] text-[12px]">
+            {(() => {
+              const c = featureUsage.compatViews, t = featureUsage.tarotViews;
+              if (c === 0 && t === 0) return <span className="text-[#aaa]">아직 조회 데이터가 없어요</span>;
+              if (c === t) return <span className="text-[#888]">궁합과 타로가 <span className="font-medium">막상막하</span>예요 🤝</span>;
+              const win = c > t ? "궁합" : "타로";
+              const winColor = c > t ? "#88B0BC" : "#9b6bc8";
+              const ratio = Math.min(c, t) === 0 ? "∞" : `${(Math.max(c, t) / Math.min(c, t)).toFixed(1)}×`;
+              return (
+                <span className="text-[#888]">
+                  <span className="font-medium" style={{ color: winColor }}>{win}</span>를 약 <span className="font-medium" style={{ color: winColor }}>{ratio}</span> 더 많이 봐요
+                </span>
+              );
+            })()}
+          </div>
+          <div className="mt-3 text-[10px] text-[#bbb] leading-relaxed">
+            조회 = 궁합 결과 노출(compat_revealed) vs 타로 카드 뽑기(card_generated · feature:tarot)
+          </div>
+        </div>
+
+        {/* 우: 인기 타로 카드 */}
+        <div className="bg-white dark:bg-[#1a1535] rounded-2xl border border-[#E8E0D0] dark:border-[#2a2545] p-4">
+          <div className="flex items-center justify-between mb-1">
+            <div className="text-[11px] uppercase tracking-widest text-[#888]">인기 타로 카드 Top 8</div>
+            <div className="text-[10px] text-[#bbb]">오늘 리딩 캐시 {tarotReadingToday}건</div>
+          </div>
+          <TarotRankList cards={tarotTop} />
+        </div>
       </div>
 
       {/* 메인 2컬럼 */}
@@ -420,11 +520,21 @@ export default function AdminDashboard({ data }: Props) {
                   {shareByKind.daily_fortune / funnel.share_clicked > 0.12 ? "Daily" : ""}
                 </div>
               )}
+              {shareByKind.tarot > 0 && (
+                <div
+                  className="flex items-center justify-center text-[9px] font-medium text-white"
+                  style={{ width: `${Math.round(shareByKind.tarot / funnel.share_clicked * 100)}%`, background: "#9b6bc8" }}
+                  title={`타로 ${shareByKind.tarot}건`}
+                >
+                  {shareByKind.tarot / funnel.share_clicked > 0.12 ? "타로" : ""}
+                </div>
+              )}
             </div>
-            <div className="flex gap-3 mt-1.5">
+            <div className="flex flex-wrap gap-3 mt-1.5">
               <span className="flex items-center gap-1 text-[11px]"><span className="w-2 h-2 rounded-sm inline-block bg-[#88B0BC]" /><span className="text-[#888]">궁합 {shareByKind.compat}</span></span>
               <span className="flex items-center gap-1 text-[11px]"><span className="w-2 h-2 rounded-sm inline-block bg-[#C49A3F]" /><span className="text-[#888]">운세 {shareByKind.fortune}</span></span>
               <span className="flex items-center gap-1 text-[11px]"><span className="w-2 h-2 rounded-sm inline-block bg-[#C8385A]" /><span className="text-[#888]">Daily {shareByKind.daily_fortune}</span></span>
+              <span className="flex items-center gap-1 text-[11px]"><span className="w-2 h-2 rounded-sm inline-block bg-[#9b6bc8]" /><span className="text-[#888]">타로 {shareByKind.tarot}</span></span>
             </div>
           </div>
         )}

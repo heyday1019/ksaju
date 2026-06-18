@@ -11,6 +11,12 @@ export const revalidate = 0;
 
 import { createClient } from "@supabase/supabase-js";
 import AdminDashboard from "@/components/admin/AdminDashboard";
+import tarotCards from "../../../data/ksaju-tarot.json";
+
+// card_id → 카드 이름 룩업 (인기 타로 카드 라벨용)
+const TAROT_NAME = new Map<number, string>(
+  (tarotCards as { id: number; name_en: string }[]).map((c) => [c.id, c.name_en])
+);
 
 // ─── 서버사이드 쿼리 ──────────────────────────────────────────────
 
@@ -117,19 +123,61 @@ async function getAnalytics(days: number = 7) {
     .eq("event", "share_clicked")
     .gte("created_at", sinceISO);
 
-  const shareByKind = { compat: 0, fortune: 0, daily_fortune: 0 };
+  const shareByKind = { compat: 0, fortune: 0, daily_fortune: 0, tarot: 0 };
   (shareKindRaw || []).forEach((r) => {
     const kind = (r.props as Record<string, unknown> | null)?.kind;
     if (kind === "compat") shareByKind.compat++;
     else if (kind === "fortune") shareByKind.fortune++;
     else if (kind === "daily_fortune") shareByKind.daily_fortune++;
+    else if (kind === "tarot") shareByKind.tarot++;
   });
 
-  // 7. daily_fortunes — 오늘(KST) 캐시된 일간 수
+  // 8. 궁합 vs 타로 — 기능별 "조회" 비교
+  //    궁합 조회 = compat_revealed (아이돌+상대 결과 노출)
+  //    타로 조회 = card_generated { feature: "tarot" } (카드 뽑기 reveal)
+  const { count: compatRevealed } = await supabase
+    .from("analytics_events")
+    .select("id", { count: "exact", head: true })
+    .eq("event", "compat_revealed")
+    .gte("created_at", sinceISO);
+
+  const { data: cardGenRaw } = await supabase
+    .from("analytics_events")
+    .select("props")
+    .eq("event", "card_generated")
+    .gte("created_at", sinceISO);
+
+  let tarotDraws = 0;
+  const tarotCardMap = new Map<number, number>();
+  (cardGenRaw || []).forEach((r) => {
+    const p = r.props as Record<string, unknown> | null;
+    if (p?.feature !== "tarot") return;
+    tarotDraws++;
+    const cid = p?.card_id;
+    if (typeof cid === "number") tarotCardMap.set(cid, (tarotCardMap.get(cid) || 0) + 1);
+  });
+
+  const tarotTop = Array.from(tarotCardMap.entries())
+    .map(([id, count]) => ({ id, name: TAROT_NAME.get(id) ?? `#${id}`, count }))
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 8);
+
+  const featureUsage = {
+    compatViews: compatRevealed ?? 0,
+    tarotViews: tarotDraws,
+    compatShares: shareByKind.compat,
+    tarotShares: shareByKind.tarot,
+  };
+
+  // 7. 오늘(KST) 캐시 수 — daily_fortunes + tarot_readings
   const kstNow = new Date().toLocaleString("en-US", { timeZone: "Asia/Seoul" });
   const todayStr = new Date(kstNow).toISOString().slice(0, 10);
   const { count: dailyFortuneToday } = await supabase
     .from("daily_fortunes")
+    .select("id", { count: "exact", head: true })
+    .eq("date", todayStr);
+  const { count: tarotReadingToday } = await supabase
+    .from("tarot_readings")
     .select("id", { count: "exact", head: true })
     .eq("date", todayStr);
 
@@ -146,7 +194,10 @@ async function getAnalytics(days: number = 7) {
     recent,
     groupData,
     shareByKind,
+    featureUsage,
+    tarotTop,
     dailyFortuneToday: dailyFortuneToday ?? 0,
+    tarotReadingToday: tarotReadingToday ?? 0,
     days,
     fetchedAt: new Date().toISOString(),
   };
