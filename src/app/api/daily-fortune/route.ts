@@ -94,7 +94,7 @@ Respond ONLY with valid JSON — no markdown, no extra text:
         "X-Title": "KSaju Daily Fortune",
       },
       body: JSON.stringify({
-        model: "anthropic/claude-haiku-4-5-20251001",
+        model: "anthropic/claude-haiku-4.5",
         max_tokens: 120,
         temperature: 0.8,
         messages: [{ role: "user", content: prompt }],
