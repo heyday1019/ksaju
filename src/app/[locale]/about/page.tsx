@@ -28,12 +28,20 @@ export default async function AboutPage() {
           <h2 className="font-display text-lg font-semibold">{t("canDoHeading")}</h2>
           <ul className="list-disc space-y-1 pl-5">
             <li>{t("canDoItem1")}</li>
+            <li>{t("dailyItem")}</li>
             <li>
               {t("canDoItem2Before")}{" "}
               <LocaleLink href="/inyeon" className="text-primary underline-offset-2 hover:underline">
                 Inyeon (인연)
               </LocaleLink>{" "}
               {t("canDoItem2After")}
+            </li>
+            <li>
+              {t("tarotBefore")}{" "}
+              <LocaleLink href="/tarot" className="text-primary underline-offset-2 hover:underline">
+                Tarot
+              </LocaleLink>{" "}
+              {t("tarotAfter")}
             </li>
             <li>{t("canDoItem3")}</li>
           </ul>
