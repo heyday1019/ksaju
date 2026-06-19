@@ -7,6 +7,7 @@ import { drawDailyCard, kstDateString } from "@/lib/tarot";
 import { elementOf, ELEMENT_TEXT } from "@/lib/saju-display";
 import { track } from "@/lib/analytics";
 import { TarotShareModal } from "@/components/tarot/tarot-share-modal";
+import { SpreadCardBack } from "@/components/tarot/spread/spread-card-back";
 import type { UserSaju } from "@/lib/saju-types";
 
 export function TarotDraw({ saju }: { saju: UserSaju }) {
@@ -76,9 +77,7 @@ export function TarotDraw({ saju }: { saju: UserSaju }) {
         </div>
       ) : (
         <div className="flex flex-col items-center gap-4">
-          <div className="flex h-80 w-56 items-center justify-center rounded-xl border-2 border-dashed border-border bg-secondary/30 text-5xl">
-            🃏
-          </div>
+          <SpreadCardBack className="w-56 drop-shadow-lg" />
           <Button size="lg" className="w-full" onClick={reveal}>
             {t("drawButton")}
           </Button>

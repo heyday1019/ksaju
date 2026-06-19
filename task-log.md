@@ -4,6 +4,42 @@
 
 ---
 
+## 2026-06-19 (금) — 사이클 27: 타로 스프레드 (과거·현재·미래, 인터랙티브)
+
+새 인터랙티브 유료-후보 기능. 브레인스토밍(비주얼 컴패니언으로 카드뒷면·레이아웃 결정) → 스펙 → 플랜 → **서브에이전트 주도 실행(7 태스크, 태스크별 implementer+spec/quality 리뷰)** → opus 최종 전체리뷰 → fix 웨이브 → `main` ff-머지+푸시.
+
+### ✅ `/tarot/spread` — 3카드 스프레드 (커밋 `b30ecd3`·`da373f7`·`f1216a4`·`d339f90`·`afef6f7`·`302d4b3`·`974379d`·`4f3a0d0`)
+
+- **흐름:** 사주 게이트 → 부채꼴 카드덱(`motion`) 펼침 → 과거/현재/미래 버튼 순차 → 카드 줌인/플립 reveal → 나머지 덱 페이드아웃 → 가로 3열(현재 강조) 결과 + 카드별 해석 + 종합 내러티브 + 9:16 PNG 공유.
+- **카드 뒷면(C안):** 다크 한지 텍스처(SVG feTurbulence) + 골드 모서리 창살 + 빨강 ㅎ 낙관. `SpreadCardBack` 인라인 SVG, 에셋 0.
+- **진짜 랜덤:** `drawSpread(rng=Math.random)`(`tarot.ts`) — 중복없는 3장, 결정적 아님(매 draw 다름). 리딩 API `src/app/api/tarot-spread-reading/route.ts` — OpenRouter 1회 호출 → JSON `{past,present,future,synthesis}`, **캐시 없음**(랜덤이라 무의미), 로케일별 정적 fallback.
+- **컴포넌트(`src/components/tarot/spread/`):** SpreadView(게이트)·SpreadDraw(모션 상태머신)·SpreadCardBack·SpreadResult·SpreadShareCard·SpreadShareModal. `/tarot`(오늘의 카드)에 진입 CTA. i18n `TarotSpread` 네임스페이스(4언어) + 분석 `spread_started`·`spread_card_drawn{position}`·`spread_revealed`·`share_clicked{kind:"tarot_spread"}`.
+- **접근성:** `<MotionConfig reducedMotion="user">`.
+
+### 🧭 핵심 결정 (이전 norm에서 2가지 의도적 이탈)
+
+1. **무패키지 원칙 해제:** 첫 런타임 신규 의존성 **`motion`(framer-motion)** 도입 — 유료 기능 완성도/화려함을 위해 사용자 승인 하에 결정.
+2. **유료화 대비 분리:** `/tarot/spread`를 별도 라우트로 — 향후 **크레딧/페이월 게이트를 이 경계에 부착** 예정(이 기능이 의도된 첫 유료 기능).
+
+### ✅ 최종 리뷰 fix 웨이브 (커밋 `4f3a0d0`)
+
+opus 전체리뷰 "ready: with fixes"(Critical 없음). 단일 fix 커밋으로 반영: 리딩 fetch 실패 시 **에러/재시도 상태**(이전엔 로딩 스피너 무한 대기) · `spread_revealed` **draw당 1회**(revealedRef, 로케일 변경 refetch는 유지) · i18n `error`/`retry` ×4 · lint 정리(미사용 import, motion-mock displayName) · spread-draw 테스트 강화(게이팅+track 검증) · 신규 `src/i18n/messages-parity.test.ts`(4로케일 키 패리티 고정).
+
+**보류(설계의도, 버그 아님):** 공유 모달 chrome 영어 하드코딩(기존 `TarotShareModal`과 동일) · ja/zh-TW fallback 카드명 `name_en`(데이터에 원어명 없음).
+
+**검증:** 288 tests pass, `tsc` clean, `npm run build` OK(38 라우트, `/[locale]/tarot/spread`+`/api/tarot-spread-reading`). lint = 베이스라인 9 + 허용된 set-state 패턴 1(기존 `tarot-view`와 동일 hydration 관용구). idol-picker flaky 6건은 병렬부하 타임아웃(미변경 파일) — 격리 9/9 통과 확인. `3185e2c..4f3a0d0` main push(Vercel 자동배포).
+
+### 🔜 다음 Task
+
+| 우선 | 항목 |
+|---|---|
+| ✅ 완료 | **데일리 타로(`/tarot`) 뒷면도 `SpreadCardBack`으로 통일** — reveal 전 🃏 이모지 플레이스홀더 → 다크 한지 창살 SVG 카드백(`tarot-draw.tsx`, import만 추가). tsc/lint/build clean |
+| ⚠️ 사용자 | Vercel `OPENROUTER_API_KEY` 복구 — 타로/데일리운세/**스프레드** 모두 리치 LLM 리딩에 필요(없으면 로케일별 fallback) |
+| ⚠️ 사용자 | Supabase `tarot_readings` DDL 실행(`docs/supabase-migration.sql`) |
+| 🔜 검토 | 배포 후 모바일에서 부채 펼침/줌인 모션 + 크레딧 게이트 설계 |
+
+---
+
 ## 2026-06-17 (수) — 추가: 한국어 로케일 폴리시 (타로 카드명·헤더·fallback 카피)
 
 배포 사이트 한국어 확인 후 사용자 요청으로 ko 로케일 표시를 다듬음. **모두 프레젠테이션/카피 수준 — LLM 해피패스·엔진 무변경.**
