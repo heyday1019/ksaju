@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import {
-  TAROT_CARDS, getCardById, kstDateString, drawDailyCard, tarotFallbackReading,
+  TAROT_CARDS, getCardById, kstDateString, drawDailyCard, tarotFallbackReading, drawSpread, tarotSpreadFallbackReading,
 } from "./tarot";
 import type { UserSaju } from "./saju-types";
 
@@ -91,5 +91,42 @@ describe("tarotFallbackReading", () => {
 
   it("unknown locale falls back to en", () => {
     expect(tarotFallbackReading(getCardById(0)!, "metal", "xx")).toContain("The Fool is your card today");
+  });
+});
+
+describe("drawSpread", () => {
+  it("returns 3 distinct valid cards", () => {
+    const trio = drawSpread();
+    expect(trio).toHaveLength(3);
+    const ids = new Set(trio.map((c) => c.id));
+    expect(ids.size).toBe(3);
+    for (const c of trio) expect(TAROT_CARDS).toContainEqual(c);
+  });
+  it("is deterministic for the same rng sequence", () => {
+    const mk = () => { let i = 0; const seq = [0.1, 0.5, 0.9, 0.3]; return () => seq[i++ % seq.length]; };
+    expect(drawSpread(mk()).map((c) => c.id)).toEqual(drawSpread(mk()).map((c) => c.id));
+  });
+  it("can differ across rng sequences", () => {
+    const a = drawSpread(() => 0.01).map((c) => c.id).join();
+    const b = drawSpread(() => 0.99).map((c) => c.id).join();
+    expect(a).not.toBe(b);
+  });
+});
+
+describe("tarotSpreadFallbackReading", () => {
+  const trio = [getCardById(0)!, getCardById(1)!, getCardById(2)!] as [typeof TAROT_CARDS[0], typeof TAROT_CARDS[0], typeof TAROT_CARDS[0]];
+  it("en: 4 non-empty string fields with card names", () => {
+    const r = tarotSpreadFallbackReading(trio, "metal", "en");
+    expect(r.past).toContain("The Fool");
+    for (const v of [r.past, r.present, r.future, r.synthesis]) expect(v.length).toBeGreaterThan(10);
+  });
+  it("ko: uses Korean card name + hangul element, not English template", () => {
+    const r = tarotSpreadFallbackReading(trio, "metal", "ko");
+    expect(r.past).toContain("광대");
+    expect(r.synthesis).toContain("금");
+    expect(r.synthesis).not.toContain("Trust your");
+  });
+  it("unknown locale falls back to en", () => {
+    expect(tarotSpreadFallbackReading(trio, "metal", "xx").synthesis).toContain("Trust your");
   });
 });

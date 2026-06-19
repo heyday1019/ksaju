@@ -59,3 +59,57 @@ export function tarotFallbackReading(card: TarotCard, element: WuXing, locale: s
       return `${card.name_en} is your card today — ${card.theme}. Let your ${meta.label} energy lead the way, and good things will follow. ✨`;
   }
 }
+
+export type SpreadReading = { past: string; present: string; future: string; synthesis: string };
+
+/** Three distinct random cards (upright). NOT deterministic — different each draw. Pass `rng` for tests. */
+export function drawSpread(rng: () => number = Math.random): [TarotCard, TarotCard, TarotCard] {
+  const deck = [...TAROT_CARDS];
+  for (let i = 0; i < 3; i++) {
+    const j = i + Math.floor(rng() * (deck.length - i));
+    [deck[i], deck[j]] = [deck[j], deck[i]];
+  }
+  return [deck[0], deck[1], deck[2]];
+}
+
+/** Static 3-card reading used when the LLM is unavailable. Localized by `locale`. */
+export function tarotSpreadFallbackReading(
+  cards: [TarotCard, TarotCard, TarotCard],
+  element: WuXing,
+  locale: string = "en",
+): SpreadReading {
+  const loc = (FALLBACK_LOCALES as readonly string[]).includes(locale) ? locale : "en";
+  const [p, c, f] = cards;
+  const el = elementLabel(element, loc);
+  const name = (card: TarotCard) => (loc === "ko" ? card.name_kr : card.name_en);
+  switch (loc) {
+    case "ko":
+      return {
+        past: `과거의 카드 '${name(p)}' — ${p.theme}`,
+        present: `현재의 카드 '${name(c)}' — ${c.theme}`,
+        future: `미래의 카드 '${name(f)}' — ${f.theme}`,
+        synthesis: `${el} 기운을 믿고 흐름을 따라가면, 과거의 경험이 현재를 지나 좋은 미래로 이어질 거예요. ✨`,
+      };
+    case "ja":
+      return {
+        past: `過去のカード「${name(p)}」— ${p.theme}`,
+        present: `現在のカード「${name(c)}」— ${c.theme}`,
+        future: `未来のカード「${name(f)}」— ${f.theme}`,
+        synthesis: `${el}のエネルギーを信じて流れに乗れば、過去の経験が現在を経て良い未来へつながります。✨`,
+      };
+    case "zh-TW":
+      return {
+        past: `過去之牌「${name(p)}」— ${p.theme}`,
+        present: `現在之牌「${name(c)}」— ${c.theme}`,
+        future: `未來之牌「${name(f)}」— ${f.theme}`,
+        synthesis: `順著你的${el}能量前行，過去的經驗會穿越現在，引向美好的未來。✨`,
+      };
+    default:
+      return {
+        past: `Your past card, ${name(p)} — ${p.theme}.`,
+        present: `Your present card, ${name(c)} — ${c.theme}.`,
+        future: `Your future card, ${name(f)} — ${f.theme}.`,
+        synthesis: `Trust your ${el} energy and let it flow — what you learned carries you through today into a brighter future. ✨`,
+      };
+  }
+}
