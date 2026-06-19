@@ -26,6 +26,8 @@
     "future": "미래",
     "drawPosition": "{position} 카드 뽑기 🃏",
     "loading": "카드를 읽는 중…",
+    "error": "카드를 읽지 못했어요 — 다시 시도해 주세요 ✨",
+    "retry": "다시 시도 🔄",
     "shareButton": "공유 ✨",
     "replay": "다시 뽑기 🔄",
     "disclaimer": "재미로 보는 거예요 🌙"

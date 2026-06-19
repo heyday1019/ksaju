@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence, MotionConfig } from "motion/react";
 import { useTranslations, useLocale } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -19,20 +19,32 @@ export function SpreadDraw({ saju }: { saju: UserSaju }) {
   const [cards, setCards] = useState<[TarotCard, TarotCard, TarotCard]>(() => drawSpread());
   const [drawn, setDrawn] = useState(0);
   const [reading, setReading] = useState<SpreadReading | null>(null);
+  const [failed, setFailed] = useState(false);
+  const revealedRef = useRef(false);
   const done = drawn >= 3;
   const isKo = locale === "ko";
 
   useEffect(() => { track("spread_started"); }, []);
 
-  useEffect(() => {
-    if (!done) return;
-    track("spread_revealed");
+  const loadReading = useCallback(() => {
+    setFailed(false);
+    setReading(null);
     const ids = cards.map((c) => c.id).join(",");
     fetch(`/api/tarot-spread-reading?cardIds=${ids}&dayMaster=${encodeURIComponent(saju.dayMaster)}&locale=${locale}`)
       .then((r) => r.json() as Promise<SpreadReading>)
       .then(setReading)
-      .catch(() => setReading(null));
-  }, [done, cards, saju.dayMaster, locale]);
+      .catch(() => setFailed(true));
+  }, [cards, saju.dayMaster, locale]);
+
+  useEffect(() => {
+    if (!done) { revealedRef.current = false; return; }
+    if (!revealedRef.current) {
+      revealedRef.current = true;
+      track("spread_revealed");
+    }
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    loadReading();
+  }, [done, loadReading]);
 
   const drawNext = () => {
     track("spread_card_drawn", { position: POSITIONS[drawn] });
@@ -43,6 +55,7 @@ export function SpreadDraw({ saju }: { saju: UserSaju }) {
     setCards(drawSpread());
     setDrawn(0);
     setReading(null);
+    setFailed(false);
     track("spread_started");
   };
 
@@ -106,8 +119,14 @@ export function SpreadDraw({ saju }: { saju: UserSaju }) {
             {t("drawPosition", { position: t(POSITIONS[drawn]) })}
           </Button>
         )}
-        {done && reading === null && (
+        {done && !reading && !failed && (
           <p className="animate-pulse text-center text-sm text-muted-foreground">{t("loading")}</p>
+        )}
+        {done && failed && (
+          <div className="space-y-2 text-center">
+            <p className="text-sm text-destructive">{t("error")}</p>
+            <Button variant="outline" className="w-full" onClick={loadReading}>{t("retry")}</Button>
+          </div>
         )}
       </div>
     </MotionConfig>

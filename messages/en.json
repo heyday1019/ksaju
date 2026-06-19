@@ -26,6 +26,8 @@
     "future": "Future",
     "drawPosition": "Draw your {position} card 🃏",
     "loading": "Reading the cards…",
+    "error": "Couldn't read the cards — try again ✨",
+    "retry": "Try again 🔄",
     "shareButton": "Share ✨",
     "replay": "Draw again 🔄",
     "disclaimer": "For entertainment 🌙"

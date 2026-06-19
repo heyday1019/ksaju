@@ -26,6 +26,8 @@
     "future": "未來",
     "drawPosition": "抽你的{position}之牌 🃏",
     "loading": "正在解讀牌卡…",
+    "error": "無法解讀牌卡 — 請再試一次 ✨",
+    "retry": "再試一次 🔄",
     "shareButton": "分享 ✨",
     "replay": "再抽一次 🔄",
     "disclaimer": "僅供娛樂 🌙"

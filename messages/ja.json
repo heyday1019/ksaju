@@ -26,6 +26,8 @@
     "future": "未来",
     "drawPosition": "{position}のカードを引く 🃏",
     "loading": "カードを読んでいます…",
+    "error": "カードを読めませんでした — もう一度お試しください ✨",
+    "retry": "もう一度試す 🔄",
     "shareButton": "シェア ✨",
     "replay": "もう一度引く 🔄",
     "disclaimer": "エンタメ目的です 🌙"
