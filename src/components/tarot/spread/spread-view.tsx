@@ -2,9 +2,8 @@
 
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
-import Link from "next/link";
 import { BirthForm } from "@/components/kst/birth-form";
-import { TarotDraw } from "@/components/tarot/tarot-draw";
+import { SpreadDraw } from "@/components/tarot/spread/spread-draw";
 import { loadUserSaju, saveUserSaju } from "@/lib/saju-storage";
 import { calcUserSaju } from "@/app/actions/saju";
 import type { BirthData } from "@/lib/kst-types";
@@ -14,17 +13,14 @@ const subscribeTz = () => () => {};
 const getTz = () => Intl.DateTimeFormat().resolvedOptions().timeZone;
 const getTzServer = () => undefined;
 
-export function TarotView() {
-  const t = useTranslations("Tarot");
+export function SpreadView() {
+  const t = useTranslations("TarotSpread");
   const [saju, setSaju] = useState<UserSaju | null>(null);
   const [ready, setReady] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const defaultTz = useSyncExternalStore(subscribeTz, getTz, getTzServer);
 
-  useEffect(() => {
-    setSaju(loadUserSaju());
-    setReady(true);
-  }, []);
+  useEffect(() => { setSaju(loadUserSaju()); setReady(true); }, []);
 
   const handleSubmit = async (data: BirthData) => {
     setSubmitting(true);
@@ -33,7 +29,7 @@ export function TarotView() {
       saveUserSaju(s);
       setSaju(s);
     } catch (err) {
-      console.error("Tarot saju calc failed:", err);
+      console.error("Tarot spread saju calc failed:", err);
     } finally {
       setSubmitting(false);
     }
@@ -52,7 +48,7 @@ export function TarotView() {
         </div>
 
         {saju ? (
-          <TarotDraw saju={saju} />
+          <SpreadDraw saju={saju} />
         ) : (
           <div className="space-y-3 rounded-xl border border-border bg-card/60 p-5">
             <p className="text-sm text-muted-foreground">{t("birthdayPrompt")}</p>
@@ -64,13 +60,6 @@ export function TarotView() {
             />
           </div>
         )}
-
-        <Link
-          href="/tarot/spread"
-          className="inline-block text-sm font-medium text-primary underline-offset-4 hover:underline"
-        >
-          {t("spreadCta")}
-        </Link>
       </div>
     </div>
   );
