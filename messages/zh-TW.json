@@ -13,7 +13,22 @@
     "loading": "正在讀牌…",
     "comeback": "一天一張 — 明天再來 🌙",
     "shareButton": "分享 ✨",
-    "changeBirthday": "更改生日"
+    "changeBirthday": "更改生日",
+    "spreadCta": "試試過去・現在・未來牌陣 →"
+  },
+  "TarotSpread": {
+    "title": "過去 · 現在 · 未來",
+    "subtitle": "抽你的三張牌陣 ✨",
+    "birthdayPrompt": "輸入生日，為你抽出專屬牌陣。",
+    "birthdaySubmit": "開始牌陣 ✨",
+    "past": "過去",
+    "present": "現在",
+    "future": "未來",
+    "drawPosition": "抽你的{position}之牌 🃏",
+    "loading": "正在解讀牌卡…",
+    "shareButton": "分享 ✨",
+    "replay": "再抽一次 🔄",
+    "disclaimer": "僅供娛樂 🌙"
   },
   "SiteFooter": {
     "about": "關於",

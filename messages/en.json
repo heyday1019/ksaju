@@ -13,7 +13,22 @@
     "loading": "Reading the cards…",
     "comeback": "One card a day — come back tomorrow 🌙",
     "shareButton": "Share ✨",
-    "changeBirthday": "Change birthday"
+    "changeBirthday": "Change birthday",
+    "spreadCta": "Try the Past · Present · Future spread →"
+  },
+  "TarotSpread": {
+    "title": "Past · Present · Future",
+    "subtitle": "Draw your 3-card spread ✨",
+    "birthdayPrompt": "Enter your birthday to draw your personalized spread.",
+    "birthdaySubmit": "Start my spread ✨",
+    "past": "Past",
+    "present": "Present",
+    "future": "Future",
+    "drawPosition": "Draw your {position} card 🃏",
+    "loading": "Reading the cards…",
+    "shareButton": "Share ✨",
+    "replay": "Draw again 🔄",
+    "disclaimer": "For entertainment 🌙"
   },
   "SiteFooter": {
     "about": "About",

@@ -13,7 +13,22 @@
     "loading": "カードを読み取り中…",
     "comeback": "1日1枚 — また明日 🌙",
     "shareButton": "シェア ✨",
-    "changeBirthday": "誕生日を変更"
+    "changeBirthday": "誕生日を変更",
+    "spreadCta": "過去・現在・未来のスプレッドを試す →"
+  },
+  "TarotSpread": {
+    "title": "過去 · 現在 · 未来",
+    "subtitle": "3枚のスプレッドを引きましょう ✨",
+    "birthdayPrompt": "誕生日を入力すると、あなただけのスプレッドを引けます。",
+    "birthdaySubmit": "スプレッドを始める ✨",
+    "past": "過去",
+    "present": "現在",
+    "future": "未来",
+    "drawPosition": "{position}のカードを引く 🃏",
+    "loading": "カードを読んでいます…",
+    "shareButton": "シェア ✨",
+    "replay": "もう一度引く 🔄",
+    "disclaimer": "エンタメ目的です 🌙"
   },
   "SiteFooter": {
     "about": "About",

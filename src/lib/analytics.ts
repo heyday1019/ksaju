@@ -12,7 +12,10 @@ export type AnalyticsEvent =
   | "share_clicked"
   | "another_idol_clicked"
   | "partner_submitted"
-  | "compat_revealed";
+  | "compat_revealed"
+  | "spread_started"
+  | "spread_card_drawn"
+  | "spread_revealed";
 
 let initialized = false;
 let currentLocale: string | undefined;
