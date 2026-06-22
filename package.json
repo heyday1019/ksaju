@@ -12,7 +12,8 @@
     "seed:idols": "node scripts/seed-idols.mjs",
     "seed:tarot": "node scripts/seed-tarot.mjs",
     "gen:qr": "node scripts/gen-qr.mjs",
-    "gen:og": "node scripts/gen-og.mjs"
+    "gen:og": "node scripts/gen-og.mjs",
+    "gen:favicon": "node scripts/gen-favicon.mjs"
   },
   "dependencies": {
     "@fullstackfamily/manseryeok": "^1.0.8",
