@@ -8,7 +8,7 @@
 // ============================================================
 import { WUXING_PRODUCE, WUXING_CONTROL, STEM_COMBO } from "./saju-data";
 import { elementOf, wuxingBalance } from "./saju-display";
-import type { WuXing, HeavenlyStem, UserSaju, CurrentLuck } from "./saju-types";
+import type { WuXing, UserSaju, CurrentLuck } from "./saju-types";
 import i18n from "../data/ksaju-fortune-i18n.json";
 
 export type FortuneKey = "money" | "love" | "career" | "time";

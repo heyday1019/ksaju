@@ -2,7 +2,6 @@ import type {
   HeavenlyStem,
   EarthlyBranch,
   WuXing,
-  YinYang,
   SipSin,
   StemInfo,
   BranchInfo,
