@@ -2,7 +2,7 @@
 // KSaju 사용자 사주 변환 (src/lib/saju.ts)
 //
 // BirthData → KST 일시(convertToKST) → manseryeok(calculateSaju) → UserSaju
-// manseryeok(~300KB)을 import 하므로 server-only. Server Action에서만 사용.
+// manseryeok(~300KB)을 import. 미니앱(Vite SPA)에서는 브라우저에서 직접 실행.
 // ============================================================
 import { calculateSaju } from "@fullstackfamily/manseryeok";
 import { formatInTimeZone } from "date-fns-tz";
