@@ -1,0 +1,18 @@
+@import "tailwindcss";
+
+@theme {
+  --color-hanji:     #FBF6E8;
+  --color-baekja:    #FFFFFF;
+  --color-muk:       #1A1A2E;
+  --color-jindallae: #C8385A;
+  --color-dancheong: #C49A3F;
+  --color-cheongja:  #88B0BC;
+  --color-wuxing-mok:  #5E8B5E;
+  --color-wuxing-hwa:  var(--color-jindallae);
+  --color-wuxing-to:   var(--color-dancheong);
+  --color-wuxing-geum: #A8A8B0;
+  --color-wuxing-su:   var(--color-cheongja);
+}
+
+:root { color-scheme: light; }
+body { background: var(--color-hanji); color: var(--color-muk); }
