@@ -4,7 +4,26 @@
 
 ---
 
-## 2026-06-22 (월) — 파비콘 + 앱인토스(Apps in Toss) 미니앱 분기 (진행 중)
+## 2026-06-23 (화) — 앱인토스 미니앱 "K사주" Task 5–11 완료 (4화면 + 공유 + 빌드)
+
+이전 세션에서 Task 4/11 에서 일시중단됐던 `feat/apps-in-toss` 미니앱을 **executing-plans 로 재개**, Task 5–11 인라인 TDD 실행(서브에이전트 미사용). 플랜 `docs/superpowers/plans/2026-06-22-apps-in-toss-miniapp.md` 그대로.
+
+**완료 (커밋, 28 tests green · tsc -b clean · vite build → dist/):**
+- **T5** `424ed3a` — localStorage 헬퍼(`state/user-saju`) + `BirthForm`(zod, 빈입력→undefined·timezone 고정) + `PillarsGrid`(오행색 한자) + `WuxingBalance`(오행 막대) + `MySajuScreen` + `TabNav`(4탭) + `App` 통합(4-screen state, Task7-9 스텁). **부수 수정:** Task1·2 잠복 빌드부채 해소 — tsconfig에 `vitest/globals`·`jest-dom` 타입 추가(테스트 글로벌) + 복사 libs(`fortune.ts`/`saju-data.ts`) 미사용 import 제거. (`tsc -b`/`vite build` 는 Task10에서 처음 요구돼 그때까지 미검출.)
+- **T6** `251bee0` — `FortuneCards`(금전/연애/직업/올해 4카드, 오행색 티어배지).
+- **T7** `1049ee2` — `IdolPicker`(검색/그룹) + `CompatResult`(점수·`compatLabelKo`·`getReading` ko) + `CompatScreen`.
+- **T8** `8e4a8d9` — `TarotCardView` + `TarotScreen`(`drawDailyCard` 결정적 + `dailyReadingKo`).
+- **T9** `1e4b61f` — `SpreadScreen`(과거·현재·미래 `drawSpread` + `spreadReadingKo`).
+- **T10** `93ada95` — `ShareFooter`(외부링크/QR/URL 0, 테스트로 단언) + `ShareCard`(9:16 360×640) + `share.ts`(`html-to-image` 다운로드 폴백). **토스 web-framework 공개 네이티브 공유 API 없음 확인** → 로컬 다운로드만(외부통신 0). CompatScreen 미리보기=export 동일노드 + 공유 버튼.
+- **T11** `304d520` — 외부참조 grep 0건 검증, 미사용 Vite 템플릿 에셋 4종 제거(`src/assets/*`, `public/icons.svg`), `saju.ts` stale server-only 주석 수정, `README` 작성.
+
+**검증:** apps-in-toss 28 tests pass(메인 레포와 독립 vitest), `tsc -b` clean, `npm run build` → `dist/`(677KB 번들 = manseryeok 포함, size 경고만). `grep supabase|posthog|openrouter|fetch|http` = 0건.
+
+**남은 사용자 액션(배포):** `granite.config.ts` `appName`(콘솔 App ID)·`brand.icon`(콘솔 업로드) 확정 → 앱인토스 개발자센터 로컬 샌드박스 → 실기기 딥링크 → 콘솔 등록 → 빌드 업로드. **미검증:** 실기기에서 공유 다운로드 동작·모바일 레이아웃(코드 레벨은 완료, 디바이스 확인 필요).
+
+---
+
+## 2026-06-22 (월) — 파비콘 + 앱인토스(Apps in Toss) 미니앱 분기 (Task 1–4 · 5–11은 2026-06-23 완료)
 
 ### ✅ 사주 낙관 파비콘 (main, 커밋 `8475a7d` · 푸시 완료)
 
