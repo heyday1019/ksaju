@@ -4,6 +4,36 @@
 
 ---
 
+## 2026-06-22 (월) — 파비콘 + 앱인토스(Apps in Toss) 미니앱 분기 (진행 중)
+
+### ✅ 사주 낙관 파비콘 (main, 커밋 `8475a7d` · 푸시 완료)
+
+- 기존 Next 기본 `favicon.ico`를 **사주 낙관(빨간 도장) 흰 배경** 아이콘으로 교체 + 누락돼 있던 `apple-touch-icon.png`(180px) 생성.
+- 재실행 가능한 생성기 `scripts/gen-favicon.mjs`(`npm run gen:favicon`, `gen:qr`/`gen:og` 패턴): `scripts/assets/stamp-saju.png` → 84% 센터크롭(워터마크 제거) → 트림 → 흰 배경 중앙 배치. sharp가 .ico 미지원이라 **PNG들을 ICO 컨테이너로 직접 패킹**(16/32/48) → 신규 의존성 0.
+- `src/app/layout.tsx` metadata는 이미 `/favicon.ico`·`/apple-touch-icon.png` 참조 → 코드 수정 불필요. `main` 푸시 → Vercel 자동 배포.
+
+### 🚧 앱인토스 미니앱 "K사주" — 별도 브랜치 `feat/apps-in-toss` (Task 4/11 완료, 일시중단)
+
+기존 KSaju 사주 엔진을 재사용하는 **독립 Vite SPA** 미니앱. 한국어 전용·외부통신 0·오프라인 결정적. 브레인스토밍 → 스펙 → 플랜 → **서브에이전트 주도 실행(11 태스크, 태스크별 implementer + spec/quality 리뷰)** 방식.
+
+- **문서:** 스펙 `docs/superpowers/specs/2026-06-22-apps-in-toss-miniapp-design.md`(커밋 `0687378`), 플랜 `docs/superpowers/plans/2026-06-22-apps-in-toss-miniapp.md`(11 태스크 TDD, 커밋 `ba9b450`).
+- **핵심 결정(사용자):** ① 신규 폴더 `apps-in-toss/` + libs **복사**(완전 독립) ② **룰베이스/정적 큐레이션만**(OpenRouter·Supabase·PostHog·LLM 전부 제거) ③ 4화면(내 사주+운세 / 아이돌 궁합 / 오늘의 타로 / 타로 과거-현재-미래) ④ KSaju 한지 미감 경량 재현(TDS 미사용) ⑤ primaryColor 진달래 `#C8385A` ⑥ 외부 링크(QR·ko-fi·ksaju.me) 전면 배제.
+- **핵심 발견:** web-framework는 **Vite SPA 모델**(`dev:vite`, `build:tsc -b && vite build`)이라 Next 서버기능(Server Action·API routes) 미동작 → 엔진만 재사용, UI 신규. 그리고 **운세(`fortune.ts`)·궁합 내러티브(`getReading`)는 엔진이 이미 `locale="ko"` 지원** → 한국어 콘텐츠 작업이 대폭 축소(궁합 레이블·일간 키워드·타로 리딩만 신규).
+
+**완료 태스크 (커밋, 16 tests green):**
+- **T1** `2301c92` — Vite+React19+TS+Tailwind v4 스캐폴딩 + `granite.config.ts`(appName `ksaju`, displayName `K사주`, `#C8385A`, `webViewProps:{type:'partner'}`) + 한지 테마 셸. (환경: React19 `--legacy-peer-deps`, `@sentry/cli` postinstall Windows 이슈→`--ignore-scripts`, Node22 vs 권장24 경고.)
+- **T2** `222d69f` — 엔진 libs 13종 + data JSON 4종 복사, `saju.ts`의 `server-only` 제거, 데이터 경로 `../../data→../data`. 기존 `saju.test.ts` 그대로 이식(RM 1992-09-12→壬申/己酉/辛卯/辛 known-answer) → manseryeok 브라우저 동작 검증. ⚠️ 플랜의 테스트 예시 값 오기(1994/甲戌) 발견·정정.
+- **T3** `fa7180b`+`9ef574a` — `content/ko/labels.ts`: `compatLabelKo`(15 오행쌍 한국어) + `dayMasterKeywordKo`(10 천간). 리뷰 지적(폴백 미검증 테스트) fix 포함.
+- **T4** `076c0b2` — `content/ko/tarot.ts`: `dailyReadingKo`/`spreadReadingKo`(영어 theme 미사용, `name_kr`+suit뉘앙스+오행 한국어).
+
+**남은 작업 (Task 5–11, base `076c0b2`):** T5 App 셸·탭네비·생일입력·내 사주 결과 / T6 운세 카드 / T7 아이돌 궁합 화면 / T8 오늘의 타로 / T9 타로 스프레드 / T10 9:16 공유 카드(외부링크 없는 푸터) / T11 토스 샌드박스 빌드·README.
+
+**재개 방법:** `feat/apps-in-toss` 브랜치에서 서브에이전트 주도 실행 계속 — 진행 레저 `.superpowers/sdd/progress.md`(T1–4 complete 기록), 플랜대로 Task 5 implementer부터 디스패치(base `076c0b2`).
+
+**미해결(구현 중 확정 예정):** 토스 네이티브 공유 API 존재 여부(없으면 다운로드 폴백), `birthSchema` 필드 매핑. **최종 리뷰 triage 메모(Minor):** T1 미사용 템플릿 에셋 4종(`public/icons.svg`, `src/assets/{hero.png,typescript.svg,vite.svg}`)·프레임워크 brand favicon, T2 `saju.ts` line5 stale 주석.
+
+---
+
 ## 2026-06-19 (금) — 사이클 27: 타로 스프레드 (과거·현재·미래, 인터랙티브)
 
 새 인터랙티브 유료-후보 기능. 브레인스토밍(비주얼 컴패니언으로 카드뒷면·레이아웃 결정) → 스펙 → 플랜 → **서브에이전트 주도 실행(7 태스크, 태스크별 implementer+spec/quality 리뷰)** → opus 최종 전체리뷰 → fix 웨이브 → `main` ff-머지+푸시.
