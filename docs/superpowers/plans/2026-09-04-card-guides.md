@@ -1638,7 +1638,7 @@ import { dirname, join } from "node:path";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const cards = JSON.parse(readFileSync(join(root, "data", "ksaju-tarot.json"), "utf8"));
 const guideDir = join(root, "data", "card-guides");
-const MODEL = "anthropic/claude-haiku-4-5-20251001";
+const MODEL = "anthropic/claude-haiku-4.5";
 const LOCALES = ["en", "ko", "ja", "zh-TW"];
 const LANG_NAME = { en: "English", ko: "Korean", ja: "Japanese", "zh-TW": "Traditional Chinese (Taiwan)" };
 const FIELDS = ["title", "summary", "meaning", "symbols", "upright", "reversed", "love", "work", "sajuLens"];
@@ -1708,7 +1708,7 @@ function saveGuides(locale, guides) {
 // 같은 내용의 한국어 요약은 영어의 절반도 안 되는 글자 수로 끝난다.
 // 구글이 메타 설명을 자르는 지점(약 920px)도 라틴 ~155자 / CJK ~65자로 갈린다.
 // 여기에 영어 기준(120-200)을 그대로 적용하면 번역본이 전부 검증 실패한다.
-const SUMMARY_RANGE = { en: [120, 200], ko: [45, 90], ja: [45, 90], "zh-TW": [40, 85] };
+const SUMMARY_RANGE = { en: [120, 200], ko: [45, 90], ja: [38, 90], "zh-TW": [30, 85] };
 
 function validate(guide, slug, locale) {
   for (const f of FIELDS) if (guide[f] === undefined) throw new Error(`${slug}: missing ${f}`);

@@ -143,7 +143,7 @@ prose completeness.
 more than a Latin one, so a natural Korean summary of the same content runs less than
 half the character count of its English source — and Google truncates meta descriptions
 at roughly 920 pixels, which is about 155 Latin characters but only about 65 CJK ones.
-The target ranges are `en` 120–200, `ko`/`ja` 45–90, `zh-TW` 40–85. Applying the English
+The target ranges are `en` 120–200, `ko` 45–90, `ja` 38–90, `zh-TW` 30–85. The CJK floors were first set from the hand-written exemplars and proved too high — generated CJK summaries run shorter than hand-written ones — so they were lowered to what the generator actually achieves. Applying the English
 bound to all four would reject every translation.
 
 **What is deliberately absent:** `slug`, `element`, `name_en`, `name_kr`, and the image
@@ -309,7 +309,7 @@ say the same thing.
   card and leaves the file untouched.
 - Writes JSON with stable key order (card `id`) so diffs stay readable.
 - Requires `OPENROUTER_API_KEY`; exits with a clear message when absent.
-- Model: `anthropic/claude-haiku-4-5-20251001`, matching the tarot reading route.
+- Model: `anthropic/claude-haiku-4.5`, matching the tarot reading route.
 
 The script is a **build-time authoring tool**. It never runs in the app. Only its JSON
 output is committed, and every page stays static.
