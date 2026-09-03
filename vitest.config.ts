@@ -1,4 +1,4 @@
-import { defineConfig } from "vitest/config";
+import { configDefaults, defineConfig } from "vitest/config";
 import path from "path";
 
 export default defineConfig({
@@ -6,6 +6,10 @@ export default defineConfig({
     environment: "node",
     globals: true,
     setupFiles: ["./vitest.setup.ts"],
+    // apps-in-toss/ 는 자체 vitest 설정(happy-dom + react 플러그인)과 node_modules 를 가진
+    // 독립 SPA 다. 여기서 끌어다 돌리면 node 환경·플러그인 부재로 전부 실패한다.
+    // 그쪽 테스트는 `cd apps-in-toss && npm test` 로 돌린다.
+    exclude: [...configDefaults.exclude, "apps-in-toss/**"],
   },
   resolve: {
     alias: {

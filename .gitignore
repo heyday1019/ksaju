@@ -68,3 +68,6 @@ next-env.d.ts
 n8n-tarot-workflow.json
 # 1회용 PDF 분할 산출물
 .tmp/
+
+# Ko-fi 디지털 상품 산출물 — 로컬 생성(npm run gen:products), 레포에 커밋하지 않음
+/products/
