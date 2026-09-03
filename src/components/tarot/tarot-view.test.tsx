@@ -11,6 +11,10 @@ vi.mock("next-intl", () => ({
   useTranslations: () => (k: string) => k,
   useLocale: () => "en",
 }));
+vi.mock("@/i18n/navigation", () => ({
+  Link: ({ href, children, ...props }: { href: string; children: React.ReactNode; [k: string]: unknown }) =>
+    <a href={href} {...props}>{children}</a>,
+}));
 vi.mock("@/components/kst/birth-form", () => ({
   BirthForm: () => <div data-testid="birth-form" />,
 }));

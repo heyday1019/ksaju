@@ -14,7 +14,8 @@
     "comeback": "1日1枚 — また明日 🌙",
     "shareButton": "シェア ✨",
     "changeBirthday": "誕生日を変更",
-    "spreadCta": "過去・現在・未来のスプレッドを試す →"
+    "spreadCta": "過去・現在・未来のスプレッドを試す →",
+    "cardsCta": "各カードの意味を読む →"
   },
   "TarotSpread": {
     "title": "過去 · 現在 · 未来",
@@ -55,6 +56,7 @@
     "backToHub": "← カード解説一覧"
   },
   "SiteFooter": {
+    "cards": "カード解説",
     "about": "About",
     "faq": "FAQ",
     "privacy": "プライバシー",

@@ -10,6 +10,9 @@ export function SiteFooter() {
   return (
     <footer className="relative z-10 mt-8 border-t border-border/50 px-8 py-6 text-center text-xs text-muted-foreground">
       <nav className="flex flex-wrap justify-center gap-4">
+        <Link href="/cards" className="underline-offset-2 hover:underline hover:text-foreground">
+          {t("cards")}
+        </Link>
         <Link href="/about" className="underline-offset-2 hover:underline hover:text-foreground">
           {t("about")}
         </Link>

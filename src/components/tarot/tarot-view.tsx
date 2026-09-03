@@ -3,6 +3,7 @@
 import { useEffect, useState, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
+import { Link as LocaleLink } from "@/i18n/navigation";
 import { BirthForm } from "@/components/kst/birth-form";
 import { TarotDraw } from "@/components/tarot/tarot-draw";
 import { loadUserSaju, saveUserSaju } from "@/lib/saju-storage";
@@ -71,6 +72,12 @@ export function TarotView() {
         >
           {t("spreadCta")}
         </Link>
+        <LocaleLink
+          href="/cards"
+          className="inline-block text-sm font-medium text-primary underline-offset-4 hover:underline"
+        >
+          {t("cardsCta")}
+        </LocaleLink>
       </div>
     </div>
   );

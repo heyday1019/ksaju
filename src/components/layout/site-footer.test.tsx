@@ -15,6 +15,7 @@ describe("SiteFooter", () => {
   it("links to all four trust pages with correct hrefs", () => {
     render(<SiteFooter />);
     const expected: Array<[RegExp, string]> = [
+      [/cards/i, "/cards"],
       [/about/i, "/about"],
       [/faq/i, "/faq"],
       [/privacy/i, "/privacy"],

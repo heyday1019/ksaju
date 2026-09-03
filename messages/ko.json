@@ -14,7 +14,8 @@
     "comeback": "하루 한 장 — 내일 다시 만나요 🌙",
     "shareButton": "공유하기 ✨",
     "changeBirthday": "생일 변경",
-    "spreadCta": "과거·현재·미래 스프레드 해보기 →"
+    "spreadCta": "과거·현재·미래 스프레드 해보기 →",
+    "cardsCta": "카드별 의미 읽어보기 →"
   },
   "TarotSpread": {
     "title": "과거 · 현재 · 미래",
@@ -55,6 +56,7 @@
     "backToHub": "← 전체 카드 해설"
   },
   "SiteFooter": {
+    "cards": "카드 해설",
     "about": "소개",
     "faq": "FAQ",
     "privacy": "개인정보",

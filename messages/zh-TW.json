@@ -14,7 +14,8 @@
     "comeback": "一天一張 — 明天再來 🌙",
     "shareButton": "分享 ✨",
     "changeBirthday": "更改生日",
-    "spreadCta": "試試過去・現在・未來牌陣 →"
+    "spreadCta": "試試過去・現在・未來牌陣 →",
+    "cardsCta": "閱讀每張牌的意義 →"
   },
   "TarotSpread": {
     "title": "過去 · 現在 · 未來",
@@ -55,6 +56,7 @@
     "backToHub": "← 全部牌義"
   },
   "SiteFooter": {
+    "cards": "牌義解說",
     "about": "關於",
     "faq": "FAQ",
     "privacy": "隱私權",
