@@ -53,3 +53,31 @@ export function publishedSlugs(): string[] {
   const files = Object.values(GUIDES);
   return TAROT_CARDS.map(cardSlug).filter((slug) => files.every((f) => slug in f));
 }
+
+/**
+ * 같은 수트 안에서 자기 자신 바깥으로 걸어나가며(-1, +1, -2, +2 …) 발행된 카드만 모은다.
+ * `published` 필터가 핵심 — 22/78장만 발행된 상태에서 거르지 않으면 404로 링크가 나간다.
+ */
+export function relatedCards(
+  card: TarotCard,
+  published: Set<string> = new Set(publishedSlugs()),
+  limit = 4,
+): TarotCard[] {
+  const suit = TAROT_CARDS.filter((c) => c.suit === card.suit);
+  const n = suit.length;
+  const idx = suit.findIndex((c) => c.id === card.id);
+  if (idx === -1) return [];
+
+  const out: TarotCard[] = [];
+  for (let step = 1; step <= Math.floor(n / 2) && out.length < limit; step++) {
+    for (const dir of [-1, 1] as const) {
+      if (out.length >= limit) break;
+      const c = suit[(((idx + dir * step) % n) + n) % n];
+      if (c.id === card.id) continue;
+      if (!published.has(cardSlug(c))) continue;
+      if (out.some((o) => o.id === c.id)) continue;
+      out.push(c);
+    }
+  }
+  return out;
+}

@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { TAROT_CARDS } from "./tarot";
-import { cardSlug, cardBySlug, getGuide, publishedSlugs } from "./card-guides";
+import { cardSlug, cardBySlug, getGuide, publishedSlugs, relatedCards } from "./card-guides";
 
 describe("cardSlug", () => {
   it("produces a unique slug for all 78 cards", () => {
@@ -80,5 +80,52 @@ describe("getGuide", () => {
 
   it("returns null for an unwritten card", () => {
     expect(getGuide("en", "not-a-card")).toBeNull();
+  });
+});
+
+describe("relatedCards", () => {
+  const majors = TAROT_CARDS.filter((c) => c.suit === "major");
+  const allMajors = new Set(majors.map(cardSlug));
+  const card = (name: string) => TAROT_CARDS.find((c) => c.name_en === name)!;
+
+  it("returns four neighbours ordered prev, next, prev2, next2", () => {
+    const related = relatedCards(card("The Chariot"), allMajors); // id 7
+    expect(related.map((c) => c.id)).toEqual([6, 8, 5, 9]);
+  });
+
+  it("wraps around the suit boundary", () => {
+    const related = relatedCards(card("The Fool"), allMajors); // id 0
+    expect(related.map((c) => c.id)).toEqual([21, 1, 20, 2]);
+  });
+
+  it("never includes the card itself", () => {
+    for (const c of majors) {
+      expect(relatedCards(c, allMajors).some((r) => r.id === c.id)).toBe(false);
+    }
+  });
+
+  it("stays inside the same suit", () => {
+    const wands = new Set(
+      TAROT_CARDS.filter((c) => c.suit === "wands").map(cardSlug),
+    );
+    for (const c of TAROT_CARDS.filter((x) => x.suit === "wands")) {
+      expect(relatedCards(c, wands).every((r) => r.suit === "wands")).toBe(true);
+    }
+  });
+
+  it("omits unpublished cards", () => {
+    const onlyThree = new Set(["the-fool", "the-magician", "the-world"]);
+    const related = relatedCards(card("The Fool"), onlyThree);
+    expect(related.map(cardSlug)).toEqual(["the-world", "the-magician"]);
+  });
+
+  it("returns an empty list when nothing else is published", () => {
+    expect(relatedCards(card("The Fool"), new Set(["the-fool"]))).toEqual([]);
+  });
+
+  it("defaults to the real published set", () => {
+    const related = relatedCards(card("The Fool"));
+    const published = new Set(publishedSlugs());
+    expect(related.every((c) => published.has(cardSlug(c)))).toBe(true);
   });
 });
