@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { TAROT_CARDS } from "./tarot";
-import { cardSlug, cardBySlug } from "./card-guides";
+import { cardSlug, cardBySlug, getGuide, publishedSlugs } from "./card-guides";
 
 describe("cardSlug", () => {
   it("produces a unique slug for all 78 cards", () => {
@@ -34,5 +34,51 @@ describe("cardBySlug", () => {
 
   it("returns null for an unknown slug", () => {
     expect(cardBySlug("not-a-card")).toBeNull();
+  });
+});
+
+describe("publishedSlugs", () => {
+  it("only lists slugs present in all four locale files", () => {
+    const published = publishedSlugs();
+    for (const slug of published) {
+      for (const locale of ["en", "ko", "ja", "zh-TW"] as const) {
+        expect(getGuide(locale, slug)).not.toBeNull();
+      }
+    }
+  });
+
+  it("includes the-fool", () => {
+    expect(publishedSlugs()).toContain("the-fool");
+  });
+
+  it("orders slugs by card id", () => {
+    const published = publishedSlugs();
+    const ids = published.map((s) => TAROT_CARDS.find((c) => cardSlug(c) === s)!.id);
+    expect(ids).toEqual([...ids].sort((a, b) => a - b));
+  });
+
+  it("never lists a slug that is not a real card", () => {
+    for (const slug of publishedSlugs()) {
+      expect(cardBySlug(slug)).not.toBeNull();
+    }
+  });
+});
+
+describe("getGuide", () => {
+  it("returns a fully populated guide for the-fool in every locale", () => {
+    for (const locale of ["en", "ko", "ja", "zh-TW"] as const) {
+      const guide = getGuide(locale, "the-fool")!;
+      expect(guide.title.length).toBeGreaterThan(0);
+      expect(guide.summary.length).toBeGreaterThan(0);
+      expect(guide.meaning.length).toBeGreaterThanOrEqual(2);
+      expect(guide.symbols.length).toBeGreaterThanOrEqual(3);
+      expect(guide.upright.length).toBeGreaterThan(0);
+      expect(guide.reversed.length).toBeGreaterThan(0);
+      expect(guide.sajuLens.length).toBeGreaterThan(0);
+    }
+  });
+
+  it("returns null for an unwritten card", () => {
+    expect(getGuide("en", "not-a-card")).toBeNull();
   });
 });
