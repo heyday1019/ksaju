@@ -84,6 +84,20 @@ function saveGuides(locale, guides) {
 // 여기에 영어 기준(120-200)을 그대로 적용하면 번역본이 전부 검증 실패한다.
 const SUMMARY_RANGE = { en: [120, 200], ko: [45, 90], ja: [38, 90], "zh-TW": [30, 85] };
 
+// ja/zh-TW must never contain Hangul — see 2026-09-04-card-guides Task 11 fix round.
+// Prompt compliance alone let Korean script leak into both locales; this is the durable guard.
+const HANGUL_RE = /[가-힣]/;
+function proseFields(guide) {
+  const out = [["title", guide.title], ["summary", guide.summary]];
+  guide.meaning.forEach((p, i) => out.push([`meaning[${i}]`, p]));
+  guide.symbols.forEach((s, i) => {
+    out.push([`symbols[${i}].label`, s.label]);
+    out.push([`symbols[${i}].text`, s.text]);
+  });
+  out.push(["upright", guide.upright], ["reversed", guide.reversed], ["love", guide.love], ["work", guide.work], ["sajuLens", guide.sajuLens]);
+  return out;
+}
+
 function validate(guide, slug, locale) {
   for (const f of FIELDS) if (guide[f] === undefined) throw new Error(`${slug}: missing ${f}`);
   if (!Array.isArray(guide.meaning) || guide.meaning.length < 2) throw new Error(`${slug}: meaning needs 2+ paragraphs`);
@@ -97,6 +111,16 @@ function validate(guide, slug, locale) {
   }
   for (const f of ["title", "upright", "reversed", "love", "work", "sajuLens"]) {
     if (!String(guide[f]).trim()) throw new Error(`${slug}: ${f} is blank`);
+  }
+  if (locale === "ja" || locale === "zh-TW") {
+    for (const [field, value] of proseFields(guide)) {
+      const text = String(value);
+      const idx = text.search(HANGUL_RE);
+      if (idx !== -1) {
+        const snippet = text.slice(Math.max(0, idx - 15), idx + 25);
+        throw new Error(`${slug}: ${field} contains Hangul near "${snippet}"`);
+      }
+    }
   }
   return guide;
 }
@@ -179,6 +203,19 @@ ${JSON.stringify(exemplar, null, 2)}`;
 }
 
 async function translate(card, source, locale) {
+  const hangulRule = locale === "ja"
+    ? `CRITICAL — the output must contain NO Hangul (Korean script) anywhere, in any field.
+The Korean card name given below is context only, to help you identify the card — never
+reproduce it in Korean script. Render Korean terms (사주, 일간, 오행, element names, the
+card's Korean title, etc.) in katakana, or in kanji where a real Japanese word already
+exists for the concept (e.g. 五行, 日干 read as Japanese, not copied as Korean).`
+    : locale === "zh-TW"
+      ? `CRITICAL — the output must contain NO Hangul (Korean script) anywhere, in any field.
+The Korean card name given below is context only, to help you identify the card — never
+reproduce it in Korean script. Render Korean terms (사주, 일간, 오행, element names, the
+card's Korean title, etc.) using Chinese characters (e.g. 四柱, 日干, 五行) or Latin
+romanization — never Hangul.`
+      : "";
   const system = `You are a literary translator working into ${LANG_NAME[locale]}.
 Translate faithfully but idiomatically — the result must read as if written in
 ${LANG_NAME[locale]}, not translated. Keep every nuance and the dry, specific tone.
@@ -187,6 +224,8 @@ convention. Keep the card's English name somewhere in "title".
 
 Do NOT pad "summary" to match the English length — a natural ${LANG_NAME[locale]} summary
 of the same content is much shorter in characters. Aim for the range below.
+
+${hangulRule}
 
 ${shapeFor(locale)}`;
   const user = `Translate this tarot card guide into ${LANG_NAME[locale]}.
