@@ -29,5 +29,660 @@
     "love": "New feeling, no track record. Enjoy it as it is instead of auditioning it for a future.",
     "work": "A first attempt or an unfamiliar role. Your inexperience is an asset right now — spend it before it wears off.",
     "sajuLens": "Saju has no card zero, but it has 목(木) — wood: the energy of spring, of sap rising, of a shoot pushing through ground that has not finished thawing. Wood is the fuel the Fool runs on: outward expansion, tolerance for uncertainty, growth that starts before conditions are ideal. If your 일간 (Day Master) is a wood stem, this card usually reads as permission, because it is describing how you already work. If your chart leans 금(金) — metal, which prizes structure, edges and finished form — the Fool arrives as friction rather than encouragement, and what it is pointing at is usually the plan you polished one revision past the moment you should have shipped it."
+  },
+  "the-magician": {
+    "title": "The Magician",
+    "summary": "The Magician is card 1 of the Major Arcana — the will made visible, the moment after the leap when skill becomes currency. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Magician is the Fool one step later, but everything has changed. He stands at a table laid with four objects — the tools of his craft — and his posture says he knows exactly what he can do with them. One arm reaches toward heaven, the other points at earth. The message is simple: I can move what is above and what is below. In the KSaju deck he wears the deep robes of a Korean court magician, someone whose skill earned him access, whose confidence is not performance but earned fact.",
+      "What the card describes is the moment when appetite becomes ability, when you stop asking permission and start issuing commands. The Magician does not wonder if he should act — he has already moved from the question of whether to the logistics of how. When he turns up in a reading, he seldom appears by accident. Something in your position has shifted from theoretical to actual, and the card is marking the instant you should stop talking and start building."
+    ],
+    "symbols": [
+      {
+        "label": "The four objects on the lacquered table",
+        "text": "Brass incense burner (fire), white porcelain cup (water), jade ceremonial sword (metal), golden coin (earth). These are not decoration — they are inventory. The Magician works with all four elements because mastery means refusing to be limited by what others say is possible within a single domain."
+      },
+      {
+        "label": "One arm raised to heaven, one pointed at earth",
+        "text": "The gesture of a person who claims both the inspiration above and the material below. Not prayer, not submission — this is the posture of someone drawing energy from both directions and routing it through their own will."
+      },
+      {
+        "label": "The infinity symbol above his head",
+        "text": "Not the vague promise of infinite potential but the mathematical loop: what goes out returns, what cycles continues. The Magician understands that action is not linear, that resources flow and can be redirected, that the game has no fixed ending."
+      },
+      {
+        "label": "Deep purple and gold robes with crane embroidery",
+        "text": "Crane is longevity, dignity, an earned position. These are not borrowed robes or costumes. He dresses the part because he has become the part — the clothes mark a status he built and now maintains."
+      }
+    ],
+    "upright": "You have the materials and the knowledge. What was waiting is now happening — move before the opening closes. The card asks you to stop moderating your ambition and to push what you have built into actual rooms where actual people can see it. Speak with the authority you have already earned, make the ask you have already rehearsed, deploy the skill you have already proven. The Magician does not apologize for taking up space.",
+    "reversed": "The confidence is hollow or the materials are missing. Reversed, the Magician can mean you are performing mastery instead of possessing it, or that you are waiting for permission that no one has the authority to grant. Check whether you are actually ready or simply frightened of being seen as uncertain.",
+    "love": "Attraction based on what you are actually capable of doing, not on potential or on what someone thinks you could become.",
+    "work": "Your skill is currency now. Price it accordingly and stop underselling it as a favour.",
+    "sajuLens": "The Magician maps to 火 — fire: the energy of refinement, will directed outward, skill transformed into visible result. A 火 Day Master reads this card as description — you work by converting raw material into finished form, by moving things through transformation. But for a 水 Day Master (water: inward, receptive, adaptive), the Magician can read as friction, pointing to a moment when receptivity alone will not move the problem, when adaptation must become action. For 木 Day Master, it reads as the next stage of growth — ambition maturing into method. For 金 Day Master, it often arrives as confirmation that your structure has earned you authority. For 土 Day Master, it marks the moment when your steadiness becomes leverage."
+  },
+  "the-high-priestess": {
+    "title": "The High Priestess",
+    "summary": "The High Priestess is card 2 of the Major Arcana — the knowledge that sits still and waits. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The High Priestess does not move toward you; you move toward her. She is the mudang in her chamber, holding the scroll of what is already known but not yet spoken. Between the red and blue pillars — between action and rest, between heat and cold — she sits in the space where opposites do not fight. The card describes composure as a form of power: not the power to act, but the power to hold a question steady long enough to see what moves beneath it.",
+      "She is not passive. An open scroll requires someone to have decided what to reveal. The veil of moonlight silk is there to mark what stays private, not to hide incompetence. When she appears in a reading she is usually telling you that the next step is not to do something, but to know something — and that knowing something often means sitting with uncertainty until its shape becomes clear without you having forced it."
+    ],
+    "symbols": [
+      {
+        "label": "The open scroll",
+        "text": "She holds celestial secrets on parchment, already written out but shown only to those who approach her directly. Knowledge here is not hidden from malice; it is private by nature, available only to the person ready to see it."
+      },
+      {
+        "label": "The red and blue pillars",
+        "text": "Lacquered and formal, they frame her like the boundaries of a ritual space. They are not walls but markers — they say this is a threshold, and crossing it changes something about how you move."
+      },
+      {
+        "label": "Pomegranates and lotus flowers",
+        "text": "Pomegranates hold countless seeds behind a single skin; lotus flowers root in mud but open above water. Both mark fertility and hidden depths, what is abundant beneath what appears still."
+      },
+      {
+        "label": "The crescent moon above her head",
+        "text": "She is aligned with the moon's rhythm, not the sun's. This is the card of patience, of cycles that cannot be rushed, of timing that belongs to something larger than individual will."
+      }
+    ],
+    "upright": "Stop pushing and start listening. The High Priestess appears when the right move is to wait, to sit with what you do not yet understand, to trust that clarity will arrive if you do not force it. She is not telling you nothing is happening — she is telling you that what is happening is not visible yet. Pay attention to what arrives in silence: intuition, dreams, the questions that will not leave you alone. This is the card of the person who knows something is true before they can prove it.",
+    "reversed": "Silence is being mistaken for wisdom, or knowledge is being hoarded when it should be shared. Reversed, the High Priestess points to information that should have been spoken, to intuition that was ignored, or to a stillness that has curdled into paralysis. Check whether you are genuinely listening or simply refusing to act.",
+    "love": "Something is being understood between you that has not yet been named.",
+    "work": "Research, pattern-recognition, or a role that requires you to hold information close. Your real work is happening in private right now.",
+    "sajuLens": "Fire 일간 (Day Master) reads this card as permission to stop proving themselves through constant visibility; water reads it as the natural state, and may need to check whether they are using it as an excuse. Metal 일간 craves the structure the scroll promises — what is written can be known — but the card insists that some things stay open, unfinalized. Earth responds to the stability of the pillars and the cycles of the moon. Wood 일간 often resists the card's refusal to move, but when it lands in a wood chart it usually signals that growth is happening underground, where roots deepen before shoots rise again."
+  },
+  "the-empress": {
+    "title": "The Empress",
+    "summary": "The Empress is card 3 of the Major Arcana — the one who tends what grows. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Empress sits where things ripen. She is not the planner or the architect — that was the Magician, that will be the Emperor. She is the one who knows how to let abundance happen, how to create the conditions where beauty and fruition are not borrowed from tomorrow but alive right now. In the KSaju deck she wears the scarlet daeryebok of a Joseon queen, jewels catching light, peonies blooming at her feet, phoenixes circling overhead. She is maternal not as a sentiment but as a fact: generative, grounded, warm.",
+      "What appears when the Empress turns up is usually already growing. The card does not ask whether you deserve it or whether you worked hard enough. It asks whether you can tend it without strangling it, whether you can stay present to what is already abundant instead of reaching for what might be better. She is the antidote to the scarcity that whispers you should always be reaching for more."
+    ],
+    "symbols": [
+      {
+        "label": "The flower-covered stone throne",
+        "text": "Solid foundation underneath, blooms on top. The Empress is not floating on sentiment — she is rooted, maternal authority with staying power. The stone endures; the flowers are what the endurance makes room for."
+      },
+      {
+        "label": "The scarlet daeryebok and golden embroidery",
+        "text": "Not borrowed royalty. This is the formal dress of actual power, Korean and specific, worn by someone who does not need to apologize for the space she takes up. She is beautiful because she is confident, not the other way around."
+      },
+      {
+        "label": "Peonies and harvest fruits",
+        "text": "Both are symbols of abundance in Korean tradition — fullness that has come into season. Not theoretical wealth or future promise. What surrounds her is here, ripe, ready to be gathered or shared."
+      },
+      {
+        "label": "The pair of phoenixes overhead",
+        "text": "Resurrection, renewal, return. They circle her throne, suggesting cycles that continue without her having to force them. Abundance perpetuates itself when tended correctly."
+      }
+    ],
+    "upright": "Something you have nurtured is ready. Stop managing it like it might disappear and start enjoying the fact that it is here. The Empress upright says you have done the work; now tend what exists instead of abandoning it to chase something untested. She favours presence, comfort, generosity that costs nothing because there is enough. This is the card of someone who has stopped bargaining with the present.",
+    "reversed": "Abundance that has curled inward, or nurturing that has turned into control. Reversed, the Empress can point to beauty that exists only on the surface, or to care that smothers. Check whether what you are tending is still growing or whether you are holding it so tightly that it cannot breathe.",
+    "love": "Warm, mutual, and not performance — this is what actual affection feels like when it has ripened.",
+    "work": "Growth that is now visible. Tend it, present-tense. Do not rewrite the strategy.",
+    "sajuLens": "The Empress moves at the frequency of 화(火) — fire: warmth, ripeness, radiance that draws others in. But her throne is planted in 토(土) — earth: stability, harvest, the cycle completing itself. If your 일간 is fire, this card reads as natural: you already know how to make things around you flourish. If your Day Master is earth, she confirms what you suspected — you are the one who makes things last. If you are 금(金) — metal, sharp and precise — the Empress feels slightly inefficient to you, but that inefficiency is her strength; water stems find her generosity easier to trust than their own caution; wood stems can learn from her that not everything requires pushing."
+  },
+  "the-emperor": {
+    "title": "The Emperor",
+    "summary": "The Emperor is card 4 of the Major Arcana — the seat of power held by someone who earned it coolly. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Emperor is what happens when ambition stops performing and starts ruling. He sits on a dragon throne because he has already won; the white celestial dragon behind him is not decoration but the cosmic order bending to his will. His jade-green and gold robes mark him as the one who holds the mandate. The scepter and seal in his hands are not symbols of power — they are the actual machinery of it, and he knows exactly how to use both.",
+      "Where the Fool moves by appetite, the Emperor moves by calculation. His expression is strict and determined because he has learned that confidence without accountability is just noise. The vast dominion behind him — mountain, sky, territory — exists because he made decisions that held. This is the card of someone who has moved past wanting to lead and has become comfortable at the top."
+    ],
+    "symbols": [
+      {
+        "label": "The golden dragon throne",
+        "text": "Not ornament but infrastructure. The dragon is the emblem of supreme authority in East Asian tradition, and he is seated so deeply in it that it feels like the only place he has ever belonged. The throne does the work of stating his legitimacy without him needing to defend it."
+      },
+      {
+        "label": "The white celestial dragon coiling behind",
+        "text": "Protective and aligned with him entirely. Unlike a challenger or a rival, this dragon serves — it represents the cosmic order that has decided to cooperate with his rule rather than resist it. Power confirmed from beyond the seat itself."
+      },
+      {
+        "label": "The scepter and jade seal",
+        "text": "Both are tools, not trophies. One commands, one authorizes. His hands hold them loosely because he has used them so often they are extensions of habit now. He does not grip power — he channels it."
+      },
+      {
+        "label": "Jade-green and gold gonryongpo robe",
+        "text": "The imperial dragon robe is the uniform of office, and the color palette — deep blue and gold — signals dominion over earth and heaven both. He wears it the way a master wears a tool: completely unselfconsciously."
+      }
+    ],
+    "upright": "Authority that has earned its seat through execution, not inheritance or luck. When the Emperor turns up, something in your life is ready to be governed — a project, a group, a direction — and you have the clarity right now to do it without apology. Rule with the confidence of someone who has already proven the idea works. Set boundaries clearly, follow through visibly, and delegate without second-guessing. The structure you build now will hold.",
+    "reversed": "Power held too rigidly, or seized before it was ready. Reversed, the Emperor either rules as tyrant rather than leader, or discovers that the throne he took is not actually his to keep. Check whether you are leading from competence or from fear of being displaced. If the answer is fear, the reversal is asking you to step back before the structure collapses.",
+    "love": "Authority held in the relationship, but affection withheld. Works better as a phase than as a permanent temperature.",
+    "work": "Take full ownership of the domain you control. Hesitation reads as weakness to everyone watching.",
+    "sajuLens": "The Emperor belongs to 火 — fire: the energy of clarity, of rule-making, of structure that burns away what does not fit. If your 일간 is a fire stem, this card reads as your natural habitat; you are describing how power looks when someone stops apologizing for having it. If your Day Master is 水 — water, which flows around obstacles rather than commanding them — the Emperor arrives as a lesson in firmness you will need to learn, or as a warning that someone else has already learned it at your expense. For 木 wood stems, it reads as the necessary next step after growth: time to stop expanding and start governing what you have built."
+  },
+  "the-hierophant": {
+    "title": "The Hierophant",
+    "summary": "The Hierophant is card 5 of the Major Arcana — the guide who has studied long enough to stop performing knowledge. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Hierophant sits between two temple pillars in the full weight of his office: saffron and crimson robes, a lotus staff, young monks at his feet. He is not the knowledge itself but the person who has become a conduit for it—trustworthy because he has already been broken by the work of holding it. The card describes the moment when learning stops being accumulation and becomes transmission.",
+      "What he offers is not inspiration but grounding. The incense smoke curls upward but he remains seated, rooted. When this card appears it is often asking whether you are ready to stop searching and start listening—not to abandon your own discernment, but to recognize that some doors require a guide who has already walked through them. The stone Buddha altar behind him suggests that his authority comes from something older than himself."
+    ],
+    "symbols": [
+      {
+        "label": "The lotus staff",
+        "text": "Held steady in his hand, it marks him as a teacher of the dharma—not a symbol of power seized but of responsibility accepted. The lotus grows from mud into light, which is exactly what a true guide helps you do."
+      },
+      {
+        "label": "Two young monks kneeling",
+        "text": "Their devotion is not blind. They have chosen to study with him because his years of practice have made him readable—trustworthy in the way a stone is trustworthy, weathered by its own experience into reliability."
+      },
+      {
+        "label": "Stone Buddha altar and dancheong pillars",
+        "text": "Both represent tradition that has held its shape across centuries. He sits within something larger than himself, which is precisely what gives his guidance weight. He is not inventing wisdom but stewarding it."
+      },
+      {
+        "label": "Incense smoke curling upward",
+        "text": "The bridge between earth and heaven, visible but immaterial. His teaching works the same way—it cannot be grasped directly, only breathed in and allowed to settle into the body over time."
+      }
+    ],
+    "upright": "A guide has appeared or it is time to become one. The Hierophant upright is about choosing to trust someone whose experience you can verify, or about stepping into the role of teacher because you have finally paid enough dues to speak without qualification. This is not about blind faith—it is about recognizing when someone has genuinely walked the path before you. Ask for help. Give it if you are asked.",
+    "reversed": "The guide has become an institution, or the student has stopped thinking for themselves. Reversed, the Hierophant points to authority claimed without earned weight behind it, or to wisdom that has calcified into dogma. Check whether you are following someone's teaching or someone's image.",
+    "love": "A partnership grounded in shared values and genuine trust rather than infatuation.",
+    "work": "Find a mentor or mentor someone. The knowledge you have is not valuable until it moves to the next person.",
+    "sajuLens": "The Hierophant carries 土 — earth energy: stability, tradition, the accumulated weight of generations. Someone with a 土 Day Master often reads this card as recognition—you are already building toward this role of trusted guide, and the card is simply naming it. For 火 Day Masters, who burn bright and fast, the Hierophant can feel constraining; the reading then asks whether you are willing to slow down enough for others to follow. 木 sees it as permission to put down roots. 金 respects the structure but may resist the vulnerability of admitting you need guidance. 水 recognizes that the Hierophant too is shaped by what he contains; his teachings, like water, take the form of the vessel."
+  },
+  "the-lovers": {
+    "title": "The Lovers",
+    "summary": "The Lovers is card 6 of the Major Arcana — two people choosing each other under blessing. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Lovers is not about love in the abstract. It is about the moment when two specific people decide to stay. In the KSaju deck they wear the full regalia of a Joseon wedding: the bride in red with her green ceremonial overcoat, the groom in blue silk. They stand under a canopy of golden phoenixes, and their hands are reaching toward each other. The blessing is already there — two phoenixes float above them, the peach blossoms and red berries surround them. What remains is the choice to meet inside that blessing.",
+      "This is the card of recognition rather than infatuation. Both figures are fully visible; neither is blurred by desire or obscured by projection. The golden light that holds them says the same thing the traditional wedding does: this union is witnessed, named, held. When the Lovers appears it describes a moment where you stop choosing possibilities and start choosing a person — or a direction, or a version of yourself — and mean it."
+    ],
+    "symbols": [
+      {
+        "label": "The bride in red and green",
+        "text": "Red is the colour of joy and marriage in Korean tradition; green is the ceremonial overcoat that marks the transition into a new household. She is not hidden or diminished by her finery — the layers declare her visibility and her formal weight in this moment."
+      },
+      {
+        "label": "The groom in blue silk",
+        "text": "Blue jeogori silk carries both softness and formality. His standing beside her is not a default but a choice that required its own preparation, its own commitment to the form."
+      },
+      {
+        "label": "The canopy of golden phoenixes",
+        "text": "Phoenixes are resurrection and renewal; gold is value and permanence. The canopy above them suggests that this choice — this particular two — is being held by something larger than either person alone."
+      },
+      {
+        "label": "Hands reaching toward each other",
+        "text": "The movement is not complete. The hands have not yet met. The card captures the moment of intention before the grip, which is where actual commitment lives."
+      }
+    ],
+    "upright": "This is the card of recognized choice. Two things or two paths have become clear to you, and you are ready to move toward one of them with full knowledge of what you are leaving behind. The Lovers does not minimize cost — the wedding clothes are elaborate and binding — but it asks you to pay it anyway, because some unions are worth their weight. Trust the clarity you have arrived at. The witnesses are already there.",
+    "reversed": "The choice is being delayed or divided. Either you are caught between two options and afraid to release one, or the choice is being made for you by circumstance rather than by consent. Before you proceed, check whether you are moving toward something or merely away from something else.",
+    "love": "Recognition of a specific person, not projection onto a type.",
+    "work": "Full commitment to one direction, with the cost of abandoning others consciously accepted.",
+    "sajuLens": "The Lovers reads through the five elements as a card about what kind of choice you are making. Fire Day Masters (丙, 丁) often see this card as permission to burn away uncertainty and commit to passion. Water Day Masters (壬, 癸) may find it asks them to move beyond their natural flexibility and stand still beside someone. Metal Day Masters (庚, 辛) can read it as the formal completion of a structure they have been building; wood Day Masters (甲, 乙) may experience it as a slight squeeze — the boundaries that make marriage beautiful feel like constraints. Earth Day Masters (戊, 己) often find this card describes their own steadiness being finally witnessed and chosen. The card does not change; what changes is which element recognizes itself in the blessing."
+  },
+  "the-chariot": {
+    "title": "The Chariot",
+    "summary": "The Chariot is card 7 of the Major Arcana — the momentum that carries you through opposition by sheer force of will. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Chariot is a general on his way somewhere and he is not stopping. He wears tiger-face armor because tigers do not negotiate; his two horses—one black, one white—pull in the same direction despite their different natures. Behind him five-direction flags fly, claiming territory as he moves. The card describes not the moment of decision but the moment after, when hesitation would be a waste of energy already committed. He is past the point where doubt changes anything.",
+      "What matters here is not whether the path is clear but whether you have decided the destination is worth the scars. The Chariot reads as confidence only in the sense that confidence is what happens when you have already absorbed the cost and kept moving anyway. The mountains conquered in his background were not defeated by asking nicely. When this card appears, something in you has stopped negotiating with itself."
+    ],
+    "symbols": [
+      {
+        "label": "Tiger-face breastplate armor",
+        "text": "Ornate and fierce, carved with the predator's mask. The general wears the tiger's nature as his own—not aggression for its own sake but the animal's absolute commitment to its strike. This is armor that makes a statement before the battle starts."
+      },
+      {
+        "label": "Black horse and white horse, side by side",
+        "text": "Opposites harnessed to the same chariot. They could pull in different directions but they do not—this is what discipline looks like. The card suggests that conflicting impulses, when pointed toward the same target, become power rather than confusion."
+      },
+      {
+        "label": "Five-direction battle flags",
+        "text": "Flying behind him as he moves, they mark territory and announce his presence to anyone watching. These are not subtle. The card carries the energy of claiming ground, of making your direction unmissable."
+      },
+      {
+        "label": "Mountains conquered in the background",
+        "text": "Not mountains he is approaching but ones he has already moved through and left behind. The landscape itself bears the mark of his passage. This is what happens when momentum carries long enough to reshape terrain."
+      }
+    ],
+    "upright": "You have made a choice and now you are inside its momentum. The time for weighing options has ended—your job now is to drive straight. Do not brake for doubt that surfaces halfway through. The Chariot suggests that obstacles between you and your target are solvable only by moving faster, not by stopping to negotiate. Your conviction is your armor right now. Keep the reins tight and the destination fixed.",
+    "reversed": "The chariot is either racing toward something without knowing what you will do when you arrive, or it is running to escape what is already behind you. Reversed, the card asks whether this momentum is actually yours or whether you are being carried by inertia. Without a real destination the general just becomes someone driving very fast in circles. Pause long enough to ask if you chose this direction or merely inherited it.",
+    "love": "Unstoppable forward motion, the kind that does not wait for permission or perfect timing.",
+    "work": "You are the fastest solution to an urgent problem. Hesitation now costs more than speed.",
+    "sajuLens": "The Chariot lives in 火—fire: the energy of momentum, of commitment once decided, of heat that will not cool. For 火 Day Masters (丙, 丁) this card often reads as recognition: it describes how you naturally move through resistance. But for 水 Day Masters (壬, 癸), whose strength lies in adaptation and flow around obstacles rather than through them, the Chariot can feel like an external demand to move faster than your nature allows. For 木 Day Masters the card suggests expansion; for 金 it arrives as a warning that plans must be solid enough to withstand the speed; for 土 it asks whether the ground beneath you is stable enough to support such velocity."
+  },
+  "strength": {
+    "title": "Strength",
+    "summary": "Strength is card 8 of the Major Arcana — power held not by force but by calm. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "Strength is the card that moves through the world without needing to announce itself. The woman in the KSaju deck does not wrestle the tiger or break it — she has simply opened its mouth as if opening a door, and the tiger allows it because her touch carries no threat. This is mastery that works sideways: the gentle pressure that works better than the hammer because it moves with the grain instead of against it. The card is about willpower, but not the kind that makes fists.",
+      "What arrives when Strength appears is the discovery that you already have what you need to manage this. Not someday, when you are older or richer or have more permission. Now. The only thing that changes is the pressure you apply — less force, more presence. The tiger's fierce eyes have softened not because it has been defeated but because it has been truly seen. That seeing is the whole of the card."
+    ],
+    "symbols": [
+      {
+        "label": "The woman in hanbok",
+        "text": "Pink and white silk, delicate and composed. She does not dress as a warrior or wear armor — there is nothing defensive about her. Her strength comes from being so entirely present that nothing defensive is needed. The beauty matters. It is not separate from the strength."
+      },
+      {
+        "label": "The tiger's open mouth",
+        "text": "The tiger is massive and it is white — a creature of raw power. But she opens its mouth without struggle, her hand gentle and sure. The tiger does not resist. This is what happens when you approach power with respect instead of fear."
+      },
+      {
+        "label": "Golden morning light",
+        "text": "Not the harsh glare of high sun but the soft clarity of dawn — the light that reveals without burning. Everything here is seen clearly and nothing is forced into visibility before its time."
+      },
+      {
+        "label": "Chrysanthemums blooming",
+        "text": "The flower that endures and blooms late in the season, often paired in Korean art with stone and longevity. Gentleness and durability growing side by side — the card's central claim that soft does not mean fragile."
+      }
+    ],
+    "upright": "The control you need is already in your hands. It does not come from clenching harder or pushing further — it comes from the quiet pressure of someone who knows what they want and is not frantic about getting it. Trust the gentle approach. Trust that being calm in front of something dangerous is itself a form of power. This card asks you to lead with presence, not force, and to notice where you have been applying effort where ease would work better.",
+    "reversed": "The strength has turned rigid or the gentleness has turned passive. Either you are gripping too hard and wearing yourself out with unnecessary force, or you are not gripping at all and calling it virtue. The tiger is not tamed by pretending it is not there. Check whether you are being truly strong or just tired, and whether your calm is actual composure or simply avoidance.",
+    "love": "Desire held without desperation — you know what you want and you are not frantic about proving it.",
+    "work": "The project responds to steady hands, not urgent ones. Your competence is showing; let it work.",
+    "sajuLens": "Fire 일간 (丙/丁 Day Masters) often reads Strength as their baseline — they naturally bring focus and composed power. For them the card usually confirms what is already happening. Water 일간 (癸/壬) experiences this card differently: it arrives as instruction, asking them to move from intuition into action, to take the softness they already have and direct it with purpose. Earth 일간 (戊/己) sees it as a lesson in knowing when to stop adjusting; metal 일간 (庚/辛) learns that precision and gentleness are not opposites. Wood 일간 (甲/乙) reads it as a caution: your strength is real, but it works better when you stop proving it."
+  },
+  "the-hermit": {
+    "title": "The Hermit",
+    "summary": "The Hermit is card 9 of the Major Arcana — the scholar who left the village and found what he was looking for in the dark. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Hermit is not hiding. He has simply moved to where the question can be heard more clearly. In the KSaju deck he wears the grey durumagi and tall gat of a Joseon scholar, but he is alone on a mountain path at dusk — he has traded the library for the silence that comes after years of asking the same things over and over. The lantern he carries is not for finding his way; it is for seeing what was always there.",
+      "This card describes a withdrawal that is not escape but recalibration. The Hermit has looked at the world long enough to know it cannot teach him what he is looking for anymore, so he has stopped asking the world and started asking himself instead. When he turns up in a reading he is not suggesting you disappear — he is suggesting that the answer you need is already inside you, and you have to get quiet enough to hear it."
+    ],
+    "symbols": [
+      {
+        "label": "The paper lantern with warm amber light",
+        "text": "It illuminates only the rocky path directly ahead, not the whole mountain. This is knowledge that is immediate and personal rather than universal. The light is his own — generated, carried, and extinguished only when he decides."
+      },
+      {
+        "label": "The elderly Joseon scholar in grey hemp durumagi",
+        "text": "Grey is the colour of ash and stone, of wisdom that has burned away ornament. The simple coat and tall gat show him still formal, still shaped by study — he has not become wild, only solitary. He brought his learning with him."
+      },
+      {
+        "label": "The lone pine bent by wind",
+        "text": "It has survived pressure by flexibility rather than resistance. It stands beside him like an echo: something that has grown strong precisely through having nothing to prove, nothing to defend, nowhere else to be."
+      },
+      {
+        "label": "Misty mountain peaks receding into blue distance",
+        "text": "The landscape itself is withdrawing into obscurity. What is far away is becoming unknowable, which means attention is being forced inward. The Hermit cannot see the next range even if he wanted to."
+      }
+    ],
+    "upright": "You are at the point where more information will not help. Stop gathering and start listening to what you already know. This is the card of the scholar who closes the books, the counsellor who stops giving advice and sits with the question instead. What you are looking for requires solitude, not because solitude is punishment but because it is the only condition under which this particular answer can be heard. Give yourself permission to withdraw.",
+    "reversed": "The isolation has curdled into loneliness, or the silence has become an excuse to avoid deciding. Reversed, the Hermit points to wisdom that has calcified into stubbornness, or withdrawal that reads more like abandonment. The difference is whether you chose the solitude or whether you are hiding in it. Check whether you are reflecting or merely brooding.",
+    "love": "What you need from this person is not the person — it is what they reflect about you. Step back and look.",
+    "work": "This is the work you have to do alone. Collaboration will slow it down; trust your own process.",
+    "sajuLens": "The Hermit aligns with 火 — fire: the energy that burns away everything except what matters, that sees in the dark. A fire Day Master reading this card often feels like recognition; the inner light the Hermit carries is how they naturally work. For 水 — water Day Masters, whose nature is to flow and merge, to move between forms, the Hermit's solitary radiance can feel like a warning or a temporary necessity rather than a destination. For 土 — earth, which seeks stability and connection, the card reads as a season of necessary isolation that will eventually end. For 木 — wood, which pushes outward, it suggests that the next growth requires first understanding the roots. For 金 — metal, which values form and completion, it offers refinement through subtraction."
+  },
+  "wheel-of-fortune": {
+    "title": "Wheel of Fortune",
+    "summary": "Card 10 of the Major Arcana — the moment when the board turns and what was rising begins to fall, what was hidden becomes visible. A reading of luck, cycles, and the instant before the spin lands.",
+    "meaning": [
+      "The Wheel of Fortune is not about fortune evenly distributed. It is about the specific instant when motion matters most: the yut-board suspended between throws, the eight trigrams holding their positions for one more breath before the cosmic energy shifts them all at once. In the KSaju deck, figures of different Joseon social classes climb and descend the spokes — the board is the same for everyone, but your position on it changes. What the card describes is not stability but velocity: the speed at which your circumstances are already in motion.",
+      "The four guardians at the cardinal points — dragon, tiger, phoenix, tortoise — are the keepers of direction and season. They watch the wheel turn. When this card appears, it is showing you that you are not driving the change; you are recognizing it as it happens. The indigo space around the wheel is vast and older than the turning itself. Luck is not random. It is simply the name we give to motion we did not personally set in motion."
+    ],
+    "symbols": [
+      {
+        "label": "The yut-board as wheel",
+        "text": "A yut-board is a tool for divination through chance — the throw lands where it lands. As the Wheel of Fortune it becomes the shape of fate itself: circular, continuous, divided into sections that determine outcome. The golden rim holding the trigrams is the frame that keeps the chaos meaningful instead of merely chaotic."
+      },
+      {
+        "label": "Figures ascending and descending",
+        "text": "Joseon men and women of different classes moving up the spokes and down them simultaneously. The wheel does not judge who deserves to rise or fall — it simply turns, and your social position moves with it. This is not cruelty; it is indifference. Which is sometimes gentler."
+      },
+      {
+        "label": "The four guardians at cardinal points",
+        "text": "Azure dragon, white tiger, red phoenix, black tortoise: the mythological rulers of direction and season. They mark the wheel as a thing of cosmic order, not mere accident. Each guardian governs a direction; together they hold the turning in place."
+      },
+      {
+        "label": "Deep indigo and gold",
+        "text": "Gold rim against indigo space. The wheel is precise and structured; the space around it is infinite and ancient. The fortune you are about to encounter is small and bright against something much larger than itself."
+      }
+    ],
+    "upright": "Something is turning in your direction right now. The card does not promise permanent advantage — wheels turn for everyone — but it says the moment you are in has momentum behind it. Do not wait for the turning to stop before you move. Act while the board is already in motion, because the spokes you can reach today will be somewhere else tomorrow. Luck is not about deserving; it is about timing.",
+    "reversed": "The wheel is still turning, but you are reading it as betrayal instead of simply as turning. Reversed, this card shows someone fighting against a motion that cannot be stopped by resistance. The fall is coming for someone on the wheel — accept that it might be you, and plan for the next spin rather than insisting the current one should not end.",
+    "love": "A meeting that feels fated because it arrives exactly when you stopped looking for it.",
+    "work": "An opportunity arriving faster than preparation. Step into it anyway — the board moves whether you feel ready or not.",
+    "sajuLens": "The Wheel reads through the lens of five elements as a map of where your own energy is currently cycling. Fire (화) Day Masters often experience this card as expansion — their element is rising, the wheel turns in their season. Water (수) Day Masters feel it as a warning that their moment is passing; water is most powerful in winter, and the wheel spins toward other seasons. Metal (금) Day Masters see the structure holding the chaos; earth (토) Day Masters ground themselves in the center, unmoved by what circles them. Wood (목) Day Masters move with the wheel, flexible. Your element is not fixed; the card shows you which one is dominant in this moment, and whether your natural rhythm aligns with it or cuts against it."
+  },
+  "justice": {
+    "title": "Justice",
+    "summary": "Justice is card 11 of the Major Arcana — the moment when the scales tip and a choice becomes final. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "Justice sits at the high bench where decisions stop being abstract. She holds the white fan of authority and the jade scepter of magistrate office, and before her the scales hang in perfect balance — not tipping toward mercy or severity, but steady. The Joseon court hall frames her with red pillars and formal black robes. What she represents is not punishment but the weight of consequence: the moment when you stop arguing your case and accept that someone else's judgment has become final.",
+      "The card does not ask whether the decision is fair — it assumes fairness is the magistrate's job, not yours. What it asks is whether you can live inside a world where choices matter and where balance, once struck, does not shift on appeal. Upright, Justice describes the relief of having a verdict, even if it costs you. Reversed, it shows what happens when you cannot accept the scales, when you keep trying to tip them back."
+    ],
+    "symbols": [
+      {
+        "label": "The white ceremonial fan",
+        "text": "The fan of office held steady in one hand. It is the instrument through which a magistrate speaks without emotion — formal, precise, impossible to argue with. This is authority that has learned not to justify itself."
+      },
+      {
+        "label": "The jade magistrate scepter",
+        "text": "Jade in Joseon symbolized something that could be refined but never softened. The scepter is the decision made solid. It cannot be unmade through persuasion or tears."
+      },
+      {
+        "label": "The brass scales in perfect balance",
+        "text": "Not weighted toward either side. The equilibrium is the point — not compromise, but the acknowledgment that both claims have been heard and weighed. This is what finality looks like."
+      },
+      {
+        "label": "The kneeling petitioners below",
+        "text": "They have presented their case and now they wait. The card captures the moment after argument stops. Power has moved into someone else's hands and the waiting is what remains."
+      }
+    ],
+    "upright": "A decision has been made and you are on the receiving end of it. Justice upright says to stop negotiating, stop presenting new evidence, stop hoping the verdict will shift — it has landed. The relief comes not from getting what you wanted but from the scales stopping their movement. Accept the boundary. Make your next move inside it.",
+    "reversed": "You cannot accept that the decision is final. Reversed, Justice shows the petitioner who keeps arguing, the one who haunts the courthouse steps, who rewrites the case in their head every morning. At some point the scales must be allowed to rest, or you will exhaust yourself trying to tip them back.",
+    "love": "A commitment that has moved beyond negotiation into the form it will hold.",
+    "work": "A verdict from someone with authority over you. Your job now is to adapt, not to appeal.",
+    "sajuLens": "Justice is 금(金) energy made visible — metal at its most formal, precise, and absolute. Metal establishes edges and respects hierarchy; it cuts and it holds firm. If your 일간 is a metal stem (庚/辛), Justice reads as a card about your native language — how you naturally move toward clear boundaries and final forms. For 목(木) Day Masters — wood, which flows and adapts — this card often arrives as something external and slightly stiff, a force that will not bend. Fire (화/火) individuals may experience it as cold. Earth (토/土) sees it as necessary containment. Water (수/水) masters may find the rigid scales claustrophobic, but water also knows how to move within any vessel it is poured into."
+  },
+  "the-hanged-man": {
+    "title": "The Hanged Man",
+    "summary": "The Hanged Man is card 12 of the Major Arcana — the pause that rewires how you see. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Hanged Man is not suffering. He hangs by one ankle from a zelkova branch in an old Joseon garden, his white robes falling toward earth, his face ringed in golden light, his expression calm as a scholar in meditation. He has stopped moving not because he was forced to, but because he chose to flip the world upside down and look at it from below. The card asks what you see when you are willing to be still enough, long enough, to let your perspective crack open.",
+      "Confinement in this card is voluntary — it is the price of insight. The halo suggests enlightenment that arrives through constraint rather than through motion. When the Hanged Man appears, something has already paused: a relationship, a plan, a way of thinking you have carried so long you forgot it was a choice. The card does not ask whether you want this interruption. It asks what becomes visible now that you have stopped pretending the old angle was the only angle."
+    ],
+    "symbols": [
+      {
+        "label": "Hanging by one ankle from the zelkova branch",
+        "text": "The tree is ancient, rooted, patient. Hanging is deliberate, not accidental — this is suspension by choice, not punishment. One ankle does the work of holding; the rest of the body is free to reorient. The posture itself is the meditation."
+      },
+      {
+        "label": "White hemp robes flowing downward",
+        "text": "Joseon scholar's dress, simple and undyed, now flowing the wrong direction — toward the earth instead of away from it. The fabric moves in the direction of gravity, emphasizing that perspective has literally inverted. What hangs down is now what matters."
+      },
+      {
+        "label": "The halo of soft golden light",
+        "text": "Not divine intervention but the glow of understanding. The light circles his face from below, the new bottom, suggesting that clarity arrives from the inverted angle, not from the world as it was arranged before."
+      },
+      {
+        "label": "Moss and autumn leaves on the tree",
+        "text": "Time has accumulated here. The tree is not young, and the season is late. This is a pause that happens after something has lived long enough to need revision, not before it has begun."
+      }
+    ],
+    "upright": "You are in a voluntary pause — you have chosen to stop moving in order to see differently. The world has not changed, but your vantage point has. Use this interruption for what it actually is: a chance to examine the assumptions you forgot were assumptions. Patience here is not passive. It is the work of holding still while understanding rewires itself. The card suggests that the insight worth having requires you to be suspended, at least for now.",
+    "reversed": "The pause has become involuntary, or it is being resisted. Reversed, the Hanged Man points either to confinement that has curdled into resentment, or to someone who refuses to stop long enough to let their perspective shift. The pause may still be necessary. The refusal to accept it is the problem.",
+    "love": "A necessary step back to see the relationship clearly, or a stall that has grown uncomfortable.",
+    "work": "A project halted for reassessment, or a role that requires you to work in a way that feels unfamiliar and upside-down.",
+    "sajuLens": "The Hanged Man connects to 水 — water: the yielding element that takes the shape of whatever holds it, that flows downward, that reflects and clarifies. Water Day Masters (壬, 癸) often read this card as describing how they naturally work: fluid, adaptive, willing to approach from underneath. For 火 — fire Day Masters (丙, 丁), whose nature is to rise and illuminate directly, the Hanged Man arrives as foreign instruction: the card is teaching them what happens when you stop burning for a moment and let coolness in. 木 expansion resists it; 金 structure finds it useful if temporary; 土 stability can hold the pause, but becomes restless inside it."
+  },
+  "death": {
+    "title": "Death",
+    "summary": "Death is card 13 of the Major Arcana — not an ending but the threshold between what was and what comes next. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The card shows a Joseon death messenger, the 저승사자 who ferries the dead between worlds. He wears ceremonial black, rides a pale skeletal horse, and carries a scroll of names — the record of what has been completed. But he is not cruel; figures of all social classes bow before him with dignity. Death in this deck is not punishment. It is the order of nature, the boundary crossed when one season tips into another, the moment when what was held must be released so that something else can form.",
+      "The white rose blooming from the horse's skull is the key. Decay and growth are not opposites here — they are consecutive. The sunrise on the horizon is distant but certain. This card arrives when something in your life has finished its work and is ready to become something else. It rarely means disaster. More often it means you have been holding a shape that no longer holds you, and the only way forward is to let it go."
+    ],
+    "symbols": [
+      {
+        "label": "The skeletal messenger in black doeppo and gat",
+        "text": "Death dressed in Joseon ceremony, formal and precise. This is not chaos arriving — it is protocol, the dignified administration of what must end. He is a functionary, not a thief. The bureaucracy of transformation has rules."
+      },
+      {
+        "label": "The pale skeletal horse",
+        "text": "The mount is as dead as the rider. They move together through the boundary between worlds, neither fully in one place nor the other. The horse carries him at the threshold, not beyond it."
+      },
+      {
+        "label": "The scroll of names and the white rose",
+        "text": "He carries the record of what has been completed — the scroll is full — and yet a single white bloom grows from bone. The card holds both sides: what is finished and what blooms from its ending."
+      },
+      {
+        "label": "Figures bowing; the distant sunrise",
+        "text": "Everyone recognizes him. There is no resistance, only acknowledgment. The horizon glows with transformation already beginning. This is acceptance of the necessary order."
+      }
+    ],
+    "upright": "Something has run its course and is asking to be released. The card promises that letting it go is not loss — it is the mechanism by which one chapter becomes another. Do not confuse this with giving up; there is a difference between surrender and finishing. The messenger has come for what is already dead. Let him take it. The sunrise is waiting on the other side.",
+    "reversed": "The ending is being delayed. Either you are gripping something that is already spent, or something outside you is refusing the transition that wants to happen. Reversed, Death suggests that the boundary is stuck — the old form has not released and the new one cannot fully arrive. Something needs to break before anything can form.",
+    "love": "A relationship has reached its completion. Whether that means goodbye or metamorphosis depends on whether both people are willing to cross the threshold together.",
+    "work": "A role, project, or phase is finished. The question now is what shape the next one takes, and whether you have the courage to leave the previous identity behind.",
+    "sajuLens": "Death is 水 and 火 energy — the water of dissolution, the fire of transformation. For 水 Day Masters (adaptability, flow), this card reads as natural, almost restful; you already understand that forms are temporary. For 木 Day Masters (expansion, growth), Death can feel like interruption, but it is showing you that the only way through a bottleneck is collapse and reformation. 土 Day Masters (stability, rootedness) may experience this as disruption of foundations, while 金 Day Masters (structure, completion) can find permission here to finish something properly rather than letting it decay. 火 Day Masters see Death as a kindred force — transformation is their native element."
+  },
+  "temperance": {
+    "title": "Temperance",
+    "summary": "Temperance is card 14 of the Major Arcana — the skill of moving two opposing forces into harmony without losing either one. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "Temperance does not mean abstinence. It means the exact calibration required to pour from one vessel into another without waste, without overflow, without the two liquids ever colliding badly enough to shatter the container. The figure in the KSaju deck is a seonnyeo, a Korean celestial being, pouring water between two different-sized vessels — an act that requires constant, minute adjustment. She stands with one foot on land and one on water, neither fully committed to either state. This is not indecision. This is the balance point itself.",
+      "The card appears when two separate things need to work together and neither one can be abandoned. A relationship that requires both people to stay exactly who they are. A project that demands both speed and precision. A life that holds contradictions without trying to resolve them into a single coherent narrative. Temperance is not about compromise — it is about the architecture that lets opposing things coexist. Notice the rainbow behind her. Notice that nothing has spilled."
+    ],
+    "symbols": [
+      {
+        "label": "Two vessels of different sizes",
+        "text": "She pours between unequal containers. The card is not about balancing identical things — that would be simple. It is about making two fundamentally different quantities and qualities work together in one system without either one drowning the other out."
+      },
+      {
+        "label": "One foot on land, one on water",
+        "text": "She is not choosing between solid and liquid, between fixed and flowing. She stands in both. This is the posture of someone who has learned to hold contradictions without the contradiction tearing them apart."
+      },
+      {
+        "label": "The golden aura and serene expression",
+        "text": "She is not straining. There is no tension in her face. The work of holding two things in balance has become so practiced that it reads as peace rather than effort. Mastery looks like calm."
+      },
+      {
+        "label": "Iris and lotus flowers at the water's edge",
+        "text": "Both bloom at thresholds — where two states meet. They mark the boundary itself as a place where something beautiful can grow, not a problem to be solved or a line to choose a side of."
+      }
+    ],
+    "upright": "Two things that seem to pull apart are actually learning to work together. Keep pouring. The progress will be smooth because you are not forcing it — you are following the shape of what wants to flow. Adjust constantly and lightly; rigidity will crack the vessel. This is not the time to declare victory or to pick a side. Stay at the threshold, keep both things moving, and trust that the rainbow appears precisely because the light is hitting the mist at exactly the right angle.",
+    "reversed": "The vessels are cracking or the liquid is spilling. Something that was held in balance has tipped into imbalance, or you are trying to pour too fast. Reversed, the card warns that you cannot ignore either one of the competing demands — trying to eliminate one half of the contradiction will only make the other half collapse. Go slower. Adjust what you are doing, not what you are trying to balance.",
+    "love": "Two different people learning the exact pressure required to pour toward each other without one of them vanishing.",
+    "work": "Competing priorities that actually complement each other once you stop treating them as enemies. Keep both moving.",
+    "sajuLens": "Temperance embodies 水 — water: flowing, yielding, finding the shape of its container without breaking the container itself. For a 일간 whose chart leans water — 임수(壬水) or 계수(癸水) — this card often reads as description of their native gift, the flexibility that lets them move through resistant spaces. For earth 일간 — 무토(戊土) or 기토(己土) — Temperance can read as instruction, even friction: earth wants to settle into one shape, and this card is saying the shape needs to stay fluid. For fire 일간 — 병화(丙火) or 정화(丁火) — it points to the cost of their directness: sometimes the target needs you to pour slowly instead of burn bright. Metal 일간 — 경금(庚金) or 신금(辛金) — tend to read this card as a puzzle: how do you maintain your edge while staying flexible? The answer is usually: practice pouring until it becomes as precise as a blade."
+  },
+  "the-devil": {
+    "title": "The Devil",
+    "summary": "The Devil is card 15 of the Major Arcana — desire that wears a throne and calls itself freedom. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Devil in the KSaju deck sits in his own court, horned and glowing-eyed, holding power that looks enormous from below. But notice: the chains around the kneeling figures are loose enough to step out of. The Devil does not actually imprison anyone. He offers a bargain that feels so good in the moment that the prisoner forgets they are the one who locked the door.",
+      "This is card 15, which is to say it arrives after the Lovers — after you have already learned to want something outside yourself. The Devil is what happens when that wanting curdles into hunger that eats its own satisfaction. Sweet temptation is the theme because it is not cruel. It simply knows what you crave and keeps delivering exactly that, until the delivery itself becomes the cage."
+    ],
+    "symbols": [
+      {
+        "label": "The dokkaebi on the throne",
+        "text": "A Korean goblin-demon seated in power, not a generic Satan. The dokkaebi is trickster, not tyrant — which matters. He wins through cleverness and knowledge of what humans want, not through force. His domain is appetite made visible."
+      },
+      {
+        "label": "The spiked glowing club",
+        "text": "Held in his grip, glowing red. It is a weapon only if you refuse the bargain. For those who have already agreed, it looks like a symbol of authority — which is the point. The same object reads as different things depending on whether you see yourself as prisoner or guest."
+      },
+      {
+        "label": "Loose chains and kneeling figures",
+        "text": "The chains are slack enough to slip. The figures remain anyway. This is the card's central argument: that most captivity is consensual, chosen fresh each moment because the alternative — freedom without direction — feels worse than bondage with structure."
+      },
+      {
+        "label": "Gold coins scattered on dark stone",
+        "text": "Wealth visible but not accumulated, glinting in shadows. The Devil offers treasure, but it sits loose on the floor, easy to forget because easy to replace. Enough to keep wanting, never enough to satisfy."
+      }
+    ],
+    "upright": "You are inside a transaction that tastes like freedom. Something is being offered that you genuinely want — comfort, pleasure, status, a specific kind of certainty — and the price seems worth paying, or you have stopped asking what the price is. The Devil arrives to ask: Is this a choice you are choosing, or a choice you have stopped examining? The chains are loose. You can leave. The question is whether you want to badly enough to feel the discomfort of unfamiliar air.",
+    "reversed": "The chains are tightening or the taste has gone bitter. Reversed, the Devil points to a bargain that is no longer paying out, or to the moment when you finally notice you are hungry. This is actually the card's most useful position — it means the spell has broken and you can see the bars again.",
+    "love": "Attraction mistaken for connection; desire mistaken for love. Notice what you are actually choosing, beneath the feeling.",
+    "work": "Comfort that is starting to look like a cage. Your role fits well enough that you stopped noticing you were being fitted for it.",
+    "sajuLens": "The Devil operates through 火 — fire: passion, desire, the heat that drives consumption. But he traps you by making fire feel like 土 — earth, stability and home. Someone with a fire 일간 often reads this card as simple recognition; they know the territory of appetite. For water 일간, which moves toward flow and connection, the Devil reads as a warning about which connections cost you your own motion. Metal 일간 — which seeks refinement and edge — tends to notice the bars first, making this card a wake-up call rather than a seduction."
+  },
+  "the-tower": {
+    "title": "The Tower",
+    "summary": "The Tower is card 16 of the Major Arcana — the lightning strike that ends what could not hold. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Tower is not a card about disaster in the way most people read disaster. It is about the moment when a structure that looked solid reveals what it always was: temporary, built on assumption, propped up by the agreement to pretend. The lightning does not create the fracture — it only makes visible the one that was already there. In the KSaju deck it strikes a Joseon palace pavilion, the highest point, where what is most carefully maintained finally breaks open.",
+      "What arrives with this card is not random. The false foundation was already failing; the shock is only the announcement of a failure already in motion. This is why the Tower, for all its violence, is sometimes a relief. It ends the exhausting work of holding together what cannot hold. When it appears in a reading, something you have been managing is about to manage itself — usually by coming apart. The question is not whether to resist this, but what you will build once the rubble settles."
+    ],
+    "symbols": [
+      {
+        "label": "Lightning at the apex",
+        "text": "The bolt strikes the highest point, the place of greatest visibility and greatest fragility. What falls hardest is what rises highest. The lightning does not discriminate — it finds the tallest structure and splits it open."
+      },
+      {
+        "label": "Golden roof tiles exploding outward",
+        "text": "The explosion is violent and precise. What was carefully arranged scatters everywhere at once. The gold reads as value, as investment, as everything poured into maintaining the appearance of permanence."
+      },
+      {
+        "label": "Figures in court robes falling",
+        "text": "These are people whose identity was built into the structure. They are not falling from nowhere — they are falling from the identity they wore. The fall is the collapse of the role they occupied."
+      },
+      {
+        "label": "Flames and storm clouds",
+        "text": "Fire erupts from the windows below; darkness presses from above. The destruction comes from both inside and outside at once. There is nowhere to hide from this convergence."
+      }
+    ],
+    "upright": "Something you have known was unstable is finally breaking. Do not brace against it. The Tower arrives when bracing is pointless, when the structure has already decided to fall. Let the old shape come apart, gather what actually survives it, and notice what you feel once you no longer have to defend it. This card often brings relief disguised as disaster.",
+    "reversed": "The collapse is delayed but not prevented. Reversed, the Tower suggests you are using time and effort to prop up something that will eventually fail anyway. Stop reinforcing the weak point and start planning for the aftermath. The longer you hold it together, the messier the eventual break.",
+    "love": "A relationship that was held together by routine or fear is suddenly stripped to what it actually is.",
+    "work": "A business model, a hierarchy, or a way of working is about to become untenable and will fail regardless of how hard you push.",
+    "sajuLens": "Fire and metal collide in this card: 화(火) is sudden, destructive, transformative; 금(金) is structure, walls, carefully maintained form. For a metal Day Master, the Tower often reads as genuinely threatening—your element is what builds the pavilion, and watching it explode is watching your own strength become liability. For a water Day Master (flexibility, flow), the collapse of rigid structures can read almost as relief. Fire masters see the drama but not the loss. Wood Day Masters tend to read this card as clearance—the dead timber burned away so new growth can begin. Earth Day Masters read it as destabilization of ground they stand on. The card's meaning shifts less than your element's relationship to what is burning."
+  },
+  "the-star": {
+    "title": "The Star",
+    "summary": "The Star is card 17 of the Major Arcana — hope that has learned to be specific. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Star arrives after the storm. In the KSaju deck she kneels at a pond under the Big Dipper, pouring water from two ewers — one into earth, one into water — as though feeding the world's thirst and her own belief simultaneously. She is not wishing on the star. She is doing the work that the starlight makes visible. This is hope that has moved past sentiment into action, a faith that shows up in your hands.",
+      "What the card describes is clarity without urgency. The Big Dipper burns steady above her; the jasmine and cosmos do not hurry. She has stopped running toward the light and started working by it instead. When the Star appears in a reading, it usually means the scrambling part is over — you can see where you are going now, and the next move is not frantic but deliberate, even graceful."
+    ],
+    "symbols": [
+      {
+        "label": "The two white ewers",
+        "text": "Water poured into earth nourishes what is rooted. Water poured into water returns to itself. She gives to what needs holding and to what needs flowing. The card reads as balance between concrete action and the intangible part of hope — both matter."
+      },
+      {
+        "label": "The Big Dipper blazing",
+        "text": "The brightest navigational star in the northern sky, unmistakable and constant. Not the North Star itself, but the pointer toward it. Hope here is not an invention — it is something you can actually steer by."
+      },
+      {
+        "label": "The pond at moonlight",
+        "text": "Still water reflects. What she pours and what she sees are not separate things. This is the card of clarity as reflection, of understanding that arrives through stillness rather than effort."
+      },
+      {
+        "label": "Starlight-blue robes and white flowers",
+        "text": "The jasmine and cosmos are real blooms from Korean gardens, not mythology. The palette is silver and deep blue — colour of night sky made visible. Ordinary and extraordinary occupy the same moment."
+      }
+    ],
+    "upright": "You can see the path now. The Star is not about getting what you want but about knowing what you actually want, and discovering that clarity has already changed what comes next. Work with what is illuminated instead of pushing against what remains dark. Your gift right now is not ambition but precision — you know which direction to pour the water. Trust the steadiness of this moment; it will not last forever, but while it does, it is enough.",
+    "reversed": "The light has gone uncertain or you have stopped looking at it. Reversed, the Star suggests either that you have lost sight of what you were moving toward, or that you are moving toward it for reasons that no longer hold up under scrutiny. Before you act, check whether you are still guided by your own star or by someone else's.",
+    "love": "Love that has moved from infatuation to seeing the person clearly, and still choosing them.",
+    "work": "A project or direction that has come into sharp focus. You can move with confidence now because you understand what you are actually building.",
+    "sajuLens": "The Star carries 火 — fire's clarity and vision — but through the still water of 水. If your 일간 is fire, this card reads as confirmation: the thing you see burning is real, and your instinct about its direction is sound. If your Day Master is 水, the Star reverses your usual pattern: instead of flowing around obstacles, you are standing still and seeing through them. This card reads very differently for 木 — wood pushes outward, but here you are asked to pour deliberately. For 金 — metal — the Star offers the form your discipline has been lacking. For 土 — earth — it is permission to dream while remaining grounded."
+  },
+  "the-moon": {
+    "title": "The Moon",
+    "summary": "The Moon is card 18 of the Major Arcana — the state between knowing and not knowing. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Moon does not lie and does not tell the truth. It reflects light that belongs to something else, and in that reflection everything becomes both clearer and less certain — shadows deepen, familiar shapes shift, and you cannot quite tell what is real from what is cast by the light itself. The card appears when you are in a state too ambiguous to resolve. Not danger exactly, but the uneasy allure of a threshold, where multiple readings of the same situation can all be partially true.",
+      "What makes the Moon different from simple confusion is that the confusion itself contains information. The card shows you are sensing something real — an inconsistency, a hidden layer, a person or situation with more depth than the surface admits. The question is not whether you are right to feel uneasy, but whether you are reading the right thing. Patience and attention matter more than action. The Moon rewards those who can sit inside ambiguity long enough to see which shadow moves first."
+    ],
+    "symbols": [
+      {
+        "label": "The full moon over the Joseon mountain",
+        "text": "Complete but not clarifying. The full moon gives maximum light and maximum shadows simultaneously — it illuminates without resolving. In Joseon landscape this becomes a cultural anchor: the moon is the classic image of beauty and longing that cannot be reached or fully known."
+      },
+      {
+        "label": "The twin haetae stone lions",
+        "text": "Guardian figures that mark the boundary between what is protected and what is exposed. Their symmetry suggests balance, but also suggests that they are always in opposition — each guards against what the other might allow through. Neither is wrong; both watch the same threshold from opposite sides."
+      },
+      {
+        "label": "The white jade rabbit pounding medicine",
+        "text": "From Korean mythology: the rabbit works ceaselessly on something that can never be finished. Eternal labour, routine as ritual. On a night of illusion and uncertainty, this is the one thing that does not change — what stays constant even when you cannot see clearly."
+      },
+      {
+        "label": "The wolf and dog howling from opposite cliffs",
+        "text": "The same sound from two different sources, neither fully wild nor fully tame. They are separated by space but connected by the vibration they share — instinct recognizing itself across a distance that makes direct contact impossible."
+      },
+      {
+        "label": "The crayfish emerging from still water",
+        "text": "What surfaces from the depths without warning. In the absolute stillness of the pond, even small movement creates ripples. This is what the Moon's quality reveals: tiny disturbances become visible only in perfect calm, and you must be watching to catch them."
+      }
+    ],
+    "upright": "You are reading a situation correctly, but not completely. Something real is hidden, not by malice but by its own nature — it exists in the gaps between what can be directly seen. Do not force clarity yet. Instead, watch what surfaces when nothing demands immediate action. The person or situation that seems contradictory probably is: hold both readings at once, and notice which one your body trusts. This card favours the patient interpreter.",
+    "reversed": "The confusion is not productive anymore — it has turned into denial or into a kind of comfortable fog you are choosing not to burn through. Reversed, the Moon suggests that clarity is available if you are willing to see it, but you are still settling for the story that feels safer. Check what you have stopped asking about. The illusion was useful once; now it is just costing you.",
+    "love": "Attraction wrapped in uncertainty — you know something about this person is real, but you cannot yet tell what you are actually seeing.",
+    "work": "A project or role where the stakes are not yet visible. Trust your unease as data; it is pointing at something you have not gathered enough to name.",
+    "sajuLens": "The Moon belongs to 수(水) — water: receptive, reflective, the element that takes the shape of what contains it. Water reads surfaces and depths equally; it thrives in ambiguity because ambiguity is where water moves. If your 일간 (Day Master) is water, this card often reads as your home territory — the Moon describes how you naturally navigate. If your Day Master is 화(火) — fire, which needs clarity and direct seeing — the Moon's ambiguity lands as frustration rather than wisdom, and the card is asking whether you have the patience to stay in a question longer than your nature usually permits. 목(木) experiences the Moon as stagnation; 금(金) as noise obscuring the signal; 토(土) as terrain that will not stay still long enough to build on."
+  },
+  "the-sun": {
+    "title": "The Sun",
+    "summary": "The Sun is card 19 of the Major Arcana — the peak where all the work has already paid off. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The Sun is the card that needs no translation. A young boy in a hanbok rides a white horse through sunflowers under a golden sun with a human face and outstretched arms — the image says what it means without stepping sideways. This is success so complete it has stopped needing to prove itself. The stone wall behind him holds morning glories, which bloom in the early light and close by afternoon: the card catches the moment when blooming is still happening, before it fades. Everything here is at its brightest point.",
+      "What separates this card from mere happiness is the sense of full arrival. The Fool begins; the Sun completes. The radiant face of the sun itself is not distant or cold — it is joyful, present, almost celebratory. In a reading, the Sun often shows up when a long effort has finally made it to daylight, or when you have stepped into a role that fits you so exactly that pretense has become unnecessary. The warmth flooding everything is not metaphorical; it is the actual condition of the card."
+    ],
+    "symbols": [
+      {
+        "label": "The boy in red and yellow hanbok",
+        "text": "He is young, which matters — the Sun is not about the tired satisfaction of having reached the finish line decades ago. His bright clothing matches the sun itself, not in competition but in harmony. He is dressed in the colours of the card's own energy."
+      },
+      {
+        "label": "The white horse",
+        "text": "Not wild or prancing, but moving forward with clear direction through the field. The colour white reads as purity of intention, or as clarity — there is no ambiguity about where this momentum is taking him."
+      },
+      {
+        "label": "The sunflowers and golden light",
+        "text": "Sunflowers follow the sun by nature; they are the landscape's own agreement with the card's theme. The golden light floods everything without shadow. This is illumination so complete that nothing remains hidden or confused."
+      },
+      {
+        "label": "The stone wall with morning glories",
+        "text": "Behind him, not ahead. The wall suggests a boundary that has been crossed, a threshold already passed. Morning glories bloom briefly at dawn — the card catches the exact moment of fullest blooming before the day's heat closes them."
+      }
+    ],
+    "upright": "This is the card of something that has already succeeded. Not the hope of success but the actual fact of it — the work is done, the effort has converted to result, and you have arrived at a place where you can finally stop bracing for failure. In a reading, the Sun usually means you can trust what has come to pass. The question is not whether it will hold; it is what you do now that you no longer have to fight for it.",
+    "reversed": "The sun is being obscured, or its warmth is not reaching you. Reversed, the Sun can point to success that feels hollow, achievement that does not warm you, or a brightness that belongs to someone else's story. It can also mean the peak is passing — the moment of fullest blooming has already happened and you are moving into afternoon. Look at what you are celebrating and whether it actually belongs to you.",
+    "love": "Complete contentment with someone specific. The kind of happiness that stops comparing itself to other versions.",
+    "work": "A project or role that has become so natural it no longer requires your anxiety. You have earned the position you are in.",
+    "sajuLens": "The Sun holds the energy of 화(火) — fire at its fullest expression: noon sun, clarity, visibility, the peak before descent. For a fire Day Master (丙火 or 丁火), this card often reads as home ground — you work in bright, public energy and the Sun describes the exact conditions you operate best in. For 수(水) Day Masters (癸水 or 壬水), whose element opposes fire, the Sun can feel harsh or exhausting; what it shows is success that demands you stay visible and warm regardless of your nature. For 木 — wood — the Sun is growth reaching its full height. For 金 — metal — it can read as achievement, but also as a warning that polish only lasts in shade; once you are fully visible, maintenance becomes constant."
+  },
+  "judgement": {
+    "title": "Judgement",
+    "summary": "Judgement is card 20 of the Major Arcana — the moment when what was buried rises to meet you, and you recognize it as your own. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "Judgement is not about punishment or moral reckoning. It is about recognition. The ancestors in their shrouds are rising because they have been called, and they are joyful — this is reunion, not verdict. The card describes a moment when something you thought was finished suddenly has weight again, when a pattern or a person or a version of yourself that you had put away steps forward and asks to be met. The herald's horn is not condemning; it is announcing. What returns is returning because you are finally ready to see it differently.",
+      "The card moves through two registers at once. There is the literal level — an old relationship, a dormant skill, a childhood promise — and the psychological one, in which the past becomes usable only once you stop running from it. Judgement suggests that this crossing does not happen by accident. Some choice, some work, some slow readiness has prepared the ground. When the horn sounds, the tombs open cleanly. What emerges is not what was buried, but what it has become."
+    ],
+    "symbols": [
+      {
+        "label": "The herald in white and gold",
+        "text": "White is both purity and neutrality — this figure has no stake in who rises or why. Gold marks the announcement as significant. The horn is long and curved, a shape that carries sound across distance and over obstacles, suggesting that what is being called has been out of reach."
+      },
+      {
+        "label": "The golden cloud",
+        "text": "The herald stands above, not within the valley. This is the card of perspective shifting — the view from higher ground that lets you see the whole pattern at once instead of the next footstep."
+      },
+      {
+        "label": "Stone tombs and white shrouds",
+        "text": "The burial is thorough and formal. That these people are rising in joy rather than anger or confusion suggests they were not abandoned — they were laid to rest with intention. What rises has been honored even in its rest."
+      },
+      {
+        "label": "Families reuniting, dawn light, clear sky",
+        "text": "The reunion is multi-generational and the light is arriving, not departing. This is not nostalgia — it is a future that could not happen until the past was called forward and acknowledged."
+      }
+    ],
+    "upright": "Something that was put away is ready to move again, and you will know it the moment you see it. Do not mistake this for going backward — Judgement is never mere repetition. The question is whether you have learned enough to work with this material differently. Say yes to the reunion, whether it is with a person, a project, or a version of yourself you had given up on. The ancestors are rising because the ground has been prepared.",
+    "reversed": "The horn has sounded but you are not answering. Either the timing is wrong and you are being called too early, or you are refusing a recognition you are not ready to make. Reversed, Judgement points to an unfinished reckoning — something the past requires of you that you are still running from.",
+    "love": "Someone or something you thought was finished is asking for another chapter. Pay attention to what it has become.",
+    "work": "A skill, contact, or project that was shelved is suddenly relevant again. The market shifted, or you learned enough to use it properly.",
+    "sajuLens": "Judgement carries 火 — fire: the transformative energy of clarity, of things becoming visible. For a fire Day Master (丙火 or 丁火), Judgement often reads as natural — you work by illumination and recognition anyway. The card asks: what have you been holding in the dark that you could finally see? For an 水 Day Master (癸水 or 壬水), Judgement arrives with more difficulty. Water flows; it does not turn back or revisit. When Judgement appears in a water chart, it usually signals a necessary exception — something that does require you to stop flowing and face what is rising. For 土 — earth Day Masters — this card asks whether you have built the foundation solid enough to support what is returning. The ancestors rise only if the ground has been prepared."
+  },
+  "the-world": {
+    "title": "The World",
+    "summary": "The World is card 21 of the Major Arcana — the full circle closing, the journey complete. What it means upright, reversed, and through a saju lens.",
+    "meaning": [
+      "The World is what happens when all the work stops being work. A figure dances inside a wreath of the four noble plants — plum, orchid, chrysanthemum, bamboo — each one planted in restraint, each one flowering anyway. The four guardian deities watch from the corners: dragon, tiger, phoenix, tortoise. This is not rest after effort. This is effort and rest the same thing. The card says: you have moved through all twenty predecessors and arrived somewhere that contains all of them.",
+      "The five-color robe she wears holds all five elements in one garment. The two silk fans she moves are not fighting the air — they are dancing with it. When the World appears it usually means a cycle has genuinely finished, a project has found its shape, a version of yourself has completed its reason for existing. What comes next is not promised. But this: this part is done, and done well enough that you can feel it."
+    ],
+    "symbols": [
+      {
+        "label": "The dancing figure",
+        "text": "Her body is in motion but her stance is rooted. This is not the Fool's weightless step but a grounded turn — the difference between beginning and arriving. The dance itself is the completion, not a means toward something else."
+      },
+      {
+        "label": "The wreath of four noble plants",
+        "text": "Plum, orchid, chrysanthemum, bamboo are the scholar's four gentlemen in Korean painting — restraint made visible. The wreath contains all of them at once, which is what harmony actually looks like: not each one taking turns, but all four blooming in the same frame."
+      },
+      {
+        "label": "The four guardian deities at four corners",
+        "text": "Azure dragon, white tiger, red phoenix, black tortoise mark the cardinal directions and complete the cosmic circle. They are not defending her; they are witnessing. She dances inside their attention."
+      },
+      {
+        "label": "The five-color robe and two silk fans",
+        "text": "Obangbaek — the five colours — contains wood, fire, earth, metal, water woven into one cloth. The fans are not weapons or shields but instruments of motion, making the air into something visible."
+      }
+    ],
+    "upright": "This is the card of the closed circle. Something you began has ripened. A version of your effort has reached its natural end, and the ending itself is the proof it was worth doing. Do not mistake this for permission to stop moving — the World is not laziness — but do let yourself feel the shape you have made. You have earned the moment where the cost and the reward balance exactly. Enjoy it before the next beginning.",
+    "reversed": "The circle has not closed. Either you are still pushing at something that should have finished, or you left before the work was done and now feel the incompleteness like a weight. The card reversed asks: what are you refusing to let end, and what did you abandon before it was ready? One is as damaging as the other.",
+    "love": "A relationship that has moved through seasons and arrived somewhere both of you recognise as home.",
+    "work": "A project that has found its final shape. Completion is here, even if you are not yet ready to call it that.",
+    "sajuLens": "The World holds all five elements in balance — 목火土金水 dancing together. For a 목 (wood) Day Master, this card often reads as a natural endpoint of a growth cycle, permission to rest before the next expansion. Fire 일간 sees it as recognition earned, the moment when effort transmutes into respect. Earth Day Masters recognise themselves in the stability: the foundation has held. Metal 일간 reads it as form completed, the design now finished — though metal often feels the pull to refine it one more time. Water Day Masters, whose nature is flux, sometimes struggle with closure; the World asks them to hold still long enough to see what the stillness reveals. The card's real message shifts by element: for wood it is 'you grew'; for fire, 'you shone'; for earth, 'you held'; for metal, 'you built'; for water, 'you flowed into shape.'"
   }
 }

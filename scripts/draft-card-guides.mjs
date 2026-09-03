@@ -12,7 +12,7 @@ import { dirname, join } from "node:path";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const cards = JSON.parse(readFileSync(join(root, "data", "ksaju-tarot.json"), "utf8"));
 const guideDir = join(root, "data", "card-guides");
-const MODEL = "anthropic/claude-haiku-4-5-20251001";
+const MODEL = "anthropic/claude-haiku-4.5";
 const LOCALES = ["en", "ko", "ja", "zh-TW"];
 const LANG_NAME = { en: "English", ko: "Korean", ja: "Japanese", "zh-TW": "Traditional Chinese (Taiwan)" };
 const FIELDS = ["title", "summary", "meaning", "symbols", "upright", "reversed", "love", "work", "sajuLens"];
@@ -82,7 +82,7 @@ function saveGuides(locale, guides) {
 // 같은 내용의 한국어 요약은 영어의 절반도 안 되는 글자 수로 끝난다.
 // 구글이 메타 설명을 자르는 지점(약 920px)도 라틴 ~155자 / CJK ~65자로 갈린다.
 // 여기에 영어 기준(120-200)을 그대로 적용하면 번역본이 전부 검증 실패한다.
-const SUMMARY_RANGE = { en: [120, 200], ko: [45, 90], ja: [45, 90], "zh-TW": [40, 85] };
+const SUMMARY_RANGE = { en: [120, 200], ko: [45, 90], ja: [38, 90], "zh-TW": [30, 85] };
 
 function validate(guide, slug, locale) {
   for (const f of FIELDS) if (guide[f] === undefined) throw new Error(`${slug}: missing ${f}`);
@@ -114,7 +114,17 @@ async function ask(system, user) {
   });
   if (!res.ok) throw new Error(`OpenRouter ${res.status}: ${await res.text()}`);
   const body = await res.json();
-  return JSON.parse(body.choices[0].message.content);
+  const content = body.choices?.[0]?.message?.content;
+  if (!content) throw new Error(`OpenRouter response has no message content: ${JSON.stringify(body)}`);
+  let text = content.trim();
+  if (text.startsWith("```")) {
+    text = text.replace(/^```[a-zA-Z]*\n?/, "").replace(/```\s*$/, "").trim();
+  }
+  try {
+    return JSON.parse(text);
+  } catch (err) {
+    throw new Error(`Failed to parse model response as JSON: ${err.message}. Raw content starts with: ${text.slice(0, 200)}`);
+  }
 }
 
 const shapeFor = (locale) => `Return ONE JSON object with exactly these keys:
@@ -144,7 +154,9 @@ contains. Do not invent objects, animals, or colours that are not in it.
 CRITICAL — "sajuLens" is what makes this page worth existing. Connect the card to the
 five elements (오행: wood/fire/earth/metal/water) and to the 일간 (Day Master) concept.
 Say how the card reads differently for someone whose Day Master is one element versus
-another. Be concrete.`;
+another. Be concrete. When naming a bare element in English, write the single hanja with
+an English gloss — "火 — fire" or "火 (fire)" — never repeat the same character in
+parentheses as "火(火)".`;
 
 async function draftEnglish(card, exemplar) {
   const system = `${VOICE}\n\n${shapeFor("en")}`;
