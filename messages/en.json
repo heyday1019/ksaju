@@ -32,6 +32,28 @@
     "replay": "Draw again 🔄",
     "disclaimer": "For entertainment 🌙"
   },
+  "Cards": {
+    "metaTitle": "Tarot Card Meanings",
+    "metaDescription": "What each tarot card means — upright, reversed, and read through Korean saju.",
+    "hubTitle": "Card meanings",
+    "hubIntro": "Every card in the deck, read twice: the way tarot has always read it, and the way it looks through saju.",
+    "suitMajor": "Major Arcana",
+    "suitWands": "Wands",
+    "suitCups": "Cups",
+    "suitSwords": "Swords",
+    "suitPentacles": "Pentacles",
+    "meaningHeading": "What the card means",
+    "symbolsHeading": "Symbols in the art",
+    "uprightHeading": "Upright",
+    "reversedHeading": "Reversed",
+    "loveLabel": "In love",
+    "workLabel": "In work",
+    "sajuHeading": "Through a saju lens",
+    "relatedHeading": "Related cards",
+    "ctaTarot": "Pull your daily card →",
+    "ctaDeck": "Get the full deck →",
+    "backToHub": "← All card meanings"
+  },
   "SiteFooter": {
     "about": "About",
     "faq": "FAQ",

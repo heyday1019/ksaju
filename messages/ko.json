@@ -32,6 +32,28 @@
     "replay": "다시 뽑기 🔄",
     "disclaimer": "재미로 보는 거예요 🌙"
   },
+  "Cards": {
+    "metaTitle": "타로 카드 의미",
+    "metaDescription": "카드 한 장 한 장의 의미 — 정방향, 역방향, 그리고 사주로 읽기.",
+    "hubTitle": "카드 해설",
+    "hubIntro": "덱의 모든 카드를 두 번 읽습니다. 타로가 늘 읽어온 방식으로 한 번, 사주로 한 번.",
+    "suitMajor": "메이저 아르카나",
+    "suitWands": "봉",
+    "suitCups": "잔",
+    "suitSwords": "검",
+    "suitPentacles": "금화",
+    "meaningHeading": "이 카드의 의미",
+    "symbolsHeading": "그림 속 상징",
+    "uprightHeading": "정방향",
+    "reversedHeading": "역방향",
+    "loveLabel": "연애에서",
+    "workLabel": "일에서",
+    "sajuHeading": "사주로 읽으면",
+    "relatedHeading": "관련 카드",
+    "ctaTarot": "오늘의 카드 뽑기 →",
+    "ctaDeck": "전체 덱 받기 →",
+    "backToHub": "← 전체 카드 해설"
+  },
   "SiteFooter": {
     "about": "소개",
     "faq": "FAQ",

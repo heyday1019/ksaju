@@ -32,6 +32,28 @@
     "replay": "もう一度引く 🔄",
     "disclaimer": "エンタメ目的です 🌙"
   },
+  "Cards": {
+    "metaTitle": "タロットカードの意味",
+    "metaDescription": "一枚ずつのカードの意味——正位置、逆位置、そして四柱推命から読む。",
+    "hubTitle": "カード解説",
+    "hubIntro": "デッキのすべてのカードを二度読みます。タロットがずっと読んできたやり方で一度、四柱推命で一度。",
+    "suitMajor": "大アルカナ",
+    "suitWands": "棒",
+    "suitCups": "杯",
+    "suitSwords": "剣",
+    "suitPentacles": "金貨",
+    "meaningHeading": "このカードの意味",
+    "symbolsHeading": "絵の中の象徴",
+    "uprightHeading": "正位置",
+    "reversedHeading": "逆位置",
+    "loveLabel": "恋愛では",
+    "workLabel": "仕事では",
+    "sajuHeading": "四柱推命から読むと",
+    "relatedHeading": "関連カード",
+    "ctaTarot": "今日のカードを引く →",
+    "ctaDeck": "デッキ全体を入手 →",
+    "backToHub": "← カード解説一覧"
+  },
   "SiteFooter": {
     "about": "About",
     "faq": "FAQ",

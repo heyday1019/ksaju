@@ -32,6 +32,28 @@
     "replay": "再抽一次 🔄",
     "disclaimer": "僅供娛樂 🌙"
   },
+  "Cards": {
+    "metaTitle": "塔羅牌牌義",
+    "metaDescription": "每一張牌的意義——正位、逆位，以及用四柱命理來讀。",
+    "hubTitle": "牌義解說",
+    "hubIntro": "把整副牌讀兩次：一次用塔羅一直以來的讀法，一次用四柱命理。",
+    "suitMajor": "大阿爾克那",
+    "suitWands": "權杖",
+    "suitCups": "聖杯",
+    "suitSwords": "寶劍",
+    "suitPentacles": "錢幣",
+    "meaningHeading": "這張牌的意義",
+    "symbolsHeading": "畫中的象徵",
+    "uprightHeading": "正位",
+    "reversedHeading": "逆位",
+    "loveLabel": "在感情上",
+    "workLabel": "在工作上",
+    "sajuHeading": "用四柱命理來讀",
+    "relatedHeading": "相關牌",
+    "ctaTarot": "抽今天的牌 →",
+    "ctaDeck": "取得整副牌 →",
+    "backToHub": "← 全部牌義"
+  },
   "SiteFooter": {
     "about": "關於",
     "faq": "FAQ",
