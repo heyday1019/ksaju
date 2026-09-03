@@ -1,0 +1,217 @@
+// data/card-guides/<locale>.json 초안 생성기. 1회성 저작 도구 — 앱에서는 절대 실행되지 않는다.
+//
+//   npm run draft:cards -- --lang en --suit major
+//   npm run draft:cards -- --lang ko,ja,zh-TW --suit major
+//   npm run draft:cards -- --lang ko --force the-fool
+//
+// 이미 채워진 슬러그는 건너뛴다(idempotent). 손질한 본문을 덮어쓰지 않고, 중단해도 이어서 돌릴 수 있다.
+import { readFileSync, writeFileSync, existsSync, mkdirSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+import { dirname, join } from "node:path";
+
+const root = join(dirname(fileURLToPath(import.meta.url)), "..");
+const cards = JSON.parse(readFileSync(join(root, "data", "ksaju-tarot.json"), "utf8"));
+const guideDir = join(root, "data", "card-guides");
+const MODEL = "anthropic/claude-haiku-4-5-20251001";
+const LOCALES = ["en", "ko", "ja", "zh-TW"];
+const LANG_NAME = { en: "English", ko: "Korean", ja: "Japanese", "zh-TW": "Traditional Chinese (Taiwan)" };
+const FIELDS = ["title", "summary", "meaning", "symbols", "upright", "reversed", "love", "work", "sajuLens"];
+
+// ---------- CLI ----------
+function arg(name, fallback = null) {
+  const i = process.argv.indexOf(`--${name}`);
+  return i === -1 ? fallback : process.argv[i + 1];
+}
+const langs = (arg("lang", "en")).split(",").map((s) => s.trim());
+const suit = arg("suit", "major");
+const force = arg("force");
+for (const l of langs) if (!LOCALES.includes(l)) throw new Error(`Unknown locale: ${l}`);
+
+const apiKey = process.env.OPENROUTER_API_KEY;
+if (!apiKey) {
+  console.error("OPENROUTER_API_KEY is not set. Export it and re-run.");
+  process.exit(1);
+}
+
+// ---------- card_prompt: 그림에 실제로 그려진 것 ----------
+function parseCsv(text) {
+  const rows = [];
+  let row = [], field = "", inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const c = text[i];
+    if (inQuotes) {
+      if (c === '"') { if (text[i + 1] === '"') { field += '"'; i++; } else inQuotes = false; }
+      else field += c;
+    } else if (c === '"') inQuotes = true;
+    else if (c === ",") { row.push(field); field = ""; }
+    else if (c === "\r") { /* skip */ }
+    else if (c === "\n") { row.push(field); rows.push(row); row = []; field = ""; }
+    else field += c;
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+  return rows.filter((r) => r.length > 1);
+}
+const csvRows = parseCsv(readFileSync(join(root, "docs", "tarot-cards.csv"), "utf8"));
+const csvHeader = csvRows[0];
+const promptByName = new Map(
+  csvRows.slice(1).map((r) => [r[csvHeader.indexOf("name_en")], r[csvHeader.indexOf("card_prompt")]]),
+);
+
+// ---------- slug (src/lib/card-guides.ts 의 cardSlug 와 동일 규칙) ----------
+const slugOf = (card) =>
+  card.name_en.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "");
+
+// ---------- 파일 I/O ----------
+function loadGuides(locale) {
+  const path = join(guideDir, `${locale}.json`);
+  return existsSync(path) ? JSON.parse(readFileSync(path, "utf8")) : {};
+}
+function saveGuides(locale, guides) {
+  mkdirSync(guideDir, { recursive: true });
+  // 카드 id 순으로 정렬해 diff를 읽을 수 있게 유지한다.
+  const ordered = {};
+  for (const card of cards) {
+    const s = slugOf(card);
+    if (guides[s]) ordered[s] = guides[s];
+  }
+  writeFileSync(join(guideDir, `${locale}.json`), JSON.stringify(ordered, null, 2) + "\n", "utf8");
+}
+
+// ---------- 검증: 통과 못 하면 그 카드는 저장하지 않는다 ----------
+// summary 길이는 로케일마다 다르다. CJK 한 글자가 라틴 문자보다 훨씬 많은 정보를 담아서,
+// 같은 내용의 한국어 요약은 영어의 절반도 안 되는 글자 수로 끝난다.
+// 구글이 메타 설명을 자르는 지점(약 920px)도 라틴 ~155자 / CJK ~65자로 갈린다.
+// 여기에 영어 기준(120-200)을 그대로 적용하면 번역본이 전부 검증 실패한다.
+const SUMMARY_RANGE = { en: [120, 200], ko: [45, 90], ja: [45, 90], "zh-TW": [40, 85] };
+
+function validate(guide, slug, locale) {
+  for (const f of FIELDS) if (guide[f] === undefined) throw new Error(`${slug}: missing ${f}`);
+  if (!Array.isArray(guide.meaning) || guide.meaning.length < 2) throw new Error(`${slug}: meaning needs 2+ paragraphs`);
+  if (!Array.isArray(guide.symbols) || guide.symbols.length < 3) throw new Error(`${slug}: symbols needs 3+ entries`);
+  for (const s of guide.symbols) {
+    if (!s.label?.trim() || !s.text?.trim()) throw new Error(`${slug}: symbol missing label/text`);
+  }
+  const [min, max] = SUMMARY_RANGE[locale];
+  if (guide.summary.length < min || guide.summary.length > max) {
+    throw new Error(`${slug}: summary is ${guide.summary.length} chars, need ${min}-${max} for ${locale}`);
+  }
+  for (const f of ["title", "upright", "reversed", "love", "work", "sajuLens"]) {
+    if (!String(guide[f]).trim()) throw new Error(`${slug}: ${f} is blank`);
+  }
+  return guide;
+}
+
+async function ask(system, user) {
+  const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model: MODEL,
+      messages: [{ role: "system", content: system }, { role: "user", content: user }],
+      response_format: { type: "json_object" },
+      max_tokens: 4000,
+    }),
+  });
+  if (!res.ok) throw new Error(`OpenRouter ${res.status}: ${await res.text()}`);
+  const body = await res.json();
+  return JSON.parse(body.choices[0].message.content);
+}
+
+const shapeFor = (locale) => `Return ONE JSON object with exactly these keys:
+{
+  "title": string,
+  "summary": string (${SUMMARY_RANGE[locale][0]}-${SUMMARY_RANGE[locale][1]} characters — this is a meta description, and the limit differs by language because CJK characters carry more per glyph),
+  "meaning": [string, string]  (2 paragraphs, 60-90 words each),
+  "symbols": [{"label": string, "text": string}] (3-4 entries, 30-50 words each),
+  "upright": string (3-4 sentences),
+  "reversed": string (3 sentences),
+  "love": string (one sentence),
+  "work": string (one sentence),
+  "sajuLens": string (one paragraph, 80-110 words)
+}
+No markdown, no extra keys, no commentary.`;
+
+const VOICE = `You write for KSaju, a Korean saju and tarot site for an international audience.
+Voice: plain, specific, quietly witty. Short sentences. No mysticism-for-its-own-sake,
+no "the universe wants you to", no second-person life advice that could apply to anyone.
+Never claim accuracy or real divination — the site's disclaimer is "For entertainment".
+Write about this specific card, not about tarot in general.
+
+CRITICAL — "symbols" must describe imagery that is ACTUALLY DRAWN on this card. You are
+given the art-direction prompt the illustration was generated from. Use only what it
+contains. Do not invent objects, animals, or colours that are not in it.
+
+CRITICAL — "sajuLens" is what makes this page worth existing. Connect the card to the
+five elements (오행: wood/fire/earth/metal/water) and to the 일간 (Day Master) concept.
+Say how the card reads differently for someone whose Day Master is one element versus
+another. Be concrete.`;
+
+async function draftEnglish(card, exemplar) {
+  const system = `${VOICE}\n\n${shapeFor("en")}`;
+  const user = `Write the English guide for this tarot card.
+
+name_en: ${card.name_en}
+name_kr: ${card.name_kr}
+suit: ${card.suit}
+rank: ${card.rank}
+element: ${card.element ?? "none (Major Arcana)"}
+theme: ${card.theme}
+keywords: ${card.keywords}
+
+Art-direction prompt the illustration was generated from (the ONLY source for "symbols"):
+${promptByName.get(card.name_en) ?? "(unavailable — describe symbols only in general terms)"}
+
+Here is an existing entry in the exact voice and shape to match:
+${JSON.stringify(exemplar, null, 2)}`;
+  return ask(system, user);
+}
+
+async function translate(card, source, locale) {
+  const system = `You are a literary translator working into ${LANG_NAME[locale]}.
+Translate faithfully but idiomatically — the result must read as if written in
+${LANG_NAME[locale]}, not translated. Keep every nuance and the dry, specific tone.
+Keep Korean terms 사주, 일간, 오행 and element names in the target language's normal
+convention. Keep the card's English name somewhere in "title".
+
+Do NOT pad "summary" to match the English length — a natural ${LANG_NAME[locale]} summary
+of the same content is much shorter in characters. Aim for the range below.
+
+${shapeFor(locale)}`;
+  const user = `Translate this tarot card guide into ${LANG_NAME[locale]}.
+The card is ${card.name_en} (${card.name_kr}).
+
+${JSON.stringify(source, null, 2)}`;
+  return ask(system, user);
+}
+
+// ---------- main ----------
+const targets = cards.filter((c) => c.suit === suit);
+const en = loadGuides("en");
+const exemplar = en["the-fool"];
+if (!exemplar) throw new Error("data/card-guides/en.json must contain 'the-fool' as the style exemplar.");
+
+for (const locale of langs) {
+  const guides = loadGuides(locale);
+  let written = 0, skipped = 0, failed = 0;
+
+  for (const card of targets) {
+    const slug = slugOf(card);
+    if (force && slug !== force) continue;
+    if (guides[slug] && slug !== force) { skipped++; continue; }
+
+    try {
+      const raw = locale === "en"
+        ? await draftEnglish(card, exemplar)
+        : await translate(card, en[slug] ?? (() => { throw new Error(`en.json has no '${slug}' to translate from — draft English first`); })(), locale);
+      guides[slug] = validate(raw, slug, locale);
+      saveGuides(locale, guides);   // 카드마다 저장 — 중단돼도 진행분이 남는다
+      written++;
+      console.log(`  ✓ ${locale}/${slug}`);
+    } catch (err) {
+      failed++;
+      console.error(`  ✗ ${locale}/${slug}: ${err.message}`);
+    }
+  }
+
+  console.log(`${locale}: ${written} written, ${skipped} skipped, ${failed} failed`);
+}
