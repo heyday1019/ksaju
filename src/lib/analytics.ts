@@ -15,7 +15,8 @@ export type AnalyticsEvent =
   | "compat_revealed"
   | "spread_started"
   | "spread_card_drawn"
-  | "spread_revealed";
+  | "spread_revealed"
+  | "card_cta_clicked";
 
 let initialized = false;
 let currentLocale: string | undefined;
