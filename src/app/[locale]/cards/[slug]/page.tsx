@@ -100,7 +100,7 @@ export default async function CardGuidePage({
     <div className="flex flex-1 flex-col items-center px-8 py-12">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd).replace(/</g, "\\u003c") }}
       />
       <CardGuideArticle card={card} guide={guide} />
       <div className="w-full max-w-2xl">

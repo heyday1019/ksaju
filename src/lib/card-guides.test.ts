@@ -126,6 +126,7 @@ describe("relatedCards", () => {
   it("defaults to the real published set", () => {
     const related = relatedCards(card("The Fool"));
     const published = new Set(publishedSlugs());
+    expect(related).toHaveLength(4);
     expect(related.every((c) => published.has(cardSlug(c)))).toBe(true);
   });
 });

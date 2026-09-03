@@ -1,3 +1,4 @@
+import "server-only";
 import { TAROT_CARDS, type TarotCard } from "./tarot";
 import type { Locale } from "@/i18n/routing";
 import enGuides from "../../data/card-guides/en.json";
