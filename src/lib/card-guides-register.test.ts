@@ -2,6 +2,18 @@ import { describe, expect, it } from "vitest";
 import guides from "../../data/card-guides/ko.json";
 import { findPlainForm, politen } from "../../scripts/fix-ko-register.mjs";
 
+// -ㅂ니다 / -습니다 / -세요 가 하나라도 있는가. '봅니다'처럼 종성 ㅂ 로 활용된 형태까지
+// 잡아야 하므로 문자열 매칭이 아니라 음절 종성을 본다 ('아니다'는 해라체이므로 제외된다).
+const HANGUL_BASE = 0xac00;
+const JONGSEONG_B = 17;
+function hasPoliteEnding(text: string): boolean {
+  if (/세요/.test(text)) return true;
+  return [...text.matchAll(/[가-힣]+니다/g)].some((m) => {
+    const w = m[0];
+    return (w.charCodeAt(w.length - 3) - HANGUL_BASE) % 28 === JONGSEONG_B;
+  });
+}
+
 // 한국어 해설의 문체 기준은 손으로 쓴 the-fool = 존댓말(합쇼체).
 // 나머지 56장을 `npm run draft:cards -- --lang ko` 로 붙일 때 초안이 해라체로
 // 나오는 일이 있어서, 파일 자체를 불변으로 고정해 둔다. 깨지면 `npm run fix:ko`.
@@ -10,12 +22,12 @@ describe("ko 카드 해설 문체", () => {
     expect(findPlainForm(guides)).toEqual([]);
   });
 
-  it("22장 전부 존댓말 문장을 갖는다", () => {
+  it("78장 전부 존댓말 문장을 갖는다", () => {
     const slugs = Object.keys(guides);
-    expect(slugs).toHaveLength(22);
+    expect(slugs).toHaveLength(78);
     for (const slug of slugs) {
       const entry = (guides as Record<string, { upright: string }>)[slug];
-      expect(entry.upright, slug).toMatch(/(습니다|입니다|세요)/);
+      expect(hasPoliteEnding(entry.upright), slug).toBe(true);
     }
   });
 });

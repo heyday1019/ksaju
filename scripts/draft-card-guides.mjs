@@ -98,7 +98,7 @@ function proseFields(guide) {
   return out;
 }
 
-function validate(guide, slug, locale) {
+function validate(guide, slug, locale, card) {
   for (const f of FIELDS) if (guide[f] === undefined) throw new Error(`${slug}: missing ${f}`);
   if (!Array.isArray(guide.meaning) || guide.meaning.length < 2) throw new Error(`${slug}: meaning needs 2+ paragraphs`);
   if (!Array.isArray(guide.symbols) || guide.symbols.length < 3) throw new Error(`${slug}: symbols needs 3+ entries`);
@@ -112,6 +112,18 @@ function validate(guide, slug, locale) {
   for (const f of ["title", "upright", "reversed", "love", "work", "sajuLens"]) {
     if (!String(guide[f]).trim()) throw new Error(`${slug}: ${f} is blank`);
   }
+  // 메타 디스크립션에는 카드 이름이 들어가야 검색 결과에서 어느 카드인지 보인다.
+  // 번역본은 자국어로 쓰이므로 영어 이름을 요구하지 않는다.
+  if (locale === "en" && card && !guide.summary.toLowerCase().includes(card.name_en.toLowerCase())) {
+    throw new Error(`${slug}: summary must contain the card name "${card.name_en}"`);
+  }
+  // 같은 한자를 괄호로 되풀이하는 버릇(火(火))이 있다. 프롬프트 규칙만으로는 막히지 않아
+  // — 메이저 22장 때 12장에서 나왔고 손으로 고쳤다 — 검증으로 고정한다.
+  for (const [field, value] of proseFields(guide)) {
+    const m = String(value).match(/([\u4e00-\u9fff])\s*[(（]\s*\1\s*[)）]/);
+    if (m) throw new Error(`${slug}: ${field} repeats a hanja in parentheses ("${m[0]}") — write "火 — fire" instead`);
+  }
+
   if (locale === "ja" || locale === "zh-TW") {
     for (const [field, value] of proseFields(guide)) {
       const text = String(value);
@@ -144,6 +156,8 @@ async function ask(system, user) {
   if (text.startsWith("```")) {
     text = text.replace(/^```[a-zA-Z]*\n?/, "").replace(/```\s*$/, "").trim();
   }
+  // 모델이 배열/객체 마지막 항목 뒤에 쉼표를 남기는 일이 있다. JSON.parse 는 거부한다.
+  text = text.replace(/,(\s*[}\]])/g, "$1");
   try {
     return JSON.parse(text);
   } catch (err) {
@@ -182,7 +196,7 @@ another. Be concrete. When naming a bare element in English, write the single ha
 an English gloss — "火 — fire" or "火 (fire)" — never repeat the same character in
 parentheses as "火(火)".`;
 
-async function draftEnglish(card, exemplar) {
+async function draftEnglish(card, exemplar, note = "") {
   const system = `${VOICE}\n\n${shapeFor("en")}`;
   const user = `Write the English guide for this tarot card.
 
@@ -198,11 +212,11 @@ Art-direction prompt the illustration was generated from (the ONLY source for "s
 ${promptByName.get(card.name_en) ?? "(unavailable — describe symbols only in general terms)"}
 
 Here is an existing entry in the exact voice and shape to match:
-${JSON.stringify(exemplar, null, 2)}`;
+${JSON.stringify(exemplar, null, 2)}${note}`;
   return ask(system, user);
 }
 
-async function translate(card, source, locale) {
+async function translate(card, source, locale, note = "") {
   const hangulRule = locale === "ja"
     ? `CRITICAL — the output must contain NO Hangul (Korean script) anywhere, in any field.
 The Korean card name given below is context only, to help you identify the card — never
@@ -231,7 +245,7 @@ ${shapeFor(locale)}`;
   const user = `Translate this tarot card guide into ${LANG_NAME[locale]}.
 The card is ${card.name_en} (${card.name_kr}).
 
-${JSON.stringify(source, null, 2)}`;
+${JSON.stringify(source, null, 2)}${note}`;
   return ask(system, user);
 }
 
@@ -251,10 +265,27 @@ for (const locale of langs) {
     if (guides[slug] && slug !== force) { skipped++; continue; }
 
     try {
-      const raw = locale === "en"
-        ? await draftEnglish(card, exemplar)
-        : await translate(card, en[slug] ?? (() => { throw new Error(`en.json has no '${slug}' to translate from — draft English first`); })(), locale);
-      guides[slug] = validate(raw, slug, locale);
+      // 검증 실패는 대개 summary 길이 초과처럼 고쳐 말하면 되는 것들이다.
+      // 오류 문구를 그대로 되먹여 한 번 더 시도한다.
+      let raw, note = "", lastErr;
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          raw = locale === "en"
+            ? await draftEnglish(card, exemplar, note)
+            : await translate(card, en[slug] ?? (() => { throw new Error(`en.json has no '${slug}' to translate from — draft English first`); })(), locale, note);
+          validate(raw, slug, locale, card);
+          lastErr = null;
+          break;
+        } catch (err) {
+          lastErr = err;
+          note = `
+
+Your previous attempt was rejected: ${err.message}
+Fix exactly that and return the whole JSON object again.`;
+        }
+      }
+      if (lastErr) throw lastErr;
+      guides[slug] = raw;
       saveGuides(locale, guides);   // 카드마다 저장 — 중단돼도 진행분이 남는다
       written++;
       console.log(`  ✓ ${locale}/${slug}`);
