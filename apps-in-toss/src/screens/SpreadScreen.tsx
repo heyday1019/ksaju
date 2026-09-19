@@ -3,13 +3,13 @@ import { drawSpread, type TarotCard } from "../lib/tarot";
 import { spreadReadingKo } from "../content/ko/tarot";
 import { elementOf } from "../lib/saju-display";
 import { TarotCardView } from "../components/TarotCardView";
-import type { UserSaju } from "../lib/saju-types";
+import type { Profile } from "../state/profiles";
 
 export function SpreadScreen({
   me,
   onNeedSaju,
 }: {
-  me: UserSaju | null;
+  me: Profile | null;
   onNeedSaju: () => void;
 }) {
   const [cards, setCards] = useState<
@@ -31,7 +31,7 @@ export function SpreadScreen({
     );
   }
 
-  const el = elementOf(me.dayMaster);
+  const el = elementOf(me.saju.dayMaster);
   const reading = cards ? spreadReadingKo(cards, el) : null;
 
   return (
@@ -47,7 +47,12 @@ export function SpreadScreen({
         <>
           <div className="grid grid-cols-3 gap-2">
             {cards.map((c, i) => (
-              <TarotCardView key={i} card={c} />
+              <div key={i} className="flex flex-col gap-1">
+                <p className="text-center text-[11px] tracking-wider text-gray-400">
+                  {["과거", "현재", "미래"][i]}
+                </p>
+                <TarotCardView card={c} />
+              </div>
             ))}
           </div>
           <div className="flex flex-col gap-2 text-sm">
@@ -57,7 +62,7 @@ export function SpreadScreen({
             <p className="font-bold">{reading.synthesis}</p>
           </div>
           <p className="text-center text-xs text-gray-400">
-            For entertainment 🌙
+            재미로 보는 콘텐츠예요 🌙
           </p>
         </>
       )}

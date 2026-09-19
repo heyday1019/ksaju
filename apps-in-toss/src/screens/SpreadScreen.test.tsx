@@ -1,12 +1,16 @@
 import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SpreadScreen } from "./SpreadScreen";
-import type { UserSaju } from "../lib/saju-types";
+import type { Profile } from "../state/profiles";
 
-const me: UserSaju = {
+const me: Profile = {
+  id: "p1",
+  name: "나",
+  saju: {
   pillars: { year: "甲戌", month: "癸酉", day: "辛卯", hour: null },
   dayMaster: "辛",
-  isTimeCorrected: false,
+    isTimeCorrected: false,
+  },
 };
 
 test("사주 없으면 안내가 보인다", () => {
