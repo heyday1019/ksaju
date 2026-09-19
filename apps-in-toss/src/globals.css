@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+/* 한자 전용 명조 서브셋(Noto Serif KR, 43글리프 ~10KB, variable wght).
+   Gowun Batang 은 한글 전용이라 한자 글리프가 없어 Noto 를 쓴다.
+   한글 본문은 시스템 폰트를 그대로 쓴다 — 한글 명조를 싣는 순간 수백 KB가 된다. */
+@font-face {
+  font-family: "KSaju Hanja";
+  src: url("./assets/hanja.woff2") format("woff2-variations");
+  font-weight: 400 700;
+  font-display: swap;
+}
+
 @theme {
   --color-hanji:     #FBF6E8;
   --color-baekja:    #FFFFFF;
@@ -15,4 +25,53 @@
 }
 
 :root { color-scheme: light; }
-body { background: var(--color-hanji); color: var(--color-muk); }
+
+/* html/body 에 overflow-x:hidden 을 걸지 않는다 — iOS WKWebView 에서 세로 스크롤이
+   통째로 죽는 알려진 문제가 있다. 좌우 스크롤 차단은 앱 루트의 overflow-x:clip 으로
+   처리한다(clip 은 스크롤 컨테이너를 만들지 않는다). 핀치줌은 viewport meta 의
+   user-scalable=no 가 막는다 — body 에 touch-action 을 걸어 제스처를 제한하지 않는다. */
+html, body {
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  background-color: var(--color-hanji);
+  color: var(--color-muk);
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* 좌우 스크롤만 차단. 세로 스크롤에는 영향을 주지 않는다. */
+.app-root {
+  overflow-x: clip;
+}
+
+/* === 한지 바탕 — 실제 한지 사진 타일 + 단청황 45° 미세 스트라이프 ===
+   미니앱은 라이트 전용이라 웹앱의 다크 규칙은 가져오지 않는다. */
+.hanji-paper {
+  background-color: var(--color-hanji);
+  background-image:
+    repeating-linear-gradient(45deg,
+      transparent 0px, transparent 2px,
+      rgba(196, 154, 63, 0.035) 2px, rgba(196, 154, 63, 0.035) 4px),
+    url("./assets/hanji-bg.webp");
+  background-repeat: repeat, repeat;
+  background-size: auto, 612px 428px;
+  background-blend-mode: normal, multiply;
+}
+
+/* === 우물 정(井) 창살 띠 — 가로 2획 + 세로 2획 (인라인 SVG, 외부 요청 0) ===
+   viewBox 높이를 렌더 높이(14px)와 같게 맞춘다. 웹앱처럼 viewBox 30 을 14px 로
+   눌러 담으면 가로획이 0.47px 로 뭉개져 세로획만 남는다. */
+.changsal-band {
+  height: 14px;
+  background-repeat: repeat-x;
+  background-size: 40px 14px;
+  opacity: 0.55;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 14'%3E%3Cg stroke='%23C49A3F' stroke-width='1'%3E%3Cline x1='0' y1='4.5' x2='40' y2='4.5'/%3E%3Cline x1='0' y1='9.5' x2='40' y2='9.5'/%3E%3Cline x1='13.5' y1='0' x2='13.5' y2='14'/%3E%3Cline x1='27.5' y1='0' x2='27.5' y2='14'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* === 한자 강조 === */
+.hanja {
+  font-family: "KSaju Hanja", "Noto Serif KR", "Noto Sans CJK KR", Georgia, serif;
+  letter-spacing: 0.05em;
+}
