@@ -3,8 +3,15 @@
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- 핀치줌 비활성화(앱인토스 필수) + 노치/홈인디케이터 safe-area 사용 -->
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="format-detection" content="telephone=no" />
+    <!-- 앱 이름은 granite.config.ts 의 brand.displayName 과 정확히 일치해야 한다 -->
     <title>K사주</title>
+    <meta property="og:title" content="K사주" />
   </head>
   <body>
     <div id="root"></div>
