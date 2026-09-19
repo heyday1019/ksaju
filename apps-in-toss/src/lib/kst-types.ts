@@ -1,5 +1,5 @@
-import { z } from "zod";
-
+// 생년월일 검증(zod birthSchema)은 제거했다 — BirthForm 이 년/월/일 드롭다운이고
+// 일(日) 선택지를 고른 연·월에서 파생하므로 잘못된 날짜를 만들 수 없다.
 export type BirthData = {
   year: number;
   month: number;
@@ -37,30 +37,3 @@ export type KSTResult = {
   jiziHour: JiziHour | null;
   funFact: string;
 };
-
-export const birthSchema = z
-  .object({
-    year: z
-      .number({ message: "Year is required" })
-      .int()
-      .min(1900, "1900 이후만 지원")
-      .max(2050, "2050까지만 지원"),
-    month: z.number({ message: "Month is required" }).int().min(1).max(12),
-    day: z.number({ message: "Day is required" }).int().min(1).max(31),
-    hour: z.number().int().min(0).max(23).optional(),
-    minute: z.number().int().min(0).max(59).optional(),
-    timezone: z.string().min(1, "Timezone is required"),
-  })
-  .superRefine((data, ctx) => {
-    // 월별 유효 일자 검증 (예: 2월 30일 차단)
-    const maxDay = new Date(data.year, data.month, 0).getDate();
-    if (data.day > maxDay) {
-      ctx.addIssue({
-        code: "custom",
-        path: ["day"],
-        message: `${data.year}년 ${data.month}월은 ${maxDay}일까지입니다`,
-      });
-    }
-    // hour-without-minute 보정은 convertToKST에서 처리 (superRefine mutation은
-    // Zod v4에서 권장되지 않음 — 코드 리뷰 I4).
-  });
