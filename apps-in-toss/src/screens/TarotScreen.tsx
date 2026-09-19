@@ -38,7 +38,7 @@ export function TarotScreen({
   return (
     <section className="flex flex-col gap-4">
       <h2 className="text-xl font-bold">오늘의 타로</h2>
-      <div className="mx-auto w-44">
+      <div className="mx-auto w-40">
         <TarotCardView card={card} showCaption={false} />
       </div>
       <p className="text-center text-sm">{reading}</p>

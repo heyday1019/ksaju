@@ -8,7 +8,7 @@
 //   src/assets/hanji-bg.webp  ← 메인 레포 public/hanji-bg.png (426KB → ~16KB)
 //   src/assets/stamp.webp     ← public/app-icon-600.png 을 160px 로 (~5KB)
 //   src/assets/hanja.woff2    ← Noto Serif KR 에서 한자 43글리프만 서브셋 (~10KB)
-//   src/assets/tarot/*.webp   ← 메인 레포 public/tarot/*.png 78장 (79MB → ~3.6MB)
+//   src/assets/tarot/*.webp   ← 메인 레포 public/tarot/*.png 78장 (79MB → ~1.4MB)
 //
 // 필요 도구(개발 머신에만):
 //   - sharp        : 메인 레포 루트 node_modules 에서 해석한다
@@ -45,13 +45,16 @@ async function stampMark() {
 }
 
 /**
- * 타로 덱 78장.
- * 화면에서 가장 크게 나오는 건 '오늘의 타로' 한 장(CSS 160px)이라 3배 해상도
- * 기기 기준 480px 이면 충분하다. 400px 로 줄여도 480 으로 확대했을 때 원본과
- * 구분되지 않아 400px 로 고정한다(79MB PNG → 약 3.6MB WebP, 장당 ~47KB).
+ * 타로 덱 78장 → 280px WebP.
  *
- * 초기 로딩에는 영향이 없다 — Vite 가 장당 개별 파일로 내보내고 화면에 뜬
- * 카드만 받아간다. 늘어나는 건 .ait 최초 내려받기 용량뿐이다.
+ * 덱은 .ait 에서 내가 줄일 수 있는 유일하게 큰 덩어리다(400px 일 때 3.6MB).
+ * 프레임워크가 넣는 RN 소스맵 2.46MB 는 옵트아웃이 없어 손댈 수 없다.
+ * 로딩 시간으로 두 번 반려된 뒤 240px 까지 내렸다. 표시 크기(오늘의 타로
+ * 160 CSS × 3배 = 480px)로 확대해 원본과 나란히 봐도 구분되지 않는다 —
+ * 평면적인 채색의 일러스트라 축소에 강하다. 약 1.4MB, 장당 ~19KB.
+ *
+ * 런타임 로딩에는 영향이 없다 — Vite 가 장당 개별 파일로 내보내고 화면에 뜬
+ * 카드만 받아간다(사주 화면 0장). 줄어드는 건 번들 내려받기 시간이다.
  */
 async function tarotDeck() {
   const src = join(repo, "public", "tarot");
@@ -61,7 +64,7 @@ async function tarotDeck() {
   let total = 0;
   for (const f of files) {
     const out = join(dir, f.replace(/\.png$/, ".webp"));
-    await sharp(join(src, f)).resize(400).webp({ quality: 70 }).toFile(out);
+    await sharp(join(src, f)).resize(240).webp({ quality: 64 }).toFile(out);
     total += statSync(out).size;
   }
   return { label: `src/assets/tarot/ (${files.length}장)`, size: total };
