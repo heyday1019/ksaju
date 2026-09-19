@@ -2,6 +2,9 @@ import tarot from "../data/ksaju-tarot.json";
 import type { WuXing, UserSaju } from "./saju-types";
 import { WUXING_META, elementLabel } from "./saju-display";
 
+// 오늘의 운세도 같이 쓰므로 공용 모듈로 옮겼다. 기존 import 경로를 위해 재수출한다.
+export { kstDateString } from "./kst-date";
+
 export type TarotCard = {
   id: number;
   suit: "major" | "wands" | "cups" | "swords" | "pentacles";
@@ -20,10 +23,6 @@ export function getCardById(id: number): TarotCard | null {
   return TAROT_CARDS.find((c) => c.id === id) ?? null;
 }
 
-/** KST "YYYY-MM-DD" for `now` (en-CA → ISO-like date). Client + server safe. */
-export function kstDateString(now: Date = new Date()): string {
-  return new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Seoul" }).format(now);
-}
 
 /** Deterministic 32-bit FNV-1a hash. */
 function fnv1a(str: string): number {

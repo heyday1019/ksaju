@@ -72,3 +72,20 @@ export function dateToLuck(now: Date): CurrentLuck {
     monthPillar: saju.pillars.month,
   };
 }
+
+/**
+ * 오늘(KST) 일주 간지. 오늘의 운세가 '나 vs 오늘' 을 비교할 때 쓴다.
+ * dateToLuck 과 같은 이유로 정오 고정 — 일주는 시각이 아니라 날짜로 정해진다.
+ * @param now 기준 시각(보통 new Date()). 테스트 주입용으로 인자화.
+ */
+export function dateToDayPillar(now: Date): string {
+  const saju = birthToSaju({
+    year: Number(formatInTimeZone(now, "Asia/Seoul", "yyyy")),
+    month: Number(formatInTimeZone(now, "Asia/Seoul", "M")),
+    day: Number(formatInTimeZone(now, "Asia/Seoul", "d")),
+    hour: 12,
+    minute: 0,
+    timezone: "Asia/Seoul",
+  });
+  return saju.pillars.day;
+}

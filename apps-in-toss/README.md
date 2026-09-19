@@ -19,7 +19,12 @@ KSaju 사주 엔진을 재사용한 **앱인토스(Apps in Toss) WebView 미니�
 
 ## 기능 (4화면)
 
-- **내 사주** — 생일 입력 → 사주 4기둥(한자·오행색) + 오행 밸런스 + fun 운세 4카드 + 9:16 공유 카드
+- **내 사주** — 생일 입력 → **오늘의 운세 한 줄** + 사주 4기둥(한자·오행색) + 오행 밸런스
+  + fun 운세 4카드 + 9:16 공유 카드
+  - 오늘의 운세는 일간과 **오늘 일주 천간**의 관계(`stemRelation`)로 기운을 정하고,
+    `(일간 × KST 날짜)` FNV-1a 해시로 문장·행운색을 고른다(`src/lib/daily.ts`).
+    웹앱은 같은 자리에 LLM 을 쓰지만 여기서는 외부통신 0 원칙대로 규칙으로 만든다.
+    웹앱 폴백처럼 관계당 문장 하나면 매일 같은 말이 나오므로 관계별 풀을 둔다.
   - **사주 프로필 여러 개** — 나·친구·연인을 이름과 함께 저장하고 칩으로 전환(`src/state/profiles.ts`).
     예전 단일 저장본(`ksaju.toss.userSaju.v1`)은 첫 로드에서 '나' 프로필로 자동 이관된다.
 - **궁합** — K-pop 아이돌 **또는 친구·연인**(저장된 프로필 선택 / 생일 직접 입력) + 9:16 공유 카드
@@ -81,7 +86,9 @@ KSaju 사주 엔진을 재사용한 **앱인토스(Apps in Toss) WebView 미니�
 - CSS 안의 자산도 같은 이유로 `public/` 이 아니라 `src/assets/` 에 둔다 —
   `public/` 의 절대 `url()` 은 Vite 가 재작성하지 않는다.
 - 초기 청크는 **200KB 선**을 유지한다. 타로 덱 78장을 넣고도 그대로다. 무거운 모듈은 부팅 경로에서 빼둔 상태다:
-  만세력(240KB)·아이돌/타로 데이터(72KB)·html-to-image·궁합/타로 화면 전부 동적 import.
+  만세력(240KB)·html-to-image·궁합/타로 화면 전부 동적 import. 데이터 JSON 은
+  **파일별로** 쪼갠다 — 한 덩어리로 묶으면 운세 i18n 하나 때문에 아이돌 DB(34KB)·
+  타로(19KB)까지 사주 화면에서 받아간다.
 
 ## 앱인토스 심사 규칙 대응
 
@@ -111,7 +118,7 @@ KSaju 사주 엔진을 재사용한 **앱인토스(Apps in Toss) WebView 미니�
 npm install        # React 19 peer 충돌 시: npm install --legacy-peer-deps
 npm run dev        # http://localhost:5173 (브라우저 확인용)
 npx granite dev    # 토스 앱 샌드박스에서 실기기 접속
-npm test           # vitest (45 tests)
+npm test           # vitest (49 tests)
 npm run build      # tsc -b && vite build → dist/
 npx ait build      # 배포용 .ait 아티팩트 (deploymentId 발급)
 npm run gen:assets # 디자인 자산 재생성(1회용, sharp + python fonttools 필요)

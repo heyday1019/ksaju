@@ -5,9 +5,12 @@ import { WuxingBalance } from "../components/WuxingBalance";
 import { FortuneCards } from "../components/FortuneCards";
 import { DayMasterHero } from "../components/DayMasterHero";
 import { BrandMark, ChangsalBand } from "../components/Chrome";
+import { kstDateString } from "../lib/kst-date";
 import { ProfileBar } from "../components/ProfileBar";
 import { FortuneShareModal } from "../components/FortuneShareModal";
+import { DailyFortuneCard } from "../components/DailyFortuneCard";
 import type { FortuneCard } from "../lib/fortune";
+import type { DailyFortune } from "../lib/daily";
 import type { BirthData } from "../lib/kst-types";
 import type { Profile } from "../state/profiles";
 
@@ -50,6 +53,7 @@ export function MySajuScreen({
   // 저장된 사람이 없으면 곧바로 입력 화면. 있으면 '+ 사람 추가' 를 눌렀을 때만 연다.
   const [adding, setAdding] = useState(false);
   const [fortune, setFortune] = useState<FortuneCard[] | null>(null);
+  const [daily, setDaily] = useState<DailyFortune | null>(null);
   const [sharing, setSharing] = useState(false);
 
   const showForm = adding || !active;
@@ -57,15 +61,24 @@ export function MySajuScreen({
   useEffect(() => {
     if (!active) {
       setFortune(null);
+      setDaily(null);
       return;
     }
     let alive = true;
     void (async () => {
-      const [{ dateToLuck }, { calcFortune }] = await Promise.all([
-        sajuEngine(),
-        import("../lib/fortune"),
-      ]);
-      if (alive) setFortune(calcFortune(active.saju, dateToLuck(new Date()), "ko"));
+      const [{ dateToLuck, dateToDayPillar }, { calcFortune }, { calcDailyFortune }] =
+        await Promise.all([
+          sajuEngine(),
+          import("../lib/fortune"),
+          import("../lib/daily"),
+        ]);
+      if (!alive) return;
+      const now = new Date();
+      setFortune(calcFortune(active.saju, dateToLuck(now), "ko"));
+      // 오늘 일주의 천간과 내 일간을 비교해 하루 한 줄을 만든다(규칙기반·오프라인)
+      setDaily(
+        calcDailyFortune(active.saju, dateToDayPillar(now)[0], kstDateString()),
+      );
     })();
     return () => {
       alive = false;
@@ -120,6 +133,7 @@ export function MySajuScreen({
         onSelect={onSelect}
         onAdd={() => setAdding(true)}
       />
+      {daily && <DailyFortuneCard name={active.name} fortune={daily} />}
       <DayMasterHero saju={active.saju} name={active.name} />
       <ChangsalBand />
       <Section title="사주 네 기둥">
