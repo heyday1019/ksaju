@@ -8,7 +8,9 @@
 //   src/assets/hanji-bg.webp  ← 메인 레포 public/hanji-bg.png (426KB → ~16KB)
 //   src/assets/stamp.webp     ← public/app-icon-600.png 을 160px 로 (~5KB)
 //   src/assets/hanja.woff2    ← Noto Serif KR 에서 한자 43글리프만 서브셋 (~10KB)
-//   src/assets/tarot/*.webp   ← 메인 레포 public/tarot/*.png 78장 (79MB → ~1.4MB)
+//
+// 타로 덱은 여기서 만들지 않는다 — 번들에 싣지 않고 ksaju.me 에서 받아온다.
+// (메인 레포 public/tarot-webp/, 최초 접속 시간에 얹히지 않게)
 //
 // 필요 도구(개발 머신에만):
 //   - sharp        : 메인 레포 루트 node_modules 에서 해석한다
@@ -16,7 +18,7 @@
 // ============================================================
 import { execFileSync } from "node:child_process";
 import { createRequire } from "node:module";
-import { existsSync, mkdirSync, readdirSync, statSync } from "node:fs";
+import { existsSync, mkdirSync, statSync } from "node:fs";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 
@@ -42,32 +44,6 @@ async function stampMark() {
   const out = join(app, "src", "assets", "stamp.webp");
   await sharp(src).resize(160, 160).webp({ quality: 85 }).toFile(out);
   return out;
-}
-
-/**
- * 타로 덱 78장 → 280px WebP.
- *
- * 덱은 .ait 에서 내가 줄일 수 있는 유일하게 큰 덩어리다(400px 일 때 3.6MB).
- * 프레임워크가 넣는 RN 소스맵 2.46MB 는 옵트아웃이 없어 손댈 수 없다.
- * 로딩 시간으로 두 번 반려된 뒤 240px 까지 내렸다. 표시 크기(오늘의 타로
- * 160 CSS × 3배 = 480px)로 확대해 원본과 나란히 봐도 구분되지 않는다 —
- * 평면적인 채색의 일러스트라 축소에 강하다. 약 1.4MB, 장당 ~19KB.
- *
- * 런타임 로딩에는 영향이 없다 — Vite 가 장당 개별 파일로 내보내고 화면에 뜬
- * 카드만 받아간다(사주 화면 0장). 줄어드는 건 번들 내려받기 시간이다.
- */
-async function tarotDeck() {
-  const src = join(repo, "public", "tarot");
-  const dir = join(app, "src", "assets", "tarot");
-  mkdirSync(dir, { recursive: true });
-  const files = readdirSync(src).filter((f) => f.endsWith(".png"));
-  let total = 0;
-  for (const f of files) {
-    const out = join(dir, f.replace(/\.png$/, ".webp"));
-    await sharp(join(src, f)).resize(240).webp({ quality: 64 }).toFile(out);
-    total += statSync(out).size;
-  }
-  return { label: `src/assets/tarot/ (${files.length}장)`, size: total };
 }
 
 /**
@@ -114,9 +90,9 @@ async function hanjaFont() {
   return out;
 }
 
-const human = (n) => (n > 1024 * 1024 ? `${(n / 1024 / 1024).toFixed(2)} MB` : `${(n / 1024).toFixed(1)} KB`);
+const human = (n) => `${(n / 1024).toFixed(1)} KB`;
 
-for (const make of [hanjiTexture, stampMark, hanjaFont, tarotDeck]) {
+for (const make of [hanjiTexture, stampMark, hanjaFont]) {
   const r = await make();
   const label = typeof r === "string" ? r.replace(app + "\\", "").replace(app + "/", "") : r.label;
   const size = typeof r === "string" ? statSync(r).size : r.size;

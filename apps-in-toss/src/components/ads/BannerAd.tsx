@@ -10,6 +10,10 @@ import { useEffect, useRef, useState } from "react";
 //  - 컨테이너 width 100%, 고정형은 height 96px, 부착 엘리먼트 내부는 비워둔다
 //  - 노필/렌더실패로 한 번도 못 뜬 슬롯은 접어서 빈 여백을 남기지 않는다
 //  - 광고를 가리거나 겹치지 않는다 (탭바보다 아래층에 두고 본문 패딩으로 자리를 비운다)
+//
+// 초기화는 첫 화면이 그려진 뒤로 미룬다. SDK 초기화는 외부 스크립트를 받아오므로
+// 부팅 직후에 걸면 '최초 접속' 구간에 네트워크 대기가 얹힌다 — 로딩 시간으로
+// 세 번 반려된 뒤 넣은 방어다. 광고는 조금 늦게 떠도 되지만 첫 화면은 아니다.
 
 const BANNER_HEIGHT = 96;
 
@@ -57,10 +61,19 @@ export function BannerAd({ adGroupId }: { adGroupId: string }) {
   useEffect(() => {
     let cancelled = false;
     let attached: { destroy: () => void } | undefined;
+    let start: ReturnType<typeof setTimeout> | undefined;
     // 한 번이라도 떴던 슬롯은 이후 자동갱신의 노필로 접지 않는다(SDK 가 다음 소재로 재시도).
     let everRendered = false;
 
-    void (async () => {
+    // 첫 페인트가 끝나고 한 박자 쉰 뒤에 시작한다
+    const idle = (fn: () => void) =>
+      "requestIdleCallback" in window
+        ? (window as unknown as {
+            requestIdleCallback: (cb: () => void, o?: { timeout: number }) => void;
+          }).requestIdleCallback(fn, { timeout: 3000 })
+        : (start = setTimeout(fn, 1200));
+
+    idle(() => void (async () => {
       const ok = await ensureInitialized();
       if (cancelled) return;
       if (!ok) {
@@ -89,10 +102,11 @@ export function BannerAd({ adGroupId }: { adGroupId: string }) {
           },
         },
       });
-    })();
+    })());
 
     return () => {
       cancelled = true;
+      if (start) clearTimeout(start);
       attached?.destroy();
     };
   }, [adGroupId]);
