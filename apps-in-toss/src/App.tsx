@@ -82,8 +82,9 @@ export default function App() {
 
   return (
     <div className="app-root hanji-paper min-h-screen">
-      {/* 하단 도크(배너+탭바)가 가리지 않도록 본문 아래 여백을 넉넉히 둔다 */}
-      <main className="px-4 pt-4 pb-56">
+      {/* 하단 도크(배너+탭바)가 가리지 않도록 본문 아래 여백을 둔다.
+          배너가 없는 첫 화면에서는 불필요한 여백을 만들지 않는다. */}
+      <main className={`px-4 pt-4 ${active ? "pb-60" : "pb-28"}`}>
         {screen === "saju" && (
           <MySajuScreen
             profiles={profiles}
@@ -110,13 +111,15 @@ export default function App() {
         </Suspense>
       </main>
 
-      {/* 광고를 탭바가 덮지 않도록 배너를 탭바 위에 쌓는다(광고 은닉·겹침 금지) */}
+      {/* 광고를 탭바가 덮지 않도록 배너를 탭바 위에 쌓는다(광고 은닉·겹침 금지).
+          배너는 사주를 본 뒤에만 올린다 — 첫 화면(생일 입력)에서 외부 광고 SDK 를
+          부르지 않아야 '최초 접속' 구간이 깨끗하다. */}
       <div
         className="fixed inset-x-0 bottom-0 z-10"
         style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       >
         <TabNav active={screen} onChange={go} />
-        <BannerAd adGroupId={BANNER_AD_GROUP_ID} />
+        {active && <BannerAd adGroupId={BANNER_AD_GROUP_ID} />}
       </div>
     </div>
   );
