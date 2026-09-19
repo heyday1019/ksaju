@@ -1,66 +1,163 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BirthForm } from "../components/BirthForm";
 import { PillarsGrid } from "../components/PillarsGrid";
 import { WuxingBalance } from "../components/WuxingBalance";
 import { FortuneCards } from "../components/FortuneCards";
-import { birthToSaju, dateToLuck } from "../lib/saju";
-import { dayMasterInfo, elementLabel } from "../lib/saju-display";
-import { dayMasterKeywordKo } from "../content/ko/labels";
-import { calcFortune } from "../lib/fortune";
+import { DayMasterHero } from "../components/DayMasterHero";
+import { BrandMark, ChangsalBand } from "../components/Chrome";
+import { ProfileBar } from "../components/ProfileBar";
+import { FortuneShareModal } from "../components/FortuneShareModal";
+import type { FortuneCard } from "../lib/fortune";
 import type { BirthData } from "../lib/kst-types";
-import type { UserSaju } from "../lib/saju-types";
+import type { Profile } from "../state/profiles";
+
+/**
+ * 만세력 엔진(manseryeok, ~300KB)은 부팅에 필요 없다.
+ * 생일을 넣는 순간에만 동적 import 해 초기 로딩에서 제외한다(심사 반려 사유 2).
+ */
+const sajuEngine = () => import("../lib/saju");
+
+function Section({
+  title,
+  children,
+}: {
+  title: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <section className="flex flex-col gap-2">
+      <h3 className="text-xs font-bold tracking-[0.15em] text-gray-400">
+        {title}
+      </h3>
+      {children}
+    </section>
+  );
+}
 
 export function MySajuScreen({
-  saju,
-  onCalc,
+  profiles,
+  active,
+  onSelect,
+  onAdd,
+  onRemove,
 }: {
-  saju: UserSaju | null;
-  onCalc: (s: UserSaju) => void;
+  profiles: Profile[];
+  active: Profile | null;
+  onSelect: (id: string) => void;
+  onAdd: (name: string, birth: BirthData) => Promise<void>;
+  onRemove: (id: string) => void;
 }) {
-  const [local, setLocal] = useState<UserSaju | null>(saju);
-  const cur = local ?? saju;
+  // 저장된 사람이 없으면 곧바로 입력 화면. 있으면 '+ 사람 추가' 를 눌렀을 때만 연다.
+  const [adding, setAdding] = useState(false);
+  const [fortune, setFortune] = useState<FortuneCard[] | null>(null);
+  const [sharing, setSharing] = useState(false);
 
-  function handle(b: BirthData) {
-    const s = birthToSaju({ ...b, timezone: "Asia/Seoul" });
-    setLocal(s);
-    onCalc(s);
+  const showForm = adding || !active;
+
+  useEffect(() => {
+    if (!active) {
+      setFortune(null);
+      return;
+    }
+    let alive = true;
+    void (async () => {
+      const [{ dateToLuck }, { calcFortune }] = await Promise.all([
+        sajuEngine(),
+        import("../lib/fortune"),
+      ]);
+      if (alive) setFortune(calcFortune(active.saju, dateToLuck(new Date()), "ko"));
+    })();
+    return () => {
+      alive = false;
+    };
+  }, [active]);
+
+  async function handle(birth: BirthData, name: string) {
+    await onAdd(name, birth);
+    setAdding(false);
   }
 
-  if (!cur) {
+  if (showForm) {
+    const first = profiles.length === 0;
     return (
-      <section className="flex flex-col gap-4">
-        <h2 className="text-xl font-bold">내 사주</h2>
-        <p className="text-sm text-gray-600">
-          생일을 넣으면 사주 네 기둥과 오늘의 운세를 볼 수 있어요.
-        </p>
-        <BirthForm onSubmit={handle} />
-      </section>
+      <div className="flex flex-col gap-6 pt-6">
+        {first && <BrandMark />}
+        {first && <ChangsalBand />}
+        <div className="flex flex-col gap-1 text-center">
+          <h2 className="text-xl font-bold">
+            {first ? "생일만 알려주세요" : "누구의 사주를 볼까요?"}
+          </h2>
+          <p className="text-sm text-gray-500">
+            {first
+              ? "사주 네 기둥과 오늘의 운세를 바로 보여드릴게요."
+              : "이름과 생일을 넣으면 그 사람 사주도 저장돼요."}
+          </p>
+        </div>
+        <BirthForm
+          withName
+          defaultName={first ? "나" : ""}
+          submitLabel={first ? "내 사주 보기" : "사주 보기"}
+          onSubmit={handle}
+        />
+        {!first && (
+          <button
+            type="button"
+            onClick={() => setAdding(false)}
+            className="self-center text-sm text-gray-500 underline"
+          >
+            취소
+          </button>
+        )}
+      </div>
     );
   }
 
-  const dm = dayMasterInfo(cur.dayMaster);
-  const fortune = calcFortune(cur, dateToLuck(new Date()), "ko");
-
   return (
-    <section className="flex flex-col gap-5">
-      <div>
-        <h2 className="text-xl font-bold">내 사주</h2>
-        <p className="text-sm">
-          일간{" "}
-          <b className="text-[var(--color-jindallae)]">{cur.dayMaster}</b> (
-          {elementLabel(dm.element, "ko")}) — {dayMasterKeywordKo(cur.dayMaster)}
-        </p>
-      </div>
-      <PillarsGrid saju={cur} />
-      <WuxingBalance saju={cur} />
-      <FortuneCards cards={fortune} />
+    <div className="flex flex-col gap-6">
+      <ProfileBar
+        profiles={profiles}
+        activeId={active.id}
+        onSelect={onSelect}
+        onAdd={() => setAdding(true)}
+      />
+      <DayMasterHero saju={active.saju} name={active.name} />
+      <ChangsalBand />
+      <Section title="사주 네 기둥">
+        <PillarsGrid saju={active.saju} />
+      </Section>
+      <Section title="오행 균형">
+        <WuxingBalance saju={active.saju} />
+      </Section>
+      {fortune && (
+        <Section title="오늘의 운세">
+          <FortuneCards cards={fortune} />
+        </Section>
+      )}
       <button
-        onClick={() => setLocal(null)}
-        className="text-sm text-gray-500 underline"
+        type="button"
+        onClick={() => setSharing(true)}
+        disabled={!fortune}
+        className="rounded-lg bg-[var(--color-jindallae)] px-4 py-3.5 font-bold text-white disabled:opacity-40"
       >
-        생일 다시 입력
+        이미지로 저장하기 ✨
       </button>
-      <p className="text-center text-xs text-gray-400">For entertainment 🌙</p>
-    </section>
+      {profiles.length > 1 && (
+        <button
+          type="button"
+          onClick={() => onRemove(active.id)}
+          className="self-center text-sm text-gray-400 underline"
+        >
+          '{active.name}' 삭제
+        </button>
+      )}
+      <p className="text-center text-xs text-gray-400">재미로 보는 콘텐츠예요 🌙</p>
+      {sharing && fortune && (
+        <FortuneShareModal
+          profile={active}
+          cards={fortune}
+          onClose={() => setSharing(false)}
+        />
+      )}
+    </div>
   );
 }
