@@ -5,7 +5,7 @@ export default defineConfig({
   appName: 'ksaju',
   brand: {
     // index.html <title> / og:title / 콘솔 앱 이름과 공백까지 동일해야 한다
-    displayName: 'K사주',
+    displayName: 'K사주타로',
     primaryColor: '#C8385A',        // 진달래 핑크
     icon: 'https://static.toss.im/appsintoss/53459/1717c73a-9d75-4ff2-9fdf-1ef6a9588634.png',
   },

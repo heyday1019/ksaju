@@ -3,7 +3,7 @@ export function ShareFooter() {
   return (
     <div className="mt-5 text-center">
       <div className="text-sm font-bold tracking-wide text-[var(--color-jindallae)]">
-        K사주
+        K사주타로
       </div>
       <div className="mt-0.5 text-[11px] text-gray-400">
         재미로 보는 콘텐츠예요 🌙
