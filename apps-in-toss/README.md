@@ -1,4 +1,4 @@
-# K사주 — Apps in Toss 미니앱
+# K사주타로 — Apps in Toss 미니앱
 
 KSaju 사주 엔진을 재사용한 **앱인토스(Apps in Toss) WebView 미니앱**.
 한국어 전용 · 외부통신 0 · 오프라인 결정적.
@@ -169,7 +169,9 @@ WebP, 48KB). 카드 아트는 첫 화면에 필요 없는 자산인데(타로는
   좌우 스크롤 차단은 앱 루트의 `overflow-x: clip`(스크롤 컨테이너를 만들지 않는다)으로 한다.
 - **`alert()`/`confirm()` 금지** — 피드백은 인페이지 `role="status"` 메시지로 처리합니다.
 - **앱 이름 일치** — `granite.config.ts` 의 `brand.displayName`, `index.html` 의 `<title>`·`og:title`,
-  콘솔 등록 이름이 공백까지 모두 `K사주` 로 같아야 합니다.
+  콘솔 등록 이름이 공백까지 모두 `K사주타로` 로 같아야 합니다. 한 곳만 빠져도
+  "미니앱 이름이 앱 정보등록에 제출된 이름과 동일해야 해요"로 반려된다(실제 이력).
+  이름을 바꿀 때는 `grep -rn "K사주"` 로 전수 확인할 것 — 공유 카드 푸터를 빼먹기 쉽다.
 - **이미지 저장** — WebView 에서 `<a download>` 는 동작하지 않습니다. `src/lib/share.ts` 의
   `saveShareCard` 가 토스 앱 안에서는 `saveBase64Data`(photos:write 권한)로 사진첩에 저장하고,
   브라우저에서만 다운로드로 폴백합니다.
