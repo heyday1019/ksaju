@@ -10,6 +10,7 @@ import {
   removeProfile,
   type Profile,
 } from "./state/profiles";
+import { logScreen } from "./lib/analytics";
 import type { BirthData } from "./lib/kst-types";
 
 // 콘솔에서 발급받은 하단 고정 배너 지면.
@@ -58,6 +59,16 @@ export default function App() {
     window.addEventListener("popstate", onPop);
     return () => window.removeEventListener("popstate", onPop);
   }, []);
+
+  // 탭이 곧 화면이다(단일 라우트 SPA). 콘솔에는 `/::screen` 하나만 쌓이고 있어서
+  // 어느 탭이 실제로 쓰이는지 볼 수 없었다 — 탭별로 `saju::screen` 처럼 남긴다.
+  //
+  // 이 호출이 첫 화면에서 SDK 청크(gzip ~5KB)를 당겨온다. 배너를 첫 화면에 올리지
+  // 않는 규칙과 달리 이건 지킨다 — 광고 네트워크가 아니라 토스 자체 계측이고,
+  // 페인트 이후 비동기로 받으며, 앱 진입 로그는 여기서 놓치면 복구할 수 없다.
+  useEffect(() => {
+    logScreen(screen);
+  }, [screen]);
 
   function select(id: string) {
     setActiveProfile(id);

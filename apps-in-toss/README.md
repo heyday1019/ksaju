@@ -43,6 +43,37 @@ KSaju 사주 엔진을 재사용한 **앱인토스(Apps in Toss) WebView 미니�
 - 노필·렌더실패로 한 번도 못 뜬 슬롯은 접는다(빈 여백 금지). 한 번 떴던 슬롯은 유지(SDK 자동갱신)
 - 배너를 **가리거나 겹치지 않는다** — 하단 도크에서 탭바를 배너 위에 쌓고 본문은 `pb-56` 으로 자리를 비운다
 
+## 이벤트 로그와 전환 지표
+
+2026-10-22 부터 토스 노출 정책이 등급제(출시 / 추천 / 부스팅)로 바뀐다. **추천** 선정 기준의
+하나가 전환율이고, 그 전환율은 콘솔 '핵심 지표'에 등록한 **전환 지표**로 계산한다.
+이 앱은 그전까지 커스텀 로그가 하나도 없어서(`/::screen` 과 플랫폼 자동 로그뿐) 전환율을
+낼 수 없었다. `src/lib/analytics.ts` 가 그 구멍을 메운다.
+
+SDK 2.x 가 주는 것은 `Analytics.screen / impression / click` 세 개뿐이다
+(3.x 문서의 `Analytics.log` 는 여기 없다). 콘솔에는 `{log_name}::{type}` 이름으로 쌓인다.
+
+| 호출 | 콘솔 로그 이름 | 뜻 |
+|---|---|---|
+| `logScreen(tab)` | `saju::screen` 등 | 탭 진입. 단일 라우트라 탭별 사용량이 안 보였다 |
+| `logSajuResult()` | `saju_result::impression` | 생일 입력 → 4기둥 결과 도달. **대표 전환 후보** |
+| `logCompatResult(kind)` | `compat_result::impression` | 궁합 결과 확인 (`kind`=idol/person) |
+| `logTarotResult()` | `tarot_result::impression` | 오늘의 타로 확인 |
+| `logShareSaved(card, how)` | `share_saved::click` | 공유 카드 **저장 성공**(모달 열기와 구분) |
+
+지켜야 할 것:
+
+- **로그 이름을 바꾸면 콘솔 전환 지표가 조용히 0이 된다.** 지표의 `eventName` 이 이 문자열에
+  묶여 있다. `analytics.test.ts` 가 이름을 고정해 둔다
+- SDK 는 반드시 동적 import (정적 import 는 웹에서 크래시 + 심사 반려. 배너와 같은 이유)
+- 생일·이름 같은 개인정보는 파라미터에 넣지 않는다 (외부통신 0 원칙)
+- 테스트는 `src/test-setup.ts` 에서 SDK 를 통째로 mock 한다. 실제 번들을 끌어오면 브리지도
+  없으면서 변환 비용만 얹혀 전체 실행이 타임아웃한다(실제로 App.test 가 단독으론 통과하는데
+  전체에선 깨졌다)
+
+**콘솔 등록은 배포 이후에 한다.** 수집된 적 없는 이름으로 지표를 만들면 값이 영원히 0이고,
+대표 지표는 나중에 삭제할 수도 없다. 배포 → 콘솔 로그 카탈로그에 이름이 뜨는지 확인 → 등록 순서.
+
 ## 디자인 자산
 
 `src/assets/` 의 3개 파일은 `scripts/gen-assets.mjs` 가 만들어 커밋한 것이고,

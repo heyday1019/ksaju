@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { IdolPicker } from "../components/IdolPicker";
 import { CompatResult, type CompatOther } from "../components/CompatResult";
 import { ShareCard } from "../components/ShareCard";
@@ -7,6 +7,7 @@ import { ShareModal } from "../components/ShareModal";
 import { BirthForm } from "../components/BirthForm";
 import { normalizeIdolSaju } from "../lib/compatibility";
 import { toCompatPillars } from "../lib/saju";
+import { logCompatResult } from "../lib/analytics";
 import type { BirthData } from "../lib/kst-types";
 import type { Profile } from "../state/profiles";
 
@@ -24,6 +25,20 @@ export function CompatScreen({
   const [mode, setMode] = useState<Mode>("idol");
   const [other, setOther] = useState<CompatOther | null>(null);
   const [sharing, setSharing] = useState(false);
+
+  // 상대를 고르고 궁합 결과가 실제로 그려진 순간만 기록한다(탭 진입은 제외).
+  // 훅 순서를 지키려고 아래 early return 보다 위에 둔다.
+  const loggedOther = useRef<string | null>(null);
+  useEffect(() => {
+    if (!other) {
+      loggedOther.current = null;
+      return;
+    }
+    const key = `${mode}:${other.name}`;
+    if (loggedOther.current === key) return;
+    loggedOther.current = key;
+    logCompatResult(mode);
+  }, [other, mode]);
 
   if (!me) {
     return (

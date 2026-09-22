@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BirthForm } from "../components/BirthForm";
 import { PillarsGrid } from "../components/PillarsGrid";
 import { WuxingBalance } from "../components/WuxingBalance";
@@ -6,7 +6,9 @@ import { FortuneCards } from "../components/FortuneCards";
 import { DayMasterHero } from "../components/DayMasterHero";
 import { BrandMark, ChangsalBand } from "../components/Chrome";
 import { kstDateString } from "../lib/kst-date";
+import { logSajuResult } from "../lib/analytics";
 import { ProfileBar } from "../components/ProfileBar";
+import { PromotionCard } from "../components/PromotionCard";
 import { FortuneShareModal } from "../components/FortuneShareModal";
 import { DailyFortuneCard } from "../components/DailyFortuneCard";
 import type { FortuneCard } from "../lib/fortune";
@@ -57,6 +59,16 @@ export function MySajuScreen({
   const [sharing, setSharing] = useState(false);
 
   const showForm = adding || !active;
+
+  // 전환 지표의 대표 이벤트 — 생일을 넣고 결과 화면까지 도달한 순간.
+  // 사람(프로필)당 한 번만 보낸다. 프로필을 바꾸면 그 사람 기준으로 다시 한 번.
+  const loggedFor = useRef<string | null>(null);
+  useEffect(() => {
+    if (!active || showForm) return;
+    if (loggedFor.current === active.id) return;
+    loggedFor.current = active.id;
+    logSajuResult();
+  }, [active, showForm]);
 
   useEffect(() => {
     if (!active) {
@@ -134,6 +146,8 @@ export function MySajuScreen({
         onAdd={() => setAdding(true)}
       />
       {daily && <DailyFortuneCard name={active.name} fortune={daily} />}
+      {/* 사주를 본 뒤에만 노출된다 — 첫 화면에서는 SDK 를 부르지 않는다 */}
+      <PromotionCard />
       <DayMasterHero saju={active.saju} name={active.name} />
       <ChangsalBand />
       <Section title="사주 네 기둥">

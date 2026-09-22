@@ -1,5 +1,6 @@
 import { useRef, useState, type ReactNode } from "react";
 import { saveShareCard, type SaveResult } from "../lib/share";
+import { logShareSaved } from "../lib/analytics";
 
 const MESSAGE: Record<SaveResult, string> = {
   saved: "사진첩에 저장했어요 ✨",
@@ -29,7 +30,12 @@ export function ShareModal({
     if (!cardRef.current || saving) return;
     setSaving(true);
     setMessage(null);
-    setMessage(MESSAGE[await saveShareCard(cardRef.current, filename)]);
+    const result = await saveShareCard(cardRef.current, filename);
+    setMessage(MESSAGE[result]);
+    // 모달을 연 것이 아니라 **저장에 성공한** 경우만 확산 신호로 센다.
+    if (result === "saved" || result === "downloaded") {
+      logShareSaved(filename, result);
+    }
     setSaving(false);
   }
 

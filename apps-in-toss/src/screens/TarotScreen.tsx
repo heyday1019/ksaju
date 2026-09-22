@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { drawDailyCard, kstDateString } from "../lib/tarot";
 import { dailyReadingKo } from "../content/ko/tarot";
 import { elementOf } from "../lib/saju-display";
 import { TarotCardView, tarotArtOf } from "../components/TarotCardView";
 import { TarotShareModal } from "../components/FortuneShareModal";
+import { logTarotResult } from "../lib/analytics";
 import type { Profile } from "../state/profiles";
 
 export function TarotScreen({
@@ -14,6 +15,13 @@ export function TarotScreen({
   onNeedSaju: () => void;
 }) {
   const [sharing, setSharing] = useState(false);
+
+  // 사주가 있어야 카드가 나온다 — 카드를 실제로 본 경우만 기록한다.
+  // 훅 순서를 지키려고 아래 early return 보다 위에 둔다.
+  useEffect(() => {
+    if (!me) return;
+    logTarotResult();
+  }, [me]);
 
   if (!me) {
     return (
