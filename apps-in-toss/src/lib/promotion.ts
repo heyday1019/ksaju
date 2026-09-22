@@ -21,16 +21,28 @@ export const PROMOTION_CODE = "01M342SD79WN25KXZZBYYPS27Y";
  * 그래서 `?promo=test` 가 붙은 링크로 열었을 때만 테스트 코드를 쓴다.
  * 테스트 호출은 포인트가 차감되지도 지급되지도 않고, 일반 사용자와
  * 심사자는 이 플래그 없이 진입하므로 실제 동작에 영향이 없다.
+ *
+ * 딥링크의 쿼리는 WebView 의 `location.search` 에 실리지 않는다 —
+ * 미니앱은 `https://{appName}.apps.tossmini.com` 에서 서빙되기 때문이다.
+ * 진입 스킴은 `getSchemeUri()` 로만 읽을 수 있다.
  */
-function resolveCode(): string {
+export async function isTestMode(): Promise<boolean> {
   try {
-    if (new URLSearchParams(window.location.search).get("promo") === "test") {
-      return `TEST_${PROMOTION_CODE}`;
-    }
+    const { getSchemeUri } = await import("@apps-in-toss/web-framework");
+    if (/[?&]promo=test(?:&|$)/.test(getSchemeUri() ?? "")) return true;
   } catch {
-    /* 쿼리를 못 읽으면 실코드를 쓴다 */
+    /* 토스 앱 밖에서는 스킴이 없다 */
   }
-  return PROMOTION_CODE;
+  try {
+    // 브라우저에서 확인할 때의 경로
+    return new URLSearchParams(window.location.search).get("promo") === "test";
+  } catch {
+    return false;
+  }
+}
+
+async function resolveCode(): Promise<string> {
+  return (await isTestMode()) ? `TEST_${PROMOTION_CODE}` : PROMOTION_CODE;
 }
 
 export type Mission = "saju" | "share";
@@ -138,7 +150,10 @@ export async function grantReward(
 ): Promise<GrantResult> {
   if (hasClaimed(hash, mission)) return { ok: false, code: "ALREADY_GRANTED" };
 
-  const params = { promotionCode: resolveCode(), amount: MISSION_AMOUNT[mission] };
+  const params = {
+    promotionCode: await resolveCode(),
+    amount: MISSION_AMOUNT[mission],
+  };
 
   try {
     const { grantPromotionReward } = await import("@apps-in-toss/web-framework");

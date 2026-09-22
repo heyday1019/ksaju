@@ -7,6 +7,7 @@ import {
   grantReward,
   hasClaimed,
   isTerminal,
+  isTestMode,
   type Mission,
 } from "../lib/promotion";
 import { shareMiniApp } from "../lib/toss-share";
@@ -28,7 +29,12 @@ export function PromotionCard() {
   const [busy, setBusy] = useState<Mission | null>(null);
   const [message, setMessage] = useState<string | null>(null);
   const [closed, setClosed] = useState(false);
+  const [testMode, setTestMode] = useState(false);
   const lock = useRef(false);
+
+  useEffect(() => {
+    void isTestMode().then(setTestMode);
+  }, []);
 
   useEffect(() => {
     let alive = true;
@@ -87,6 +93,13 @@ export function PromotionCard() {
       <div>
         <p className="text-[11px] font-bold tracking-[0.15em] text-[var(--color-jindallae)]">
           출시 기념 이벤트
+          {/* 테스트 코드로 호출 중임을 눈으로 확인할 수 있게 한다 —
+              실기기에서 활성화할 때 실제 예산이 나가지 않았는지 알 길이 없었다 */}
+          {testMode && (
+            <span className="ml-1.5 rounded bg-black/10 px-1.5 py-0.5 text-[10px] tracking-normal text-gray-500">
+              테스트 모드
+            </span>
+          )}
         </p>
         <h3 className="mt-0.5 text-base font-bold">
           {allDone ? "참여해 주셔서 고마워요 🎉" : "토스포인트 최대 30원 드려요"}

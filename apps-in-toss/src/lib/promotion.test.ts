@@ -2,12 +2,16 @@ import { beforeEach, expect, test, vi } from "vitest";
 
 const getAnonymousKey = vi.fn();
 const grantPromotionReward = vi.fn();
+const getSchemeUri = vi.fn(() => "intoss://ksaju");
 vi.mock("@apps-in-toss/web-framework", () => ({
   get getAnonymousKey() {
     return getAnonymousKey;
   },
   get grantPromotionReward() {
     return grantPromotionReward;
+  },
+  get getSchemeUri() {
+    return getSchemeUri;
   },
 }));
 
@@ -17,6 +21,7 @@ beforeEach(() => {
   vi.clearAllMocks();
   localStorage.clear();
   getAnonymousKey.mockResolvedValue({ type: "HASH", hash: "h1" });
+  getSchemeUri.mockReturnValue("intoss://ksaju");
 });
 
 test("사용자 식별 실패 4갈래를 구분한다", async () => {
@@ -48,14 +53,24 @@ test("지급 성공하면 hash 원장에 기록해 재지급을 막는다", asyn
   expect(grantPromotionReward).not.toHaveBeenCalled();
 });
 
-test("?promo=test 로 열면 테스트 코드로 호출한다", async () => {
+test("진입 스킴에 promo=test 가 있으면 테스트 코드로 호출한다", async () => {
+  // 딥링크 쿼리는 location.search 가 아니라 진입 스킴에만 실린다
+  getSchemeUri.mockReturnValue("intoss://ksaju?_deploymentId=abc&promo=test");
   grantPromotionReward.mockResolvedValue({ key: "rk_1" });
-  window.history.replaceState({}, "", "/?promo=test");
+
   await grantReward("h9", "saju");
+
   expect(grantPromotionReward).toHaveBeenCalledWith({
     params: { promotionCode: expect.stringMatching(/^TEST_/), amount: 10 },
   });
-  window.history.replaceState({}, "", "/");
+});
+
+test("스킴에 플래그가 없으면 실제 코드로 호출한다", async () => {
+  grantPromotionReward.mockResolvedValue({ key: "rk_1" });
+  await grantReward("h8", "saju");
+  expect(grantPromotionReward).toHaveBeenCalledWith({
+    params: { promotionCode: expect.not.stringMatching(/^TEST_/), amount: 10 },
+  });
 });
 
 test("원장은 사용자(hash)별로 분리된다", async () => {
