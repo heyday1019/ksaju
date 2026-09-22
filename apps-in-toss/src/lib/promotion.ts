@@ -77,7 +77,10 @@ export async function fetchUserHash(): Promise<UserKey> {
 
 const ledgerKey = (hash: string) => `ksaju.promo.v1:${hash}`;
 
-type Ledger = Partial<Record<Mission, string>>; // mission → rewardKey
+type Ledger = Partial<Record<Mission, string>> & {
+  /** 공유를 '안 할래요'로 넘긴 경우. 다시 묻지 않는다. */
+  shareDismissed?: boolean;
+};
 
 function readLedger(hash: string): Ledger {
   try {
@@ -89,6 +92,20 @@ function readLedger(hash: string): Ledger {
 
 export function hasClaimed(hash: string, mission: Mission): boolean {
   return Boolean(readLedger(hash)[mission]);
+}
+
+export function isShareDismissed(hash: string): boolean {
+  return Boolean(readLedger(hash).shareDismissed);
+}
+
+export function dismissShare(hash: string): void {
+  try {
+    const l = readLedger(hash);
+    l.shareDismissed = true;
+    localStorage.setItem(ledgerKey(hash), JSON.stringify(l));
+  } catch {
+    /* 저장 실패는 무시 — 다음에 다시 물어볼 뿐이다 */
+  }
 }
 
 function recordClaim(hash: string, mission: Mission, rewardKey: string): void {
@@ -139,9 +156,15 @@ export function grantMessage(code: string): string {
   }
 }
 
-/** 예산 소진·미등록처럼 재시도가 무의미한 상태 — 지급 UI 를 닫아야 한다. */
+/**
+ * 예산이 소진돼 이벤트가 끝난 상태 — 지급 UI 를 닫는다.
+ *
+ * 4100(프로모션을 찾을 수 없음)은 여기 넣지 않는다. 그건 '끝났다'가 아니라
+ * '아직 테스트 코드로 활성화되지 않았다'는 뜻이라, 닫아버리면 카드가 통째로
+ * 사라져 다른 미션까지 못 누르게 된다.
+ */
 export function isTerminal(code: string): boolean {
-  return code === "4109" || code === "4112" || code === "4100";
+  return code === "4109" || code === "4112";
 }
 
 export async function grantReward(
