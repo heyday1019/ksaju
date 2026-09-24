@@ -1,7 +1,8 @@
 // 앱인토스 콘솔 '핵심 지표'(전환 지표)가 읽는 이벤트 로그.
 //
-// 콘솔 로그 카탈로그에는 `{log_name}::{type}` 이름으로 쌓인다.
-// 예) logSajuResult() → `saju_result::impression`
+// 콘솔 로그 카탈로그에는 `log_name` 이 **그대로** 쌓인다 — `::impression` 같은
+// 접미사는 붙지 않는다(2026-09-24 실제 수집분으로 확인).
+// 예) logSajuResult() → `saju_result`
 // 이 이름을 그대로 전환 지표(EVENT_LOG)의 eventName 에 넣는다.
 // 그래서 **이름을 바꾸면 콘솔 지표가 조용히 0이 된다** — 상수를 함부로 고치지 말 것.
 //
