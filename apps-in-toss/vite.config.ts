@@ -1,12 +1,14 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+import aitDevtools from "@apps-in-toss/devtools/unplugin";
+
 export default defineConfig({
   // .ait 안에서 웹 자산은 `web/` 하위에 담겨 https 오리진의 '하위 경로'로 서빙된다.
   // 기본값('/')이면 index.html 이 /assets/... 를 오리진 루트에서 찾다가 404 → 흰 화면.
   // (심사 반려 사유 1 "앱 스킴 접속 불가" + 2 "20초 초과"의 원인)
   base: "./",
-  plugins: [react()],
+  plugins: [aitDevtools.vite(), react()],
   build: {
     rolldownOptions: {
       output: {
