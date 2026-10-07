@@ -12,6 +12,7 @@ import {
   type Mission,
 } from "../lib/promotion";
 import { shareMiniApp } from "../lib/toss-share";
+import { requestReviewAt } from "../lib/review";
 
 /**
  * 출시 기념 토스포인트 카드. '내 사주' 결과를 본 뒤에만 노출된다.
@@ -60,9 +61,16 @@ export function PromotionCard() {
 
   // 이 자리에서 마지막 미션을 끝냈으면 완료 문구를 잠깐 보여주고 카드를 접는다.
   // 다 끝낸 이벤트 배너가 계속 자리를 차지하지 않도록.
+  //
+  // 카드를 접는 이 순간이 리뷰를 청할 만한 지점이다 — 포인트를 받고 이벤트를
+  // 끝낸 직후다. 공유 시트와 겹치지 않도록 2.5초 뒤에 부른다.
+  // 빈도 제한(순간당 1회·30일 1회)은 requestReviewAt 이 관리한다.
   useEffect(() => {
     if (!hydrated || !sajuDone || !shareGone) return;
-    const t = setTimeout(() => setClosed(true), 2500);
+    const t = setTimeout(() => {
+      setClosed(true);
+      void requestReviewAt("promo_done");
+    }, 2500);
     return () => clearTimeout(t);
   }, [hydrated, sajuDone, shareGone]);
 
