@@ -3,38 +3,30 @@
 // 전에는 `App.tsx` 안에 라이브 ID가 그대로 박혀 있었다. 지면이 늘어나면 흩어지고,
 // 어느 빌드가 어떤 ID를 쓰는지 한눈에 볼 수 없다.
 
-/** 콘솔에서 발급받은 하단 고정 배너 지면 (프로덕션). */
-const LIVE_BANNER_AD_GROUP_ID = "ait.v2.live.14d7a4538d864d74";
-
-/** 공식 테스트 지면. 실 ID로 개발 테스트를 하면 정책 위반이다. */
-const TEST_BANNER_AD_GROUP_ID = "ait-ad-test-banner-id";
-
 /**
  * 하단 배너 지면.
  *
- * **프로덕션은 env 에 의존하지 않는다.** 프로덕션 ID까지 env 주입으로 바꾸면
- * 빌드 설정이 한 번 빠지는 순간 라이브 번들이 조용히 테스트 지면으로 나가고,
- * 화면은 정상으로 보이면서 수익만 0이 된다 — 눈에 띄지 않는 종류의 사고다.
- * 그래서 프로덕션은 상수로 고정하고, 바꿀 수 있는 쪽은 개발 빌드만 둔다.
+ * **프로덕션 분기에 테스트 ID 문자열이 남으면 안 된다.** `ait build` 가 출시
+ * 번들을 검사해서 "테스트 광고 그룹 ID 가 들어 있다"로 거부하고 `.ait` 를
+ * 아예 만들지 않는다(실제로 막혔다). 그래서 개발 분기를 삼항 안에 인라인으로
+ * 두고 `import.meta.env.DEV` 가 정적으로 false 가 되면 통째로 제거되게 한다.
+ * 상수로 꺼내 쓰면 함수 본문에 참조가 남아 제거되지 않는다.
  *
- * 개발 빌드는 기본적으로 테스트 지면을 쓴다. 다른 지면을 확인해야 하면
- * `VITE_BANNER_AD_GROUP_ID` 로 덮어쓴다.
+ * 프로덕션은 env 에 의존하지 않는다. 프로덕션 ID까지 env 주입으로 바꾸면 빌드
+ * 설정이 한 번 빠지는 순간 라이브 번들이 조용히 테스트 지면으로 나가고, 화면은
+ * 정상으로 보이면서 수익만 0이 된다 — 눈에 띄지 않는 종류의 사고다.
+ * (지금은 `ait build` 가 그 조합 자체를 막지만, 의존하지 않는 쪽이 낫다.)
+ *
+ * 개발 빌드는 공식 테스트 지면을 쓴다. 실 ID 로 개발 테스트를 하면 정책 위반이다.
+ * 다른 지면을 확인해야 하면 `VITE_BANNER_AD_GROUP_ID` 로 덮어쓴다.
  *
  * 참고: 광고 SDK 는 토스 앱 안에서만 동작한다(`isSupported()` 가 웹에서 false).
  * 그래서 브라우저 개발 중에는 어느 ID든 애초에 광고가 뜨지 않는다.
  */
-export function resolveBannerAdGroupId(env: {
-  dev: boolean;
-  override?: string;
-}): string {
-  if (!env.dev) return LIVE_BANNER_AD_GROUP_ID;
-  return env.override || TEST_BANNER_AD_GROUP_ID;
-}
-
-export const BANNER_AD_GROUP_ID: string = resolveBannerAdGroupId({
-  dev: import.meta.env.DEV,
-  override: import.meta.env.VITE_BANNER_AD_GROUP_ID as string | undefined,
-});
+export const BANNER_AD_GROUP_ID: string = import.meta.env.DEV
+  ? (import.meta.env.VITE_BANNER_AD_GROUP_ID as string | undefined) ||
+    "ait-ad-test-banner-id"
+  : "ait.v2.live.14d7a4538d864d74";
 
 /**
  * 배너와 조작 영역(탭바·버튼) 사이 최소 이격.
