@@ -16,6 +16,17 @@ KSaju 사주 엔진을 재사용한 **앱인토스(Apps in Toss) WebView 미니�
 | 서비스 링크 | `intoss://ksaju` |
 | 카테고리 | 생활 > 콘텐츠 > 운세 |
 | 콘솔 홈 | https://apps-in-toss.toss.im/workspace/53459/mini-app/77288/home |
+| 배너 광고 지면 | `ait.v2.live.14d7a4538d864d74` (BANNER) |
+| 프로모션 | `60707` / `01M4APKX5AAK9KRHF8MTX1RCG1` — 예산 20,000원 |
+
+**프로모션에는 생성 후 못 바꾸는 값이 있다.** `dailyUserRewardLimitAmount`(하루
+한도)와 혜택탭 설정(`missionName`·`rewardAmount`·`landingUrl`)은 MCP 도 콘솔 웹
+수정 화면도 입력란이 없다 — **프로모션을 새로 만드는 수밖에 없다.**
+그래서 하루 한도를 50원으로 넉넉히 잡아뒀다(현재 사용 40원 = 사주 10 + 공유 30,
+남은 10원은 '아침 운세 알림 등록' 자리). `promotion.test.ts` 가 합계를 지킨다.
+
+코드를 바꾸면 번들 검수가 한 사이클 더 돈다. 첫 프로모션(53739, 하루 한도 30원)을
+바꿀 수 없어서 겪은 일이다.
 
 ## 기능 (4화면)
 
@@ -62,10 +73,24 @@ SDK 가 주는 것은 `Analytics.screen / impression / click` 세 개다.
 | `logCompatResult(kind)` | `compat_result` | EVENT | 궁합 결과 확인 (`kind`=idol/person) |
 | `logTarotResult()` | `tarot_result` | EVENT | 오늘의 타로 확인 |
 | `logShareSaved(card, how)` | `share_saved` | EVENT | 공유 카드 **저장 성공**(모달 열기와 구분) |
+| `logDailyFortuneOpen(state)` | `daily_fortune_open` | EVENT | 오늘의 운세 노출. `state`=teaser/card |
+| `logShareClicked(from)` | `share_clicked` | EVENT | 토스 공유 시트를 띄웠다 |
+
+**`share_saved` 와 `share_clicked` 는 다른 사건이다.** 저장은 PNG 를 사진첩에 쓰고
+끝나서 아무도 받지 않고, 사용자가 그걸 어디에 올렸는지 측정할 방법도 없다. 한동안
+저장만 계측해서 7일 5건을 '공유 5건'으로 읽고 있었다. 신규 유입이 생기는 경로는
+`share_clicked` 쪽뿐이다.
 
 등록된 전환 지표(2026-09-24, `event_act_type_set` 으로 생성):
 `saju_result`(대표) / `share_saved` / `tarot_result`.
+`daily_fortune_open`·`share_clicked` 는 **로그만 쌓고 지표 등록은 보류**했다 —
+전환 지표 권장 상한이 3개이고 이미 3개다. 수치가 의미 있으면 서브 하나와 교체한다.
 **활성 지표(ACTIVATION)는 MCP 로 조회·설정할 수 없다 — 콘솔 웹에서만 된다.**
+
+**로그는 한 틱에 여러 건이 나갈 수 있다**(결과 도달 + 운세 노출이 같은 effect
+flush 에서 같이 발생). 호출마다 `await import()` 를 새로 하면 모듈 로더에 따라
+첫 건만 살고 나머지가 조용히 유실된다 — `catch` 가 가려서 드러나지도 않는다.
+그래서 `analytics.ts` 가 SDK 모듈 promise 를 **메모이즈**한다.
 
 지켜야 할 것:
 
@@ -217,6 +242,21 @@ WebP, 48KB). 카드 아트는 첫 화면에 필요 없는 자산인데(타로는
   콘솔 이름과 공백까지 같게(`K사주타로`) 유지한다. 한 곳만 어긋나도
   "미니앱 이름이 앱 정보등록에 제출된 이름과 동일해야 해요"로 반려된 이력이 있다.
   이름을 바꿀 때는 `grep -rn "K사주"` 로 전수 확인할 것 — 공유 카드 푸터를 빼먹기 쉽다.
+- **출시 번들에 테스트 광고 ID 문자열이 남으면 반려** — 런타임에 쓰지 않는 상수여도
+  검수가 번들 문자열을 본다(스트레스 팡팡 20261007-12, 걱정인형 우체통 2026-08-21).
+  `npm run build` 가 `scripts/check-release.mjs` 로 막는다. 테스트 ID 를 상수로
+  꺼내 함수에서 참조하면 트리셰이킹이 안 돼 번들에 남는다 — 개발 분기는
+  `import.meta.env.DEV` 삼항 **안에 인라인**으로 둘 것(`src/config/ads.ts`).
+- **배너는 조작 영역에서 24px 이상** — 토스애즈 SSP 오클릭 유도 금지.
+  탭바 바로 밑에 붙여두면 탭을 누르려다 광고를 누른다(`AD_CONTROL_GAP_PX`).
+- **공유 링크에는 `ogImageUrl` 을 반드시 붙인다** — 비우면 그림이 핵심인 앱의 링크가
+  미리보기 없는 맨 링크로 돌아다닌다. `Share.createLink({ path, ogImageUrl })`.
+  `getTossShareLink`·`share` 는 3.5.0 에서 **@deprecated**.
+  공유 시트는 **텍스트만** 싣는다 — 카드 이미지 자체는 보낼 수 없다.
+- **리뷰 요청은 빈도를 우리가 건다** — `Review.request()` 는 인자도 제한도 없다.
+  `src/lib/review.ts` 가 moment 당 1회 · 30일 1회로 묶고, 첫 진입에는 붙이지 않는다.
+  `isSupported()` 를 **기록보다 먼저** 봐야 한다 — 순서를 바꾸면 구버전 사용자의
+  '1회' 가 영구히 소진된다.
 - **이미지 저장** — WebView 에서 `<a download>` 는 동작하지 않습니다. `src/lib/share.ts` 의
   `saveShareCard` 가 토스 앱 안에서는 `saveBase64Data`(photos:write 권한)로 사진첩에 저장하고,
   브라우저에서만 다운로드로 폴백합니다.
