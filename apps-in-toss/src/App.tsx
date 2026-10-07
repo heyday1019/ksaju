@@ -11,10 +11,8 @@ import {
   type Profile,
 } from "./state/profiles";
 import { logScreen } from "./lib/analytics";
+import { AD_CONTROL_GAP_PX, BANNER_AD_GROUP_ID } from "./config/ads";
 import type { BirthData } from "./lib/kst-types";
-
-// 콘솔에서 발급받은 하단 고정 배너 지면.
-const BANNER_AD_GROUP_ID = "ait.v2.live.14d7a4538d864d74";
 
 // 첫 화면(내 사주)만 초기 청크에 싣고, 나머지 탭은 눌렀을 때 받는다.
 // (궁합은 아이돌 DB 60KB, 타로는 카드 데이터 24KB를 함께 끌고 온다)
@@ -95,7 +93,7 @@ export default function App() {
     <div className="app-root hanji-paper min-h-screen">
       {/* 하단 도크(배너+탭바)가 가리지 않도록 본문 아래 여백을 둔다.
           배너가 없는 첫 화면에서는 불필요한 여백을 만들지 않는다. */}
-      <main className={`px-4 pt-4 ${active ? "pb-60" : "pb-28"}`}>
+      <main className={`px-4 pt-4 ${active ? "pb-64" : "pb-28"}`}>
         {screen === "saju" && (
           <MySajuScreen
             profiles={profiles}
@@ -130,7 +128,15 @@ export default function App() {
         style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
       >
         <TabNav active={screen} onChange={go} />
-        {active && <BannerAd adGroupId={BANNER_AD_GROUP_ID} />}
+        {active && (
+          <>
+            {/* 탭 버튼과 배너를 떼어 놓는다 — 붙여 두면 탭을 누르려다 광고를
+                누르게 되고, 이건 토스애즈 SSP 의 오클릭 유도 금지에 걸린다.
+                탭바(플로팅 필)처럼 투명해서 본문이 뒤로 흐른다. */}
+            <div aria-hidden style={{ height: AD_CONTROL_GAP_PX }} />
+            <BannerAd adGroupId={BANNER_AD_GROUP_ID} />
+          </>
+        )}
       </div>
     </div>
   );
