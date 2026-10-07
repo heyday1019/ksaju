@@ -108,3 +108,22 @@ test("4110 은 한 번 재시도한다", async () => {
   expect(await grantReward("h1", "saju")).toEqual({ ok: true });
   expect(grantPromotionReward).toHaveBeenCalledTimes(2);
 });
+
+// 프로모션의 `dailyUserRewardLimitAmount` 는 **생성 후 수정이 불가능하다**
+// (MCP 도 콘솔 웹도 입력란이 없다). 현재 프로모션 60707 은 50원으로 만들어져
+// 있다. 미션 합계가 이걸 넘으면 마지막 미션이 조용히 지급 실패하고, 고치려면
+// 프로모션을 새로 만들어 코드 교체 + 검수를 또 돌려야 한다.
+const PROMOTION_DAILY_USER_LIMIT = 50;
+
+test("미션 합계가 프로모션 하루 한도를 넘지 않는다", () => {
+  const total = Object.values(MISSION_AMOUNT).reduce((a, b) => a + b, 0);
+  expect(total).toBeLessThanOrEqual(PROMOTION_DAILY_USER_LIMIT);
+});
+
+// 1회 지급 한도(maxSingleRewardAmount)는 30원으로 만들어져 있다.
+// 이걸 넘는 미션은 4114(1회 지급 금액 초과)로 실패한다.
+test("미션별 금액이 1회 지급 한도를 넘지 않는다", () => {
+  for (const amount of Object.values(MISSION_AMOUNT)) {
+    expect(amount).toBeLessThanOrEqual(30);
+  }
+});

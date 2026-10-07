@@ -11,8 +11,19 @@
 // 최대 30원이라 감당 가능한 수준이라 택했다.
 // ============================================================
 
-/** 콘솔에서 발급받은 프로모션 코드. */
-export const PROMOTION_CODE = "01M342SD79WN25KXZZBYYPS27Y";
+/**
+ * 콘솔에서 발급받은 프로모션 코드.
+ *
+ * 2026-10-07 에 교체했다. 이전 코드(`01M342SD79WN25KXZZBYYPS27Y`)는 1인 하루
+ * 한도가 30원으로 고정돼 있었고, **그 필드는 생성 후 수정이 불가능하다**
+ * (MCP 도 콘솔 웹도 입력란이 없다). 공유를 30원으로 올리면 사주 10원과 합쳐
+ * 40원이 되어 한도를 넘기므로 프로모션을 새로 만들어야 했다. 혜택탭 문구도
+ * 생성 시에만 정할 수 있어 같은 이유가 겹쳤다.
+ *
+ * 새 프로모션: 예산 20,000원 / 1회 최대 30원 / 하루 한도 50원.
+ * 한도를 50원으로 잡아둔 건 나중에 '아침 운세 알림 등록 10원'을 붙일 자리다.
+ */
+export const PROMOTION_CODE = "01M4APKX5AAK9KRHF8MTX1RCG1";
 
 /**
  * 프로모션은 `TEST_` 코드로 실기기에서 1회 호출해야 정상 상태가 된다
@@ -47,8 +58,11 @@ async function resolveCode(): Promise<string> {
 
 export type Mission = "saju" | "share";
 
-/** 미션별 지급액. 합계가 프로모션의 1일 한도(30원)와 같다. */
-export const MISSION_AMOUNT: Record<Mission, number> = { saju: 10, share: 20 };
+/**
+ * 미션별 지급액. 합계 40원으로, 프로모션의 1일 한도 50원 안에 있다.
+ * 남은 10원은 '아침 운세 알림 등록' 미션 자리다(서버 작업 후 추가).
+ */
+export const MISSION_AMOUNT: Record<Mission, number> = { saju: 10, share: 30 };
 
 export const MISSION_LABEL: Record<Mission, string> = {
   saju: "내 사주 확인하기",

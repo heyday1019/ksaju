@@ -120,7 +120,7 @@ export function PromotionCard() {
         <h3 className="mt-0.5 text-base font-bold">
           {sajuDone && shareGone
             ? "참여해 주셔서 고마워요 🎉"
-            : "토스포인트 최대 30원 드려요"}
+            : `토스포인트 최대 ${MISSION_AMOUNT.saju + MISSION_AMOUNT.share}원 드려요`}
         </h3>
       </div>
 
