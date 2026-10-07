@@ -6,11 +6,14 @@ import { FortuneCards } from "../components/FortuneCards";
 import { DayMasterHero } from "../components/DayMasterHero";
 import { BrandMark, ChangsalBand } from "../components/Chrome";
 import { kstDateString } from "../lib/kst-date";
-import { logSajuResult } from "../lib/analytics";
+import { logDailyFortuneOpen, logSajuResult } from "../lib/analytics";
 import { ProfileBar } from "../components/ProfileBar";
 import { PromotionCard } from "../components/PromotionCard";
 import { FortuneShareModal } from "../components/FortuneShareModal";
-import { DailyFortuneCard } from "../components/DailyFortuneCard";
+import {
+  DailyFortuneCard,
+  DailyFortuneTeaser,
+} from "../components/DailyFortuneCard";
 import type { FortuneCard } from "../lib/fortune";
 import type { DailyFortune } from "../lib/daily";
 import type { BirthData } from "../lib/kst-types";
@@ -57,6 +60,8 @@ export function MySajuScreen({
   const [fortune, setFortune] = useState<FortuneCard[] | null>(null);
   const [daily, setDaily] = useState<DailyFortune | null>(null);
   const [sharing, setSharing] = useState(false);
+  /** 티저 → 생일 폼 포커스 이동용. BirthForm 이 id 를 밖으로 열어주지 않는다. */
+  const formRef = useRef<HTMLDivElement>(null);
 
   const showForm = adding || !active;
 
@@ -69,6 +74,22 @@ export function MySajuScreen({
     loggedFor.current = active.id;
     logSajuResult();
   }, [active, showForm]);
+
+  // 오늘의 운세 노출. 생일이 없어 티저만 보인 경우와 실제 카드를 구분해 보낸다.
+  // 지금까지 운세는 전혀 계측되지 않아서 얼마나 읽히는지 알 수 없었다.
+  const dailyLoggedFor = useRef<string | null>(null);
+  useEffect(() => {
+    const key = showForm
+      ? profiles.length === 0
+        ? "teaser"
+        : null // 프로필이 있는데 '추가' 폼을 연 경우 — 운세가 보이지 않는다
+      : daily && active
+        ? `card:${active.id}`
+        : null;
+    if (!key || dailyLoggedFor.current === key) return;
+    dailyLoggedFor.current = key;
+    logDailyFortuneOpen(key === "teaser" ? "teaser" : "card");
+  }, [showForm, profiles.length, daily, active]);
 
   useEffect(() => {
     if (!active) {
@@ -102,11 +123,28 @@ export function MySajuScreen({
     setAdding(false);
   }
 
+  /**
+   * 티저를 눌렀을 때 생일 폼으로 데려간다.
+   *
+   * 새 화면을 열지 않는다 — 폼은 이미 같은 화면 아래에 있으므로 스크롤과 포커스만
+   * 옮긴다. `BirthForm` 은 내부에서 `useId` 로 id 를 만들어 밖에서 특정 입력을
+   * 지목할 수 없으니, 감싼 컨테이너에서 첫 입력 요소를 찾는다.
+   */
+  function focusForm() {
+    const node = formRef.current;
+    if (!node) return;
+    node.scrollIntoView({ behavior: "smooth", block: "center" });
+    node.querySelector<HTMLElement>("input, select")?.focus();
+  }
+
   if (showForm) {
     const first = profiles.length === 0;
     return (
       <div className="flex flex-col gap-6 pt-6">
         {first && <BrandMark />}
+        {/* 생일이 없어도 '오늘의 운세'가 무엇인지 먼저 보여준다. 누르면 폼으로
+            데려가지만 강요하지는 않는다 — 아래 폼을 바로 써도 똑같이 동작한다. */}
+        {first && <DailyFortuneTeaser onTap={focusForm} />}
         {first && <ChangsalBand />}
         <div className="flex flex-col gap-1 text-center">
           <h2 className="text-xl font-bold">
@@ -118,12 +156,14 @@ export function MySajuScreen({
               : "이름과 생일을 넣으면 그 사람 사주도 저장돼요."}
           </p>
         </div>
-        <BirthForm
-          withName
-          defaultName={first ? "나" : ""}
-          submitLabel={first ? "내 사주 보기" : "사주 보기"}
-          onSubmit={handle}
-        />
+        <div ref={formRef}>
+          <BirthForm
+            withName
+            defaultName={first ? "나" : ""}
+            submitLabel={first ? "내 사주 보기" : "사주 보기"}
+            onSubmit={handle}
+          />
+        </div>
         {!first && (
           <button
             type="button"
