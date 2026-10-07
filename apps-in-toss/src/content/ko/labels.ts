@@ -1,4 +1,4 @@
-import { elementOf } from "../../lib/saju-display";
+import { elementOf, WUXING_KO } from "../../lib/saju-display";
 import type { WuXing } from "../../lib/saju-types";
 
 const COMPAT_LABELS: Record<string, string> = {
@@ -41,4 +41,68 @@ const DAY_MASTER_KO: Record<string, string> = {
 
 export function dayMasterKeywordKo(dayStem: string): string {
   return DAY_MASTER_KO[dayStem] ?? "";
+}
+
+// ─── 오행 균형 해설 ───────────────────────────────────────────────
+//
+// 막대 그래프만 보여주면 숫자의 뜻을 알 수 없다. 추천 미니앱 UX 기준이
+// "점수·유형이 나오면 그 의미를 설명할 것"을 요구하므로 한 문장을 붙인다.
+// 규칙기반이고 LLM 을 쓰지 않는다(이 앱의 다른 운세들과 같은 방식).
+
+/** 오행별 성향 한 마디. 모두 '힘'으로 끝나 뒤에 붙는 조사가 항상 '이/은'이다. */
+const WUXING_TRAIT: Record<WuXing, string> = {
+  wood: "뻗어나가는 힘",
+  fire: "드러내는 힘",
+  earth: "버티는 힘",
+  metal: "끊어내는 힘",
+  water: "스며드는 힘",
+};
+
+/** 한글 음절에 종성이 있는지. 조사를 고르는 데 쓴다. */
+function hasFinalConsonant(word: string): boolean {
+  const code = word.charCodeAt(word.length - 1) - 0xac00;
+  if (code < 0 || code > 11171) return false;
+  return code % 28 !== 0;
+}
+
+/** `목` → `목이`, `화` → `화가` */
+function withSubject(word: string): string {
+  return word + (hasFinalConsonant(word) ? "이" : "가");
+}
+
+/** `목` → `목은`, `화` → `화는` */
+function withTopic(word: string): string {
+  return word + (hasFinalConsonant(word) ? "은" : "는");
+}
+
+const ELS: WuXing[] = ["wood", "fire", "earth", "metal", "water"];
+
+/**
+ * 오행 균형을 한 문장으로 풀어준다.
+ *
+ * 가장 두터운 오행과 비어 있는 오행만 본다. 치우침이 1 이하면 균형형으로 말한다.
+ * 조언은 "챙기면 좋아요" 수준으로만 한다 — 타깃에 10대가 포함되므로 단정하거나
+ * 겁주는 표현은 쓰지 않는다.
+ */
+export function wuxingSummaryKo(balance: Record<WuXing, number>): string {
+  const counts = ELS.map((e) => balance[e]);
+  const max = Math.max(...counts);
+  const min = Math.min(...counts);
+
+  if (max - min <= 1) {
+    return "다섯 기운이 고르게 퍼져 있어요 — 어느 한쪽으로 치우치지 않는 균형형이에요.";
+  }
+
+  const top = ELS.filter((e) => balance[e] === max);
+  const empty = ELS.filter((e) => balance[e] === 0);
+  const topKo = top.map((e) => WUXING_KO[e]).join("·");
+  const topTrait = WUXING_TRAIT[top[0]];
+
+  if (empty.length === 0) {
+    return `${withSubject(topKo)} 가장 두터워요 — ${topTrait}이 먼저 나오는 편이에요.`;
+  }
+
+  const emptyKo = empty.map((e) => WUXING_KO[e]).join("·");
+  const emptyTrait = WUXING_TRAIT[empty[0]];
+  return `${withSubject(topKo)} 두텁고 ${withTopic(emptyKo)} 비어 있어요 — ${topTrait}은 쉽게 나오고, ${emptyTrait}은 의식해서 챙기면 좋아요.`;
 }
