@@ -6,7 +6,12 @@ import { FortuneCards } from "../components/FortuneCards";
 import { DayMasterHero } from "../components/DayMasterHero";
 import { BrandMark, ChangsalBand } from "../components/Chrome";
 import { kstDateString } from "../lib/kst-date";
-import { logDailyFortuneOpen, logSajuResult } from "../lib/analytics";
+import {
+  logDailyFortuneOpen,
+  logSajuResult,
+  logShareClicked,
+} from "../lib/analytics";
+import { shareWithReward } from "../lib/share-reward";
 import { ProfileBar } from "../components/ProfileBar";
 import { PromotionCard } from "../components/PromotionCard";
 import { FortuneShareModal } from "../components/FortuneShareModal";
@@ -60,6 +65,8 @@ export function MySajuScreen({
   const [fortune, setFortune] = useState<FortuneCard[] | null>(null);
   const [daily, setDaily] = useState<DailyFortune | null>(null);
   const [sharing, setSharing] = useState(false);
+  const [sendingShare, setSendingShare] = useState(false);
+  const [shareMsg, setShareMsg] = useState<string | null>(null);
   /** 티저 → 생일 폼 포커스 이동용. BirthForm 이 id 를 밖으로 열어주지 않는다. */
   const formRef = useRef<HTMLDivElement>(null);
 
@@ -121,6 +128,27 @@ export function MySajuScreen({
   async function handle(birth: BirthData, name: string) {
     await onAdd(name, birth);
     setAdding(false);
+  }
+
+  /**
+   * 토스 공유 시트로 미니앱을 보낸다 — 신규 유입이 생기는 유일한 경로다.
+   *
+   * 보상이 남아 있으면 공유가 끝난 뒤 이어서 지급된다(`shareWithReward`).
+   * 공유를 취소하면 아무 일도 일어나지 않고 결과 화면은 그대로 남는다.
+   */
+  async function handleShare() {
+    if (sendingShare) return;
+    setSendingShare(true);
+    setShareMsg(null);
+    logShareClicked("saju_result");
+    try {
+      const r = await shareWithReward("내 사주 봤어, 너도 볼래? 🔮");
+      if (r.rewarded > 0) {
+        setShareMsg(`공유 고마워요! 토스포인트 ${r.rewarded}원을 지급했어요 🎉`);
+      }
+    } finally {
+      setSendingShare(false);
+    }
   }
 
   /**
@@ -201,13 +229,30 @@ export function MySajuScreen({
           <FortuneCards cards={fortune} />
         </Section>
       )}
+      {/* 1차 액션은 '보내기' 다.
+          사진첩 저장은 공유가 아니다 — 아무도 받지 않고, 사용자가 그걸 어디에
+          올렸는지 측정할 방법도 없다. 신규 유입은 링크에서만 생긴다.
+          그래서 저장은 2차로 내리되 없애지는 않는다(스토리에 올리는 사용자가 있다). */}
+      <button
+        type="button"
+        onClick={() => void handleShare()}
+        disabled={sendingShare}
+        className="rounded-lg bg-[var(--color-jindallae)] px-4 py-3.5 font-bold text-white disabled:opacity-60"
+      >
+        {sendingShare ? "공유 창을 여는 중…" : "친구에게 보내기 🔮"}
+      </button>
+      {shareMsg && (
+        <p role="status" className="text-center text-sm">
+          {shareMsg}
+        </p>
+      )}
       <button
         type="button"
         onClick={() => setSharing(true)}
         disabled={!fortune}
-        className="rounded-lg bg-[var(--color-jindallae)] px-4 py-3.5 font-bold text-white disabled:opacity-40"
+        className="self-center text-sm text-gray-500 underline disabled:opacity-40"
       >
-        이미지로 저장하기 ✨
+        이미지로 저장하기
       </button>
       {profiles.length > 1 && (
         <button

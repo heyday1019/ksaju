@@ -95,3 +95,17 @@ test("오행 균형에 해설 문장이 함께 나온다", async () => {
   // 辛卯·甲戌·癸酉 → 비어 있는 오행이 있어 '비어 있어요' 문장이 나온다.
   expect(screen.getByText(/비어 있어요|고르게|두터워요/)).toBeInTheDocument();
 });
+
+test("결과 화면의 1차 액션은 '친구에게 보내기' 이고, 이미지 저장은 2차로 남는다", async () => {
+  render(
+    <MySajuScreen profiles={[me]} active={me} onAdd={vi.fn(async () => {})} {...noop} />,
+  );
+  // 신규 유입이 생기는 경로가 1차여야 한다 — 사진첩 저장은 아무도 받지 않는다.
+  const send = screen.getByRole("button", { name: /친구에게 보내기/ });
+  const save = screen.getByRole("button", { name: /이미지로 저장하기/ });
+  expect(send).toBeInTheDocument();
+  expect(save).toBeInTheDocument();
+
+  // DOM 순서로 1차/2차를 고정한다(1차가 먼저 온다).
+  expect(send.compareDocumentPosition(save) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+});
