@@ -71,3 +71,8 @@ n8n-tarot-workflow.json
 
 # Ko-fi 디지털 상품 산출물 — 로컬 생성(npm run gen:products), 레포에 커밋하지 않음
 /products/
+
+# 기획 문서 원본 PDF — 같은 내용의 .md 를 apps-in-toss/docs/ 에 커밋해 두었고
+# 앱이 읽는 것도 그쪽이다(scripts/gen-ktarot.mjs). PDF 는 로컬 보관용.
+/K-타로 78장 구조화 노트.pdf
+/K-타로 오리지널 해석 문안.pdf
