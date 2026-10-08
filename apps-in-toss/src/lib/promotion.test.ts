@@ -15,7 +15,14 @@ vi.mock("@apps-in-toss/web-framework", () => ({
   },
 }));
 
-import { fetchUserHash, grantReward, hasClaimed, MISSION_AMOUNT } from "./promotion";
+import {
+  dismissShare,
+  fetchUserHash,
+  grantReward,
+  hasClaimed,
+  MISSION_AMOUNT,
+  PROMOTION_CODE,
+} from "./promotion";
 
 beforeEach(() => {
   vi.clearAllMocks();
@@ -126,4 +133,25 @@ test("미션별 금액이 1회 지급 한도를 넘지 않는다", () => {
   for (const amount of Object.values(MISSION_AMOUNT)) {
     expect(amount).toBeLessThanOrEqual(30);
   }
+});
+
+// 원장 키에 프로모션 코드가 없으면, 예전 이벤트를 끝낸 사용자에게 새 이벤트가
+// 영원히 안 보인다(PromotionCard 가 '둘 다 완료'로 보고 처음부터 닫는다).
+test("원장은 프로모션 코드별로 분리된다", () => {
+  const hash = "h-ledger";
+  expect(hasClaimed(hash, "saju")).toBe(false);
+
+  // 예전 프로모션 시절의 기록을 흉내 낸다 — 새 코드의 원장에 영향을 주면 안 된다.
+  localStorage.setItem(`ksaju.promo.v1:${hash}`, JSON.stringify({ saju: "k", share: "k" }));
+  expect(hasClaimed(hash, "saju")).toBe(false);
+  expect(hasClaimed(hash, "share")).toBe(false);
+});
+
+test("원장 키에 현재 프로모션 코드가 들어 있다", () => {
+  const hash = "h-key";
+  localStorage.clear();
+  dismissShare(hash);
+  const keys = Object.keys(localStorage).filter((k) => k.startsWith("ksaju.promo"));
+  expect(keys).toHaveLength(1);
+  expect(keys[0]).toContain(PROMOTION_CODE);
 });

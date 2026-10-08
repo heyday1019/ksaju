@@ -89,7 +89,19 @@ export async function fetchUserHash(): Promise<UserKey> {
 
 // ---- hash 기준 원장 (1인 1회) ----
 
-const ledgerKey = (hash: string) => `ksaju.promo.v1:${hash}`;
+/**
+ * 원장 키에 **프로모션 코드를 포함한다.**
+ *
+ * v1 은 `ksaju.promo.v1:{hash}` 로 어느 프로모션인지가 없었다. 그래서 프로모션을
+ * 새로 만들어 코드를 바꿨을 때, 예전 이벤트를 이미 끝낸 사용자에게는 새 이벤트
+ * 카드가 **영원히 뜨지 않았다** — `PromotionCard` 가 '둘 다 완료'로 보고 처음부터
+ * 닫아버린다. 하필 그 사람들이 재방문자이자 공유해 줄 가능성이 가장 높은 층이다.
+ *
+ * 새 프로모션은 새 이벤트이고 자격도 서버에서 프로모션 단위로 따진다. 키도 그렇게
+ * 맞춘다. 예전 v1 키는 그대로 남지만 아무도 읽지 않는다(몇 바이트라 지우지 않는다).
+ */
+const ledgerKey = (hash: string) =>
+  `ksaju.promo.v2:${PROMOTION_CODE}:${hash}`;
 
 type Ledger = Partial<Record<Mission, string>> & {
   /** 공유를 '안 할래요'로 넘긴 경우. 다시 묻지 않는다. */
