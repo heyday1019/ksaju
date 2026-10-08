@@ -9,7 +9,8 @@
     "check:release": "node scripts/check-release.mjs",
     "preview": "vite preview",
     "test": "vitest run",
-    "gen:assets": "node scripts/gen-assets.mjs"
+    "gen:assets": "node scripts/gen-assets.mjs",
+    "gen:ktarot": "node scripts/gen-ktarot.mjs"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4.3.1",
