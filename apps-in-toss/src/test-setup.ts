@@ -17,4 +17,6 @@ vi.mock("@apps-in-toss/web-framework", () => ({
 
 // 화면/만세력 엔진을 동적 import(코드 스플리팅) 하므로 findBy* 대기를 넉넉히 둔다.
 // 런타임이 느린 게 아니라, vitest 가 manseryeok(300KB)을 최초 1회 변환하는 비용이다.
-configure({ asyncUtilTimeout: 15000 });
+// `vitest.config.ts` 의 testTimeout 보다 작아야 한다 — 크면 테스트가 먼저 죽어서
+// "요소를 못 찾았다" 가 아니라 모호한 타임아웃으로 떨어진다.
+configure({ asyncUtilTimeout: 25000 });
