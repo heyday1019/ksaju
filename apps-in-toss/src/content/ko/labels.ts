@@ -1,4 +1,5 @@
 import { elementOf, WUXING_KO } from "../../lib/saju-display";
+import { withSubject, withTopic } from "../../lib/ko-particle";
 import type { WuXing } from "../../lib/saju-types";
 
 const COMPAT_LABELS: Record<string, string> = {
@@ -57,23 +58,6 @@ const WUXING_TRAIT: Record<WuXing, string> = {
   metal: "끊어내는 힘",
   water: "스며드는 힘",
 };
-
-/** 한글 음절에 종성이 있는지. 조사를 고르는 데 쓴다. */
-function hasFinalConsonant(word: string): boolean {
-  const code = word.charCodeAt(word.length - 1) - 0xac00;
-  if (code < 0 || code > 11171) return false;
-  return code % 28 !== 0;
-}
-
-/** `목` → `목이`, `화` → `화가` */
-function withSubject(word: string): string {
-  return word + (hasFinalConsonant(word) ? "이" : "가");
-}
-
-/** `목` → `목은`, `화` → `화는` */
-function withTopic(word: string): string {
-  return word + (hasFinalConsonant(word) ? "은" : "는");
-}
 
 const ELS: WuXing[] = ["wood", "fire", "earth", "metal", "water"];
 
