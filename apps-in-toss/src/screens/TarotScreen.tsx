@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { drawDailyCard, kstDateString } from "../lib/tarot";
-import { dailyReadingKo } from "../content/ko/tarot";
-import { elementOf } from "../lib/saju-display";
+import { kstDateString } from "../lib/tarot";
+import { dailyDraw } from "../lib/ktarot";
+import { cardReadingKo } from "../content/ko/ktarot";
+import { CardReadingView } from "../components/CardReadingView";
 import { TarotCardView, tarotArtOf } from "../components/TarotCardView";
 import { TarotShareModal } from "../components/FortuneShareModal";
 import { logTarotResult } from "../lib/analytics";
@@ -39,9 +40,12 @@ export function TarotScreen({
     );
   }
 
-  const card = drawDailyCard(me.saju, kstDateString());
-  const el = elementOf(me.saju.dayMaster);
-  const reading = dailyReadingKo(card, el);
+  // 카드와 방향(정/역)이 함께 정해진다 — 사람·날짜가 같으면 둘 다 고정이다.
+  const drawn = dailyDraw(me.saju, kstDateString());
+  const { card } = drawn;
+  const reading = cardReadingKo(drawn);
+  // 공유 카드는 좁으니 본문만 싣는다.
+  const shareText = reading.body;
 
   return (
     <section className="flex flex-col gap-4">
@@ -49,7 +53,7 @@ export function TarotScreen({
       <div className="mx-auto w-40">
         <TarotCardView card={card} showCaption={false} />
       </div>
-      <p className="text-center text-sm">{reading}</p>
+      <CardReadingView reading={reading} />
       <button
         type="button"
         onClick={() => setSharing(true)}
@@ -65,7 +69,8 @@ export function TarotScreen({
           cardImage={tarotArtOf(card.filename)}
           cardNameKr={card.name_kr}
           cardNameEn={card.name_en}
-          reading={reading}
+          orientationLabel={reading.orientationLabel}
+          reading={shareText}
           onClose={() => setSharing(false)}
         />
       )}

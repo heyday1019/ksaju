@@ -18,10 +18,18 @@ test("사주 없으면 안내가 보인다", () => {
   expect(screen.getByText(/먼저 내 사주/)).toBeInTheDocument();
 });
 
-test("뽑기 버튼을 누르면 과거/현재/미래 3장과 합 문장이 보인다", async () => {
+test("뽑기 버튼을 누르면 과거/현재/미래 3장과 맺음말이 보인다", async () => {
   render(<SpreadScreen me={me} onNeedSaju={() => {}} />);
   await userEvent.click(screen.getByRole("button", { name: /카드 뽑기/ }));
-  expect(await screen.findByText(/과거의 카드/)).toBeInTheDocument();
-  expect(screen.getByText(/현재의 카드/)).toBeInTheDocument();
-  expect(screen.getByText(/미래의 카드/)).toBeInTheDocument();
+
+  // 자리 이름은 카드 위(그리드)와 리딩 위에 각각 나온다.
+  expect((await screen.findAllByText("과거")).length).toBeGreaterThan(0);
+  expect(screen.getAllByText("현재").length).toBeGreaterThan(0);
+  expect(screen.getAllByText("미래").length).toBeGreaterThan(0);
+
+  // 세 장 모두 방향 배지를 단다.
+  expect(screen.getAllByText(/정방향|역방향/)).toHaveLength(3);
+
+  // 맺음말은 세 카드의 키워드를 엮는다 — 전에는 오행 하나로만 결정돼 늘 같았다.
+  expect(screen.getByText(/한 걸음 옮겨보세요/)).toBeInTheDocument();
 });

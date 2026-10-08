@@ -65,6 +65,7 @@ export function TarotShareModal({
   cardImage,
   cardNameKr,
   cardNameEn,
+  orientationLabel,
   reading,
   onClose,
 }: {
@@ -73,6 +74,8 @@ export function TarotShareModal({
   cardImage?: string;
   cardNameKr: string;
   cardNameEn: string;
+  /** 정방향 / 역방향. 본문이 방향에 따라 달라지므로 카드에도 적는다. */
+  orientationLabel?: string;
   reading: string;
   onClose: () => void;
 }) {
@@ -92,7 +95,14 @@ export function TarotShareModal({
             />
           )}
           <div>
-            <p className="text-lg font-bold">{cardNameKr}</p>
+            <div className="flex items-center justify-center gap-1.5">
+              <p className="text-lg font-bold">{cardNameKr}</p>
+              {orientationLabel && (
+                <span className="rounded bg-black/8 px-1.5 py-0.5 text-[10px] font-bold text-gray-500">
+                  {orientationLabel}
+                </span>
+              )}
+            </div>
             <p className="text-[11px] text-gray-500">{cardNameEn}</p>
           </div>
           <p className="text-[13px] leading-relaxed">{reading}</p>
